@@ -90,16 +90,46 @@ Este documento se compone de 6 secciones principales que tratan diferentes aspec
 \section{Análisis de Requisitos}
 
 \subsection{Introducción}
-La \textbf{administración de comunidades de vecinos} es una actividad compleja que requiere de la gestión de diferentes actividades, como la administración económica de la comunidad, la resolución de incidencias, gestión de los espacios comunitarios, resolución de incidencias o generación y comunicación de documentación, entre otras. 
+En esta sección se va definir la \textbf{especificación de requerimientos} que establece los requisitos funcionales y no funcionales de la aplicación SolucionesVecinales, realizando una análisis del funcionamiento de esperado de aplicación y estableciendo unos limites para el diseño de ésta.
 
-Además, hay que \textbf{coordinar a los vecinos}, teniendo en cuenta que estos pueden ser un grupo muy heterogéneo, con diferentes dificultades, como \textbf{problemas de accesibilidad} o \textbf{movilidad}, \textbf{dificultad} para \textbf{manejar las nuevas tecnologías}, \textbf{problemas económicos}, etc. En resumen, una serie de circunstancias que añaden complejidad a una tarea ya de por si compleja.
+\subsubsection{Propósito}
+El propósito de esta sección es \textbf{establecer los requisitos}, tanto funcionales como no funcionales, de la aplicación que se va a desarrollar, realizando una \textbf{análisis exhaustivo de su funcionamiento} y estableciendo las restricciones necesarias para que la aplicación cumpla su funcionalidad de forma correcta, segura y eficiente. Estos requisitos no ayudarán a planificar el proceso de desarrollo así como ha tomar las decisiones oportunas durante el proceso de diseño de la aplicación.
 
-Para solventar estos problemas, \textbf{SolucionesVecinales} ofrece una solución integral de gestión de comunidades de vecinos, enfocada en la simpleza de uso y la accesibilidad y totalmente gratuita, para no dejar a nadie fuera del proceso de gestión de su comunidad.
+Esta sección va dirigido principalmente al equipo de desarrollo, que serán los encargados de elaborar el diseño de la aplicación a partir de los requerimientos y restricciones establecidos en este documento, aunque teniendo en cuenta que también esta incluido en el documento del proyecto en general cabe la posibilidad de que tengan acceso a el otros interesados, como por ejemplo, posibles inversores.
+
+\subsubsection{Alcance}
+Nuestro producto se llama \textbf{SolucionesVecinales} y es una aplicación web para la \textbf{gestión de comunidades de vecinos}. El fin de SolucionesVecinales es ayudar a todos los integrantes en una comunidad de vecinos a realizar diferentes gestiones relacionadas con las administración de su comunidad, de forma simple y sencilla. 
+
+Es una aplicación que se va ha \textbf{ofrece de forma gratuita}, cuya meta principal es llegar al mayor número de usuarios, implementando buenas \textbf{políticas de accesibilidad} y ofreciendo una \textbf{interfaz sencilla} e \textbf{intuitiva} que pueda usar cualquiera persona, incluso aquellos que no están familiarizados con las nuevas tecnologías. 
+
+Partiendo de esta base, la aplicación deberá \textbf{ayudar a realizar las tareas} más comunes en las que deben participar los vecinos en una comunidad, como el acceso de documentos, creación de incidencias, consulta de las cuentas de la comunidad,  reserva de espacios comunes, etc.
+
+\subsubsection{Definiciones, Siglas y Abreviaturas}
+En esta sección se va a realizar una descripción de las definiciones, siglas o abreviaturas que puedan aparecer a lo largo de este documento y que sea oportuno explicar con más detalle.
+ 
+\begin{description}
+		\item[API:] una API del inglés Application Programming Interface ó Interfaz de Programación de Aplicaciones, es un conjunto de definiciones, protocolos, funciones, etc.., que permiten que una aplicación de comunique con otra aplicación o pieza de software. \cite{aws01}
+		
+		\item[API Web:] una API Web es un tipo de API que permite la comunicación entre el navegador (cliente) y el servidor, permitiendo que el navegador realice diferentes peticiones HTTP al servidor que permiten modificar, añadir, consultar o eliminar los datos almacenados en el servidor y el acceso a diferentes servicios y recursos.
+		
+		\item[API REST:] este tipo de API es uno de los más empleados en las aplicaciones web actualmente. El termino REST proviene del ingles Representational State Transfer, ó transferencia de estado representacional. Estás APIs definen un conjunto de funciones, como GET, PUT, DElETE, etc, que los clientes pueden utilizar para acceder a los datos del servidor. Su principal características es que no tiene estado, es decir, los servidores no guardan los datos del cliente entre peticiones. \cite{wiki01}
+\end{description}
+
+\subsection{Referencias}
+La referencias, tanto de esta sección como del resto de secciones se incluyen al final de documento, con los enlaces adecuados en los textos que hacen referencias a estas.
+
+
+\subsection{Visión General}
 
 
 
 
 
-%\bibliographystyle{unsrt}
+
+
+
+\newpage
+\bibliography{citas}
+\bibliographystyle{unsrt}
 
 \end{document}
