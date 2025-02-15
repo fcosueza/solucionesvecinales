@@ -71,7 +71,7 @@ La gestión de comunidades de vecinos es una tarea compleja que requiere realiza
 
 Además de estas tareas, hay que garantizar la seguridad de la información almacenada, ya que es información sensible, así como el proceso para realizar estas tareas sea sencillo e intuitivo, además de accesible. 
 
-\subsection{Estructura de este Documento}
+\subsection{Visión General}
 Este documento se compone de 6 secciones principales que tratan diferentes aspecto del proyecto. Para facilitar al interesado la navegación por éste, vamos a explicar brevemente en que consiste cada sección del documento:
 
 \begin{itemize}
@@ -114,10 +114,45 @@ Las definiciones, siglas y abreviaturas se incluyen al final del documento, dent
 La referencias, al igual que el glosario, tanto de esta sección como del resto de secciones se incluyen al final de documento, para no duplicar secciones. Además, en cada texto que haga referencia a alguna página o documento, se incluirá la cita adecuada apunta a dicha referencia, para facilitar su acceso.
 
 
-\subsection{Visión General}
-\gls{foobar} is a strange animal
+\subsubsection{Visión General}
+Este documento se divide principalmente en 4 secciones, incluyendo la actual. Cada sección describe un aspecto diferentes de los requisitos del software y son las siguientes:
 
-\gls{foo} is another strange animal
+\begin{itemize}
+	\item \textbf{Introducción} (Sección 2.1): en esta primera sección se realiza una introducción tanto al software como a este documento, explicando su propósito, alcance, etc...
+	
+	\item \textbf{Descripción General} (Sección 2.2): en esta sección se realiza una descripción del software que se va a desarrollar, incluyendo su funcionalidad, restricciones, características de los usuarios potenciales, interfaces, etc. Nos sirve como base para especificar los requisitos en el siguiente apartado.
+	
+	\item \textbf{Requerimientos Específicos} (Sección 2.3): en la tercera sección vamos a establecer los requisitos específicos del software, extraídos de la descripción general y separándolos en requisitos funcionales y no funcionales.
+	
+	\item \textbf{Requerimientos de Documentación} (Sección 2.4): en esta sección de la parte de requisitos se especifican los requisitos de documentación que va a tener el software, incluyendo manuales, ayuda en línea, instalación, etc.
+\end{itemize}
+
+\subsection{Descripción General}
+En esta sección se van a describir todos los factores y restricciones que afectan al producto, estableciendo una base para la definición de los requisitos específicos en la siguiente sección, incluyendo una perspectiva general del producto, así como las restricciones que se deben aplicar en su diseño.
+
+\subsubsection{Perspectiva del Producto}
+En primer lugar vamos a realizar una descripción del producto, especialmente de las diferentes interfaces que se van a emplear y su interacción con los diferentes elementos y sistemas con los que deberá interactuar nuestro software.
+
+\paragraph{Interfaz de Usuario}
+La interfaz de la aplicación es una \textbf{interfaz web}, a la que se accederá desde un navegador. Esta estará compuesta de varias pantallas que ayudarán al usuario a navegar por la aplicación y llevar a cabo las diferentes tareas y funciones que se pueden realizar en nuestro software.
+
+Las interfaces de las que estará compuesta nuestra aplicación son las siguientes:
+
+\begin{itemize}
+	\item \textbf{Pantalla Principal}: esta es la primera interfaz con la que se encuentra un usuario al ingresar en nuestra aplicación web. La función principal de esta pantalla es la de \textbf{ofrecer información sobre la aplicación}, así como proporcionar un\textbf{ menú con diferentes opciones} que, además de permitir la navegación por las diferentes secciones permita a un usuario \textbf{registrarse} o \textbf{realizar login}.
+	
+	Las secciones de las que estará compuesta esta interfaz serán las siguientes:
+	
+	\begin{itemize}
+		\item \textbf{Cabecera}: aquí se mostrará una imagen con un eslogan, el nombre de la aplicación y un elemento \gls{CTO} para que los usuarios se registren o realicen login.
+		
+		\item \textbf{Barra de Menú}: esta barra, que se sitúa inicialmente encima de la cabecera y que debe permanecer en todo momento en la parte superior de la pantalla, esta compuesto del \textbf{logo de la aplicación} en el lado derecho y de un \textbf{menú}, con dos partes en el lado izquierdo. La primera parte contendrá las diferentes secciones de esta página para que se puedan acceder a ellas rápidamente. Separada un poco encontraremos la opción de login, para permitir a los usuarios realizar login. 
+		
+		\item \textbf{Secciones}: esta página contendrá, como mínimo, 3 secciones, donde se explicará un poco el propósito del software, sus principales características, los que nos diferencia de la competencia, etc. El número de de secciones puede variar, pudiendo ser necesario agregar más, pero estás deben ser visualmente atractivas, incluyendo imágenes e iconos y con una disposición adecuada. Una sección que deberá ser obligatoria, siendo la última de éstas, es la sección "Contacta con nosotros", donde ser proveerá un formulario para que los usuarios puedan realizar cualquier consulta que necesiten.
+		
+		\item \textbf{Pie de Página}: en el pie de página se añadirá una lista de enlaces con las diferentes secciones de la página, un mapa del sitio web y un conjunto de enlaces de redes sociales de la aplicación o en su defecto del equipo de desarrollo.
+	\end{itemize}
+\end{itemize}
 
 \newpage
 
