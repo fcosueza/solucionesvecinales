@@ -134,7 +134,8 @@ En esta sección se van a describir todos los factores y restricciones que afect
 En primer lugar vamos a realizar una descripción del producto, especialmente de las diferentes interfaces que se van a emplear y su interacción con los diferentes elementos y sistemas con los que deberá interactuar nuestro software.
 
 \paragraph{Interfaz de Usuario}
-La interfaz de la aplicación es una \textbf{interfaz web}, a la que se accederá desde un navegador. Esta estará compuesta de varias pantallas que ayudarán al usuario a navegar por la aplicación y llevar a cabo las diferentes tareas y funciones que se pueden realizar en nuestro software.
+~\\\\
+\-\ \-\ \-\ La interfaz de la aplicación es una \textbf{interfaz web}, a la que se accederá desde un navegador. Esta estará compuesta de varias pantallas que ayudarán al usuario a navegar por la aplicación y llevar a cabo las diferentes tareas y funciones que se pueden realizar en nuestro software.
 
 Las interfaces de las que estará compuesta nuestra aplicación son las siguientes:
 
@@ -152,6 +153,26 @@ Las interfaces de las que estará compuesta nuestra aplicación son las siguient
 		
 		\item \textbf{Pie de Página}: en el pie de página se añadirá una lista de enlaces con las diferentes secciones de la página, un mapa del sitio web y un conjunto de enlaces de redes sociales de la aplicación o en su defecto del equipo de desarrollo.
 	\end{itemize}
+	
+	\item \textbf{Pantalla de Login}: a esta pantalla se accede desde la pantalla principal cuando el usuario pulsa en el enlace de login/registro del menú de la barra principal. La pantalla inicial esta compuesta por un \textbf{formulario} de login, que debe aceptar un email y una contraseña como entrada con un botón enviar. Además, incluirá un enlace debajo del botón, centrado, que permitirá al usuario registrarse, en caso de que no este registrado, y que desplegará un nuevo formulario que veremos en detalle a continuación.
+	
+	Cuando se pulse en el botón de login, la aplicación deberá comprobar que el usuario es correcto y \textbf{redirigirlo a su página de perfil}. En caso contrario, se mostrarán los \textbf{mensajes de error} oportunos en el formulario, los cuales se detallan en este punto más adelante.
+	
+	\item \textbf{Pantalla de Registro}: en esta pantalla, que se accede desde la pantalla de login, se muestra un formulario que permitirá a un usuario registrarse en el sistema. Este formulario estará compuesto por diferentes campos que permitirán al usuario introducir la siguiente la información:
+	
+	\begin{itemize}
+		\item Dirección de Correo
+		\item Nombre de usuario
+		\item Nombre 
+		\item Apellidos		
+		\item Dirección (compuesta por los campos: calle, número, escalera, piso, letra)
+		\item Contraseña (con un campo duplicado para que la repita)
+		\item Rol (botones de tipo radio para seleccionar el rol entre administrador o usuario)
+	\end{itemize}
+	
+	Debajo, aparecerá el \textbf{botón registrarse} que permitirá al usuario registrar todos sus datos. Al realizar esta acción, el sistema, automáticamente, \textbf{generará una solicitud en la comunidad indicada}, extraída del campo dirección. Esta solicitud se enviará al administrador de la comunidad y una vez aprobada, el usuario será incluido en dicha comunidad. En caso de que los datos no sean correctos, se mostrará el formulario con los\textbf{ errores} adecuados.
+	
+	\item \textbf{Pantalla de Perfil}: una vez registrado o realizado el login, al usuario se le mostrará la página de su perfil principal. Esta página variará dependiendo del estado en el que se encuentre el usuario y el rol que tenga. 
 \end{itemize}
 
 \newpage
