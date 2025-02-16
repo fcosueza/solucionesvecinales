@@ -32,6 +32,7 @@
 \usepackage[scaled=.92]{helvet}
 \usepackage{courier}
 \usepackage[indent=12pt]{parskip}
+\usepackage[titletoc, title]{appendix}
 
 \usepackage{geometry}
 \geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=2.5cm,rmargin=2.5cm}
@@ -51,6 +52,7 @@
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \usepackage{float}
+
 
 %--------------------------------------------------------------------%
 %                      Customizing Document                          %
@@ -79,7 +81,7 @@
 
 \hypersetup{
     colorlinks=true,
-    linkcolor=black,
+    linkcolor=magenta,
     urlcolor=magenta
 }
 
@@ -93,3 +95,11 @@
 % ------------------------ New Commands ----------------------------- %
 
 \newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command
+
+% ------------------------ Anexx now with name in spanish before title ----------------------- %
+
+\addto\captionsspanish{%
+	\renewcommand\appendixname{Anexo}
+	\renewcommand\appendixpagename{Anexos}
+}
+
