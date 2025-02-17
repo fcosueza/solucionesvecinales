@@ -170,9 +170,12 @@ Las interfaces de las que estará compuesta nuestra aplicación son las siguient
 		\item \textbf{Pie de Página}: en el pie de página se añadirá una lista de enlaces con las diferentes secciones de la página, un mapa del sitio web y un conjunto de enlaces de redes sociales de la aplicación o en su defecto del equipo de desarrollo.
 	\end{itemize}
 	
+	Tanto la \textbf{barra de menú} superior como el \textbf{pié de página} se mantendrán \textbf{visibles en todas las pantallas} de la aplicación, cambiando en ciertos aspectos u ofreciendo diferentes opciones.
+	
 	\item \textbf{Pantalla de Login}: a esta pantalla se accede desde la pantalla principal cuando el usuario pulsa en el enlace de login/registro del menú de la barra principal. La pantalla inicial esta compuesta por un \textbf{formulario} de login, que debe aceptar un email y una contraseña como entrada con un botón enviar. Además, incluirá un enlace debajo del botón, centrado, que permitirá al usuario registrarse, en caso de que no este registrado, y que desplegará un nuevo formulario que veremos en detalle a continuación.
 	
 	\item \textbf{Pantalla de Registro}: en esta pantalla, que se accede desde la pantalla de login, se muestra un formulario que permitirá a un usuario registrarse en el sistema. Este formulario estará compuesto por diferentes campos que permitirán al usuario introducir la información necesaria pare registrar, como puede ser Nombre, Correo, Dirección, rol, etc. Debajo, aparecerá el \textbf{botón registrarse} que permitirá al usuario registrar todos sus datos. 
+
 	
 	\item \textbf{Pantalla de Comunidad}: una vez registrado o realizado el login, al usuario se le mostrará la página  principal de login. Esta página variará dependiendo del estado en el que se encuentre el usuario y el rol que tenga, aunque tendrá 4 zonas definidas:
 	
@@ -182,29 +185,47 @@ Las interfaces de las que estará compuesta nuestra aplicación son las siguient
 		\item \textbf{Menú Lateral}: un menú latera, situado a la izquierda, que mostrará las opciones relativas a la comunidad que este cargada. Las opciones variarán según si el usuario tiene el rol de administrador o de usuario, pero la opciones comunes a ambos son las siguientes: 
 		
 		\begin{itemize}
+			\item \textbf{Inicio}
 			\item \textbf{Tablón de Anuncios}
 			\item \textbf{Documentos}
 			\item \textbf{Incidencias}
+			\item \textbf{Espacios Comunes}
+			\item \textbf{Finanzas}
 		\end{itemize}
-	\end{itemize} 
+		
+		Adicionalmente, si el usuario tiene el \textbf{rol administrador}, se mostrará la opción "\textbf{Solicitudes}". La \textbf{opción de Inicio} llevará al usuario a la \textbf{pantalla principal de comunidad}. El resto de opciones las detallaremos en los siguientes puntos.
+		
+		\item \textbf{Zona de Contenido}: en esta zona, que estará ubicada en el centro, se mostrará la información de las diferentes opciones que podemos consultar o modificar en la comunidad. Por defecto, se mostrarán 2 secciones indicando las incidencias y reservas que ha realizado el usuario y el estado de estás. En ambos casos, se dará la opción de eliminar, tanto las reservas como las incidencias mediante un botón a la derecha de cada elemento.
+	\end{itemize}
 	
-
 	
-	
-	\item \textbf{Pantalla de Perfil}: en este pantalla, que se accede desde el menú vertical del icono de perfil, se mostrará un \textbf{formulario con toda la información del usuario}. Este formulario será \textbf{editable} y se podrá actualizar mediante un botón que habrá debajo de él con el texto "Guardar". 
+	\item \textbf{Pantalla de Perfil}: en esta pantalla, que se accede desde el menú vertical del icono de perfil, se mostrará un \textbf{formulario con toda la información del usuario} en la zona de contenido. Este formulario se podrá \textbf{editar} y actualizar mediante un botón que habrá debajo de él con el texto "Guardar". 
 	
 	Además, debajo de este aparecerá un \textbf{botón} con la opción "\textbf{Eliminar usuario}" que permitirá a un usuario eliminar su información, y que al ser pulsado ocultará el formulario con al información y mostrará una ventana de confirmación. Si la confirmación es positiva, se eliminará al usuario, y se redireccionará la pantalla principal.
 	
-	\item \textbf{Pantalla de Añadir Comunidad}: esta pantalla, a la que solo tienen acceso los usuarios con rol administrador, permite \textbf{añadir una nueva comunidad} de vecinos. La interfaz mostrará un \textbf{formulario web} con diferentes datos que deberán rellenarse para dar de alta la comunidad, principalmente la \textbf{dirección}, que será por lo que se identifique cada comunidad. En el caso de que se pueda dar de alta la comunidad se mostrará una mensaje de éxito y se redireccionará a la páginas principal de comunidad. En caso contrario, se mostrará los mensajes de error adecuados.
+	\item \textbf{Pantalla de Añadir Comunidad}: esta pantalla, a la que solo tienen acceso los usuarios con rol administrador, permite \textbf{añadir una nueva comunidad} de vecinos. La interfaz mostrará un \textbf{formulario web} con diferentes datos que deberán rellenarse para dar de alta la comunidad, principalmente la \textbf{dirección}, que será por lo que se identifique cada comunidad. En el caso de que se pueda dar de alta la comunidad se mostrará una mensaje de éxito y se redireccionará a la página principal de comunidad. En caso contrario, se mostrará los mensajes de error adecuados.
 	
-	\item \textbf{Pantalla del Tablón de Anuncios}: en esta interfaz se mostrará el menú lateral que corresponda al usuario y en la zona de contenido
+	\item \textbf{Pantalla del Tablón de Anuncios}: en esta interfaz se mostrará el menú lateral que corresponda al usuario y en la zona de contenido se mostrará una tabla con todos los mensajes que se han posteado en la comunidad, junto con su fecha. 
 	
-	\item \textbf{}
+	En el caso de que el usuario sea tenga el rol de usuario, no se podrán realizar más acciones en el tablón de anuncios, pero si el \textbf{usuario es una administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios. Si el mensaje se ha agregado con éxito, se mostrará un mensaje y se cerrará el formulario. Si no, se mostrarán los errores que han ocurrido en el formulario.
 	
-
+	\item \textbf{Pantalla de Documentos}: en esta pantalla, que se accede desde el menú lateral de la página de comunidad, se mostrarán los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los usuario, \textbf{deberán poder descargar} los diferentes documentos pulsando en ellos o con un botón debajo o al lado de cada documento. 
+	
+	En el caso de que el \textbf{usuario sea un administrador}, debe aparecer un botón con el texto "\textbf{Añadir Documento}" que desplegará una formulario y le permitirá añadir nuevos documentos al directorio. Si el documento se ha añadido correctamente, se cerrar el formulario y se mostrará el mensaje adecuado. En caso contrario, se mostrarán los errores que han ocurrido en el formulario.
+	
+	\item \textbf{Pantalla de Incidencias}: en esta pantalla, se mostrará una \textbf{lista con todas las incidencias} de la comunidad, junto con su fecha de creación y su estado. Para un \textbf{usuario normal}, solo se mostrarán \textbf{sus incidencias} y todos aquellas que hayan sido \textbf{marcadas como públicas} por los usuarios que las hayan creado. Para el administrador, serán visibles todas las incidencias.
+	
+	Debajo de la lista de incidencias, debe haber un \textbf{botón} con el texto "\textbf{Crear incidencia}", que desplegará un formulario y permitirá a cualquier usuario crear una nueva incidencia. Además, si el \textbf{usuario conectado es el administrador}, aparecerán 2 botones a la derecha de cada incidencia, que permitirán tanto \textbf{borrar las incidencias} como \textbf{cambiar su estado}.
 		
+	\item \textbf{Pantalla de Espacios Comunes}: en esta pantalla se mostrarán los diferentes espacios comunes de la comunidad y se permitirá su reserva. Se mostrará una lista con todos los espacios comunes que hay en al comunidad, que permitirá clickar en ellos y acceder a la página de cada espacio común. Además, para los administradores, se mostrará un botón con el texto "Añadir Espacio" que mostrará un formulario que permitirá añadir un nuevo espacio común, con información como el nombre del espacio común, sus características y el horario de uso, además de la posibilidad de incluir una foto de dicho espacio.
 	
+	\item \textbf{Pantalla de Detalle de Espacio Común}: en esta pantalla se muestran los \textbf{detalle de una zona común}. Aparecerá \textbf{una imagen}, si se hubiera incluido. Sino se cargara una imagen por defecto. Encima aparecerá el \textbf{nombre} del espacio común y al derecho, una \textbf{descripción} de dicho espacio. Debajo de la descripción aparecerá el horario de uso de dicho espacio.
 	
+	Debajo de este bloque, se mostrará un \textbf{calendario} con los \textbf{días en los que no se pueda reservar} con un fondo \textbf{rojo} y en los que aún \textbf{si se pueda} con un \textbf{fondo verde}, al \textbf{pinchar} sobre uno de estos días se desplegará una \textbf{lista con los posibles horarios} en los que se puede reservar, permitiendo pinchar en uno y pulsar el \textbf{botón "Reservar"} que habrá también aparecido con los horarios. 
+	
+	\item \textbf{Pantalla de Finanzas}: en esta pantalla, se mostrará, en la zona de contenido, un \textbf{tabla con las finanzas} de la comunidad. Indicando los ingresos y el tipo de estos, como cuotas, seguros, etc., así como los gastos y su tipo, limpieza del edificio, arreglos, seguros, etc. La información de mostrará para este ejercicios, realizando una estimación, y se irá modificando de forma automática cuando se añadan gastos o ingresos. 
+	
+	Solo los \textbf{administradores} puede modificar esta tabla, mediante un formulario para añadir un registros en el que se podrá seleccionar el tipo de registro, si es un ingreso o gasto, y el tipo de cada uno, así como la cantidad. Cuando se agregue un nuevo registro, el sistema calculará el balance con los nuevos datos y los mostrará.	
 \end{itemize}
 
 \end{appendices}
