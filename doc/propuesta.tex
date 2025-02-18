@@ -48,9 +48,9 @@
 \subsection{Presentación}
 En este documento se detalla el proyecto final desarrollado para el \textbf{CFGS Desarrollo de Aplicaciones Web} en el \textbf{IES Aguadulce}. El proyecto elegido ha sido una aplicación web para la \textbf{gestión y administración de comunidades de vecinos}, llamada \textbf{SolucionesVecinales}.
 
-El objetivo de esta aplicación es facilitar la \textbf{gestión de comunidades de vecinos} por parte tanto de los administradores de la propiedad como de los inquilinos o propietarios, ofreciéndose de \textbf{forma gratuita} y poniendo especial énfasis en las \textbf{accesibilidad} y \textbf{facilidad de uso}, con una interfaz web amigable y accesible desde cual dispositivo que disponga una navegador web.
+El objetivo de esta aplicación es facilitar la \textbf{gestión de comunidades de vecinos} por parte tanto de los administradores de la propiedad como de los inquilinos o propietarios, ofreciéndose de \textbf{forma gratuita} y poniendo especial énfasis en las \textbf{accesibilidad} y \textbf{facilidad de uso}, con una interfaz web amigable y accesible desde cualquier dispositivo que disponga una navegador web.
 
-La aplicación trabaja con \textbf{3 tipos diferentes de usuarios}, incluyendo administradores, usuarios y usuarios no registrados, siendo el público objetivo los administradores de propiedad y presidentes de comunidad así como todos los inquilinos y propietarios de las comunidades de vecinos. Los diferentes usuarios tendrán diferentes permisos y responsabilidades.
+La aplicación trabaja con \textbf{3 tipos diferentes de usuarios}, incluyendo administradores, usuarios y visitantes, siendo el público objetivo los administradores de propiedad y presidentes de comunidad así como todos los inquilinos y propietarios de las comunidades de vecinos. Los diferentes usuarios tendrán diferentes permisos y responsabilidades.
 
 A lo largo de este documento, desgranaremos todas los requisitos de la aplicación, el diseño elegido y todos los detalles del proceso de desarrollo y testeo.
 
@@ -98,17 +98,17 @@ Este documento se compone de 6 secciones principales que tratan diferentes aspec
 \section{Análisis de Requisitos}
 
 \subsection{Introducción}
-En esta sección se va definir la \textbf{especificación de requerimientos} que establece los requisitos funcionales y no funcionales de la aplicación SolucionesVecinales, realizando una análisis del funcionamiento de esperado de aplicación y estableciendo unos limites para el diseño de ésta.
+En esta sección se va definir la \textbf{especificación de requerimientos} que establece los requisitos funcionales y no funcionales de la aplicación SolucionesVecinales, realizando una análisis del funcionamiento esperado de aplicación y estableciendo unos límites para el diseño de ésta.
 
 \subsubsection{Propósito}
-El propósito de esta sección es \textbf{establecer los requisitos}, tanto funcionales como no funcionales, de la aplicación que se va a desarrollar, realizando una \textbf{análisis exhaustivo de su funcionamiento} y estableciendo las restricciones necesarias para que la aplicación cumpla su funcionalidad de forma correcta, segura y eficiente. Estos requisitos no ayudarán a planificar el proceso de desarrollo así como ha tomar las decisiones oportunas durante el proceso de diseño de la aplicación.
+El propósito de esta sección es \textbf{establecer los requisitos}, tanto funcionales como no funcionales, de la aplicación que se va a desarrollar, realizando una \textbf{análisis exhaustivo de su funcionamiento} y estableciendo las restricciones necesarias para que la aplicación cumpla su funcionalidad de forma correcta, segura y eficiente. Estos requisitos nos ayudarán a planificar el proceso de desarrollo así como a tomar las decisiones oportunas durante el proceso de diseño de la aplicación.
 
-Esta sección va dirigida principalmente al equipo de desarrollo, que serán los encargados de elaborar el diseño de la aplicación a partir de los requerimientos y restricciones establecidos en este documento, aunque teniendo en cuenta que también esta incluido en el documento del proyecto en general cabe la posibilidad de que tengan acceso a el otros interesados, como por ejemplo, posibles inversores.
+Esta sección va dirigida principalmente al \textbf{equipo de desarrollo}, que serán los encargados de elaborar el diseño de la aplicación a partir de los requerimientos y restricciones establecidos en este documento, aunque teniendo en cuenta que también esta incluido en el documento del proyecto en general cabe la posibilidad de que tengan acceso a él otros interesados, como por ejemplo, posibles inversores.
 
 \subsubsection{Alcance}
-Nuestro producto se llama \textbf{SolucionesVecinales} y es una aplicación web para la \textbf{gestión de comunidades de vecinos}. El fin de SolucionesVecinales es ayudar a todos los integrantes en una comunidad de vecinos a realizar diferentes gestiones relacionadas con las administración de su comunidad, de forma simple y sencilla. 
+Nuestro producto se llama \textbf{SolucionesVecinales} y es una aplicación web para la \textbf{gestión de comunidades de vecinos}. El fin de nuestra aplicación es ayudar a todos los integrantes en una comunidad de vecinos a realizar diferentes gestiones relacionadas con las administración de su comunidad, de forma simple y sencilla. 
 
-Es una aplicación que se va ha \textbf{ofrece de forma gratuita}, cuya meta principal es llegar al mayor número de usuarios, implementando buenas \textbf{políticas de accesibilidad} y ofreciendo una \textbf{interfaz sencilla} e \textbf{intuitiva} que pueda usar cualquiera persona, incluso aquellos que no están familiarizados con las nuevas tecnologías. 
+Es una aplicación que se \textbf{ofrece de forma gratuita}, cuya meta principal es llegar al mayor número de usuarios, implementando buenas \textbf{políticas de accesibilidad} y ofreciendo una \textbf{interfaz sencilla} e \textbf{intuitiva} que pueda usar cualquiera persona, incluso aquellos que no están familiarizados con las nuevas tecnologías. 
 
 Partiendo de esta base, la aplicación deberá \textbf{ayudar a realizar las tareas} más comunes en las que deben participar los vecinos en una comunidad, como el acceso de documentos, creación de incidencias, consulta de las cuentas de la comunidad,  reserva de espacios comunes, etc.
 
@@ -151,38 +151,44 @@ En primer lugar vamos a realizar una descripción del producto, especialmente de
 \section{Descripción de la Interfaz de Usuario}
 \label{sec:apenA}
 
-La interfaz de la aplicación es una \textbf{interfaz web}, a la que se accederá desde un navegador. Esta estará compuesta de varias pantallas que ayudarán al usuario a navegar por la aplicación y llevar a cabo las diferentes tareas y funciones que se pueden realizar en nuestro software.
+En este anexo se va a describir la interfaz de la aplicación, especialmente a un nivel gráfico, ya que a nivel de funcionamiento se va a describir con más detalle en otro punto de esta sección.
 
-Las interfaces de las que estará compuesta nuestra aplicación son las siguientes:
+SolucionesVecinales es una aplicación web, por lo que tendrá una \textbf{interfaz web} que podrá ser accedida desde cualquier navegador y prácticamente desde cualquier dispositivo. La interfaz estará compuesta por un conjunto de páginas web que ayudarán a los usuarios a utilizar las diferentes herramientas que ofrece la aplicación para gestionar la comunidad de vecinos. 
+
+Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las siguientes:
 
 \begin{itemize}
-	\item \textbf{Pantalla Principal}: esta es la primera interfaz con la que se encuentra un usuario al ingresar en nuestra aplicación web. La función principal de esta pantalla es la de \textbf{ofrecer información sobre la aplicación}, así como proporcionar un\textbf{ menú con diferentes opciones} que, además de permitir la navegación por las diferentes secciones permita a un usuario \textbf{registrarse} o \textbf{realizar \gls{login}}.
+	\item \textbf{Página Principal}: esta es la primera interfaz con la que se encuentra un usuario al ingresar en nuestra aplicación web. La función principal de esta pantalla es la de \textbf{ofrecer información sobre la aplicación}, así como proporcionar un\textbf{ menú con diferentes opciones} que, además de permitir la navegación por las diferentes secciones permita a un usuario \textbf{registrarse} o \textbf{realizar \gls{login}}.
 	
 	Las secciones de las que estará compuesta esta interfaz serán las siguientes:
 	
 	\begin{itemize}
 		\item \textbf{Cabecera}: aquí se mostrará una imagen con un eslogan, el nombre de la aplicación y un elemento \gls{CTO} para que los usuarios se registren o realicen login.
 		
-		\item \textbf{Barra de Menú}: esta barra, que se sitúa inicialmente encima de la cabecera y que debe permanecer en todo momento en la parte superior de la pantalla, esta compuesto del \textbf{logo de la aplicación} en el lado derecho y de un \textbf{menú}, con dos partes en el lado izquierdo. La primera parte contendrá las diferentes secciones de esta página para que se puedan acceder a ellas rápidamente. Separada un poco encontraremos la opción de login, para permitir a los usuarios realizar login. 
+		\item \textbf{Barra de Menú}: esta barra, que se sitúa inicialmente encima de la cabecera y que debe permanecer en todo momento en la parte superior de la pantalla, esta compuesta del \textbf{logo de la aplicación} en el lado izquierdo y de un \textbf{menú} en el lado derecho. El menú cambiar las opciones que ofrece dependiendo de si el usuario esta registrado o no. 
 		
-		\item \textbf{Secciones}: esta página contendrá, como mínimo, 3 secciones, donde se explicará un poco el propósito del software, sus principales características, los que nos diferencia de la competencia, etc. El número de de secciones puede variar, pudiendo ser necesario agregar más, pero estás deben ser visualmente atractivas, incluyendo imágenes e iconos y con una disposición adecuada. Una sección que deberá ser obligatoria, siendo la última de éstas, es la sección "Contacta con nosotros", donde ser proveerá un formulario para que los usuarios puedan realizar cualquier consulta que necesiten.
+		\item \textbf{Secciones}: esta página contendrá, como mínimo, \textbf{3 secciones}, donde se explicará un poco el \textbf{propósito} del software, sus principales \textbf{características}, lo que nos diferencia de la competencia, etc. El número de secciones puede variar, pudiendo ser necesario agregar más.  Las secciones deben ser \textbf{visualmente atractivas}, incluyendo imágenes e iconos y con una disposición adecuada. 
+		
+		Una sección que deberá ser \textbf{obligatoria}, es la sección ``\textbf{Contacta con nosotros}'', compuesta por un formulario y que permitirá a cualquier usuario, registrado o no, contactar con el equipo de desarrollo.
 		
 		\item \textbf{Pie de Página}: en el pie de página se añadirá una lista de enlaces con las diferentes secciones de la página, un mapa del sitio web y un conjunto de enlaces de redes sociales de la aplicación o en su defecto del equipo de desarrollo.
 	\end{itemize}
 	
 	Tanto la \textbf{barra de menú} superior como el \textbf{pié de página} se mantendrán \textbf{visibles en todas las pantallas} de la aplicación, cambiando en ciertos aspectos u ofreciendo diferentes opciones.
 	
-	\item \textbf{Pantalla de Login}: a esta pantalla se accede desde la pantalla principal cuando el usuario pulsa en el enlace de login/registro del menú de la barra principal. La pantalla inicial esta compuesta por un \textbf{formulario} de login, que debe aceptar un email y una contraseña como entrada con un botón enviar. Además, incluirá un enlace debajo del botón, centrado, que permitirá al usuario registrarse, en caso de que no este registrado, y que desplegará un nuevo formulario que veremos en detalle a continuación.
+	\item \textbf{Página de Login}: a esta pantalla se accede desde la pantalla principal cuando el usuario pulsa en el enlace de login/registro del menú de la barra principal y su propósito es permitir que los usuarios ingresen al sistema. La pantalla inicial esta compuesta por un \textbf{formulario} de login, que debe aceptar un \textbf{email} y una \textbf{contraseña} como entrada con un botón enviar. Además, incluirá un \textbf{enlace} debajo del botón, centrado, que permitirá al usuario \textbf{registrarse}, en caso de que no este registrado, desplegando un nuevo formulario que veremos en detalle a continuación.
 	
-	\item \textbf{Pantalla de Registro}: en esta pantalla, que se accede desde la pantalla de login, se muestra un formulario que permitirá a un usuario registrarse en el sistema. Este formulario estará compuesto por diferentes campos que permitirán al usuario introducir la información necesaria pare registrar, como puede ser Nombre, Correo, Dirección, rol, etc. Debajo, aparecerá el \textbf{botón registrarse} que permitirá al usuario registrar todos sus datos. 
+	\item \textbf{Página de Registro}: en esta pantalla, que se accede desde la pantalla de login, se muestra un formulario que \textbf{permitirá a un usuario registrarse} en el sistema. Este formulario estará compuesto por diferentes campos que permitirán al usuario introducir la información necesaria pare registrarse, como puede ser Nombre, Correo, Dirección, rol, etc. Debajo, aparecerá el \textbf{botón registrarse} que permitirá al usuario registrar todos sus datos.  
+	
+	Cuando un usuario se registre, el \textbf{sistema} deberá, usando la información proporcionada por éste, \textbf{buscar la comunidad} con la dirección a la que pertenece el usuario y realizar una \textbf{solicitud de inscripción}, la cual deberá aprobar el administrador de dicha comunidad. 
 
 	
-	\item \textbf{Pantalla de Comunidad}: una vez registrado o realizado el login, al usuario se le mostrará la página  principal de login. Esta página variará dependiendo del estado en el que se encuentre el usuario y el rol que tenga, aunque tendrá 4 zonas definidas:
+	\item \textbf{Página Principal de Comunidad}: una vez que el usuario haya ingresado al sistema, se mostrará la pantalla de comunidad. El propósito de esta pantalla es servir como \textbf{puerta de entrada a la gestión de al comunidad}. Esta interfaz estará compuesta por los siguientes elementos:
 	
 	\begin{itemize}
-		\item \textbf{Barra de Menú}: similar a la que vemos en la página principal, pero las opciones de menú "Login/Registrarse" habrá cambiado por el \textbf{icono de un usuario}, mostrando un \textbf{menú vertical} con las opciones "\textbf{Perfil}" y "\textbf{Logout}", que permitirán accedes a la información de perfil y hacer \gls{logout} respectivamente.
+		\item \textbf{Barra de Menú}: similar a la que vemos en la página principal, pero las opciones de menú ``Login/Registrarse''  habrá cambiado por el \textbf{icono de un usuario}. Este icono mostrará un \textbf{menú vertical} con las opciones ``\textbf{Perfil}'' y ``\textbf{Logout}'', que permitirán acceder a la información de perfil y hacer \gls{logout} respectivamente.
 		
-		\item \textbf{Menú Lateral}: un menú latera, situado a la izquierda, que mostrará las opciones relativas a la comunidad que este cargada. Las opciones variarán según si el usuario tiene el rol de administrador o de usuario, pero la opciones comunes a ambos son las siguientes: 
+		\item \textbf{Menú Lateral}: un menú lateral, situado a la izquierda, que mostrará las opciones relativas a la comunidad que este cargada. Las opciones variarán según si el usuario tiene el rol de administrador o de usuario, pero la opciones comunes a ambos son las siguientes: 
 		
 		\begin{itemize}
 			\item \textbf{Inicio}
@@ -192,26 +198,33 @@ Las interfaces de las que estará compuesta nuestra aplicación son las siguient
 			\item \textbf{Espacios Comunes}
 			\item \textbf{Finanzas}
 		\end{itemize}
+	
+		 
+		 Adicionalmente, si el usuario tiene el \textbf{rol administrador}, se mostrará la opción "\textbf{Administrar}", que permitirá al administrador gestionar los aspectos principales de la comunidad desde una misma pantalla. La cual se describirá más adelante.
+		 
+		 En caso de que el usuario no este inscrito en ninguna comunidad, no se mostrará el menú lateral.
 		
-		Adicionalmente, si el usuario tiene el \textbf{rol administrador}, se mostrará la opción "\textbf{Solicitudes}". La \textbf{opción de Inicio} llevará al usuario a la \textbf{pantalla principal de comunidad}. El resto de opciones las detallaremos en los siguientes puntos.
+		\item \textbf{Zona de Contenido}: en esta zona, que estará ubicada en el centro, se mostrará la información que se quiere mostrar al usuario. Cuando un \textbf{usuario inscrito en una comunidad} acceda a la página principal de comunidad, aquí se mostrar la \textbf{información} de ésta, como nombre, dirección y una imagen. Además, se mostraran las \textbf{incidencias sin resolver} creadas por el usuario y las \textbf{reservas pendientes} que ha realizado, debajo de la información anterior, en formato de lista. 
 		
-		\item \textbf{Zona de Contenido}: en esta zona, que estará ubicada en el centro, se mostrará la información de las diferentes opciones que podemos consultar o modificar en la comunidad. Por defecto, se mostrarán 2 secciones indicando las incidencias y reservas que ha realizado el usuario y el estado de estás. En ambos casos, se dará la opción de eliminar, tanto las reservas como las incidencias mediante un botón a la derecha de cada elemento.
+		Además, las diferentes opciones que ofrece el menú se visualizarán en esta zona, pudiendo ser estas las siguientes:
+		
+		\begin{itemize}
+			\item \textbf{Tablón de Anuncios}: mostrará una tabla con todos los mensajes informativos relativos a la comunidad, junto con su fecha. Si \textbf{usuario es un administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios.	
+			
+			\item \textbf{Documentos}: mostrará los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los usuarios, \textbf{deberán poder descargar} los diferentes documentos pulsando en ellos o con un botón debajo o al lado de cada documento. 
+			
+			En el caso de que el \textbf{usuario sea un administrador}, debe aparecer un botón con el texto "\textbf{Añadir Documento}" que desplegará una formulario y le permitirá añadir nuevos documentos al directorio. Si el documento se ha añadido correctamente, se cerrar el formulario y se mostrará el mensaje adecuado. En caso contrario, se mostrarán los errores que han ocurrido en el formulario.
+		\end{itemize}
 	\end{itemize}
 	
+	Cuando los \textbf{usuarios seleccionen} alguna \textbf{opción del menú}, la \textbf{información} se mostrará en al zona de contenido, mostrando la opción del menú resaltada y el resto de la interfaz inalterada.
+		
 	
-	\item \textbf{Pantalla de Perfil}: en esta pantalla, que se accede desde el menú vertical del icono de perfil, se mostrará un \textbf{formulario con toda la información del usuario} en la zona de contenido. Este formulario se podrá \textbf{editar} y actualizar mediante un botón que habrá debajo de él con el texto "Guardar". 
+	\item \textbf{Pantalla de Añadir Comunidad}: esta pantalla, a la que solo tienen acceso los usuarios con rol administrador, permite \textbf{añadir una nueva comunidad} de vecinos. La interfaz mostrará un \textbf{formulario web} con diferentes datos que deberán rellenarse para dar de alta la comunidad, principalmente la \textbf{dirección}, que será única para cada comunidad. En el caso de que se pueda dar de alta la comunidad se mostrará una mensaje de éxito y se redireccionará a la página principal de comunidad. En caso contrario, se mostrará los mensajes de error adecuados.
 	
-	Además, debajo de este aparecerá un \textbf{botón} con la opción "\textbf{Eliminar usuario}" que permitirá a un usuario eliminar su información, y que al ser pulsado ocultará el formulario con al información y mostrará una ventana de confirmación. Si la confirmación es positiva, se eliminará al usuario, y se redireccionará la pantalla principal.
+ 
 	
-	\item \textbf{Pantalla de Añadir Comunidad}: esta pantalla, a la que solo tienen acceso los usuarios con rol administrador, permite \textbf{añadir una nueva comunidad} de vecinos. La interfaz mostrará un \textbf{formulario web} con diferentes datos que deberán rellenarse para dar de alta la comunidad, principalmente la \textbf{dirección}, que será por lo que se identifique cada comunidad. En el caso de que se pueda dar de alta la comunidad se mostrará una mensaje de éxito y se redireccionará a la página principal de comunidad. En caso contrario, se mostrará los mensajes de error adecuados.
-	
-	\item \textbf{Pantalla del Tablón de Anuncios}: en esta interfaz se mostrará el menú lateral que corresponda al usuario y en la zona de contenido se mostrará una tabla con todos los mensajes que se han posteado en la comunidad, junto con su fecha. 
-	
-	En el caso de que el usuario sea tenga el rol de usuario, no se podrán realizar más acciones en el tablón de anuncios, pero si el \textbf{usuario es una administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios. Si el mensaje se ha agregado con éxito, se mostrará un mensaje y se cerrará el formulario. Si no, se mostrarán los errores que han ocurrido en el formulario.
-	
-	\item \textbf{Pantalla de Documentos}: en esta pantalla, que se accede desde el menú lateral de la página de comunidad, se mostrarán los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los usuario, \textbf{deberán poder descargar} los diferentes documentos pulsando en ellos o con un botón debajo o al lado de cada documento. 
-	
-	En el caso de que el \textbf{usuario sea un administrador}, debe aparecer un botón con el texto "\textbf{Añadir Documento}" que desplegará una formulario y le permitirá añadir nuevos documentos al directorio. Si el documento se ha añadido correctamente, se cerrar el formulario y se mostrará el mensaje adecuado. En caso contrario, se mostrarán los errores que han ocurrido en el formulario.
+
 	
 	\item \textbf{Pantalla de Incidencias}: en esta pantalla, se mostrará una \textbf{lista con todas las incidencias} de la comunidad, junto con su fecha de creación y su estado. Para un \textbf{usuario normal}, solo se mostrarán \textbf{sus incidencias} y todos aquellas que hayan sido \textbf{marcadas como públicas} por los usuarios que las hayan creado. Para el administrador, serán visibles todas las incidencias.
 	
@@ -225,8 +238,13 @@ Las interfaces de las que estará compuesta nuestra aplicación son las siguient
 	
 	\item \textbf{Pantalla de Finanzas}: en esta pantalla, se mostrará, en la zona de contenido, un \textbf{tabla con las finanzas} de la comunidad. Indicando los ingresos y el tipo de estos, como cuotas, seguros, etc., así como los gastos y su tipo, limpieza del edificio, arreglos, seguros, etc. La información de mostrará para este ejercicios, realizando una estimación, y se irá modificando de forma automática cuando se añadan gastos o ingresos. 
 	
-	Solo los \textbf{administradores} puede modificar esta tabla, mediante un formulario para añadir un registros en el que se podrá seleccionar el tipo de registro, si es un ingreso o gasto, y el tipo de cada uno, así como la cantidad. Cuando se agregue un nuevo registro, el sistema calculará el balance con los nuevos datos y los mostrará.	
+	Solo los \textbf{administradores} puede modificar esta tabla, mediante un formulario para añadir un registros en el que se podrá seleccionar el tipo de registro, si es un ingreso o gasto, y el tipo de cada uno, así como la cantidad. Cuando se agregue un nuevo registro, el sistema calculará el balance con los nuevos datos y los mostrará.
+	
+	\item \textbf{Pantalla de Perfil}: en esta pantalla, que se accede desde el menú vertical del icono de perfil, se mostrará un \textbf{formulario con toda la información del usuario} en la zona de contenido. Este formulario se podrá \textbf{editar} y actualizar mediante un botón que habrá debajo de él con el texto "Guardar". 
+	
+	Además, debajo de este aparecerá un \textbf{botón} con la opción ``\textbf{Eliminar usuario}'' que permitirá a un usuario eliminar su información, y que al ser pulsado ocultará el formulario con al información y mostrará una ventana de confirmación. Si la confirmación es positiva, se eliminará al usuario, y se redireccionará la pantalla principal.
 \end{itemize}
+
 
 \end{appendices}
 
