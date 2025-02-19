@@ -145,11 +145,22 @@ En primer lugar vamos a realizar una descripción del producto, especialmente de
 
 \paragraph{Interfaces con Hardware}
 ~\\\\
-\-\ \-\ \-\ Nuestro software \textbf{no interactúa directamente} con el \textbf{hardware} en que se va a ejecutar ni el cliente ni el servidor. En el lado del cliente, la forma de interacción será a través del navegador del usuario, mientras que en la parte de servidor será la base de datos y el servidor web quienes se encarguen de interactuar con el SO y este a su vez con el hardware, por lo que no debemos implementar ninguna interfaz específica.
+\-\ \-\ \-\ Nuestro software \textbf{no interactúa directamente con el hardware} de los dispositivos, ya que en la parte del cliente el la interacción se realiza con el navegador web, mientras que en la parte del servidor la interacción se realiza con el servidor web. Estos, a su vez, realizarán las interacciones necesarias con el SO.
+
+Sí cabe destacar en esta sección, ya que no veo otra donde pueda incluir esta información, que \textbf{nuestro software} se deberá usar desde \textbf{cualquier dispositivo} que cuente con un \textbf{navegador web}, por lo que deberá realizarse el diseño teniendo esto en cuenta. Realmente esto solo afecta a la estética de la aplicación en cada dispositivo, y no en su funcionamiento, y tampoco requiere del empleo de ninguna interfaz específica, por lo que solo afectará a la \textbf{interfaz de usuario}. 
+
 
 \paragraph{Interfaces con Software}
 ~\\\\
-\-\ \-\ \-\ Para el correcto funcionamiento de nuestra aplicación 
+\-\ \-\ \-\ Nuestra aplicación \textbf{no usa ninguna interfaz externa} para comunicarse con ningún software externo. 
+
+La \textbf{única interacción} que cabe mencionar es la que realiza la parte de cliente de nuestra aplicación con el \textbf{navegador web} del usuario, aunque en este aspecto no se emplea ninguna interfaz específica para llevar a cabo esta interacción, si no que se realiza a través de los lenguajes empleados para desarrollar el propio cliente, como HTML, CSS, Javascript, etc.
+
+En el \textbf{lado del servidor}, nuestra aplicación se ejecutará en un servidor web, aunque como hemos comentado, no se va a emplear ninguna interfaz para comunicarse con el. Para ejecutar nuestra aplicación vale cualquier servidor web, aunque si hay que tener en cuenta un detalle, y es que cuando la aplicación se este \textbf{ejecutando en producción}, el servidor deberá tener soporte para \gls{SSL}, ya que nuestra aplicación va a emplear el protocolo \textbf{HTTPS} para comunicarse.
+
+\paragraph{Interfaces de Comunicación}
+~\\\\
+\-\ \-\ \-\ Para que nuestra aplicación funciones correctamente \textbf{necesita comunicarse mediante una red}, ya sea local o internet, con el navegador del usuario, el cual interactuará con \textbf{nuestro cliente}, que se comunicará con el \textbf{servidor}. Esta comunicación se realizará empleando el \textbf{protocolo \gls{HTTP}}.
 
 
 \newpage
@@ -173,7 +184,7 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 	Las secciones de las que estará compuesta esta interfaz serán las siguientes:
 	
 	\begin{itemize}
-		\item \textbf{Cabecera}: aquí se mostrará una imagen con un eslogan, el nombre de la aplicación y un elemento \gls{CTO} para que los usuarios se registren o realicen login.
+		\item \textbf{Cabecera}: aquí se mostrará una imagen con un eslogan, el nombre de la aplicación y un elemento \gls{CTA} para que los usuarios se registren o realicen login.
 		
 		\item \textbf{Barra de Menú}: esta barra, que se sitúa inicialmente encima de la cabecera y que debe permanecer en todo momento en la parte superior de la pantalla, esta compuesta del \textbf{logo de la aplicación} en el lado izquierdo y de un \textbf{menú} en el lado derecho. El menú cambiar las opciones que ofrece dependiendo de si el usuario esta registrado o no. 
 		
@@ -261,7 +272,7 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 Además de estas páginas, hay que tener en cuenta que la aplicación debe \textbf{visualizarse correctamente en cualquier dispositivo}. Aunque se añadirán restricciones más adelante en este aspecto, hay que tener en cuenta que algunos \textbf{elementos cambiarán} cuando la aplicación se visualice en \textbf{dispositivos pequeños}, como móviles o tablets. Estos elementos son:
 
 \begin{itemize}
-	\item \textbf{Barra Superior}: en la barra superior todas las opciones del menú se agruparán en una menú de tipo hamburguesa, el cual se situará en la parte derecha de la barra.
+	\item \textbf{Barra Superior}: en la barra superior todas las opciones del menú se agruparán en un \gls{menú hamburguesa}, el cual se situará en la parte derecha de la barra.
 	
 	\item \textbf{Menú Lateral}: el menú lateral se ocultará, mostrando la interfaz una flecha en la parte superior izquierda, donde debería estar el menú. Al pulsar esta flecha 
 \end{itemize}
