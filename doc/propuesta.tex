@@ -143,9 +143,14 @@ En primer lugar vamos a realizar una descripción del producto, especialmente de
 \-\ \-\ \-\ Debido a que las especificaciones sobre al interfaz de usuario son más extensas, se han incluido como un anexo. Estas especificaciones se pueden consultar, en concreto, en el \hyperref[sec:apenA]{Anexo A}.
 
 
-\paragraph{Interfaces de Hardware}
+\paragraph{Interfaces con Hardware}
 ~\\\\
-\-\ \-\ \-\ 
+\-\ \-\ \-\ Nuestro software \textbf{no interactúa directamente} con el \textbf{hardware} en que se va a ejecutar ni el cliente ni el servidor. En el lado del cliente, la forma de interacción será a través del navegador del usuario, mientras que en la parte de servidor será la base de datos y el servidor web quienes se encarguen de interactuar con el SO y este a su vez con el hardware, por lo que no debemos implementar ninguna interfaz específica.
+
+\paragraph{Interfaces con Software}
+~\\\\
+\-\ \-\ \-\ Para el correcto funcionamiento de nuestra aplicación 
+
 
 \newpage
 
@@ -239,6 +244,8 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 			\item \textbf{Administrar}: esta opción solo es elegible por los usuarios con \textbf{rol de administrador} y permite al administrador \textbf{gestionar} todos los aspectos de una \textbf{comunidad} en una misma pantalla de forma rápida.
 			
 			En la zona de contenido se mostrará \textbf{información de al comunidad}, que será editable, así como los \textbf{elementos de todos} y cada uno de los \textbf{apartados} mencionados en este punto: Incidencias, Documentos, Finanzas, etc., con opciones para editar, consultar añadir o eliminar elementos a cada apartado. Los apartados se mostrarán uno debajo de otro con su correspondiente titulo y los botones adecuados para eliminar, editar o borrar elementos.
+						
+			\item \textbf{Barra de Búsqueda}: cabe destacar que \textbf{todas las secciones} incluirán, encima de la tabla o lista donde se muestra la información, una \textbf{barra de búsqueda} que permitirá seleccionar solo las entradas coincidentes con los términos que queramos.
 		\end{itemize}
 	\end{itemize}
 		
