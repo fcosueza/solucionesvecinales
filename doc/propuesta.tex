@@ -212,13 +212,15 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 		En esta zona de la interfaz se mostrará todas la información que el usuario solicite y es donde se permitirá interactuar con la comunidad. Seleccionando alguna de las opciones del menú, los \textbf{principales elementos} que se mostrarán en esta zona y que permiten \textbf{realizar las acciones sobre la comunidad} son las siguientes: 
 		
 		\begin{itemize}
-			\item \textbf{Tablón de Anuncios}: mostrará una tabla con todos los mensajes informativos relativos a la comunidad, junto con su fecha. Si \textbf{usuario es un administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios.	
+			\item \textbf{Inicio}: cuando un usuario pinche en esta opción cargara la información por defecto de la página principal de comunidad, que se ha descrito en el párrafo anterior.
 			
-			\item \textbf{Documentos}: mostrará los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los documentos se mostrarán como un conjunto de iconos con un nombre debajo. Tanto el icono como el nombre deberán ser un enlace que al pulsarlo permita a los usuarios descargar el documento en cuestión. 
+			\item \textbf{Tablón de Anuncios}: esta opción nos permite acceder a los mensajes que se han publicado en la comunidad y mostrará una tabla con todos los mensajes, junto con su fecha. Si \textbf{usuario es un administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios.	
+			
+			\item \textbf{Documentos}: pulsando en esta opción mostrará los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los documentos se mostrarán como un conjunto de iconos con un nombre debajo. Tanto el icono como el nombre deberán ser un enlace que al pulsarlo permita a los usuarios descargar el documento en cuestión. 
 			
 			En el caso de que el \textbf{usuario sea un administrador}, debe aparecer un botón con el texto "\textbf{Añadir Documento}" que desplegará una formulario y le permitirá añadir nuevos documentos al directorio. 
 			
-			\item \textbf{Incidencias}: se mostrará una \textbf{lista con todas las incidencias} de la comunidad, junto con su fecha de creación y su estado. Para un \textbf{usuario}, solo se mostrarán \textbf{sus incidencias} y todos aquellas que hayan sido \textbf{marcadas como públicas} por los usuarios que las hayan creado. Para el administrador, serán visibles todas las incidencias.
+			\item \textbf{Incidencias}: aquí nos permitirá crear y manejar las incidencias que hemos creado mostrando una \textbf{lista con todas las incidencias} de la comunidad, junto con su fecha de creación y su estado. Para un \textbf{usuario}, solo se mostrarán \textbf{sus incidencias} y todos aquellas que hayan sido \textbf{marcadas como públicas} por los usuarios que las hayan creado. Para el administrador, serán visibles todas las incidencias.
 			
 			Debajo de la lista de incidencias, debe haber un \textbf{botón} con el texto "\textbf{Crear incidencia}", que desplegará un formulario y permitirá a cualquier usuario crear una nueva incidencia. Además, si el \textbf{usuario conectado es el administrador}, aparecerán 2 botones a la derecha de cada incidencia, que permitirán tanto \textbf{borrar las incidencias} como \textbf{cambiar su estado}. En caso de que el usuario no sea administrador, solo aparecerá el botón ``Borrar'' en las incidencias que hayan sido creadas por el usuario.
 			
@@ -233,6 +235,10 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 			\item \textbf{Finanzas}: se mostrará una \textbf{tabla con las finanzas} de la comunidad. Indicando los ingresos y el tipo de estos, como cuotas, seguros, etc., así como los gastos y su tipo, limpieza del edificio, arreglos, seguros, etc. La información de mostrará para este ejercicios, realizando una estimación, y se irá modificando de forma automática cuando se añadan gastos o ingresos. 
 			
 			Solo los \textbf{administradores} puede modificar esta tabla, mediante un formulario para añadir un registros en el que se podrá seleccionar el tipo de registro, si es un ingreso o gasto, y el tipo de cada uno, así como la cantidad. Cuando se agregue un nuevo registro, el sistema calculará el balance con los nuevos datos y los mostrará. Este formulario se mostrará después de pulsar el botón ``Añadir'' debajo de la tabla de finanzas.
+			
+			\item \textbf{Administrar}: esta opción solo es elegible por los usuarios con \textbf{rol de administrador} y permite al administrador \textbf{gestionar} todos los aspectos de una \textbf{comunidad} en una misma pantalla de forma rápida.
+			
+			En la zona de contenido se mostrará \textbf{información de al comunidad}, que será editable, así como los \textbf{elementos de todos} y cada uno de los \textbf{apartados} mencionados en este punto: Incidencias, Documentos, Finanzas, etc., con opciones para editar, consultar añadir o eliminar elementos a cada apartado. Los apartados se mostrarán uno debajo de otro con su correspondiente titulo y los botones adecuados para eliminar, editar o borrar elementos.
 		\end{itemize}
 	\end{itemize}
 		
@@ -253,7 +259,7 @@ Además de estas páginas, hay que tener en cuenta que la aplicación debe \text
 	\item \textbf{Menú Lateral}: el menú lateral se ocultará, mostrando la interfaz una flecha en la parte superior izquierda, donde debería estar el menú. Al pulsar esta flecha 
 \end{itemize}
 
-Más adelante, en la sección de adecuación al entorno y restricciones de diseño se proporcionará más información sobre el desempeño de la aplicación den dispositivos móviles y tablets.
+Más adelante, en la sección de adecuación al entorno y restricciones de diseño se proporcionará más información sobre el desempeño de la aplicación en dispositivos móviles y tablets.
 
 
 \end{appendices}

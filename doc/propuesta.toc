@@ -14,6 +14,7 @@
 \contentsline {subsection}{\numberline {2.2}Descripción General}{6}{subsection.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.1}Perspectiva del Producto}{6}{subsubsection.2.2.1}%
 \contentsline {paragraph}{\numberline {2.2.1.1}Interfaz de Usuario}{6}{paragraph.2.2.1.1}%
+\contentsline {paragraph}{\numberline {2.2.1.2}Interfaces de Hardware}{6}{paragraph.2.2.1.2}%
 \contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{7}{appendix.alph1.Alph1}%
 \contentsline {section}{Glosario}{11}{section*.2}%
 \contentsline {section}{\nonumberline Referencias}{12}{section*.5}%
