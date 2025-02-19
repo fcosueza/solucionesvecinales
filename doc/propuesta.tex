@@ -181,9 +181,11 @@ Cada método tiene una funcionalidad diferente, con diferentes ventajas e inconv
 	\item \textbf{PUT}: este método crea o modifica un recurso en el servidor añadiendo el contenido en el cuerpo de la solicitud. La principal diferencia entre PUT y POST es que PUT es idempotente. \cite{mdn05}
 \end{itemize}
 
-Estos métodos tienen que tenerse claros en el proceso de desarrollo, ya que la \gls{API} de nuestra aplicación deberá manejar correctamente las diferentes peticiones que se hagan con estos métodos, y nuestro cliente deberá realizar las peticiones con el método adecuado. Se especificará más detalladamente en el apartado de restricciones.
+Estos métodos tienen que tenerse claros en el proceso de desarrollo, ya que la \gls{API} de nuestra aplicación deberá manejar correctamente las diferentes peticiones que se hagan con estos métodos, y nuestro cliente deberá realizar las peticiones con el método adecuado. Se especificará más detalladamente en el apartado de restricciones. 
 
-Por otro lado, cabe comentar los \textbf{códigos HTTP de respuesta}. Estos códigos son los que deberá responder el servidor a las diferentes peticiones que realice el cliente. No vamos a explicar cuales son todos los códigos, ya que sería muy extenso, simplemente comentar que en todo momento se deberá enviar el código adecuado al resultado de la operación solicitada por el cliente y con mensajes descriptivos que expliquen bien el motivo de ese error. 
+Cabe destacar que nuestra aplicación usara \textbf{HTTPS}, aunque esto no va a afectar en como van a tratarse los métodos ni a procesarse, sino en como se realizará la conexión, que tiene más que ver con la configuración del servidor.
+
+Por otro lado, debemos hablar de los \textbf{códigos HTTP de respuesta}. Estos códigos son los que deberá responder el servidor a las diferentes peticiones que realice el cliente. No vamos a explicar cuales son todos los códigos, ya que sería muy extenso, simplemente comentar que en todo momento se deberá enviar el código adecuado al resultado de la operación solicitada por el cliente y con mensajes descriptivos que expliquen bien el motivo de ese error. 
 
 Para consultar con más detalle los diferentes códigos que podemos encontrar podemos visitar la \href{https://developer.mozilla.org/en-US/docs/Web/HTTP/Status}{web de MDN} sobre dichos códigos, donde hay una lista extensiva con todos y cada uno de los códigos empleados.
 
@@ -194,6 +196,55 @@ Para consultar con más detalle los diferentes códigos que podemos encontrar po
 En nuestro \textbf{servidor} las restricciones tanto en memoria primaria como secundaria son mínimas. La cantidad que se use de ambas va a estar estrechamente \textbf{relacionada con el número de usuarios} que tenga nuestra aplicación, ya que el principal uso de memoria principal va ser ocupado por las peticiones de los usuarios y las acciones que tenga que llevar, en consecuencia, el servidor sobre el sistema. Por otro lado, nuestra aplicación debe almacenar una gran cantidad de datos por cada comunidad, incluyendo archivos multimedia como es el caso de imágenes, por lo que la cantidad almacenamiento secundario que necesitaremos también va a depender en gran medido del número de usuarios que tengamos.
 
 Por otro lado, nuestro \textbf{cliente} si va a tener \textbf{fuertes restricciones}, especialmente en el uso de\textbf{ memoria principal}, ya que no se espera uso de memoria secundaria más haya de lo que puedan ocupar las cookies y otros elementos de este tipo. Pero en la memoria principal si tendremos restricciones, ya que hay que tener en cuenta que nuestra aplicación debe ejecutarse en muchos dispositivos que tienen recursos muy limitados, como pueden ser los dispositivos móviles, especialmente los más antiguos. En este aspecto \textbf{deberá minimizarse} el uso de \textbf{memoria principal}, evitando efectos indeseados como excesivos renderizados o utilizando imágenes comprimidas.
+
+\paragraph{Requerimientos de Adecuación al Entorno}
+~\\\\
+\-\ \-\ \-\ La aplicación \textbf{no tiene requerimientos especiales} para su ejecución en diferentes entornos, ya que esta se va a ejecutar en cualquier servidor web que tenga soporte para SSL. Respecto a la \textbf{visualización en diferentes tipos de dispositivos}, en la \textbf{sección de restricciones de diseño} se añadirán detalles sobre como afrontar esta situación.
+
+\subsubsection{Funciones del Producto}
+A lo largo de este documento ya hemos comentado que nuestro software, \textbf{SolucionesVecinales}, es una aplicación de \textbf{gestión de comunidades de vecinos}, pero no hemos especificado cual es su funcionamiento, así que en esta sección vamos a realizar una descripción general del funcionamiento de la aplicación.
+
+\begin{itemize}
+	\item La aplicación deberá \textbf{gestionar los diferentes usuarios} permitiendo que éstos se registren en el sistema como usuarios o administradores y que accedan a las diferentes herramientas para gestionar su comunidad, así como a la modificación de su perfil o su eliminación.
+	
+ 	\item Los \textbf{administradores} podrán añadir nuevas comunidades, donde los usuarios podrán inscribirse. El \textbf{sistema generará automáticamente} una \textbf{solicitud de inscripción} cuando se registre un usuario a la comunidad con la dirección del usuario. El \textbf{administrador deberá aprobar} la solicitud para que el usuario quede inscrito.
+ 	
+ 	\item Una vez que los \textbf{usuarios o administradores} estén inscritos en una comunidad, tendrán acceso al sistema de gestión de comunidades, donde podrán realizar diferentes acciones en su comunidad, además de tener la opción de editar su perfil o eliminar su usuario desde su página de perfil. 
+ 	
+ 	\item Dentro de las \textbf{herramientas} que provee nuestro software para \textbf{gestionar la comunidad}, tenemos las siguientes:
+ 	
+ 	\begin{itemize}
+ 		\item \textbf{Inicio}: en la pantalla de inicio de gestión de comunidad se mostrará información de la comunidad, así como información relativa a los elementos creados por el usuario, como pueden ser incidencias, documentos descargados, reservas de espacios comunes, etc.
+ 		
+ 		\item \textbf{Tablón de Anuncios}: en el tablón de anuncios el administrador podrá \textbf{crear mensajes} que van dirigidos a los miembros de la comunidad. Los mensajes se mostrarán como una \textbf{lista} con la fecha de creación debajo y todos los usuarios podrán consultarlos desde su tablón de anuncios. Solo el \textbf{administrador} podrá \textbf{crear} o \textbf{eliminar} mensajes. 
+ 		
+ 		\item \textbf{Documentos}: en esta sección el \textbf{administrador} subirá los diferentes \textbf{documentos} relativos a la \textbf{gestión de su comunidad}, como pueden ser resoluciones judiciales, legislación, actas de reuniones. El resto de usuarios podrán visualizar y descargar dichos archivos. Los archivos se \textbf{mostrarán como un conjunto de iconos} con el nombre debajo y el tamaño. Solo el \textbf{administrador} puede subir o eliminar archivos de esta sección.
+ 		
+ 		\item \textbf{Incidencias}: esta sección permitirá a todos los usuarios la \textbf{creación de incidencias}, para ponerlas en conocimiento de los administradores y que tomen las medidas oportunas para su resolución. Cuando un usuario ingrese en esta página podrá \textbf{ver} todas las \textbf{incidencias creadas por el mismo} o por otros miembros de la comunidad que hayan \textbf{marcado la incidencia como pública}. 
+ 		
+ 		Las incidencias pueden estar en tres estados: ``Creada'', ``En Proceso'' o ``Cerrada'', según el momento de procesamiento en el que se encuentre ésta. Las incidencias se mostrarán en una tabla, con su nombre, descripción, fecha de creación y estado. El \textbf{administrador} podrá \textbf{cambiar el estado} de las incidencias, además de eliminarlas. 
+ 		
+ 		\item \textbf{Espacios Comunes}: en esta sección los usuarios podrán \textbf{reservar los espacios comunes} que sea objeto de reserva en la comunidad. Los espacios comunes serán \textbf{añadidos por el administrador}, que será también el que establezca el horario en el que se pueden reservas. 
+ 		
+ 		Los \textbf{usuarios}, podrán consultar el estado de reserva de un espacio común y realizar una reserva en el horario y día que este disponible. Cuando un usuario tenga reservas realizadas, aparecerán debajo de los espacios comunes, permitiéndole borrar o cambiarlas.
+ 		
+ 		\item \textbf{Finanzas}: la sección de finanzas \textbf{mostrará una tabla con todos los ingresos y gastos} previstos para este año, aunque también se podrán consultar los del ejercicio anterior. El administrador podrá añadir o eliminar registros, lo que provocará que la aplicación haga el cálculo de nuevo, mostrando el nuevo resultado.
+ 	\end{itemize}
+\end{itemize}
+
+Estás son las principales funcionalidades que tiene nuestro software. \textbf{No es algo inamovible}, y en un futuro podría (y debería) plantearse la adición de nuevas funcionalidades. Para ello será interesante crear una canal de feedback con los usuarios y escuchar que tienen que decir, especialmente, que echan en falta.
+
+\subsubsection{Características de los Usuarios}
+Los usuarios objetivos de nuestra aplicación son un \textbf{grupo muy heterogéneo}, que abarca a \textbf{cualquier persona} que viva en una comunidad de vecinos, es decir, la gran mayoría de la población. Por ello vamos a encontrarnos usuarios con todos los niveles de experiencia, nivel educacional, edad, etc. 
+
+Teniendo esto en cuenta, la aplicación debe ser lo suficientemente simple e intuitiva en su uso para que lo usuarios con menos experiencia, nivel educativo o los que tiene problemas de accesibilidad puedan usarla correctamente.
+
+\subsubsection{Restricciones de Diseño}
+En este apartado vamos a realizar una lista con todas las restricciones de diseño que deben aplicarse a la hora de desarrollar la aplicación, desde lenguajes de programación y herramientas de desarrollo, pasando por políticas de testeo, seguridad de datos, etc...
+
+
+
+
 
 \newpage
 
