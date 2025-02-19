@@ -1,3 +1,31 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{wiki01}
+{Wikipedia - HTTP}.
+\newblock \\\url{https://en.wikipedia.org/wiki/HTTP}.
+
+\bibitem{mdn01}
+{Mozilla Developer Network - HTTP Methods}.
+\newblock \\\url{https://developer.mozilla.org/es/docs/Web/HTTP/Methods}.
+
+\bibitem{mdn02}
+{Mozilla Developer Network - HTTP Methods: GET}.
+\newblock
+  \\\url{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET}.
+
+\bibitem{mdn03}
+{Mozilla Developer Network - HTTP Methods: POST}.
+\newblock
+  \\\url{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST}.
+
+\bibitem{mdn04}
+{Mozilla Developer Network - HTTP Methods: DELETE}.
+\newblock
+  \\\url{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE}.
+
+\bibitem{mdn05}
+{Mozilla Developer Network - HTTP Methods: PUT}.
+\newblock
+  \\\url{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT}.
 
 \end{thebibliography}

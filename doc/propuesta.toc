@@ -17,7 +17,8 @@
 \contentsline {paragraph}{\numberline {2.2.1.2}Interfaces con Hardware}{6}{paragraph.2.2.1.2}%
 \contentsline {paragraph}{\numberline {2.2.1.3}Interfaces con Software}{6}{paragraph.2.2.1.3}%
 \contentsline {paragraph}{\numberline {2.2.1.4}Interfaces de Comunicación}{7}{paragraph.2.2.1.4}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{8}{appendix.alph1.Alph1}%
-\contentsline {section}{Glosario}{12}{section*.2}%
-\contentsline {section}{\nonumberline Referencias}{13}{section*.5}%
+\contentsline {paragraph}{\numberline {2.2.1.5}Restricciones de Memoria}{8}{paragraph.2.2.1.5}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{9}{appendix.alph1.Alph1}%
+\contentsline {section}{Glosario}{13}{section*.2}%
+\contentsline {section}{\nonumberline Referencias}{14}{section*.5}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

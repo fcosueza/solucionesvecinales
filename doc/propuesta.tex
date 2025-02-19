@@ -12,6 +12,7 @@
 \author{Francisco Javier Sueza Rodríguez}
 \date{\normalsize\today}
 
+\glsenablehyper
 \makeglossaries
 \loadglsentries{glos}
 
@@ -160,8 +161,39 @@ En el \textbf{lado del servidor}, nuestra aplicación se ejecutará en un servid
 
 \paragraph{Interfaces de Comunicación}
 ~\\\\
-\-\ \-\ \-\ Para que nuestra aplicación funciones correctamente \textbf{necesita comunicarse mediante una red}, ya sea local o internet, con el navegador del usuario, el cual interactuará con \textbf{nuestro cliente}, que se comunicará con el \textbf{servidor}. Esta comunicación se realizará empleando el \textbf{protocolo \gls{HTTP}}.
+\-\ \-\ \-\ Para que nuestra aplicación funciones correctamente \textbf{necesita comunicarse mediante una red}, ya sea local o internet, realizando al comunicación entre nuestro cliente, con el navegador del usuario, y nuestro servidor. Para llevar a cabo esta comunicación, se va a emplear el protocolo \gls{HTTP}.
+especificaciones
+El \textbf{protocolo HTTP} es el estándar para la comunicación web desde hace muchos años, inventado por Tim Berners-Lee en 1989, es un protocolo de la capa de aplicación que es la base de la comunicación en la Wordl Wide Web. \cite{wiki01}
 
+En este documento \textbf{no vamos a discutir} ni exponer las \textbf{especificaciones} de todo el \textbf{protocolo HTTP}, no siendo es relevante para nuestra aplicación ya que el uso de este protocolo se va a realizar mediante funciones predefinidas por los lenguajes sin tener que preocuparnos de como se implementa dicho protocolo, aunque si vamos a comentar un par de puntos que si tiene que ver con nuestra aplicación.
+
+En primer lugar, hay que hablar de los \textbf{verbos HTTP}, que son un conjunto de métodos que se usan para solicitar, desde el cliente, diferentes tipos de acciones que debe realizar el servidor, como puede ser mandar información, modificarla, eliminarla, etc... Los verbos HTTP que podemos emplear son GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE y PATCH. \cite{mdn01}
+
+Cada método tiene una funcionalidad diferente, con diferentes ventajas e inconvenientes, pero nosotros no vamos a describir aquí todos si no que nos vamos a centrar en los únicos que nos interesa y que vamos a usar en nuestra aplicación, que son \textbf{GET}, \textbf{POST}, \textbf{PUT} y \textbf{DELETE}. Las principales características de estos métodos son las siguientes:
+
+\begin{itemize}
+	\item \textbf{GET}: este método se emplea para realizar \textbf{peticiones al servidor} sobre el \textbf{estado representacional de algún recurso}. Las peticiones con este método se pueden almacenar en una caché y la información de la petición se pueden ver en la URL que se le pasa al servidor. Además es un método seguro, ya que no altera información del servidor e \gls{idempotente}. \cite{mdn02}
+	
+	\item \textbf{POST}: este método se emplea para \textbf{enviar información al servidor}, la cual se envía en el \textbf{cuerpo de la petición}. El resultado puede ser alguna acción realizada por el servidor como comprobar que los datos son correctos, crear nuevos datos o modificarlos. Es un método no seguro, ya que modifica información en el servidor, y tampoco es cacheable ni idempotente. \cite{mdn03} 
+	
+	\item \textbf{DELETE}: con éste método se le indica al servidor que elimine un recurso específico. Este método no es seguro ni cacheable, pero si es idempotente. \cite{mdn04}
+	
+	\item \textbf{PUT}: este método crea o modifica un recurso en el servidor añadiendo el contenido en el cuerpo de la solicitud. La principal diferencia entre PUT y POST es que PUT es idempotente. \cite{mdn05}
+\end{itemize}
+
+Estos métodos tienen que tenerse claros en el proceso de desarrollo, ya que la \gls{API} de nuestra aplicación deberá manejar correctamente las diferentes peticiones que se hagan con estos métodos, y nuestro cliente deberá realizar las peticiones con el método adecuado. Se especificará más detalladamente en el apartado de restricciones.
+
+Por otro lado, cabe comentar los \textbf{códigos HTTP de respuesta}. Estos códigos son los que deberá responder el servidor a las diferentes peticiones que realice el cliente. No vamos a explicar cuales son todos los códigos, ya que sería muy extenso, simplemente comentar que en todo momento se deberá enviar el código adecuado al resultado de la operación solicitada por el cliente y con mensajes descriptivos que expliquen bien el motivo de ese error. 
+
+Para consultar con más detalle los diferentes códigos que podemos encontrar podemos visitar la \href{https://developer.mozilla.org/en-US/docs/Web/HTTP/Status}{web de MDN} sobre dichos códigos, donde hay una lista extensiva con todos y cada uno de los códigos empleados.
+
+\paragraph{Restricciones de Memoria}
+~\\\\
+\-\ \-\ \-\ La \textbf{restricciones de memoria} en nuestra aplicación son muy dispares, ya que las que se aplican al servidor no son las mismas que las que se aplican al cliente, por lo que vamos a tratarlas las dos de forma individual escuetamente.
+
+En nuestro \textbf{servidor} las restricciones tanto en memoria primaria como secundaria son mínimas. La cantidad que se use de ambas va a estar estrechamente \textbf{relacionada con el número de usuarios} que tenga nuestra aplicación, ya que el principal uso de memoria principal va ser ocupado por las peticiones de los usuarios y las acciones que tenga que llevar, en consecuencia, el servidor sobre el sistema. Por otro lado, nuestra aplicación debe almacenar una gran cantidad de datos por cada comunidad, incluyendo archivos multimedia como es el caso de imágenes, por lo que la cantidad almacenamiento secundario que necesitaremos también va a depender en gran medido del número de usuarios que tengamos.
+
+Por otro lado, nuestro \textbf{cliente} si va a tener \textbf{fuertes restricciones}, especialmente en el uso de\textbf{ memoria principal}, ya que no se espera uso de memoria secundaria más haya de lo que puedan ocupar las cookies y otros elementos de este tipo. Pero en la memoria principal si tendremos restricciones, ya que hay que tener en cuenta que nuestra aplicación debe ejecutarse en muchos dispositivos que tienen recursos muy limitados, como pueden ser los dispositivos móviles, especialmente los más antiguos. En este aspecto \textbf{deberá minimizarse} el uso de \textbf{memoria principal}, evitando efectos indeseados como excesivos renderizados o utilizando imágenes comprimidas.
 
 \newpage
 
