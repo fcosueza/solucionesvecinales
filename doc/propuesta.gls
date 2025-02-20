@@ -7,12 +7,22 @@
 		\setentrycounter[]{page}\glsnumberformat{7}}}%
 \glossentry{idempotente}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{7}}}%
+\glossentry{API}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{7}}}%
+\glossentry{frontend}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{10}}}%
+\glossentry{backend}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{10}}}%
+\glossentry{SQL}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{10}}}%
+\glossentry{librerías}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{10}}}%
 \glossentry{login}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{8}}}%
-\glossentry{CTA}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{8}}}%
-\glossentry{logout}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{9}}}%
-\glossentry{menú hamburguesa}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{11}}}%
+\glossentry{CTA}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{11}}}%
+\glossentry{logout}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{12}}}%
+\glossentry{menú hamburguesa}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{14}}}%
 \end{theglossary}\glossarypostamble

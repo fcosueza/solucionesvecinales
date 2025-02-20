@@ -22,6 +22,8 @@
 \contentsline {subsubsection}{\numberline {2.2.2}Funciones del Producto}{8}{subsubsection.2.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.3}Características de los Usuarios}{10}{subsubsection.2.2.3}%
 \contentsline {subsubsection}{\numberline {2.2.4}Restricciones de Diseño}{10}{subsubsection.2.2.4}%
+\contentsline {paragraph}{\numberline {2.2.4.1}Lenguajes de Programación}{10}{paragraph.2.2.4.1}%
+\contentsline {paragraph}{\numberline {2.2.4.2}Software para el Desarrollo}{10}{paragraph.2.2.4.2}%
 \contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{11}{appendix.alph1.Alph1}%
 \contentsline {section}{Glosario}{15}{section*.2}%
 \contentsline {section}{\nonumberline Referencias}{16}{section*.5}%

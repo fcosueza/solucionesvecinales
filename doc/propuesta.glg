@@ -1,7 +1,7 @@
 This is makeindex, version 2.17 [TeX Live 2023] (kpathsea + Thai support).
 Scanning style file ./propuesta.ist...........................done (27 attributes redefined, 0 ignored).
-Scanning input file propuesta.glo....done (7 entries accepted, 0 rejected).
-Sorting entries....done (17 comparisons).
-Generating output file propuesta.gls....done (18 lines written, 0 warnings).
+Scanning input file propuesta.glo....done (12 entries accepted, 0 rejected).
+Sorting entries....done (38 comparisons).
+Generating output file propuesta.gls....done (28 lines written, 0 warnings).
 Output written in propuesta.gls.
 Transcript written in propuesta.glg.
