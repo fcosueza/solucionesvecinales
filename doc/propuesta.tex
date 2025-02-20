@@ -26,12 +26,13 @@
 
 \thispagestyle{empty}
 
-\vspace{80ex}
+\vspace{75ex}
 
 \begin{center}
     \begin{tabular}{l l}
         \textbf{Centro}: & IES Aguadulce \\
         \textbf{Ciclo Formativo}: & Desarrollo Aplicaciones Web (Distancia)\\
+        \textbf{Asignatura}: & Proyecto DAW\\
     \end{tabular}
 \end{center}
 
@@ -40,6 +41,14 @@
 \begingroup
 \hypersetup{linkcolor=black}
 \tableofcontents
+\endgroup
+
+\newpage
+
+\begingroup
+\hypersetup{linkcolor=black}
+\listoffigures
+\listoftables
 \endgroup
 
 \newpage
@@ -338,6 +347,8 @@ En este punto, vamos a listar alguno de los \textbf{puntos más importantes}, pe
 	\item El \textbf{tamaño de las fuentes} debe de poder cambiarse de forma rápida y que la web siga manteniendo su estructura visual.
 	
 	\item Se deberán \textbf{usar colores} que \textbf{no generen problema}s para usuarios \textbf{daltónicos}.
+	
+	\item Los \textbf{mensajes de error} generados en cualquier parte de la aplicación deben ser descriptivos
 \end{itemize}
 
 Estos son algunas de las restricciones que deberán aplicarse, pero los desarrolladores deberán aplicar más, según vaya surgiendo la necesidad usando la guía para la accesibilidad de contenido \href{https://www.w3.org/TR/WCAG22/}{WCAG 2.2}, proporcionada por la W3C.
@@ -355,17 +366,44 @@ Aunque nuestro proyecto no tiene muchas dependencias o supuestos, si hay que ten
 \subsection{Requisitos Específicos}
 En esta sección vamos, por fin, a definir los \textbf{requisitos funcionales} y \textbf{no funcionales} de nuestra aplicación. Esto requisitos se han extraído de la sección anterior, teniendo en cuenta la descripción de las interfaces, el funcionamiento de nuestra aplicación, etc..
 
-Adicionalmente a esta sección, se ha incluido una tabla con todos los requisitos funcionales y no funcionales en el Anexo B, para un acceso más rápido a los datos.
+Adicionalmente a esta sección, se ha incluido una tabla con todos los requisitos funcionales y no funcionales en el  \hyperref[sec:apenB]{Anexo B}, para un acceso más rápido a los datos.
 
 \subsubsection{Requisitos Funcionales}
 En primer lugar, vamos a establecer los \textbf{requisitos funcionales}. Se va a realizar en formato de lista especificando el código \textbf{RFX}, donde X es el número del requisito, su \textbf{nombre} y una descripción del requisito en forma de lista. 
 
 \begin{itemize}
-	\item \textbf{RF1 - Consultar Web Principal}: cualquier usuario podrá acceder a la página web principal para consultar la información sobre nuestra aplicación.
-	\item \textbf{RF2 - Contactar Equipo}: cualquier usuario podrá contactar con el equipo de desarrollo usando el formulario de la página principal, dejando un mensaje y su correo.
-	\item \textbf{RF3 - Registrarse en la Aplicación}: los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo sus datos.
-	\item \textbf{RF4 - Generación de Solicitud}: el sistema deberá generar una solicitud de inscripción en la comunidad que coincide con el visitante que se ha registrado.
+	\item \textbf{RF1 - Consultar Web Principal}: Cualquier usuario podrá acceder a la página web principal para consultar la información sobre nuestra aplicación.
+	\item \textbf{RF2 - Contactar Equipo}: Cualquier usuario podrá contactar con el equipo de desarrollo usando el formulario de la página principal, dejando un mensaje y su correo.
+	\item \textbf{RF3 - Registrarse en la Aplicación}: Los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo su correo, nombre, apellidos, nombre de usuario y dirección.
+	\item \textbf{RF4 - Generar Solicitud}: El sistema deberá generar una solicitud de inscripción en la comunidad que coincida con la dirección que ha especificado el usuario que se ha registrado.
+	\item \textbf{RF5 - Aprobar Solicitud}: El administrador de la comunidad deberá poder aceptar o denegar la solicitud de inscripción en la comunidad de un usuario.
+	\item \textbf{RF6 - Iniciar Sesión}: Un usuario o administrador podrá ingresar al sistema empleando su correo y contraseña como credenciales.
+	\item \textbf{RF7 - Añadir Comunidad}: El administrador podrá añadir una nueva comunidad de vecinos, independientemente de que este inscrito ya en alguna otra, especificando un nombre, descripción, imagen y dirección de la comunidad.
+	\item \textbf{RF8 - Modificar Perfil}: Un usuario o administrador podrá acceder a su perfil y modificar sus datos en el sistema.
+	\item \textbf{RF9 - Eliminar Usuario}: Un usuario podrá eliminar su usuario desde su página de perfil, pudiendo ser también eliminado por el administrador.
+	\item \textbf{RF10 - Eliminar Administrador}: El administrador podrá eliminar su información desde su página de perfil, siempre y cuando no este adscrito a ninguna comunidad.
+	\item \textbf{RF11 - Eliminar Comunidad}: El administrador podrá eliminar una comunidad de vecinos, que haya creado, desde la sección para administrar la comunidad.
+	\item \textbf{RF12 - Cargar Comunidad}: Cuando un usuario o administrador inicie sesión, se cargará la página principal de la comunidad mostrando los datos de ésta, así como las notificaciones del usuario.
+	\item \textbf{RF13 - Notificar Usuario}: El sistema creará notificaciones con los documentos descargados en los últimos 10 días, las reservas de espacios comunes y las incidencias de un usuario, mostrándolos en la página principal de la comunidad.
+	\item \textbf{RF14 - Consultar Tablón}: Un usuario o administrador podrá consultar los mensajes creados en el tablón de anuncios.
+	\item \textbf{RF15 - Gestionar Tablón}: El administrador podrá crear o eliminar mensajes del tablón de anuncios de la comunidad.
+	\item \textbf{RF16 - Consultar Documentos}: Un usuario podrá consular los documentos relativos a la comunidad y descargarlos a su dispositivo.
+	\item \textbf{RF17 - Gestionar Documentos}: El administrador podrá añadir o eliminar documentos de una comunidad.
+	\item \textbf{RF18 - Consultar Incidencias}: Un usuario podrá consultar las incidencias publicas o creadas por el mismo, mientras que una administrador podrá consultar todas las incidencias relativas a una comunidad.
+	\item \textbf{RF19 - Gestionar Incidencias}: Un usuario podrá borrar o modificar las incidencias creadas por el mismo, mientras que el administrador podrá eliminar las incidencias de cualquier usuario.
+	\item \textbf{RF20 - Modificar Estado de Incidencia}: El administrador podrá cambiar el estado de las incidencias entre: ``Creada'', ``En Proceso'' y ``Resuelta''.
+	\item \textbf{RF21 - Añadir Espacio Común}: El administrador podrá añadir espacios comunes especificando su nombre, descripción y horario de reserva.
+	\item \textbf{RF22 - Reservar Espacio Común}: Un usuario podrá reservar un espacio común seleccionando en un calendario el día y hora que quiere realizar la reserva, siempre y cuando este libre.
+	\item \textbf{RF23 - Cancelar Reserva}: Un usuario podrá cancelar una reserva de un espacio común desde la sección de espacios comunes o desde la página principal de la comunidad.
+	\item \textbf{RF24 - Gestionar Espacios Comunes}: El administrador podrá eliminar o modificar la información relativa a un espacio común.
+	\item \textbf{RF25 - Consultar Finanzas}: Un usuario podrá consultar las finanzas de la comunidad en la sección finanzas que se mostrarán en una tabla con los datos estimados para el curso actual, pudiendo también consultar los datos del curso anterior.
+	\item \textbf{RF26 - Gestionar Finanzas}: El administrador podrá añadir, eliminar o modificar los registros de la tabla de finanzas.
+	\item \textbf{RF27 - Calcular Finanzas}: El sistema realiza el calculo de las finanzas cada vez que se añada o elimine un pago o un ingreso.
+	\item \textbf{RF28 - Cerrar Sesión}: Un usuario o administrador podrán cerrar la sesión en el sistema desde el icono de usuario.	
 \end{itemize}
+
+\subsubsection{Requisitos No Funcionales}
+En esta sección se incluyen todos los requisitos no funcionales, referentes a la interfaz, seguridad, accesibilidad, etc. Al igual que con la sección anterior, se incluye una tabla con estos requisitos en el \hyperref[sec:apenB]{Anexo B}.
 
 
 
@@ -488,6 +526,47 @@ Además de estas páginas, hay que tener en cuenta que la aplicación debe \text
 
 Más adelante, en la sección de adecuación al entorno y restricciones de diseño se proporcionará más información sobre el desempeño de la aplicación en dispositivos móviles y tablets.
 
+\newpage
+
+\section{Tablas de Requisitos}
+\label{sec:apenB}
+En este anexo se incluye las tablas con los requisitos funcionales y no funcionales de la aplicación. Se han incluido en dos tablas diferentes, ya que son muy extensas. 
+
+\begin{table}[h]
+	\begin{center}
+		\bgroup
+		\def\arraystretch{1.5}
+		\begin{tabular}{| p{5cm} | p{10cm} |}
+			\hline
+			\textbf{Número y Tipo} & \textbf{Descripción}  \\ \hline
+			RF1.- Consultar Web Principal &  Cualquier usuario podrá acceder a la página web principal para consultar la información sobre nuestra aplicación \\ \hline
+			RF2.- Contactar Equipo & Cualquier usuario podrá contactar con el equipo de desarrollo usando
+			el formulario de la página principal, dejando un mensaje y su correo \\ \hline
+			RF3 - Registrarse en la Aplicación & Los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo su correo, nombre, apellidos, nombre
+			de usuario y dirección  \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+			 &   \\ \hline
+		\end{tabular}	
+		\egroup
+		\caption{Requisitos Funcionales}
+		\label{tabla:sencilla}	
+	\end{center}
+\end{table}  
 
 \end{appendices}
 
