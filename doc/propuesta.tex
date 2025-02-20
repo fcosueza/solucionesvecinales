@@ -303,6 +303,69 @@ No se va a especificar el software para el testing ni el control de calidad, ya 
 	\item Solo se permitirán conexiones \textbf{HTTPS} con la aplicación.
 \end{enumerate}
 
+\paragraph{Ley de Protección de Datos}
+~\\\\
+\-\ \-\ \-\ A la hora de implementar nuestra aplicación hay que tener en cuenta la \textbf{leyes de protección de datos} aplicables. En nuestro caso, son la \textbf{LOPD} (Ley Organica de Protección de Datos) y la \textbf{RGPD} (Reglamente General de Protección de Datos) de la Unión Europea. En este aspecto, y teniendo en cuenta los datos que trata nuestra web, debemos incluir en esta \cite{lopd}:
+
+\begin{itemize}
+	\item \textbf{Política de Privacidad}: texto legal para informar a los interesados toda la información sobre el tratamiento de sus datos.
+	
+	\item \textbf{Política de Cookies}: texto legal donde se informa de la política de cookies a los usuarios, donde además se pedirá su consentimiento para el almacenamiento de cookies en el sistema.
+	
+	\item \textbf{Cesión de Datos a Terceros}: si se decide la utilización de software de terceros (alto que aún no esta decidido) para obtener métricas del acceso a la web, como puede ser Google Analytics, se deberá firmar un acuerdo en que se establecerán las obligaciones para el encargado.
+\end{itemize}
+
+En principio estos son los puntos más importantes que se deben cumplir de las \textbf{leyes de protección de datos}, aunque deberemos estar pendientes si se añaden nuevas funcionalidades, o anuncios, para aplicar nuevas medidas.
+
+\paragraph{Accesibilidad}
+~\\\\ Uno de los puntos más importantes de nuestra aplicación es la \textbf{accesibilidad} y \textbf{facilidad de uso}, por lo que en este aspecto se deben aplicar ciertas restricciones para garantizar que todo el mundo puede emplear nuestra aplicación con eficiencia. 
+
+En este punto, vamos a listar alguno de los \textbf{puntos más importantes}, pero no vamos a hacer una descripción exhaustiva de todos los puntos implicados ya que el documento sería muy extenso. Los principales elementos a tener en cuenta son \cite{wai-wcag}: 
+
+\begin{itemize}
+	\item Todo \textbf{elemento} que \textbf{no sea de texto} deberá tener una \textbf{alternativa textual}. Por ejemplo, empleando el atributo \textbf{alt} en imágenes.
+	
+	\item Deberá emplearse un \textbf{contraste} mínimo en texto/fondo de \textbf{4.5:1}, para textos pequeños y de \textbf{3:1} para textos grandes, aunque es muy deseable que estos valores sean de \textbf{7:1} y \textbf{4.5:1} respectivamente.
+	
+	\item Se deberá proporcionar un conjunto de enlaces de tipo \textbf{breadcrumbs} para que la web sea más navegable.
+	
+	\item La aplicación debe ser totalmente \textbf{navegable} usando el teclado.
+	
+	\item Se deberán usar \textbf{etiquetas descriptivas} en todos los elementos de la interfaz.
+	
+	\item Se deberá emplear de forma eficiente los \textbf{elementos HTML semánticos} para estructurar correctamente la web y el contenido.
+	
+	\item El \textbf{tamaño de las fuentes} debe de poder cambiarse de forma rápida y que la web siga manteniendo su estructura visual.
+	
+	\item Se deberán \textbf{usar colores} que \textbf{no generen problema}s para usuarios \textbf{daltónicos}.
+\end{itemize}
+
+Estos son algunas de las restricciones que deberán aplicarse, pero los desarrolladores deberán aplicar más, según vaya surgiendo la necesidad usando la guía para la accesibilidad de contenido \href{https://www.w3.org/TR/WCAG22/}{WCAG 2.2}, proporcionada por la W3C.
+
+\subsubsection{Supuestos y Dependencias}
+Aunque nuestro proyecto no tiene muchas dependencias o supuestos, si hay que tener en cuenta los cambios que pueda haber en alguna legislación o buenas prácticas que podrían cambiar ligeramente nuestras restricciones de diseño. En aspecto, deberemos estar atentos a:
+
+\begin{itemize}
+	\item \textbf{Cambios} en la \textbf{legislación sobre protección de datos}, ya que algunos cambios en esta legislación supondría la necesidad de añadir (o eliminar) algunas restricciones.
+	
+	\item \textbf{Cambios} en las \textbf{guías de accesibilidad} de la W3C. Ahora mismo esta en desarrollo la \textbf{versión 3 de la WCAG}, que podría añadir algunos nuevas prácticas para mejorar la accesibilidad en sitios web.
+\end{itemize}
+
+
+\subsection{Requisitos Específicos}
+En esta sección vamos, por fin, a definir los \textbf{requisitos funcionales} y \textbf{no funcionales} de nuestra aplicación. Esto requisitos se han extraído de la sección anterior, teniendo en cuenta la descripción de las interfaces, el funcionamiento de nuestra aplicación, etc..
+
+Adicionalmente a esta sección, se ha incluido una tabla con todos los requisitos funcionales y no funcionales en el Anexo B, para un acceso más rápido a los datos.
+
+\subsubsection{Requisitos Funcionales}
+En primer lugar, vamos a establecer los \textbf{requisitos funcionales}. Se va a realizar en formato de lista especificando el código \textbf{RFX}, donde X es el número del requisito, su \textbf{nombre} y una descripción del requisito en forma de lista. 
+
+\begin{itemize}
+	\item \textbf{RF1 - Consultar Web Principal}: cualquier usuario podrá acceder a la página web principal para consultar la información sobre nuestra aplicación.
+	\item \textbf{RF2 - Contactar Equipo}: cualquier usuario podrá contactar con el equipo de desarrollo usando el formulario de la página principal, dejando un mensaje y su correo.
+	\item \textbf{RF3 - Registrarse en la Aplicación}: los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo sus datos.
+	\item \textbf{RF4 - Generación de Solicitud}: el sistema deberá generar una solicitud de inscripción en la comunidad que coincide con el visitante que se ha registrado.
+\end{itemize}
 
 
 

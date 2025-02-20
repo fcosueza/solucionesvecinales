@@ -26,7 +26,12 @@
 \contentsline {paragraph}{\numberline {2.2.4.2}Software para el Desarrollo}{10}{paragraph.2.2.4.2}%
 \contentsline {paragraph}{\numberline {2.2.4.3}Control de Calidad y Testeo}{11}{paragraph.2.2.4.3}%
 \contentsline {paragraph}{\numberline {2.2.4.4}Seguridad de la Aplicación}{11}{paragraph.2.2.4.4}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{12}{appendix.alph1.Alph1}%
-\contentsline {section}{Glosario}{16}{section*.2}%
-\contentsline {section}{\nonumberline Referencias}{17}{section*.5}%
+\contentsline {paragraph}{\numberline {2.2.4.5}Ley de Protección de Datos}{12}{paragraph.2.2.4.5}%
+\contentsline {paragraph}{\numberline {2.2.4.6}Accesibilidad}{12}{paragraph.2.2.4.6}%
+\contentsline {subsubsection}{\numberline {2.2.5}Supuestos y Dependencias}{13}{subsubsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.3}Requisitos Específicos}{13}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Requisitos Funcionales}{13}{subsubsection.2.3.1}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{14}{appendix.alph1.Alph1}%
+\contentsline {section}{Glosario}{18}{section*.2}%
+\contentsline {section}{\nonumberline Referencias}{19}{section*.5}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
