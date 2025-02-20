@@ -258,9 +258,53 @@ En este apartado vamos a realizar una lista con todas las restricciones de dise�
 	\item \textbf{BackEnd}: en la parte de backend se va a emplear \textbf{Node}, para poder ejecutar Typescript en el lado del servidor junto con \textbf{Express}, que nos facilitara la creación de la API. Además, se empleará para la base de datos \textbf{Postgresql}, junto con \textbf{Prisma}, un \gls{ORM} que facilitará el trabajo con la base de datos.
 	
 	\item \textbf{Herramientas de Desarrollo}: cada programador podrá usar el editor o IDE que sea de su preferencia, pero si se deberá usar \textbf{Prettier}, para establecer una estándar en el estilo código y \textbf{Eslint}, para detectar errores y adherirse a buenas prácticas.	
+	
+	\item \textbf{Gestión del Proyecto}: para la gestión del proyecto se van a emplear \textbf{Github}, como repositorio de software y \textbf{Trello}, que se empleará para la gestión de las tareas que hay que realizar a modo de tablero Kanban.
 \end{itemize}
 
-No se va a especificar el software para el testing ni el control de calidad, ya que este se especificará en su respectiva restricción, así como las herramientas empleadas para la gestión del proyecto.
+No se va a especificar el software para el testing ni el control de calidad, ya que este se especificará en su respectiva restricción.
+ 
+
+\paragraph{Control de Calidad y Testeo}
+~\\\\
+\-\ \-\ \-\ Se tiene que implementar una \textbf{política de control de calidad} que incluya el testeo continuo de la aplicación a varios niveles, para segurar su calidad y localizar errores de forma más rápida. Esta política consiste en los siguientes puntos:
+
+\begin{enumerate}
+	\item El desarrollo de cada módulo de software se realizará empleando la metodología \textbf{TDD}, \textbf{implementando primeramente los test} con la funcionalidad básica y desarrollando posteriormente el código que cumpla con dicha funcionalidad. Posteriormente se \textbf{refactorizará} teniendo en cuenta otros aspectos como la performance, la eficiencia, seguridad, etc..
+	
+	\item Para realizar los test unitarios se empleará \textbf{react-testing-library} en la parte el cliente y \textbf{Jest} + \textbf{Superset} para la parte del servidor.
+	
+	\item Se realizarán un proceso de \textbf{integración continua} empleando para ello \textbf{Github Actions}, siendo prioridad que un trozo de software que se ha desarrollado pase todos los test y haya una \textbf{cobertura del 100\%} del código con los test creados.
+	
+	\item Se integrará \textbf{Cypress} en este proceso integración continua para la realización de los e2e.
+	
+	\item El código de la aplicación estará incluida en \textbf{Code Climate}, donde se deberá revisar periódicamente y realizar los cambios indicados por este software para tener un código de calidad. Esto será complementario, como se ha comentado en otro punto, con el uso de \textbf{linters} como \textbf{Eslint}.
+	
+	\item Se seguirán las \textbf{buenas prácticas} tanto en el desarrollo del cliente como del servidor, siguiendo los estándares y recomendaciones de la \textbf{W3C}.
+\end{enumerate}
+
+\paragraph{Seguridad de la Aplicación}
+~\\\\
+\-\ \-\ \-\ A la hora de tratar con los datos de los usuarios y las comunidades hay que ser extra precavido, y tener en cuenta unas restricciones para garantizar la seguridad de dichos datos. Estas restricciones son:
+
+\begin{enumerate}
+	\item Los \textbf{datos que se obtenga de formularios} deben ser \textbf{doblemente validados}. Por un lado, se procesarán en el cliente, comprobando que tienen el formato correcto y eliminando aquellos que tengan ciertas palabras que pueden considerarse maliciosas, especialmente para ataques de \textbf{inyección SQL}. En una segunda parte se \textbf{volverán a validar en el servidor} antes de incluirlos en la base de datos.
+	
+	\item \textbf{Nunca} se \textbf{almacenarán las contraseñas} en \textbf{texto plano} en la base de datos. Para su almacenamiento, se empleará alguna función de \gls{hashing}´ como \textbf{bcrypt}, almacenando el resultado en vez de la contraseña.
+	
+	\item Las \textbf{contraseña de los usuarios} deberán tener un \textbf{longitud de 12 caracteres o más}, e incluir algún \textbf{número} y \textbf{signo de puntuación}.
+	
+	\item Nuestra base de datos, que estará físicamente en el mismo servidor que el servidor web, \textbf{solo debe aceptar consultar locales}, para evitar determinados tipos de ataques. 
+	
+	\item Las \textbf{peticiones por segundo} al servidor \textbf{estarán limitadas}, para evitar ataques de tipo \gls{DOS}.
+	
+	\item El \textbf{software} que se emplee en el desarrollo y necesario para la ejecución de la aplicación deben estar siempre \textbf{actualizado a la última última versión}.
+	
+	\item Solo se permitirán conexiones \textbf{HTTPS} con la aplicación.
+\end{enumerate}
+
+
+
 
 
 
