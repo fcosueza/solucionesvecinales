@@ -35,6 +35,6 @@
 \contentsline {subsection}{\numberline {2.4}Requerimientos de Documentación}{17}{subsection.2.4}%
 \contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{18}{appendix.alph1.Alph1}%
 \contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{22}{appendix.alph1.Alph2}%
-\contentsline {section}{Glosario}{25}{section*.4}%
-\contentsline {section}{\nonumberline Referencias}{27}{section*.7}%
+\contentsline {section}{Glosario}{26}{section*.4}%
+\contentsline {section}{\nonumberline Referencias}{28}{section*.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

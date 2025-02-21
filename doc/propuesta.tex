@@ -651,19 +651,49 @@ En este anexo se incluyen varias tablas con los requisitos funcionales y no func
 			base de datos de forma segura, nunca en texto plano, empleando un algoritmo hash y almacenando
 			el resultado encriptado en la base de datos\\ \hline
 			RNF5.- Robustez Contraseñas &  El sistema solo aceptará contraseña con un mínimo de 12 caracteres y con al menos un número y un signo de puntuación\\ \hline
-			RNF6.- Validación de Dato &  Los datos introducidos por los usuarios serán validados tanto en el
+			RNF6.- Validación de Datos &  Los datos introducidos por los usuarios serán validados tanto en el
 			cliente como en el servidor\\ \hline
-			 &  \\ \hline
-			 &  \\ \hline
-			 &  \\ \hline
-			 &  \\ \hline
-			 &  \\ \hline
-			 &  \\ \hline
-			 &  \\ \hline
+			RNF7.- Tiempo de Carga &  La aplicación deberá tener un tiempo de carga en el navegador del
+			usuario inferior a 3 segundos\\ \hline
+			RNF8.- Compresión Archivo Multimedia & Los archivos multimedia empleados en la web deberán estar comprimidos lo máximo posible sin que estos pierdan calidad significativamente\\ \hline
+			RNF9.- Uso de Memoria &  El cliente de nuestra aplicación deberá usar el mínimo de memoria
+			posible para cumplir su función de forma eficiente\\ \hline
+			RNF10.- Interfaz Adaptable &  El cliente de nuestra aplicación deberá tener una interfaz que se
+			adapte a diferentes dispositivos, incluyendo dispositivos móviles y tablets\\ \hline
+			RNF11.- Alternativa Textual &  Cualquier elemento de la interfaz que no sea texto deberá tener
+			una alternativa textual\\ \hline
+			RNF12.- Contraste &  La interfaz tiene que tener un contraste mínimo entre el texto y el fondo de
+			4.5:1 para textos pequeños y 3:1 para textos grandes\\ \hline
+			RNF13.- Navegabilidad &  La interfaz deberá ser totalmente navegable con el teclado\\ \hline
+			RNF14.- Mensajes de Error Descriptivos &  Cualquier mensaje de error que produzca la aplicación, ya sea para los usuarios o desarrolladores, debe explicar correctamente por qué se ha producido el error\\ \hline
+			RNF15.- Test Unitarios & Todo componente, función o clase deberá tener implementando su correspondiente test unitario \\ \hline
+			RNF16.- Cobertura de Tes &  Los test deberán cubrir el 100\% del código desarrollado\\ \hline
 		\end{tabular}	
 		\egroup
 		\caption{Requisitos No Funcionales (Parte I)}
 		\end{center}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\bgroup
+		\def\arraystretch{1.5}
+		\begin{tabular}{| p{5cm} | p{10cm} |}
+			\hline
+			\textbf{Número y Tipo} & \textbf{Descripción}  \\ \hline
+			RNF17.- CD/CI &  Los test unitarios, así como los e2e y los de integración deberán ejecutarse con
+			un sistema de integración/despliegue continuo\\ \hline
+			RNF18.- Calidad Global del Código &  La calidad global del código debe garantizarse, empleando
+			para ellos herramientas como Code Climate, eslint y todas aquellas que sean necesarias para que
+			el código se adapte a las buenas prácticas y estándares\\ \hline
+			RNF19 - Formato del Código & El código se formateará empleando prettier, con una configuración
+			predefinida para que todo el código, de cualquier desarrollador, tenga el mismo formato \\ \hline
+			RNF20 - LOPD y RGPD & En cumplimiento de las leyes LODP y RGPD, deberán mostrarse a los
+			usuarios los documentos legales siguientes: Política de Privacidad y Política de Cookies \\ \hline
+		\end{tabular}	
+		\egroup
+		\caption{Requisitos No Funcionales (Parte I)}
+	\end{center}
 \end{table}
 
 \end{appendices}
