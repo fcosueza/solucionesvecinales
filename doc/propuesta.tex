@@ -278,7 +278,7 @@ No se va a especificar el software para el testing ni el control de calidad, ya 
 ~\\\\
 \-\ \-\ \-\ Se tiene que implementar una \textbf{política de control de calidad} que incluya el testeo continuo de la aplicación a varios niveles, para segurar su calidad y localizar errores de forma más rápida. Esta política consiste en los siguientes puntos:
 
-\begin{enumerate}
+\begin{itemize}
 	\item El desarrollo de cada módulo de software se realizará empleando la metodología \textbf{TDD}, \textbf{implementando primeramente los test} con la funcionalidad básica y desarrollando posteriormente el código que cumpla con dicha funcionalidad. Posteriormente se \textbf{refactorizará} teniendo en cuenta otros aspectos como la performance, la eficiencia, seguridad, etc..
 	
 	\item Para realizar los test unitarios se empleará \textbf{react-testing-library} en la parte el cliente y \textbf{Jest} + \textbf{Superset} para la parte del servidor.
@@ -290,13 +290,13 @@ No se va a especificar el software para el testing ni el control de calidad, ya 
 	\item El código de la aplicación estará incluida en \textbf{Code Climate}, donde se deberá revisar periódicamente y realizar los cambios indicados por este software para tener un código de calidad. Esto será complementario, como se ha comentado en otro punto, con el uso de \textbf{linters} como \textbf{Eslint}.
 	
 	\item Se seguirán las \textbf{buenas prácticas} tanto en el desarrollo del cliente como del servidor, siguiendo los estándares y recomendaciones de la \textbf{W3C}.
-\end{enumerate}
+\end{itemize}
 
 \paragraph{Seguridad de la Aplicación}
 ~\\\\
 \-\ \-\ \-\ A la hora de tratar con los datos de los usuarios y las comunidades hay que ser extra precavido, y tener en cuenta unas restricciones para garantizar la seguridad de dichos datos. Estas restricciones son:
 
-\begin{enumerate}
+\begin{itemize}
 	\item Los \textbf{datos que se obtenga de formularios} deben ser \textbf{doblemente validados}. Por un lado, se procesarán en el cliente, comprobando que tienen el formato correcto y eliminando aquellos que tengan ciertas palabras que pueden considerarse maliciosas, especialmente para ataques de \textbf{inyección SQL}. En una segunda parte se \textbf{volverán a validar en el servidor} antes de incluirlos en la base de datos.
 	
 	\item \textbf{Nunca} se \textbf{almacenarán las contraseñas} en \textbf{texto plano} en la base de datos. Para su almacenamiento, se empleará alguna función de \gls{hashing}´ como \textbf{bcrypt}, almacenando el resultado en vez de la contraseña.
@@ -310,7 +310,7 @@ No se va a especificar el software para el testing ni el control de calidad, ya 
 	\item El \textbf{software} que se emplee en el desarrollo y necesario para la ejecución de la aplicación deben estar siempre \textbf{actualizado a la última última versión}.
 	
 	\item Solo se permitirán conexiones \textbf{HTTPS} con la aplicación.
-\end{enumerate}
+\end{itemize}
 
 \paragraph{Ley de Protección de Datos}
 ~\\\\
@@ -448,7 +448,7 @@ El posicionamiento del icono de ayuda deberá realizarse de \textbf{forma visibl
 
 
 \subsubsection{Guía de Instalación, Configuración y Archivo Léeme} 
-No será necesaria guía de instalación ni de configuración para los usuarios. Nuestros usuarios accederán a la aplicación de forma en línea y podrán utilizarla sin necesidad de realizar ningún tipo de instalación ni configuración.
+Se incluirá una \textbf{guía de instalación en un entorno local} en el que se especificará como se instala el software en un servidor Apache 2.0 y la configuración que se debe realizar, si es necesario. La guía explicará paso a paso 
 
 Respecto al archivo Léeme, se incluirá un archivo \textbf{README} en formado \gls{Markdown} en el \textbf{repositorio de Github} de nuestra aplicación, en el que se explicará un poco el propósito de nuestro software, como ejecutarlo de forma local, tecnologías empleadas, forma de contribuir al proyecto, etc. Este archivo, probablemente, sea más interesante para otros desarrolladores que para la mayoría de usuarios de nuestra aplicación.
 
@@ -459,6 +459,15 @@ En este aspecto, nuestra aplicación usara una \textbf{Licencia MIT}, que permit
 
 En el repositorio se podrá acceder a una \textbf{copia integra de esta licencia}, así como desde el píe de página de nuestra aplicación. En \href{https://opensource.org/license/mit}{este enlace} se puede acceder al texto completo en inglés de la licencia.
 
+\section{Planificación del Proyecto}
+En esta sección vamos a realizar una pequeña planificación del proyecto, explicando de forma escueta su alcance y coste, e incluyendo una diagrama de Gantt con la temporalización del proyecto.
+
+\subsection{Alcance}
+El proyecto que vamos a desarrollar se llama \textbf{SolucionesVecinales}, y consiste en una aplicación web para la gestión de comunidades de vecinos gratuita y fácil de usar.
+
+Nuestro \textbf{objetivo}, es crear un \textbf{software} que proporcione las herramientas para \textbf{gestionar los principales aspectos} de una \textbf{comunidad de vecinos}. El software ofrecerá herramientas para la gestión de incidencias, reserva de espacios comunes, gestión de documentos, tablón de anuncios y consulta de la finanzas de la comunidad. Todo eso, poniendo especial énfasis en la facilidad de uso y la accesibilidad.
+
+El \textbf{plazo de entrega} de entrega del proyecto es, como máximo, del \textbf{5 de Mayo de 2025}, por lo que en el momento de escribir estas líneas hay un plazo de 2 meses para el desarrollo de la aplicación.
 
 
 
@@ -498,7 +507,7 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 	
 	Tanto la \textbf{barra de menú} superior como el \textbf{pié de página} se mantendrán \textbf{visibles en todas las páginas} de la aplicación, cambiando en ciertos aspectos u ofreciendo diferentes opciones.
 	
-	\item \textbf{Página de Login}: a esta pantalla se accede desde la pantalla principal cuando el usuario pulsa en el enlace de login/registro del menú de la barra principal y su propósito es permitir que los usuarios ingresen al sistema. La pantalla inicial esta compuesta por un \textbf{formulario} de login, que debe aceptar un \textbf{email} y una \textbf{contraseña} como entrada, con el botón enviar en la parte inferior. Además, incluirá un \textbf{enlace} debajo del botón, centrado, que permitirá al usuario \textbf{registrarse}, en caso de que no este registrado, desplegando un nuevo formulario que veremos en detalle a continuación.
+	\item \textbf{Página de Login}: a esta pantalla se accede desde la pantalla principal cuando el usuario pulsa en el enlace de login/registro del menú de la barra principal y su propósito es permitir que los usuarios ingresen al sistema. La pantalla inicial esta compuesta por un \textbf{formulario} de login, que debe aceptar un \textbf{email} y una \textbf{contraseña} como entrada, con el botón enviar en la parte inferior. Además, incluirá un \textbf{enlace} debajo del botón, centrado, que permitirá al usuario \textbf{registrarse}, en caso de que no este registrado, desplegando un nuevo formulario que veremos en detalle a continuación. Solo el \textbf{administrador de la web} podrá realizar el ingreso al sistema empleando el \textbf{usuario WebAdmin}.
 	
 	\item \textbf{Página de Registro}: en esta pantalla, que se accede desde la pantalla de login, se muestra un formulario que \textbf{permitirá a un usuario registrarse} en el sistema. Este formulario estará compuesto por diferentes campos que permitirán al usuario introducir la información necesaria pare registrarse, como puede ser Nombre, Correo, Dirección, rol, etc. Debajo, aparecerá el \textbf{botón registrarse} que permitirá al usuario registrar todos sus datos.  
 
@@ -526,7 +535,7 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 		
 		\item \textbf{Zona de Contenido}: en esta zona, que estará ubicada en el centro, se mostrará la información que se quiere mostrar al usuario. Cuando un \textbf{usuario inscrito en una comunidad} acceda a la página principal de comunidad, aquí se mostrar la \textbf{información} de ésta, como nombre, dirección y una imagen. Además, se mostraran las \textbf{incidencias sin resolver} creadas por el usuario y las \textbf{reservas pendientes} que ha realizado, debajo de la información anterior, en formato de lista. 
 		
-		En esta zona de la interfaz se mostrará todas la información que el usuario solicite y es donde se permitirá interactuar con la comunidad. Seleccionando alguna de las opciones del menú, los \textbf{principales elementos} que se mostrarán en esta zona y que permiten \textbf{realizar las acciones sobre la comunidad} son las siguientes: 
+		En esta zona de la interfaz se mostrará todas la información de los diferentes servicios y es donde se permitirá interactuar con la comunidad. Seleccionando alguna de las opciones del menú, los \textbf{principales elementos} que se mostrarán en esta zona y que permiten \textbf{realizar las acciones sobre la comunidad} son las siguientes: 
 		
 		\begin{itemize}
 			\item \textbf{Inicio}: cuando un usuario pinche en esta opción cargara la información por defecto de la página principal de comunidad, que se ha descrito en el párrafo anterior.
@@ -553,9 +562,9 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 			
 			Solo los \textbf{administradores} puede modificar esta tabla, mediante un formulario para añadir un registros en el que se podrá seleccionar el tipo de registro, si es un ingreso o gasto, y el tipo de cada uno, así como la cantidad. Cuando se agregue un nuevo registro, el sistema calculará el balance con los nuevos datos y los mostrará. Este formulario se mostrará después de pulsar el botón ``Añadir'' debajo de la tabla de finanzas.
 			
-			\item \textbf{Administrar}: esta opción solo es elegible por los usuarios con \textbf{rol de administrador} y permite al administrador \textbf{gestionar} todos los aspectos de una \textbf{comunidad} en una misma pantalla de forma rápida.
+			\item \textbf{Administrar}: esta opción solo es elegible por los usuarios con \textbf{rol de administrador} y permite al administrador \textbf{gestionar} todos los aspectos de una \textbf{comunidad} mediante un panel de control.
 			
-			En la zona de contenido se mostrará \textbf{información de al comunidad}, que será editable, así como los \textbf{elementos de todos} y cada uno de los \textbf{apartados} mencionados en este punto: Incidencias, Documentos, Finanzas, etc., con opciones para editar, consultar añadir o eliminar elementos a cada apartado. Los apartados se mostrarán uno debajo de otro con su correspondiente titulo y los botones adecuados para eliminar, editar o borrar elementos.
+			En la zona de contenido se mostrará \textbf{información de al comunidad}, que será editable, así como los servicios mencionados en este punto: Incidencias, Documentos, Finanzas, etc., con opciones para editar, consultar añadir o eliminar elementos a cada apartado. Los apartados se mostrarán uno al lado de otro con iconos y al pulsar en ellos se desplegará una lista con todos los elementos que estos contienen, ocultando el resto secciones. Además aparecerá un botón para poder volver hacia atrás a la lista de servicios.
 						
 			\item \textbf{Barra de Búsqueda}: cabe destacar que \textbf{todas las secciones} incluirán, encima de la tabla o lista donde se muestra la información, una \textbf{barra de búsqueda} que permitirá seleccionar solo las entradas coincidentes con los términos que queramos.
 		\end{itemize}
@@ -568,7 +577,6 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 	
 	Además, debajo de este aparecerá un \textbf{botón} con la opción ``\textbf{Eliminar usuario}'' que permitirá a un usuario eliminar su información, y que al ser pulsado ocultará el formulario con al información y mostrará una ventana de confirmación. Si la confirmación es positiva, se eliminará al usuario, y se redireccionará la pantalla principal.
 \end{itemize}
-
 
 Además de estas páginas, hay que tener en cuenta que la aplicación debe \textbf{visualizarse correctamente en cualquier dispositivo}. Aunque se añadirán restricciones más adelante en este aspecto, hay que tener en cuenta que algunos \textbf{elementos cambiarán} cuando la aplicación se visualice en \textbf{dispositivos pequeños}, como móviles o tablets. Estos elementos son:
 
@@ -694,7 +702,7 @@ En este anexo se incluyen varias tablas con los requisitos funcionales y no func
 			RNF13.- Navegabilidad &  La interfaz deberá ser totalmente navegable con el teclado\\ \hline
 			RNF14.- Mensajes de Error Descriptivos &  Cualquier mensaje de error que produzca la aplicación, ya sea para los usuarios o desarrolladores, debe explicar correctamente por qué se ha producido el error\\ \hline
 			RNF15.- Test Unitarios & Todo componente, función o clase deberá tener implementando su correspondiente test unitario \\ \hline
-			RNF16.- Cobertura de Tes &  Los test deberán cubrir el 100\% del código desarrollado\\ \hline
+			RNF16.- Cobertura de Tests &  Los test deberán cubrir el 100\% del código desarrollado\\ \hline
 		\end{tabular}	
 		\egroup
 		\caption{Requisitos No Funcionales (Parte I)}
