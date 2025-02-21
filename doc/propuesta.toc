@@ -32,8 +32,9 @@
 \contentsline {subsection}{\numberline {2.3}Requisitos Específicos}{14}{subsection.2.3}%
 \contentsline {subsubsection}{\numberline {2.3.1}Requisitos Funcionales}{14}{subsubsection.2.3.1}%
 \contentsline {subsubsection}{\numberline {2.3.2}Requisitos No Funcionales}{16}{subsubsection.2.3.2}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{17}{appendix.alph1.Alph1}%
-\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{21}{appendix.alph1.Alph2}%
-\contentsline {section}{Glosario}{22}{section*.4}%
-\contentsline {section}{\nonumberline Referencias}{23}{section*.7}%
+\contentsline {subsection}{\numberline {2.4}Requerimientos de Documentación}{17}{subsection.2.4}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{18}{appendix.alph1.Alph1}%
+\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{22}{appendix.alph1.Alph2}%
+\contentsline {section}{Glosario}{25}{section*.4}%
+\contentsline {section}{\nonumberline Referencias}{27}{section*.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

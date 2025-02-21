@@ -285,7 +285,7 @@ No se va a especificar el software para el testing ni el control de calidad, ya 
 	
 	\item Se realizarán un proceso de \textbf{integración continua} empleando para ello \textbf{Github Actions}, siendo prioridad que un trozo de software que se ha desarrollado pase todos los test y haya una \textbf{cobertura del 100\%} del código con los test creados.
 	
-	\item Se integrará \textbf{Cypress} en este proceso integración continua para la realización de los e2e.
+	\item Se integrará \textbf{Cypress} en este proceso integración continua para la realización de los \gls{e2e}.
 	
 	\item El código de la aplicación estará incluida en \textbf{Code Climate}, donde se deberá revisar periódicamente y realizar los cambios indicados por este software para tener un código de calidad. Esto será complementario, como se ha comentado en otro punto, con el uso de \textbf{linters} como \textbf{Eslint}.
 	
@@ -366,6 +366,8 @@ Aunque nuestro proyecto no tiene muchas dependencias o supuestos, si hay que ten
 \subsection{Requisitos Específicos}
 En esta sección vamos, por fin, a definir los \textbf{requisitos funcionales} y \textbf{no funcionales} de nuestra aplicación. Esto requisitos se han extraído de la sección anterior, teniendo en cuenta la descripción de las interfaces, el funcionamiento de nuestra aplicación, etc..
 
+Estos requisitos \textbf{especifican las características principales} de nuestro software, pero a pesar de ello, puede que se nos hayan pasado cosas por alto en el análisis, o que \textbf{durante el desarrollo} nos encontremos con problemas inesperados. Por ello, es de esperar que durante el proceso de desarrollo puedan \textbf{surgir nuevos requisitos} o se deban \textbf{modificar algunos} de los que ya hemos definido.
+
 Adicionalmente a esta sección, se ha incluido una tabla con todos los requisitos funcionales y no funcionales en el  \hyperref[sec:apenB]{Anexo B}, para un acceso más rápido a los datos.
 
 \subsubsection{Requisitos Funcionales}
@@ -404,6 +406,31 @@ En primer lugar, vamos a establecer los \textbf{requisitos funcionales}. Se va a
 
 \subsubsection{Requisitos No Funcionales}
 En esta sección se incluyen todos los requisitos no funcionales, referentes a la interfaz, seguridad, accesibilidad, etc. Al igual que con la sección anterior, se incluye una tabla con estos requisitos en el \hyperref[sec:apenB]{Anexo B}.
+
+\begin{itemize}
+	\item \textbf{RNF1 - Arquitectura}: La aplicación se implementará empleando una arquitectura cliente-servidor.
+	\item \textbf{RNF2 - Protocolo Comunicación}: La aplicación empleará el protocolo HTTPS entre el cliente y el servidor, no permitiendo conexión con otro protocolo que no sea este.
+	\item \textbf{RNF3 - Peticiones Limitadas}: Las peticiones por segundo al servidor estarán limitadas a 10, para evitar ataques de tipo DOS.
+	\item \textbf{RNF4 - Almacenado de Contraseñas}: El sistema se encargará de almacenar las contraseñas en la base de datos de forma segura, nunca en texto plano, empleando un algoritmo hash y almacenando el resultado encriptado en la base de datos.
+	\item \textbf{RNF5 - Robustez Contraseñas}: El sistema solo aceptará contraseña con un mínimo de 12 caracteres y con al menos un número y un signo de puntuación.
+	\item \textbf{RNF6 - Validación de Datos}: Los datos introducidos por los usuarios serán validados tanto en el cliente como en el servidor. 
+	\item \textbf{RNF7 - Tiempo de Carga}: La aplicación deberá tener un tiempo de carga en el navegador del usuario inferior a 3 segundos.
+	\item \textbf{RNF8 - Compresión Archivo Multimedia}: Los archivos multimedia empleados en la web deberán estar comprimidos lo máximo posible sin que estos pierdan calidad significativamente.
+	\item \textbf{RNF9 - Uso de Memoria}: El cliente de nuestra aplicación deberá usar el mínimo de memoria posible para cumplir su función de forma eficiente.
+	\item \textbf{RNF10 - Interfaz Adaptable}: El cliente de nuestra aplicación deberá tener una interfaz que se adapte a diferentes dispositivos, incluyendo dispositivos móviles y tablets.
+	\item \textbf{RNF11 - Alternativa Textual}: Cualquier elemento de la interfaz que no sea texto deberá tener una alternativa textual.
+	\item \textbf{RNF12 - Contraste}: La interfaz tiene que tener un contraste mínimo entre el texto y el fondo de 4.5:1 para textos pequeños y 3:1 para textos grandes.
+	\item \textbf{RNF13 - Navegabilidad}: La interfaz deberá ser totalmente navegable con el teclado.
+	\item \textbf{RNF14 - Mensajes de Error Descriptivos}: Cualquier mensaje de error que produzca la aplicación, ya sea para los usuarios o desarrolladores, debe explicar correctamente por qué se ha producido el error.
+	\item \textbf{RNF15 - Test Unitarios}: Todo componente, función o clase deberá tener implementando su correspondiente test unitario.
+	\item \textbf{RNF16 - Cobertura de Test}: Los test deberán cubrir el 100\% del código desarrollado.
+	\item \textbf{RNF17 - CD/CI}: Los test unitarios, así como los e2e y los de integración deberán ejecutarse con un sistema de integración/despliegue continuo.
+	\item \textbf{RNF18 - Calidad Global del Código}: La calidad global del código debe garantizarse, empleando para ellos herramientas como Code Climate, eslint y todas aquellas que sean necesarias para que el código se adapte a las buenas prácticas y estándares.
+	\item \textbf{RNF19 - Formato del Código}: El código se formateará empleando prettier, con una configuración predefinida para que todo el código, de cualquier desarrollador, tenga el mismo formato.
+	\item \textbf{RNF20 - LOPD y RGPD}: En cumplimiento de las leyes LODP y RGPD, deberán mostrarse a los usuarios los documentos legales siguientes: Política de Privacidad y Política de Cookies.
+\end{itemize}
+
+\subsection{Requerimientos de Documentación}
 
 
 
@@ -530,9 +557,9 @@ Más adelante, en la sección de adecuación al entorno y restricciones de dise�
 
 \section{Tablas de Requisitos}
 \label{sec:apenB}
-En este anexo se incluye las tablas con los requisitos funcionales y no funcionales de la aplicación. Se han incluido en dos tablas diferentes, ya que son muy extensas. 
+En este anexo se incluyen varias tablas con los requisitos funcionales y no funcionales, ya que son muy extensas se ha preferido dividir éstas para no hacer tablas que ocupen varias páginas.
 
-\begin{table}[h]
+\begin{table}[H]
 	\begin{center}
 		\bgroup
 		\def\arraystretch{1.5}
@@ -542,31 +569,102 @@ En este anexo se incluye las tablas con los requisitos funcionales y no funciona
 			RF1.- Consultar Web Principal &  Cualquier usuario podrá acceder a la página web principal para consultar la información sobre nuestra aplicación \\ \hline
 			RF2.- Contactar Equipo & Cualquier usuario podrá contactar con el equipo de desarrollo usando
 			el formulario de la página principal, dejando un mensaje y su correo \\ \hline
-			RF3 - Registrarse en la Aplicación & Los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo su correo, nombre, apellidos, nombre
+			RF3.- Registrarse en la Aplicación & Los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo su correo, nombre, apellidos, nombre
 			de usuario y dirección  \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
-			 &   \\ \hline
+			RF4.- Generar Solicitud & El sistema deberá generar una solicitud de inscripción en la comunidad que coincida con la dirección que ha especificado el usuario que se ha registrado  \\ \hline
+			RF5.- Aprobar Solicitud: & El administrador de la comunidad deberá poder aceptar o denegar la
+			solicitud de inscripción en la comunidad de un usuario  \\ \hline
+			RF6.- Iniciar Sesión & Un usuario o administrador podrá ingresar al sistema empleando su correo
+			y contraseña como credenciales  \\ \hline
+			RF7.- Añadir Comunidad & El administrador podrá añadir una nueva comunidad de vecinos, independientemente de que 
+			este inscrito ya en alguna otra, especificando un nombre, descripción, imagen y dirección de la comunidad  \\ \hline
+			RF8.- Modificar Perfil &  Un usuario o administrador podrá acceder a su perfil y modificar sus datos
+			en el sistema \\ \hline
+			RF9.- Eliminar Usuario & Un usuario podrá eliminar su usuario desde su página de perfil, pudiendo
+			ser también eliminado por el administrador  \\ \hline
+			RF10.- Eliminar Administrador & El administrador podrá eliminar su información desde su página de perfil, siempre y cuando no este adscrito a ninguna comunidad  \\ \hline
+			RF11.- Eliminar Comunidad &  El administrador podrá eliminar una comunidad de vecinos, que
+			haya creado, desde la sección para administrar la comunidad  \\ \hline
+			RF12.- Cargar Comunidad & Cuando un usuario o administrador inicie sesión, se cargará la página
+			principal de la comunidad mostrando los datos de ésta, así como las notificaciones del usuario  \\ \hline
+			RF13.- Notificar Usuario &  El sistema creará notificaciones con los documentos descargados en
+			los últimos 10 días, las reservas de espacios comunes y las incidencias de un usuario, mostrándolos
+			en la página principal de la comunidad  \\ \hline
 		\end{tabular}	
 		\egroup
-		\caption{Requisitos Funcionales}
-		\label{tabla:sencilla}	
+		\caption{Requisitos Funcionales (Parte I)}	
 	\end{center}
 \end{table}  
+
+\begin{table}[H]
+	\begin{center}
+		\bgroup
+		\def\arraystretch{1.5}
+		\begin{tabular}{| p{5cm} | p{10cm} |}
+			\hline
+			\textbf{Número y Tipo} & \textbf{Descripción}  \\ \hline
+			RF14.- Consultar Tablón & Un usuario o administrador podrá consultar los mensajes creados en
+			el tablón de anuncios \\ \hline
+			RF15.- Gestionar Tablón & El administrador podrá crear o eliminar mensajes del tablón de anuncios de la comunidad \\ \hline
+			RF16.- Consultar Documentos &  Un usuario podrá consular los documentos relativos a la comunidad y descargarlos a su dispositivo\\ \hline
+			RF17.- Gestionar Documentos & El administrador podrá añadir o eliminar documentos de una comunidad \\ \hline
+			RF18.- Consultar Incidencias &  Un usuario podrá consultar las incidencias publicas o creadas por
+			el mismo, mientras que una administrador podrá consultar todas las incidencias relativas a una
+			comunidad \\ \hline
+			RF19.- Gestionar Incidencias & Un usuario podrá borrar o modificar las incidencias creadas por
+			el mismo, mientras que el administrador podrá eliminar las incidencias de cualquier usuario \\ \hline
+			RF20.- Modificar Estado de Incidencia &  El administrador podrá cambiar el estado de las incidencias entre: “Creada”, “En Proceso” y “Resuelta”\\ \hline
+			RF21.- Añadir Espacio Común & El administrador podrá añadir espacios comunes especificando
+			su nombre, descripción y horario de reserva \\ \hline
+			RF22.- Reservar Espacio Común & Un usuario podrá reservar un espacio común seleccionando
+			en un calendario el día y hora que quiere realizar la reserva, siempre y cuando este libre \\ \hline
+			RF23.- Cancelar Reserva & Un usuario podrá cancelar una reserva de un espacio común desde la
+			sección de espacios comunes o desde la página principal de la comunidad  \\ \hline
+			RF24.- Gestionar Espacios Comunes &  El administrador podrá eliminar o modificar la información relativa a un espacio común \\ \hline
+			RF25.- Consultar Finanzas & Un usuario podrá consultar las finanzas de la comunidad en la sección finanzas que se mostrarán en una tabla con los datos estimados para el curso actual, pudiendo
+			 también consultar los datos del curso anterior \\ \hline
+			RF26.- Gestionar Finanzas &  El administrador podrá añadir, eliminar o modificar los registros de
+			la tabla de finanzas\\ \hline
+			RF27.- Calcular Finanzas & El sistema realiza el calculo de las finanzas cada vez que se añada o
+			elimine un pago o un ingreso \\ \hline
+			RF28.- Cerrar Sesión &  Un usuario o administrador podrán cerrar la sesión en el sistema desde el
+			icono de usuario \\ \hline
+		\end{tabular}	
+		\egroup
+		\caption{Requisitos Funcionales (Parte II)}
+	\end{center}
+\end{table}  
+
+\begin{table}[H]
+	\begin{center}
+		\bgroup
+		\def\arraystretch{1.5}
+		\begin{tabular}{| p{5cm} | p{10cm} |}
+			\hline
+			\textbf{Número y Tipo} & \textbf{Descripción}  \\ \hline
+			RNF1.- Arquitectura & La aplicación se implementará empleando una arquitectura cliente-servidor \\ \hline
+			RNF2.- Protocolo Comunicación &  La aplicación empleará el protocolo HTTPS entre el cliente y
+			el servidor, no permitiendo conexión con otro protocolo que no sea este\\ \hline
+			RNF3.- Peticiones Limitadas & Las peticiones por segundo al servidor estarán limitadas a 10, para
+			evitar ataques de tipo DOS \\ \hline
+			RNF4.- Almacenado de Contraseñas &  El sistema se encargará de almacenar las contraseñas en la
+			base de datos de forma segura, nunca en texto plano, empleando un algoritmo hash y almacenando
+			el resultado encriptado en la base de datos\\ \hline
+			RNF5.- Robustez Contraseñas &  El sistema solo aceptará contraseña con un mínimo de 12 caracteres y con al menos un número y un signo de puntuación\\ \hline
+			RNF6.- Validación de Dato &  Los datos introducidos por los usuarios serán validados tanto en el
+			cliente como en el servidor\\ \hline
+			 &  \\ \hline
+			 &  \\ \hline
+			 &  \\ \hline
+			 &  \\ \hline
+			 &  \\ \hline
+			 &  \\ \hline
+			 &  \\ \hline
+		\end{tabular}	
+		\egroup
+		\caption{Requisitos No Funcionales (Parte I)}
+		\end{center}
+\end{table}
 
 \end{appendices}
 
