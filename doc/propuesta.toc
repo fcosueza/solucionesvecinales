@@ -29,12 +29,16 @@
 \contentsline {paragraph}{\numberline {2.2.4.5}Ley de Protección de Datos}{13}{paragraph.2.2.4.5}%
 \contentsline {paragraph}{\numberline {2.2.4.6}Accesibilidad}{13}{paragraph.2.2.4.6}%
 \contentsline {subsubsection}{\numberline {2.2.5}Supuestos y Dependencias}{14}{subsubsection.2.2.5}%
-\contentsline {subsection}{\numberline {2.3}Requisitos Específicos}{14}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.3}Requerimientos Específicos}{14}{subsection.2.3}%
 \contentsline {subsubsection}{\numberline {2.3.1}Requisitos Funcionales}{14}{subsubsection.2.3.1}%
 \contentsline {subsubsection}{\numberline {2.3.2}Requisitos No Funcionales}{16}{subsubsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.4}Requerimientos de Documentación}{17}{subsection.2.4}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{18}{appendix.alph1.Alph1}%
-\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{22}{appendix.alph1.Alph2}%
-\contentsline {section}{Glosario}{26}{section*.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Manual de Usuario}{17}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Ayuda en Línea}{17}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}Guía de Instalación, Configuración y Archivo Léeme}{18}{subsubsection.2.4.3}%
+\contentsline {subsubsection}{\numberline {2.4.4}Licencia de la Aplicación}{18}{subsubsection.2.4.4}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{19}{appendix.alph1.Alph1}%
+\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{23}{appendix.alph1.Alph2}%
+\contentsline {section}{Glosario}{27}{section*.4}%
 \contentsline {section}{\nonumberline Referencias}{28}{section*.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

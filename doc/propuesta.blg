@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: propuesta.aux
 The style file: unsrt.bst
 Database file #1: citas.bib
-You've used 8 entries,
+You've used 9 entries,
             1791 wiz_defined-function locations,
-            469 strings with 4383 characters,
-and the built_in function-call counts, 820 in all, are:
-= -- 64
-> -- 8
+            472 strings with 4442 characters,
+and the built_in function-call counts, 920 in all, are:
+= -- 72
+> -- 9
 < -- 0
-+ -- 8
++ -- 9
 - -- 0
 * -- 2
-:= -- 81
-add.period$ -- 16
-call.type$ -- 8
-change.case$ -- 8
+:= -- 90
+add.period$ -- 18
+call.type$ -- 9
+change.case$ -- 9
 chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 40
-empty$ -- 145
+cite$ -- 9
+duplicate$ -- 45
+empty$ -- 163
 format.name$ -- 0
-if$ -- 217
+if$ -- 244
 int.to.chr$ -- 0
-int.to.str$ -- 8
+int.to.str$ -- 9
 missing$ -- 0
-newline$ -- 35
+newline$ -- 39
 num.names$ -- 0
-pop$ -- 48
+pop$ -- 54
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 48
+skip$ -- 54
 stack$ -- 0
 substring$ -- 0
-swap$ -- 8
+swap$ -- 9
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
 while$ -- 0
-width$ -- 9
-write$ -- 58
+width$ -- 10
+write$ -- 65

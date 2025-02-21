@@ -36,4 +36,8 @@
 {W3 - Sumario WCAG 2}.
 \newblock \\\url{https://www.w3.org/WAI/standards-guidelines/wcag/es}.
 
+\bibitem{mit}
+{Licencia MIT}.
+\newblock \\\url{https://opensource.org/license/mit}.
+
 \end{thebibliography}
