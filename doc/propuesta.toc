@@ -42,8 +42,10 @@
 \contentsline {subsection}{\numberline {3.2}Coste}{20}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Diagrama de Gantt}{20}{subsection.3.3}%
 \contentsline {section}{\numberline {4}Casos de Uso}{21}{section.4}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{22}{appendix.alph1.Alph1}%
-\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{27}{appendix.alph1.Alph2}%
-\contentsline {section}{Glosario}{31}{section*.4}%
-\contentsline {section}{\nonumberline Referencias}{32}{section*.7}%
+\contentsline {subsection}{\numberline {4.1}Diagrama General de Casos de Uso}{21}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Descripción Casos de Uso Principales}{22}{subsection.4.2}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{23}{appendix.alph1.Alph1}%
+\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{28}{appendix.alph1.Alph2}%
+\contentsline {section}{Glosario}{32}{section*.4}%
+\contentsline {section}{\nonumberline Referencias}{33}{section*.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
