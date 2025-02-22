@@ -39,8 +39,10 @@
 \contentsline {subsubsection}{\numberline {2.4.4}Licencia de la Aplicación}{19}{subsubsection.2.4.4}%
 \contentsline {section}{\numberline {3}Planificación del Proyecto}{19}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Alcance}{19}{subsection.3.1}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{20}{appendix.alph1.Alph1}%
-\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{24}{appendix.alph1.Alph2}%
-\contentsline {section}{Glosario}{28}{section*.4}%
-\contentsline {section}{\nonumberline Referencias}{29}{section*.7}%
+\contentsline {subsection}{\numberline {3.2}Coste}{20}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Diagrama de Gantt}{20}{subsection.3.3}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{21}{appendix.alph1.Alph1}%
+\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{26}{appendix.alph1.Alph2}%
+\contentsline {section}{Glosario}{30}{section*.4}%
+\contentsline {section}{\nonumberline Referencias}{31}{section*.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

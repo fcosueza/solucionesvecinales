@@ -67,7 +67,7 @@ A lo largo de este documento, desgranaremos todas los requisitos de la aplicaci�
 \subsection{Contexto}
 Esta aplicación es un \textbf{proyecto personal} que se ha decidido realizar tras el análisis de diferentes aplicaciones similares y ver determinadas carencias que pueden dificultar la inclusión de todos los potenciales usuarios. Hay que tener en cuenta, que los usuarios objetivos son un grupo muy heterogéneo donde podemos encontrar personas con diferente formación, conocimientos sobre tecnologías o con problemas de accesibilidad, así como gente con dificultades económicas.
 
-Por este motivo, se ha decidido realizar una \textbf{aplicación gratuita}, centrándonos en la \textbf{accesibilidad} y \textbf{facilidad de uso}, que ayude a cualquier potencial usuario a usar la aplicación e implicarse en la gestión de comunidad de vecinos. 
+Por este motivo, se ha decidido realizar una \textbf{aplicación gratuita}, centrándonos en la \textbf{accesibilidad} y \textbf{facilidad de uso}, que ayude a cualquier potencial usuario a usar la aplicación e implicarse en la gestión de su comunidad de vecinos. 
 
 \subsection{Planteamiento del Problema}
 La gestión de comunidades de vecinos es una tarea compleja que requiere realizar un conjunto de gestiones administrativas asegurando la participación de los vecinos y de una forma transparente. En este aspecto, nuestra aplicación debería permitir que se realicen las siguientes tareas:
@@ -84,7 +84,7 @@ La gestión de comunidades de vecinos es una tarea compleja que requiere realiza
 	\item \textbf{Gestión de Finanzas}: la aplicación debe realizar, de forma automática, cálculos para administrar económicamente la comunidad, calculando el balance anual a partir de las cuotas que se están pagando y las diferentes facturas que se han pagado.
 \end{itemize}
 
-Además de estas tareas, hay que garantizar la seguridad de la información almacenada, ya que es información sensible, así como el proceso para realizar estas tareas sea sencillo e intuitivo, además de accesible. 
+Además de estas tareas, hay que garantizar la seguridad de la información almacenada, ya que es información sensible, así como que el proceso para realizar estas tareas sea sencillo e intuitivo, además de accesible. 
 
 \subsection{Visión General}
 Este documento se compone de 6 secciones principales que tratan diferentes aspecto del proyecto. Para facilitar al interesado la navegación por éste, vamos a explicar brevemente en que consiste cada sección del documento:
@@ -94,11 +94,11 @@ Este documento se compone de 6 secciones principales que tratan diferentes aspec
 	
 	\item \textbf{Hardware y Software Necesario.}: en esta sección se especifica el hardware necesarios para realizar el desarrollo y poner en funcionamiento la aplicación así como el software que se va a necesitar para este mismo propósito. También se especifica el presupuesto y los costes de hosting para la aplicación.
 	
-	\item \textbf{Casos de Uso}: en esta sección se realiza un análisis de los principales casos de uso, empleando diferentes diagramas, así como un descripción más detalladas de los casos de uso generales.
+	\item \textbf{Casos de Uso}: en esta sección se realiza un análisis de los principales casos de uso, empleando diferentes diagramas, así como una descripción más detalladas de los casos de uso generales.
 	
 	\item \textbf{Diseño de la Interfaz}: en esta sección se especifica el diseño de la interfaz de usuario, mostrando todas las páginas de la aplicación así como la relación entre estas y sus diferentes elementos.
 	
-	\item \textbf{Diseño de la Base de Datos}: en este apartado se especifica el diseño de la base de datos, empleando un esquema Entidad-Relación así como el paso a tablas de esta, explicando los puntos que sean oportunos sobre las decisiones de diseño tomadas. Además, se incluyen dos script, uno para la creación de la base de datos y otro para poblarla con datos.
+	\item \textbf{Diseño de la Base de Datos}: en este apartado se especifica el diseño de la base de datos, empleando un esquema Entidad-Relación así como el paso a tablas de ésta, explicando los puntos que sean oportunos sobre las decisiones de diseño tomadas. Además, se incluyen dos script, uno para la creación de la base de datos y otro para poblarla con datos.
 	
 	\item \textbf{Diagrama de Componentes}: en esta sección se muestra el diagrama de componentes de la aplicación, poniendo de relieve la arquitectura de la aplicación así como las interacción entre los diferentes elementos y sistemas.
 \end{itemize}
@@ -111,9 +111,9 @@ Este documento se compone de 6 secciones principales que tratan diferentes aspec
 En esta sección se va definir la \textbf{especificación de requerimientos} que establece los requisitos funcionales y no funcionales de la aplicación SolucionesVecinales, realizando una análisis del funcionamiento esperado de aplicación y estableciendo unos límites para el diseño de ésta.
 
 \subsubsection{Propósito}
-El propósito de esta sección es \textbf{establecer los requisitos}, tanto funcionales como no funcionales, de la aplicación que se va a desarrollar, realizando una \textbf{análisis exhaustivo de su funcionamiento} y estableciendo las restricciones necesarias para que la aplicación cumpla su funcionalidad de forma correcta, segura y eficiente. Estos requisitos nos ayudarán a planificar el proceso de desarrollo así como a tomar las decisiones oportunas durante el proceso de diseño de la aplicación.
+El propósito de esta sección es \textbf{establecer los requisitos}, tanto funcionales como no funcionales, de la aplicación que se va a desarrollar, realizando una \textbf{análisis exhaustivo de su funcionamiento} y estableciendo las restricciones necesarias para que la aplicación cumpla su funcionalidad de forma correcta, segura y eficiente. Estos requisitos nos ayudarán a planificar el proceso de desarrollo así como a tomar las decisiones oportunas durante el diseño de la aplicación.
 
-Esta sección va dirigida principalmente al \textbf{equipo de desarrollo}, que serán los encargados de elaborar el diseño de la aplicación a partir de los requerimientos y restricciones establecidos en este documento, aunque teniendo en cuenta que también esta incluido en el documento del proyecto en general cabe la posibilidad de que tengan acceso a él otros interesados, como por ejemplo, posibles inversores.
+Esta sección va dirigida principalmente al \textbf{equipo de desarrollo}, que serán los encargados de diseñar la aplicación a partir de los requerimientos y restricciones establecidos en este documento, aunque teniendo en cuenta que también esta incluido en el documento del proyecto en general cabe la posibilidad de que tengan acceso a él otros interesados, como por ejemplo, posibles inversores.
 
 \subsubsection{Alcance}
 Nuestro producto se llama \textbf{SolucionesVecinales} y es una aplicación web para la \textbf{gestión de comunidades de vecinos}. El fin de nuestra aplicación es ayudar a todos los integrantes en una comunidad de vecinos a realizar diferentes gestiones relacionadas con las administración de su comunidad, de forma simple y sencilla. 
@@ -130,14 +130,14 @@ La referencias, al igual que el glosario, tanto de esta sección como del resto 
 
 
 \subsubsection{Visión General}
-Este documento se divide principalmente en 4 secciones, incluyendo la actual. Cada sección describe un aspecto diferentes de los requisitos del software y son las siguientes:
+Esta sección se divide a su vez en 4 secciones, incluyendo la actual. Cada sección describe un aspecto diferentes de los requisitos del software y son las siguientes:
 
 \begin{itemize}
 	\item \textbf{Introducción} (Sección 2.1): en esta primera sección se realiza una introducción tanto al software como a este documento, explicando su propósito, alcance, etc...
 	
 	\item \textbf{Descripción General} (Sección 2.2): en esta sección se realiza una descripción del software que se va a desarrollar, incluyendo su funcionalidad, restricciones, características de los usuarios potenciales, interfaces, etc. Nos sirve como base para especificar los requisitos en el siguiente apartado.
 	
-	\item \textbf{Requerimientos Específicos} (Sección 2.3): en la tercera sección vamos a establecer los requisitos específicos del software, extraídos de la descripción general y separándolos en requisitos funcionales y no funcionales.
+	\item \textbf{Requerimientos Específicos} (Sección 2.3): en la tercera sección vamos a establecer los requisitos específicos del software, extraídos de la descripción general y separados en requisitos funcionales y no funcionales.
 	
 	\item \textbf{Requerimientos de Documentación} (Sección 2.4): en esta sección de la parte de requisitos se especifican los requisitos de documentación que va a tener el software, incluyendo manuales, ayuda en línea, instalación, etc.
 \end{itemize}
@@ -155,7 +155,7 @@ En primer lugar vamos a realizar una descripción del producto, especialmente de
 
 \paragraph{Interfaces con Hardware}
 ~\\\\
-\-\ \-\ \-\ Nuestro software \textbf{no interactúa directamente con el hardware} de los dispositivos, ya que en la parte del cliente el la interacción se realiza con el navegador web, mientras que en la parte del servidor la interacción se realiza con el servidor web. Estos, a su vez, realizarán las interacciones necesarias con el SO.
+\-\ \-\ \-\ Nuestro software \textbf{no interactúa directamente con el hardware} de los dispositivos, ya que en la parte del cliente la interacción se realiza con el navegador web, mientras que en la parte del servidor la interacción se realiza con el servidor web. Estos, a su vez, realizarán las interacciones necesarias con el SO.
 
 Sí cabe destacar en esta sección, ya que no veo otra donde pueda incluir esta información, que \textbf{nuestro software} se deberá usar desde \textbf{cualquier dispositivo} que cuente con un \textbf{navegador web}, por lo que deberá realizarse el diseño teniendo esto en cuenta. Realmente esto solo afecta a la estética de la aplicación en cada dispositivo, y no en su funcionamiento, y tampoco requiere del empleo de ninguna interfaz específica, por lo que solo afectará a la \textbf{interfaz de usuario}. 
 
@@ -171,14 +171,14 @@ En el \textbf{lado del servidor}, nuestra aplicación se ejecutará en un servid
 \paragraph{Interfaces de Comunicación}
 ~\\\\
 \-\ \-\ \-\ Para que nuestra aplicación funciones correctamente \textbf{necesita comunicarse mediante una red}, ya sea local o internet, realizando al comunicación entre nuestro cliente, con el navegador del usuario, y nuestro servidor. Para llevar a cabo esta comunicación, se va a emplear el protocolo \gls{HTTP}.
-especificaciones
-El \textbf{protocolo HTTP} es el estándar para la comunicación web desde hace muchos años, inventado por Tim Berners-Lee en 1989, es un protocolo de la capa de aplicación que es la base de la comunicación en la Wordl Wide Web. \cite{wiki01}
 
-En este documento \textbf{no vamos a discutir} ni exponer las \textbf{especificaciones} de todo el \textbf{protocolo HTTP}, no siendo es relevante para nuestra aplicación ya que el uso de este protocolo se va a realizar mediante funciones predefinidas por los lenguajes sin tener que preocuparnos de como se implementa dicho protocolo, aunque si vamos a comentar un par de puntos que si tiene que ver con nuestra aplicación.
+El \textbf{protocolo HTTP} es el estándar para la comunicación web desde hace muchos años, inventado por Tim Berners-Lee en 1989, es un protocolo de la capa de aplicación que es la base de la comunicación en la World Wide Web. \cite{wiki01}
 
-En primer lugar, hay que hablar de los \textbf{verbos HTTP}, que son un conjunto de métodos que se usan para solicitar, desde el cliente, diferentes tipos de acciones que debe realizar el servidor, como puede ser mandar información, modificarla, eliminarla, etc... Los verbos HTTP que podemos emplear son GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE y PATCH. \cite{mdn01}
+En este documento \textbf{no vamos a discutir} ni exponer las \textbf{especificaciones} de todo el \textbf{protocolo HTTP}, ya que el uso de este protocolo se va a realizar mediante funciones predefinidas por los lenguajes sin tener que preocuparnos de como se implementa dicho protocolo, aunque si vamos a comentar un par de puntos que si conviene tener en cuenta.
 
-Cada método tiene una funcionalidad diferente, con diferentes ventajas e inconvenientes, pero nosotros no vamos a describir aquí todos si no que nos vamos a centrar en los únicos que nos interesa y que vamos a usar en nuestra aplicación, que son \textbf{GET}, \textbf{POST}, \textbf{PUT} y \textbf{DELETE}. Las principales características de estos métodos son las siguientes:
+En primer lugar, hay que hablar de los \textbf{métodos HTTP}, que son un conjunto de ``verbos'' que se usan para solicitar, desde el cliente, diferentes tipos de acciones que debe realizar el servidor, como puede ser mandar información, modificarla, eliminarla, etc... Los verbos HTTP que podemos emplear son GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE y PATCH. \cite{mdn01}
+
+Cada método tiene una funcionalidad diferente, con diferentes ventajas e inconvenientes, pero nosotros no vamos a describir aquí todos, si no que nos vamos a centrar en los únicos que nos interesan y que vamos a usar en nuestra aplicación, que son \textbf{GET}, \textbf{POST}, \textbf{PUT} y \textbf{DELETE}. Las principales características de estos métodos son las siguientes:
 
 \begin{itemize}
 	\item \textbf{GET}: este método se emplea para realizar \textbf{peticiones al servidor} sobre el \textbf{estado representacional de algún recurso}. Las peticiones con este método se pueden almacenar en una caché y la información de la petición se pueden ver en la URL que se le pasa al servidor. Además es un método seguro, ya que no altera información del servidor e \gls{idempotente}. \cite{mdn02}
@@ -190,7 +190,7 @@ Cada método tiene una funcionalidad diferente, con diferentes ventajas e inconv
 	\item \textbf{PUT}: este método crea o modifica un recurso en el servidor añadiendo el contenido en el cuerpo de la solicitud. La principal diferencia entre PUT y POST es que PUT es idempotente. \cite{mdn05}
 \end{itemize}
 
-Estos métodos tienen que tenerse claros en el proceso de desarrollo, ya que la \gls{API} de nuestra aplicación deberá manejar correctamente las diferentes peticiones que se hagan con estos métodos, y nuestro cliente deberá realizar las peticiones con el método adecuado. Se especificará más detalladamente en el apartado de restricciones. 
+Estos métodos tienen que tenerse claros en el proceso de desarrollo, ya que la \gls{API} de nuestra aplicación deberá manejar correctamente las diferentes peticiones que se hagan con estos métodos, y nuestro cliente deberá realizar las peticiones con el método adecuado. 
 
 Cabe destacar que nuestra aplicación usara \textbf{HTTPS}, aunque esto no va a afectar en como van a tratarse los métodos ni a procesarse, sino en como se realizará la conexión, que tiene más que ver con la configuración del servidor.
 
@@ -200,11 +200,11 @@ Para consultar con más detalle los diferentes códigos que podemos encontrar po
 
 \paragraph{Restricciones de Memoria}
 ~\\\\
-\-\ \-\ \-\ La \textbf{restricciones de memoria} en nuestra aplicación son muy dispares, ya que las que se aplican al servidor no son las mismas que las que se aplican al cliente, por lo que vamos a tratarlas las dos de forma individual escuetamente.
+\-\ \-\ \-\ La \textbf{restricciones de memoria} en nuestra aplicación son muy dispares, ya que las que se aplican al servidor no son las mismas que las que se aplican al cliente, por lo que vamos a tratarlas las dos de forma individual.
 
 En nuestro \textbf{servidor} las restricciones tanto en memoria primaria como secundaria son mínimas. La cantidad que se use de ambas va a estar estrechamente \textbf{relacionada con el número de usuarios} que tenga nuestra aplicación, ya que el principal uso de memoria principal va ser ocupado por las peticiones de los usuarios y las acciones que tenga que llevar, en consecuencia, el servidor sobre el sistema. Por otro lado, nuestra aplicación debe almacenar una gran cantidad de datos por cada comunidad, incluyendo archivos multimedia como es el caso de imágenes, por lo que la cantidad almacenamiento secundario que necesitaremos también va a depender en gran medido del número de usuarios que tengamos.
 
-Por otro lado, nuestro \textbf{cliente} si va a tener \textbf{fuertes restricciones}, especialmente en el uso de\textbf{ memoria principal}, ya que no se espera uso de memoria secundaria más haya de lo que puedan ocupar las cookies y otros elementos de este tipo. Pero en la memoria principal si tendremos restricciones, ya que hay que tener en cuenta que nuestra aplicación debe ejecutarse en muchos dispositivos que tienen recursos muy limitados, como pueden ser los dispositivos móviles, especialmente los más antiguos. En este aspecto \textbf{deberá minimizarse} el uso de \textbf{memoria principal}, evitando efectos indeseados como excesivos renderizados o utilizando imágenes comprimidas.
+Por otro lado, nuestro \textbf{cliente} si va a tener \textbf{fuertes restricciones}, especialmente en el uso de\textbf{ memoria principal}, ya que no se espera uso de memoria secundaria más de lo que puedan ocupar las cookies y otros elementos de este tipo. Pero en la memoria principal si tendremos restricciones, ya que hay que tener en cuenta que nuestra aplicación debe ejecutarse en muchos dispositivos que tienen recursos muy limitados, como pueden ser los dispositivos móviles, especialmente los más antiguos. En este aspecto \textbf{deberá minimizarse} el uso de \textbf{memoria principal}, evitando efectos indeseados como excesivos renderizados o utilizando imágenes comprimidas.
 
 \paragraph{Requerimientos de Adecuación al Entorno}
 ~\\\\
@@ -239,6 +239,9 @@ A lo largo de este documento ya hemos comentado que nuestro software, \textbf{So
  		
  		\item \textbf{Finanzas}: la sección de finanzas \textbf{mostrará una tabla con todos los ingresos y gastos} previstos para este año, aunque también se podrán consultar los del ejercicio anterior. El administrador podrá añadir o eliminar registros, lo que provocará que la aplicación haga el cálculo de nuevo, mostrando el nuevo resultado.
  	\end{itemize}
+ 	
+ 	\item Además de estos servicios, que serán ofrecidos a los usuarios, la aplicación tiene un \textbf{backoffice}, donde el administrador web (\textbf{WebAdmin}) podrá conectarse y gestionar los diferentes servicios que tiene la aplicación, así como consultar estadísticas con diferentes parámetros.
+ 	
 \end{itemize}
 
 Estás son las principales funcionalidades que tiene nuestro software. \textbf{No es algo inamovible}, y en un futuro podría (y debería) plantearse la adición de nuevas funcionalidades. Para ello será interesante crear una canal de feedback con los usuarios y escuchar que tienen que decir, especialmente, que echan en falta.
@@ -246,7 +249,7 @@ Estás son las principales funcionalidades que tiene nuestro software. \textbf{N
 \subsubsection{Características de los Usuarios}
 Los usuarios objetivos de nuestra aplicación son un \textbf{grupo muy heterogéneo}, que abarca a \textbf{cualquier persona} que viva en una comunidad de vecinos, es decir, la gran mayoría de la población. Por ello vamos a encontrarnos usuarios con todos los niveles de experiencia, nivel educacional, edad, etc. 
 
-Teniendo esto en cuenta, la aplicación debe ser lo suficientemente simple e intuitiva en su uso para que lo usuarios con menos experiencia, nivel educativo o los que tiene problemas de accesibilidad puedan usarla correctamente.
+Teniendo esto en cuenta, la aplicación debe ser lo suficientemente simple e intuitiva en su uso para que los usuarios con menos experiencia, nivel educativo o los que tiene problemas de accesibilidad puedan usarla correctamente.
 
 \subsubsection{Restricciones de Diseño}
 En este apartado vamos a realizar una lista con todas las restricciones de diseño que deben aplicarse a la hora de desarrollar la aplicación, desde lenguajes de programación y herramientas de desarrollo, pasando por políticas de testeo, seguridad de datos, etc...
@@ -310,6 +313,8 @@ No se va a especificar el software para el testing ni el control de calidad, ya 
 	\item El \textbf{software} que se emplee en el desarrollo y necesario para la ejecución de la aplicación deben estar siempre \textbf{actualizado a la última última versión}.
 	
 	\item Solo se permitirán conexiones \textbf{HTTPS} con la aplicación.
+	
+	\item Los usuario usuarios deberán \textbf{ingresar al sistem}a empleando su \textbf{correo y contraseña}, salvo el \textbf{administrador web}, que podrá usar el \textbf{usuario WebAdmin} y su contraseña.
 \end{itemize}
 
 \paragraph{Ley de Protección de Datos}
@@ -401,7 +406,9 @@ En primer lugar, vamos a establecer los \textbf{requisitos funcionales}. Se va a
 	\item \textbf{RF25 - Consultar Finanzas}: Un usuario podrá consultar las finanzas de la comunidad en la sección finanzas que se mostrarán en una tabla con los datos estimados para el curso actual, pudiendo también consultar los datos del curso anterior.
 	\item \textbf{RF26 - Gestionar Finanzas}: El administrador podrá añadir, eliminar o modificar los registros de la tabla de finanzas.
 	\item \textbf{RF27 - Calcular Finanzas}: El sistema realiza el calculo de las finanzas cada vez que se añada o elimine un pago o un ingreso.
-	\item \textbf{RF28 - Cerrar Sesión}: Un usuario o administrador podrán cerrar la sesión en el sistema desde el icono de usuario.	
+	\item \textbf{RF28 - Cerrar Sesión}: Un usuario o administrador podrán cerrar la sesión en el sistema desde el icono de usuario.
+	
+	\item \textbf{RF29 - Administrar Servicios}: el administrador web podrá iniciar sesión empleando el usuario WebAdmin y acceder al panel de control para administrar los diferentes servicios web así como para obtener datos de uso de la aplicación.
 \end{itemize}
 
 \subsubsection{Requisitos No Funcionales}
@@ -431,10 +438,10 @@ En esta sección se incluyen todos los requisitos no funcionales, referentes a l
 \end{itemize}
 
 \subsection{Requerimientos de Documentación}
-En esta sección se va a especificar la documentación que va a emplear nuestro software, en que formato y el contenido que debe tener. En nuestro caso, la documentación más importante, de cara al usuario será la documentación en línea, como veremos a continuación.
+En esta sección se va a describir la documentación que va a emplear nuestro software, en que formato debe presentarse y el contenido que debe tener. 
 
 \subsubsection{Manual de Usuario}
-En nuestro caso, no se necesita una manual de usuario para nuestra aplicación, ya que los usuarios van a acceder a ellos de forma online y la ayuda se va a emplear va a ser la ayuda en línea.
+En nuestro caso, no se necesita una manual de usuario para nuestra aplicación, ya que los usuarios van a acceder a ella de forma online y se va a emplear ayuda online.
 
 \subsubsection{Ayuda en Línea}
 Nuestra aplicación ofrecerá una \textbf{extensa ayuda en línea} que se encargará de explicar como realizar los diferentes procedimientos que pueden llevar a cabo los usuarios en nuestra aplicación.
@@ -448,7 +455,7 @@ El posicionamiento del icono de ayuda deberá realizarse de \textbf{forma visibl
 
 
 \subsubsection{Guía de Instalación, Configuración y Archivo Léeme} 
-Se incluirá una \textbf{guía de instalación en un entorno local} en el que se especificará como se instala el software en un servidor Apache 2.0 y la configuración que se debe realizar, si es necesario. La guía explicará paso a paso 
+Se incluirá una \textbf{guía de instalación en un entorno local} en el que se especificará como se instala el software en un servidor Apache 2.0 y la configuración que se debe realizar, si es necesario. La guía lo explicará paso a paso 
 
 Respecto al archivo Léeme, se incluirá un archivo \textbf{README} en formado \gls{Markdown} en el \textbf{repositorio de Github} de nuestra aplicación, en el que se explicará un poco el propósito de nuestro software, como ejecutarlo de forma local, tecnologías empleadas, forma de contribuir al proyecto, etc. Este archivo, probablemente, sea más interesante para otros desarrolladores que para la mayoría de usuarios de nuestra aplicación.
 
@@ -467,8 +474,42 @@ El proyecto que vamos a desarrollar se llama \textbf{SolucionesVecinales}, y con
 
 Nuestro \textbf{objetivo}, es crear un \textbf{software} que proporcione las herramientas para \textbf{gestionar los principales aspectos} de una \textbf{comunidad de vecinos}. El software ofrecerá herramientas para la gestión de incidencias, reserva de espacios comunes, gestión de documentos, tablón de anuncios y consulta de la finanzas de la comunidad. Todo eso, poniendo especial énfasis en la facilidad de uso y la accesibilidad.
 
-El \textbf{plazo de entrega} de entrega del proyecto es, como máximo, del \textbf{5 de Mayo de 2025}, por lo que en el momento de escribir estas líneas hay un plazo de 2 meses para el desarrollo de la aplicación.
+El \textbf{plazo de entrega} de entrega del proyecto es, como máximo, del \textbf{5 de Mayo de 2025}, por lo que en el momento de escribir estas líneas hay un plazo de 2 meses para el desarrollo de la aplicación. Por lo que vamos a establecer un \textbf{conjunto de entregas} que se deberán respetar, no solo para llevar el proyecto a buen termino en el tiempo especificado, sino para dejar claro que esta, también, fuera del alcance de este proyecto.
 
+Las \textbf{entregas} que se han planificado son:
+
+\begin{itemize}
+	\item \textbf{7 de Marzo}: Página principal de la aplicación con la información y el formulario de contacto, concretando los elementos de diseño finales. Creación de la Base de Datos.
+	
+	\item \textbf{21 de Marzo}: Sistema de autenticación de usuario, añadir comunidades y página principal de comunidad. 
+	
+	\item \textbf{7 de Marzo}: Sistema de incidencias y Tablón de Anuncios. Página principal de administración de la comunidad.
+	
+	\item \textbf{21 de Abril}:  Sistema de gestión de espacios Comunes.
+	
+	\item \textbf{28 de Abril}: Sistema de Finanzas y Backoffice
+\end{itemize}
+
+Hay que tener en cuenta que las \textbf{entregas} se han establecido por \textbf{funcionalidades completas}, por lo que se deberá esta trabajando en el \textbf{backend} y el \textbf{frontend} de forma simultánea. Además, todo el proceso irá dirigido por lo test, empleando la \textbf{metodología TDD}.
+
+Para cumplir este calendario de entregas, cualquier \textbf{elemento fuera de estas entregas} se considerá \textbf{fuera del alcance del proyecto}, salvo que su desarrollo sea vital para el correcto funcionamiento de alguno de los elementos especificados en las entregas.
+
+\subsection{Coste}
+En el coste de nuestro proyecto hay que incluir varios elementos. Algunos de ellos ya los tenemos adquiridos con antelación, pero aún así, se incluirá en el coste del proyecto, para tenerlo en cuenta.
+
+Para el desarrollo de nuestra aplicación, se va a emplear un \textbf{ordenador portátil} ya adquirido, en concreto un \textbf{HP eq0003ns}, al que se han añadido \textbf{32 GB de RAM}. Además, hay que tener en cuenta el sueldo del desarrollador, ya que solo va a haber uno, durante los 2 meses de desarrollo, a lo que habrá que sumarle el Hosting aproximado, ya que aún se están valorando diferentes opciones. Eso, supone el siguiente costo:
+
+\begin{itemize}
+	\item HP eq0003ns con 32 GB: \textbf{600€}
+	\item Sueldo Programador 2 meses: \textbf{2500€}
+	\item Hosting (Anual): \textbf{200€}
+	\item Total: \textbf{3300€}
+\end{itemize}
+
+Este sería el coste inicial del proyecto, pero siempre pueden surgir algún contratiempo que aumente el coste o lo abarate (poco probable).
+
+\subsection{Diagrama de Gantt}
+Para finalizar esta pequeña planificación del proyecto, se expone en la siguiente figura un diagrama de Gantt con la cronología de lo que se ha realizado hasta el momento y de lo que aún queda por realizar.
 
 
 
@@ -481,24 +522,21 @@ El \textbf{plazo de entrega} de entrega del proyecto es, como máximo, del \text
 	
 \section{Descripción de la Interfaz de Usuario}
 \label{sec:apenA}
-
-En este anexo se va a describir la interfaz de la aplicación, especialmente a un nivel gráfico, ya que a nivel de funcionamiento se va a describir con más detalle en otro punto de esta sección.
-
-SolucionesVecinales es una aplicación web, por lo que tendrá una \textbf{interfaz web} que podrá ser accedida desde cualquier navegador y prácticamente desde cualquier dispositivo. La interfaz estará compuesta por un conjunto de páginas web que ayudarán a los usuarios a utilizar las diferentes herramientas que ofrece la aplicación para gestionar la comunidad de vecinos. 
+\textbf{SolucionesVecinales} es una aplicación web, por lo que tendrá una \textbf{interfaz web} que podrá ser accedida desde cualquier navegador y prácticamente desde cualquier dispositivo. La interfaz estará compuesta por un conjunto de páginas web que ayudarán a los usuarios a utilizar los diferentes servicios que ofrece la aplicación para gestionar la comunidad de vecinos. 
 
 Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las siguientes:
 
 \begin{itemize}
-	\item \textbf{Página Principal}: esta es la primera interfaz con la que se encuentra un usuario al ingresar en nuestra aplicación web. La función principal de esta pantalla es la de \textbf{ofrecer información sobre la aplicación}, así como proporcionar un\textbf{ menú con diferentes opciones} que, además de permitir la navegación por las diferentes secciones permita a un usuario \textbf{registrarse} o \textbf{realizar \gls{login}}.
+	\item \textbf{Página Principal}: está es la página que se carga cuando cualquier usuario entra a nuestra aplicación. La función principal de esta pantalla es la de \textbf{ofrecer información sobre la aplicación}, así como proporcionar un\textbf{ menú con diferentes opciones} que, además de permitir la navegación por las diferentes secciones permita a un usuario \textbf{registrarse} o \textbf{realizar \gls{login}}.
 	
 	Las secciones de las que estará compuesta esta interfaz serán las siguientes:
 	
 	\begin{itemize}
 		\item \textbf{Cabecera}: aquí se mostrará una imagen con un eslogan, el nombre de la aplicación y un elemento \gls{CTA} para que los usuarios se registren o realicen login.
 		
-		\item \textbf{Barra de Menú}: esta barra, que se sitúa inicialmente encima de la cabecera y que debe permanecer en todo momento en la parte superior de la pantalla, esta compuesta del \textbf{logo de la aplicación} en el lado izquierdo y de un \textbf{menú} en el lado derecho. El menú cambiar las opciones que ofrece dependiendo de si el usuario esta registrado o no. 
+		\item \textbf{Barra de Menú}: esta barra, que se sitúa inicialmente encima de la cabecera y que debe permanecer en todo momento en la parte superior de la pantalla, esta compuesta del \textbf{logo de la aplicación} en el lado izquierdo y de un \textbf{menú} en el lado derecho. El menú estará siempre presente en todas las páginas de la web, aunque dependiendo del contexto, la opción del menú pueden cambiar.
 		
-		\item \textbf{Secciones}: esta página contendrá, como mínimo, \textbf{3 secciones}, donde se explicará un poco el \textbf{propósito} del software, sus principales \textbf{características}, lo que nos diferencia de la competencia, etc. El número de secciones puede variar, pudiendo ser necesario agregar más.  Las secciones deben ser \textbf{visualmente atractivas}, incluyendo imágenes e iconos y con una disposición adecuada. 
+		\item \textbf{Secciones}: esta página contendrá, como mínimo, \textbf{3 secciones}, donde se explicará un poco el \textbf{propósito} del software, sus principales \textbf{características}, lo que nos diferencia de la competencia, etc. Las secciones deben ser \textbf{visualmente atractivas}, incluyendo imágenes e iconos y con una disposición adecuada. 
 		
 		Una sección que deberá ser \textbf{obligatoria}, es la sección ``\textbf{Contacta con nosotros}'', compuesta por un formulario y que permitirá a cualquier usuario, registrado o no, contactar con el equipo de desarrollo.
 		
@@ -507,17 +545,17 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 	
 	Tanto la \textbf{barra de menú} superior como el \textbf{pié de página} se mantendrán \textbf{visibles en todas las páginas} de la aplicación, cambiando en ciertos aspectos u ofreciendo diferentes opciones.
 	
-	\item \textbf{Página de Login}: a esta pantalla se accede desde la pantalla principal cuando el usuario pulsa en el enlace de login/registro del menú de la barra principal y su propósito es permitir que los usuarios ingresen al sistema. La pantalla inicial esta compuesta por un \textbf{formulario} de login, que debe aceptar un \textbf{email} y una \textbf{contraseña} como entrada, con el botón enviar en la parte inferior. Además, incluirá un \textbf{enlace} debajo del botón, centrado, que permitirá al usuario \textbf{registrarse}, en caso de que no este registrado, desplegando un nuevo formulario que veremos en detalle a continuación. Solo el \textbf{administrador de la web} podrá realizar el ingreso al sistema empleando el \textbf{usuario WebAdmin}.
+	\item \textbf{Página de Login}: el propósito de esta página es permitir que los usuarios ingresen al sistema. La pantalla inicial esta compuesta por un \textbf{formulario}, que debe aceptar un \textbf{email} y una \textbf{contraseña} como entrada, con el botón enviar en la parte inferior. Además, incluirá un \textbf{enlace} debajo del botón, centrado, que permitirá al usuario \textbf{registrarse}, en caso de que no este registrado, desplegando un nuevo formulario que veremos en detalle a continuación. Solo el \textbf{administrador de la web} podrá realizar el ingreso al sistema empleando el \textbf{usuario WebAdmin}, el resto de usuarios deberán usar su correo.
 	
 	\item \textbf{Página de Registro}: en esta pantalla, que se accede desde la pantalla de login, se muestra un formulario que \textbf{permitirá a un usuario registrarse} en el sistema. Este formulario estará compuesto por diferentes campos que permitirán al usuario introducir la información necesaria pare registrarse, como puede ser Nombre, Correo, Dirección, rol, etc. Debajo, aparecerá el \textbf{botón registrarse} que permitirá al usuario registrar todos sus datos.  
 
 	
-	\item \textbf{Página Principal de Comunidad}: una vez que el usuario haya ingresado al sistema, se mostrará la pantalla de comunidad. El propósito de esta pantalla es servir como \textbf{puerta de entrada a la gestión de al comunidad}. Esta interfaz estará compuesta por los siguientes elementos:
+	\item \textbf{Página Principal de Comunidad}: una vez que el usuario haya ingresado al sistema, se mostrará la pantalla de comunidad. El propósito de esta pantalla es servir como \textbf{puerta de entrada a la gestión de al comunidad} y como \textbf{punto de información} para el usuario. Esta interfaz estará compuesta por los siguientes elementos:
 	
 	\begin{itemize}
 		\item \textbf{Barra de Menú}: similar a la que vemos en la página principal, pero las opciones de menú ``Login/Registrarse''  habrá cambiado por el \textbf{icono de un usuario}. Este icono mostrará un \textbf{menú vertical} con las opciones ``\textbf{Perfil}'' y ``\textbf{Logout}'', que permitirán acceder a la información de perfil y hacer \gls{logout} respectivamente.
 		
-		\item \textbf{Menú Lateral}: un menú lateral, situado a la izquierda, que mostrará las opciones relativas a la comunidad que este cargada. Las opciones variarán según si el usuario tiene el rol de administrador o de usuario, pero la opciones comunes a ambos son las siguientes: 
+		\item \textbf{Menú Lateral}: un menú lateral, situado a la izquierda, que mostrará los diferentes servicios que ofrece al aplicación para gestionar la comunidad. Las opciones variarán según si el usuario tiene el rol de administrador o de usuario, pero la opciones comunes a ambos son las siguientes: 
 		
 		\begin{itemize}
 			\item \textbf{Inicio}
@@ -529,38 +567,38 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 		\end{itemize}
 	
 		 
-		 Adicionalmente, si el usuario tiene el \textbf{rol administrador}, se mostrará la opción "\textbf{Administrar}", que permitirá al administrador gestionar los aspectos principales de la comunidad desde una misma pantalla. La cual se describirá más adelante.
+		 Adicionalmente, si el usuario tiene el \textbf{rol administrador}, se mostrará la opción ``\textbf{Administrar}''	, que permitirá al administrador gestionar los aspectos principales de la comunidad desde una misma pantalla. La cual se describirá más adelante.
 		 
-		El menú lateral se mostrará solo en caso de que el usuario, independientemente de su rol, este inscrito en una comunidad. En caso contrario no se mostrará.
+		El menú lateral se mostrará solo en caso de que el usuario, independientemente de su rol, este inscrito en una comunidad. En caso contrario no se mostrará. Si el usuario es una \textbf{administrador}, se mostrará en su lugar un \textbf{formulario para añadir una comunidad}. Si es un \textbf{usuario}, se mostrará un \textbf{mensaje con el estado} de su solicitud de suscripción.
 		
-		\item \textbf{Zona de Contenido}: en esta zona, que estará ubicada en el centro, se mostrará la información que se quiere mostrar al usuario. Cuando un \textbf{usuario inscrito en una comunidad} acceda a la página principal de comunidad, aquí se mostrar la \textbf{información} de ésta, como nombre, dirección y una imagen. Además, se mostraran las \textbf{incidencias sin resolver} creadas por el usuario y las \textbf{reservas pendientes} que ha realizado, debajo de la información anterior, en formato de lista. 
+		\item \textbf{Zona de Contenido}: en esta zona, que estará ubicada en el centro y es el elemento principal de ésta página. Cuando un \textbf{usuario inscrito en una comunidad} acceda a la página principal de comunidad, aquí se mostrar la \textbf{información} de ésta, como nombre, dirección y una imagen. Además, se mostraran la actividad reciente del usuario, así como otros notificaciones, como las reservas realizadas o el estado de las incidencias creadas.
 		
 		En esta zona de la interfaz se mostrará todas la información de los diferentes servicios y es donde se permitirá interactuar con la comunidad. Seleccionando alguna de las opciones del menú, los \textbf{principales elementos} que se mostrarán en esta zona y que permiten \textbf{realizar las acciones sobre la comunidad} son las siguientes: 
 		
 		\begin{itemize}
 			\item \textbf{Inicio}: cuando un usuario pinche en esta opción cargara la información por defecto de la página principal de comunidad, que se ha descrito en el párrafo anterior.
 			
-			\item \textbf{Tablón de Anuncios}: esta opción nos permite acceder a los mensajes que se han publicado en la comunidad y mostrará una tabla con todos los mensajes, junto con su fecha. Si \textbf{usuario es un administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios.	
+			\item \textbf{Tablón de Anuncios}: este servicio nos permite acceder a los mensajes que se han publicado en la comunidad y mostrará una lista con todos los mensajes, junto con su fecha. Si \textbf{usuario es un administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios.	
 			
-			\item \textbf{Documentos}: pulsando en esta opción mostrará los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los documentos se mostrarán como un conjunto de iconos con un nombre debajo. Tanto el icono como el nombre deberán ser un enlace que al pulsarlo permita a los usuarios descargar el documento en cuestión. 
+			\item \textbf{Documentos}: pulsando en esta opción se mostrarán los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los documentos se mostrarán como un conjunto de iconos con un nombre debajo. Tanto el icono como el nombre deberán ser un enlace que al pulsarlo permita a los usuarios descargar el documento en cuestión. 
 			
 			En el caso de que el \textbf{usuario sea un administrador}, debe aparecer un botón con el texto "\textbf{Añadir Documento}" que desplegará una formulario y le permitirá añadir nuevos documentos al directorio. 
 			
-			\item \textbf{Incidencias}: aquí nos permitirá crear y manejar las incidencias que hemos creado mostrando una \textbf{lista con todas las incidencias} de la comunidad, junto con su fecha de creación y su estado. Para un \textbf{usuario}, solo se mostrarán \textbf{sus incidencias} y todos aquellas que hayan sido \textbf{marcadas como públicas} por los usuarios que las hayan creado. Para el administrador, serán visibles todas las incidencias.
+			\item \textbf{Incidencias}: este servicio permitirá a los usuario gestionar las incidencias, mostrando una \textbf{lista con todas las incidencias} de la comunidad, junto con su fecha de creación y su estado. Para un \textbf{usuario}, solo se mostrarán \textbf{sus incidencias} y todos aquellas que hayan sido \textbf{marcadas como públicas} por los usuarios que las hayan creado. Para el administrador, serán visibles todas las incidencias.
 			
-			Debajo de la lista de incidencias, debe haber un \textbf{botón} con el texto "\textbf{Crear incidencia}", que desplegará un formulario y permitirá a cualquier usuario crear una nueva incidencia. Además, si el \textbf{usuario conectado es el administrador}, aparecerán 2 botones a la derecha de cada incidencia, que permitirán tanto \textbf{borrar las incidencias} como \textbf{cambiar su estado}. En caso de que el usuario no sea administrador, solo aparecerá el botón ``Borrar'' en las incidencias que hayan sido creadas por el usuario.
+			Debajo de la lista de incidencias, debe haber un \textbf{botón} con el texto "\textbf{Crear incidencia}", que desplegará un formulario y permitirá a cualquier usuario crear una nueva incidencia. Además, si el \textbf{usuario conectado es el administrador}, aparecerán 2 botones a la derecha de cada incidencia, que permitirán tanto \textbf{borrar las incidencias} como \textbf{cambiar su estado}. En caso de que el usuario no sea administrador, solo aparecerá el botón ``Borrar'' en las incidencias que hayan sido creadas por él mismo.
 			
-			\item \textbf{Espacios Comunes}: se mostrarán los diferentes espacios comunes de la comunidad y se permitirá su reserva. Se mostrará una lista con todos los espacios comunes que hay en al comunidad, que permitirá clickar en ellos y acceder a la página de cada espacio común. Además, para los administradores, se mostrará un botón con el texto "Añadir Espacio" que mostrará un formulario que permitirá añadir un nuevo espacio común, con información como el nombre del espacio común, sus características y el horario de uso, además de la posibilidad de incluir una foto de dicho espacio.
+			\item \textbf{Zonas Comunes}: se mostrarán las diferentes zonas comunes de la comunidad y se permitirá su reserva. Se mostrará un icono por cada zona, con todos los espacios comunes que hay en al comunidad, que permitirá clickar en ellos y acceder a la página de cada espacio común. Además, para los administradores, se mostrará un botón con el texto ``Añadir Espacio'' que mostrará un formulario que permitirá añadir un nuevo espacio común, con información como el nombre del espacio común, sus características y el horario de uso, además de la posibilidad de incluir una foto de dicho espacio.
 			
 			\begin{itemize}
-				\item \textbf{Detalle de Espacio Común}: se muestran los \textbf{detalles de una zona común}. Aparecerá \textbf{una imagen}, si se hubiera incluido. Sino se cargara una imagen por defecto. Encima aparecerá el \textbf{nombre} del espacio común y al lado derecho de la imagen, una \textbf{descripción} de dicho espacio. Debajo de la descripción aparecerá el horario de uso de dicho espacio.
+				\item \textbf{Detalle de Zona Común}: se muestran los \textbf{detalles de una zona común}. Aparecerá \textbf{una imagen}, si se hubiera incluido. Sino se cargara una imagen por defecto. Encima aparecerá el \textbf{nombre} del espacio común y al lado derecho de la imagen, una \textbf{descripción} de dicho espacio. Debajo de la descripción aparecerá el horario de uso de dicho espacio.
 				
 				Debajo de este bloque, se mostrará un \textbf{calendario}. Los \textbf{días en los que no se pueda reservar} tendrán un fondo \textbf{rojo} y en los que aún \textbf{si se pueda} tendrán un \textbf{fondo verde}. Al \textbf{pinchar} sobre uno de estos días se desplegará una \textbf{lista con los posibles horarios} en los que se puede reservar, permitiendo pinchar en uno y pulsar el \textbf{botón "Reservar"} que habrá también aparecido junto con los horarios.
 			\end{itemize}
 			
-			\item \textbf{Finanzas}: se mostrará una \textbf{tabla con las finanzas} de la comunidad. Indicando los ingresos y el tipo de estos, como cuotas, seguros, etc., así como los gastos y su tipo, limpieza del edificio, arreglos, seguros, etc. La información de mostrará para este ejercicios, realizando una estimación, y se irá modificando de forma automática cuando se añadan gastos o ingresos. 
+			\item \textbf{Finanzas}: se mostrará una \textbf{tabla con las finanzas} de la comunidad, indicando los ingresos y el tipo de estos, como cuotas, seguros, etc., así como los gastos y su tipo, limpieza del edificio, arreglos, seguros, etc. La información de mostrará para este ejercicio, realizando una estimación, y se irá modificando de forma automática cuando se añadan gastos o ingresos, aunque también se podrá consultar para ejercicios anteriores. 
 			
-			Solo los \textbf{administradores} puede modificar esta tabla, mediante un formulario para añadir un registros en el que se podrá seleccionar el tipo de registro, si es un ingreso o gasto, y el tipo de cada uno, así como la cantidad. Cuando se agregue un nuevo registro, el sistema calculará el balance con los nuevos datos y los mostrará. Este formulario se mostrará después de pulsar el botón ``Añadir'' debajo de la tabla de finanzas.
+			Solo los \textbf{administradores} puede modificar esta tabla, mediante un formulario para añadir un registros en el que se podrá seleccionar el tipo de registro, si es un ingreso o gasto, y el tipo de cada uno, así como la cantidad. Cuando se agregue un nuevo registro, el sistema calculará el balance con los nuevos datos y los mostrará. Este formulario se mostrará después de pulsar el botón ``Añadir'' debajo de la tabla de finanzas. Solo se pueden añadir o borrar registros en el ejercicio actual.
 			
 			\item \textbf{Administrar}: esta opción solo es elegible por los usuarios con \textbf{rol de administrador} y permite al administrador \textbf{gestionar} todos los aspectos de una \textbf{comunidad} mediante un panel de control.
 			
@@ -576,6 +614,13 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 	\item \textbf{Página de Perfil}: en esta pantalla, que se accede desde el menú vertical del icono de perfil, se mostrará un \textbf{formulario con toda la información del usuario} en la zona de contenido. Este formulario se podrá \textbf{editar} y actualizar mediante un botón que habrá debajo de él con el texto "Guardar". 
 	
 	Además, debajo de este aparecerá un \textbf{botón} con la opción ``\textbf{Eliminar usuario}'' que permitirá a un usuario eliminar su información, y que al ser pulsado ocultará el formulario con al información y mostrará una ventana de confirmación. Si la confirmación es positiva, se eliminará al usuario, y se redireccionará la pantalla principal.
+	
+	\item \textbf{Backoffice}: esta es una interfaz especial, ya que solo es accesible por el \textbf{administrador web} o \textbf{WebAdmin} y sirve como un punto centralizado para gestionar todos los servicios y consultar datos sobre la aplicación.
+	En la parte superior aparecerá un tabla con \textbf{estadísticas} de uso generales de la aplicación. Debajo de esta tendremos un formulario con diferentes opciones para generar informes más específicos que se mostrarán en la tabla de superior.
+	
+	Debajo de este apartado, aparecerán \textbf{dos iconos}, uno para \textbf{las comunidades} y otro para \textbf{los usuarios}. Al pulsarlo, aparecerá una pantalla con una lista desplegable, con todas las comunidades registradas en al aplicación. Al pulsar en una comunidad, se desplegará una lista mostrando los usuarios registrados en al comunidad, el administrador y los espacios comunes registrados, el número de documentos, etc. En el caso de los usuarios se mostrará una tabla con todos los usuarios registrados en al aplicación.
+	
+	Dentro de las pantallas de comunidad y usuarios, el \textbf{WebAdmin} podrá \textbf{añadir} o \textbf{eliminar} cualquier comunidad o usuario. También se podrán eliminar servicios dentro de una comunidad.
 \end{itemize}
 
 Además de estas páginas, hay que tener en cuenta que la aplicación debe \textbf{visualizarse correctamente en cualquier dispositivo}. Aunque se añadirán restricciones más adelante en este aspecto, hay que tener en cuenta que algunos \textbf{elementos cambiarán} cuando la aplicación se visualice en \textbf{dispositivos pequeños}, como móviles o tablets. Estos elementos son:
@@ -664,6 +709,9 @@ En este anexo se incluyen varias tablas con los requisitos funcionales y no func
 			elimine un pago o un ingreso \\ \hline
 			RF28.- Cerrar Sesión &  Un usuario o administrador podrán cerrar la sesión en el sistema desde el
 			icono de usuario \\ \hline
+			RF29.- Administrar Servicios & el administrador web podrá iniciar sesión empleando el usuario
+			WebAdmin y acceder al panel de control para administrar los diferentes servicios web así como
+			para obtener datos de uso de la aplicación \\ \hline
 		\end{tabular}	
 		\egroup
 		\caption{Requisitos Funcionales (Parte II)}
