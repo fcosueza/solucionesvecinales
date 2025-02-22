@@ -60,7 +60,7 @@ En este documento se detalla el proyecto final desarrollado para el \textbf{CFGS
 
 El objetivo de esta aplicación es facilitar la \textbf{gestión de comunidades de vecinos} por parte tanto de los administradores de la propiedad como de los inquilinos o propietarios, ofreciéndose de \textbf{forma gratuita} y poniendo especial énfasis en las \textbf{accesibilidad} y \textbf{facilidad de uso}, con una interfaz web amigable y accesible desde cualquier dispositivo que disponga una navegador web.
 
-La aplicación trabaja con \textbf{3 tipos diferentes de usuarios}, incluyendo administradores, usuarios y visitantes, siendo el público objetivo los administradores de propiedad y presidentes de comunidad así como todos los inquilinos y propietarios de las comunidades de vecinos. Los diferentes usuarios tendrán diferentes permisos y responsabilidades.
+La aplicación trabaja con \textbf{3 tipos diferentes de usuarios}, incluyendo administradores, inquilinos y visitantes, siendo el público objetivo los administradores de propiedad y presidentes de comunidad así como todos los inquilinos y propietarios de las comunidades de vecinos. Los diferentes usuarios tendrán diferentes permisos y responsabilidades.
 
 A lo largo de este documento, desgranaremos todas los requisitos de la aplicación, el diseño elegido y todos los detalles del proceso de desarrollo y testeo.
 
@@ -214,28 +214,28 @@ Por otro lado, nuestro \textbf{cliente} si va a tener \textbf{fuertes restriccio
 A lo largo de este documento ya hemos comentado que nuestro software, \textbf{SolucionesVecinales}, es una aplicación de \textbf{gestión de comunidades de vecinos}, pero no hemos especificado cual es su funcionamiento, así que en esta sección vamos a realizar una descripción general del funcionamiento de la aplicación.
 
 \begin{itemize}
-	\item La aplicación deberá \textbf{gestionar los diferentes usuarios} permitiendo que éstos se registren en el sistema como usuarios o administradores y que accedan a las diferentes herramientas para gestionar su comunidad, así como a la modificación de su perfil o su eliminación.
+	\item La aplicación deberá \textbf{gestionar los diferentes usuarios} permitiendo que éstos se registren en el sistema como inquilinos o administradores y que accedan a las diferentes herramientas para gestionar su comunidad, así como a la modificación de su perfil o su eliminación.
 	
- 	\item Los \textbf{administradores} podrán añadir nuevas comunidades, donde los usuarios podrán inscribirse. El \textbf{sistema generará automáticamente} una \textbf{solicitud de inscripción} cuando se registre un usuario a la comunidad con la dirección del usuario. El \textbf{administrador deberá aprobar} la solicitud para que el usuario quede inscrito.
+ 	\item Los \textbf{administradores} podrán añadir nuevas comunidades, donde los usuarios podrán inscribirse. El \textbf{sistema generará automáticamente} una \textbf{solicitud de inscripción}, cuando se registre un inquilino, a la comunidad con la misma dirección del inquilino. El \textbf{administrador deberá aprobar} la solicitud para que el inquilino quede inscrito.
  	
- 	\item Una vez que los \textbf{usuarios o administradores} estén inscritos en una comunidad, tendrán acceso al sistema de gestión de comunidades, donde podrán realizar diferentes acciones en su comunidad, además de tener la opción de editar su perfil o eliminar su usuario desde su página de perfil. 
+ 	\item Una vez que los \textbf{inquilinos o administradores} estén inscritos en una comunidad, tendrán acceso al sistema de gestión de comunidades, donde podrán realizar diferentes acciones en su comunidad, además de tener la opción de editar su perfil o eliminar su usuario desde su página de perfil. 
  	
  	\item Dentro de las \textbf{herramientas} que provee nuestro software para \textbf{gestionar la comunidad}, tenemos las siguientes:
  	
  	\begin{itemize}
- 		\item \textbf{Inicio}: en la pantalla de inicio de gestión de comunidad se mostrará información de la comunidad, así como información relativa a los elementos creados por el usuario, como pueden ser incidencias, documentos descargados, reservas de espacios comunes, etc.
+ 		\item \textbf{Inicio}: en la pantalla de inicio de gestión de comunidad se mostrará información de la comunidad, así como información relativa a los elementos creados por el inquilino, como pueden ser incidencias, documentos descargados, reservas de espacios comunes, etc.
  		
  		\item \textbf{Tablón de Anuncios}: en el tablón de anuncios el administrador podrá \textbf{crear mensajes} que van dirigidos a los miembros de la comunidad. Los mensajes se mostrarán como una \textbf{lista} con la fecha de creación debajo y todos los usuarios podrán consultarlos desde su tablón de anuncios. Solo el \textbf{administrador} podrá \textbf{crear} o \textbf{eliminar} mensajes. 
  		
  		\item \textbf{Documentos}: en esta sección el \textbf{administrador} subirá los diferentes \textbf{documentos} relativos a la \textbf{gestión de su comunidad}, como pueden ser resoluciones judiciales, legislación, actas de reuniones. El resto de usuarios podrán visualizar y descargar dichos archivos. Los archivos se \textbf{mostrarán como un conjunto de iconos} con el nombre debajo y el tamaño. Solo el \textbf{administrador} puede subir o eliminar archivos de esta sección.
  		
- 		\item \textbf{Incidencias}: esta sección permitirá a todos los usuarios la \textbf{creación de incidencias}, para ponerlas en conocimiento de los administradores y que tomen las medidas oportunas para su resolución. Cuando un usuario ingrese en esta página podrá \textbf{ver} todas las \textbf{incidencias creadas por el mismo} o por otros miembros de la comunidad que hayan \textbf{marcado la incidencia como pública}. 
+ 		\item \textbf{Incidencias}: esta sección permitirá a todos los inquilinos la \textbf{creación de incidencias}, para ponerlas en conocimiento de los administradores y que tomen las medidas oportunas para su resolución. Cuando un inquilino ingrese en esta página podrá \textbf{ver} todas las \textbf{incidencias creadas por el mismo} o por otros miembros de la comunidad que hayan \textbf{marcado la incidencia como pública}. 
  		
  		Las incidencias pueden estar en tres estados: ``Creada'', ``En Proceso'' o ``Cerrada'', según el momento de procesamiento en el que se encuentre ésta. Las incidencias se mostrarán en una tabla, con su nombre, descripción, fecha de creación y estado. El \textbf{administrador} podrá \textbf{cambiar el estado} de las incidencias, además de eliminarlas. 
  		
- 		\item \textbf{Espacios Comunes}: en esta sección los usuarios podrán \textbf{reservar los espacios comunes} que sea objeto de reserva en la comunidad. Los espacios comunes serán \textbf{añadidos por el administrador}, que será también el que establezca el horario en el que se pueden reservas. 
+ 		\item \textbf{Zonas Comunes}: en esta sección los inquilinos podrán \textbf{reservar los espacios comunes} que sean objeto de reserva en la comunidad. Los espacios comunes serán \textbf{añadidos por el administrador}, que será también el que establezca el horario en el que se pueden reservas. 
  		
- 		Los \textbf{usuarios}, podrán consultar el estado de reserva de un espacio común y realizar una reserva en el horario y día que este disponible. Cuando un usuario tenga reservas realizadas, aparecerán debajo de los espacios comunes, permitiéndole borrar o cambiarlas.
+ 		Los \textbf{inquilinos}, podrán consultar el estado de reserva de un espacio común y realizar una reserva en el horario y día que este disponible. Cuando un inquilino tenga reservas realizadas, aparecerán debajo de los espacios comunes, permitiéndole borrar o cambiarlas.
  		
  		\item \textbf{Finanzas}: la sección de finanzas \textbf{mostrará una tabla con todos los ingresos y gastos} previstos para este año, aunque también se podrán consultar los del ejercicio anterior. El administrador podrá añadir o eliminar registros, lo que provocará que la aplicación haga el cálculo de nuevo, mostrando el nuevo resultado.
  	\end{itemize}
@@ -314,7 +314,7 @@ No se va a especificar el software para el testing ni el control de calidad, ya 
 	
 	\item Solo se permitirán conexiones \textbf{HTTPS} con la aplicación.
 	
-	\item Los usuario usuarios deberán \textbf{ingresar al sistem}a empleando su \textbf{correo y contraseña}, salvo el \textbf{administrador web}, que podrá usar el \textbf{usuario WebAdmin} y su contraseña.
+	\item Los usuarios deberán \textbf{ingresar al sistem}a empleando su \textbf{correo y contraseña}, salvo el \textbf{administrador web}, que podrá usar el \textbf{usuario WebAdmin} y su contraseña.
 \end{itemize}
 
 \paragraph{Ley de Protección de Datos}
@@ -351,7 +351,7 @@ En este punto, vamos a listar alguno de los \textbf{puntos más importantes}, pe
 	
 	\item El \textbf{tamaño de las fuentes} debe de poder cambiarse de forma rápida y que la web siga manteniendo su estructura visual.
 	
-	\item Se deberán \textbf{usar colores} que \textbf{no generen problema}s para usuarios \textbf{daltónicos}.
+	\item Se deberán \textbf{usar colores} que \textbf{no generen problemas} para usuarios \textbf{daltónicos}.
 	
 	\item Los \textbf{mensajes de error} generados en cualquier parte de la aplicación deben ser descriptivos
 \end{itemize}
@@ -383,30 +383,30 @@ En primer lugar, vamos a establecer los \textbf{requisitos funcionales}. Se va a
 	\item \textbf{RF2 - Contactar Equipo}: Cualquier usuario podrá contactar con el equipo de desarrollo usando el formulario de la página principal, dejando un mensaje y su correo.
 	\item \textbf{RF3 - Registrarse en la Aplicación}: Los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo su correo, nombre, apellidos, nombre de usuario y dirección.
 	\item \textbf{RF4 - Generar Solicitud}: El sistema deberá generar una solicitud de inscripción en la comunidad que coincida con la dirección que ha especificado el usuario que se ha registrado.
-	\item \textbf{RF5 - Aprobar Solicitud}: El administrador de la comunidad deberá poder aceptar o denegar la solicitud de inscripción en la comunidad de un usuario.
-	\item \textbf{RF6 - Iniciar Sesión}: Un usuario o administrador podrá ingresar al sistema empleando su correo y contraseña como credenciales.
+	\item \textbf{RF5 - Aprobar Solicitud}: El administrador de la comunidad deberá poder aceptar o denegar la solicitud de inscripción en la comunidad de un inquilino.
+	\item \textbf{RF6 - Iniciar Sesión}: Un inquilino o administrador podrá ingresar al sistema empleando su correo y contraseña como credenciales.
 	\item \textbf{RF7 - Añadir Comunidad}: El administrador podrá añadir una nueva comunidad de vecinos, independientemente de que este inscrito ya en alguna otra, especificando un nombre, descripción, imagen y dirección de la comunidad.
-	\item \textbf{RF8 - Modificar Perfil}: Un usuario o administrador podrá acceder a su perfil y modificar sus datos en el sistema.
-	\item \textbf{RF9 - Eliminar Usuario}: Un usuario podrá eliminar su usuario desde su página de perfil, pudiendo ser también eliminado por el administrador.
+	\item \textbf{RF8 - Modificar Perfil}: Un inquilino o administrador podrá acceder a su perfil y modificar sus datos en el sistema.
+	\item \textbf{RF9 - Eliminar Usuario}: Un inquilino podrá eliminar su usuario desde su página de perfil, pudiendo ser también eliminado por el administrador.
 	\item \textbf{RF10 - Eliminar Administrador}: El administrador podrá eliminar su información desde su página de perfil, siempre y cuando no este adscrito a ninguna comunidad.
 	\item \textbf{RF11 - Eliminar Comunidad}: El administrador podrá eliminar una comunidad de vecinos, que haya creado, desde la sección para administrar la comunidad.
-	\item \textbf{RF12 - Cargar Comunidad}: Cuando un usuario o administrador inicie sesión, se cargará la página principal de la comunidad mostrando los datos de ésta, así como las notificaciones del usuario.
-	\item \textbf{RF13 - Notificar Usuario}: El sistema creará notificaciones con los documentos descargados en los últimos 10 días, las reservas de espacios comunes y las incidencias de un usuario, mostrándolos en la página principal de la comunidad.
-	\item \textbf{RF14 - Consultar Tablón}: Un usuario o administrador podrá consultar los mensajes creados en el tablón de anuncios.
+	\item \textbf{RF12 - Cargar Comunidad}: Cuando un inquilino o administrador inicie sesión, se cargará la página principal de la comunidad mostrando los datos de ésta, así como las notificaciones del inquilino.
+	\item \textbf{RF13 - Notificar Inquilino}: El sistema creará notificaciones con los documentos descargados en los últimos 10 días, las reservas de espacios comunes y las incidencias de un inquilino, mostrándolos en la página principal de la comunidad.
+	\item \textbf{RF14 - Consultar Tablón}: Un inquilino o administrador podrá consultar los mensajes creados en el tablón de anuncios.
 	\item \textbf{RF15 - Gestionar Tablón}: El administrador podrá crear o eliminar mensajes del tablón de anuncios de la comunidad.
-	\item \textbf{RF16 - Consultar Documentos}: Un usuario podrá consular los documentos relativos a la comunidad y descargarlos a su dispositivo.
+	\item \textbf{RF16 - Consultar Documentos}: Un inquilino podrá consular los documentos relativos a la comunidad y descargarlos a su dispositivo.
 	\item \textbf{RF17 - Gestionar Documentos}: El administrador podrá añadir o eliminar documentos de una comunidad.
-	\item \textbf{RF18 - Consultar Incidencias}: Un usuario podrá consultar las incidencias publicas o creadas por el mismo, mientras que una administrador podrá consultar todas las incidencias relativas a una comunidad.
-	\item \textbf{RF19 - Gestionar Incidencias}: Un usuario podrá borrar o modificar las incidencias creadas por el mismo, mientras que el administrador podrá eliminar las incidencias de cualquier usuario.
+	\item \textbf{RF18 - Consultar Incidencias}: Un inquilino podrá consultar las incidencias publicas o creadas por el mismo, mientras que una administrador podrá consultar todas las incidencias relativas a una comunidad.
+	\item \textbf{RF19 - Gestionar Incidencias}: Un inquilino podrá borrar o modificar las incidencias creadas por el mismo, mientras que el administrador podrá eliminar las incidencias de cualquier inquilino.
 	\item \textbf{RF20 - Modificar Estado de Incidencia}: El administrador podrá cambiar el estado de las incidencias entre: ``Creada'', ``En Proceso'' y ``Resuelta''.
 	\item \textbf{RF21 - Añadir Espacio Común}: El administrador podrá añadir espacios comunes especificando su nombre, descripción y horario de reserva.
-	\item \textbf{RF22 - Reservar Espacio Común}: Un usuario podrá reservar un espacio común seleccionando en un calendario el día y hora que quiere realizar la reserva, siempre y cuando este libre.
-	\item \textbf{RF23 - Cancelar Reserva}: Un usuario podrá cancelar una reserva de un espacio común desde la sección de espacios comunes o desde la página principal de la comunidad.
+	\item \textbf{RF22 - Reservar Espacio Común}: Un inquilino podrá reservar un espacio común seleccionando en un calendario el día y hora que quiere realizar la reserva, siempre y cuando este libre.
+	\item \textbf{RF23 - Cancelar Reserva}: Un inquilino podrá cancelar una reserva de un espacio común desde la sección de espacios comunes o desde la página principal de la comunidad.
 	\item \textbf{RF24 - Gestionar Espacios Comunes}: El administrador podrá eliminar o modificar la información relativa a un espacio común.
-	\item \textbf{RF25 - Consultar Finanzas}: Un usuario podrá consultar las finanzas de la comunidad en la sección finanzas que se mostrarán en una tabla con los datos estimados para el curso actual, pudiendo también consultar los datos del curso anterior.
+	\item \textbf{RF25 - Consultar Finanzas}: Un inquilino podrá consultar las finanzas de la comunidad en la sección finanzas que se mostrarán en una tabla con los datos estimados para el curso actual, pudiendo también consultar los datos del curso anterior.
 	\item \textbf{RF26 - Gestionar Finanzas}: El administrador podrá añadir, eliminar o modificar los registros de la tabla de finanzas.
 	\item \textbf{RF27 - Calcular Finanzas}: El sistema realiza el calculo de las finanzas cada vez que se añada o elimine un pago o un ingreso.
-	\item \textbf{RF28 - Cerrar Sesión}: Un usuario o administrador podrán cerrar la sesión en el sistema desde el icono de usuario.
+	\item \textbf{RF28 - Cerrar Sesión}: Un inquilino o administrador podrán cerrar la sesión en el sistema desde el icono de usuario.
 	
 	\item \textbf{RF29 - Administrar Servicios}: el administrador web podrá iniciar sesión empleando el usuario WebAdmin y acceder al panel de control para administrar los diferentes servicios web así como para obtener datos de uso de la aplicación.
 \end{itemize}
@@ -492,8 +492,6 @@ Las \textbf{entregas} que se han planificado son:
 
 Hay que tener en cuenta que las \textbf{entregas} se han establecido por \textbf{funcionalidades completas}, por lo que se deberá esta trabajando en el \textbf{backend} y el \textbf{frontend} de forma simultánea. Además, todo el proceso irá dirigido por lo test, empleando la \textbf{metodología TDD}.
 
-Para cumplir este calendario de entregas, cualquier \textbf{elemento fuera de estas entregas} se considerá \textbf{fuera del alcance del proyecto}, salvo que su desarrollo sea vital para el correcto funcionamiento de alguno de los elementos especificados en las entregas.
-
 \subsection{Coste}
 En el coste de nuestro proyecto hay que incluir varios elementos. Algunos de ellos ya los tenemos adquiridos con antelación, pero aún así, se incluirá en el coste del proyecto, para tenerlo en cuenta.
 
@@ -511,6 +509,15 @@ Este sería el coste inicial del proyecto, pero siempre pueden surgir algún con
 \subsection{Diagrama de Gantt}
 Para finalizar esta pequeña planificación del proyecto, se expone en la siguiente figura un diagrama de Gantt con la cronología de lo que se ha realizado hasta el momento y de lo que aún queda por realizar.
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.31]{diagrama-gantt.png}
+	\caption{Diagrama de Gantt del Proyecto}
+\end{figure}
+
+\section{Casos de Uso}
+
+
 
 
 
@@ -527,7 +534,7 @@ Para finalizar esta pequeña planificación del proyecto, se expone en la siguie
 Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las siguientes:
 
 \begin{itemize}
-	\item \textbf{Página Principal}: está es la página que se carga cuando cualquier usuario entra a nuestra aplicación. La función principal de esta pantalla es la de \textbf{ofrecer información sobre la aplicación}, así como proporcionar un\textbf{ menú con diferentes opciones} que, además de permitir la navegación por las diferentes secciones permita a un usuario \textbf{registrarse} o \textbf{realizar \gls{login}}.
+	\item \textbf{Página Principal}: está es la página que se carga cuando cualquier usuario entra a nuestra aplicación. La función principal de esta pantalla es la de \textbf{ofrecer información sobre la aplicación}, así como proporcionar un\textbf{ menú con diferentes opciones} que, además de permitir la navegación por las diferentes secciones permita a un invitado \textbf{registrarse} o \textbf{realizar \gls{login}}.
 	
 	Las secciones de las que estará compuesta esta interfaz serán las siguientes:
 	
@@ -545,9 +552,9 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 	
 	Tanto la \textbf{barra de menú} superior como el \textbf{pié de página} se mantendrán \textbf{visibles en todas las páginas} de la aplicación, cambiando en ciertos aspectos u ofreciendo diferentes opciones.
 	
-	\item \textbf{Página de Login}: el propósito de esta página es permitir que los usuarios ingresen al sistema. La pantalla inicial esta compuesta por un \textbf{formulario}, que debe aceptar un \textbf{email} y una \textbf{contraseña} como entrada, con el botón enviar en la parte inferior. Además, incluirá un \textbf{enlace} debajo del botón, centrado, que permitirá al usuario \textbf{registrarse}, en caso de que no este registrado, desplegando un nuevo formulario que veremos en detalle a continuación. Solo el \textbf{administrador de la web} podrá realizar el ingreso al sistema empleando el \textbf{usuario WebAdmin}, el resto de usuarios deberán usar su correo.
+	\item \textbf{Página de Login}: el propósito de esta página es permitir que los usuarios ingresen al sistema. La pantalla inicial esta compuesta por un \textbf{formulario}, que debe aceptar un \textbf{email} y una \textbf{contraseña} como entrada, con el botón enviar en la parte inferior. Además, incluirá un \textbf{enlace} debajo del botón, centrado, que permitirá al invitado \textbf{registrarse}, en caso de que no este registrado, desplegando un nuevo formulario que veremos en detalle a continuación. Solo el \textbf{administrador de la web} podrá realizar el ingreso al sistema empleando el \textbf{usuario WebAdmin}, el resto de usuarios deberán usar su correo.
 	
-	\item \textbf{Página de Registro}: en esta pantalla, que se accede desde la pantalla de login, se muestra un formulario que \textbf{permitirá a un usuario registrarse} en el sistema. Este formulario estará compuesto por diferentes campos que permitirán al usuario introducir la información necesaria pare registrarse, como puede ser Nombre, Correo, Dirección, rol, etc. Debajo, aparecerá el \textbf{botón registrarse} que permitirá al usuario registrar todos sus datos.  
+	\item \textbf{Página de Registro}: en esta pantalla, que se accede desde la pantalla de login, se muestra un formulario que \textbf{permitirá a un invitado registrarse} en el sistema. Este formulario estará compuesto por diferentes campos que permitirán al invitado introducir la información necesaria pare registrarse, como puede ser Nombre, Correo, Dirección, rol, etc. Debajo, aparecerá el \textbf{botón registrarse} que permitirá al invitado registrar todos sus datos.  
 
 	
 	\item \textbf{Página Principal de Comunidad}: una vez que el usuario haya ingresado al sistema, se mostrará la pantalla de comunidad. El propósito de esta pantalla es servir como \textbf{puerta de entrada a la gestión de al comunidad} y como \textbf{punto de información} para el usuario. Esta interfaz estará compuesta por los siguientes elementos:
@@ -555,7 +562,7 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 	\begin{itemize}
 		\item \textbf{Barra de Menú}: similar a la que vemos en la página principal, pero las opciones de menú ``Login/Registrarse''  habrá cambiado por el \textbf{icono de un usuario}. Este icono mostrará un \textbf{menú vertical} con las opciones ``\textbf{Perfil}'' y ``\textbf{Logout}'', que permitirán acceder a la información de perfil y hacer \gls{logout} respectivamente.
 		
-		\item \textbf{Menú Lateral}: un menú lateral, situado a la izquierda, que mostrará los diferentes servicios que ofrece al aplicación para gestionar la comunidad. Las opciones variarán según si el usuario tiene el rol de administrador o de usuario, pero la opciones comunes a ambos son las siguientes: 
+		\item \textbf{Menú Lateral}: un menú lateral, situado a la izquierda, que mostrará los diferentes servicios que ofrece al aplicación para gestionar la comunidad. Las opciones variarán según si el usuario tiene el rol de administrador o de inquilino, pero la opciones comunes a ambos son las siguientes: 
 		
 		\begin{itemize}
 			\item \textbf{Inicio}
@@ -569,22 +576,22 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 		 
 		 Adicionalmente, si el usuario tiene el \textbf{rol administrador}, se mostrará la opción ``\textbf{Administrar}''	, que permitirá al administrador gestionar los aspectos principales de la comunidad desde una misma pantalla. La cual se describirá más adelante.
 		 
-		El menú lateral se mostrará solo en caso de que el usuario, independientemente de su rol, este inscrito en una comunidad. En caso contrario no se mostrará. Si el usuario es una \textbf{administrador}, se mostrará en su lugar un \textbf{formulario para añadir una comunidad}. Si es un \textbf{usuario}, se mostrará un \textbf{mensaje con el estado} de su solicitud de suscripción.
+		El menú lateral se mostrará solo en caso de que el usuario, independientemente de su rol, este inscrito en una comunidad. En caso contrario no se mostrará. Si es un \textbf{administrador}, se mostrará en su lugar un \textbf{formulario para añadir una comunidad}. Si es un \textbf{inquilino}, se mostrará un \textbf{mensaje con el estado} de su solicitud de suscripción.
 		
-		\item \textbf{Zona de Contenido}: en esta zona, que estará ubicada en el centro y es el elemento principal de ésta página. Cuando un \textbf{usuario inscrito en una comunidad} acceda a la página principal de comunidad, aquí se mostrar la \textbf{información} de ésta, como nombre, dirección y una imagen. Además, se mostraran la actividad reciente del usuario, así como otros notificaciones, como las reservas realizadas o el estado de las incidencias creadas.
+		\item \textbf{Zona de Contenido}: en esta zona, que estará ubicada en el centro y es el elemento principal de ésta página. Cuando un \textbf{inquilino inscrito en una comunidad} acceda a la página principal de comunidad, aquí se mostrar la \textbf{información} de ésta, como nombre, dirección y una imagen. Además, se mostraran la actividad reciente del usuario, así como otros notificaciones, como las reservas realizadas o el estado de las incidencias creadas.
 		
 		En esta zona de la interfaz se mostrará todas la información de los diferentes servicios y es donde se permitirá interactuar con la comunidad. Seleccionando alguna de las opciones del menú, los \textbf{principales elementos} que se mostrarán en esta zona y que permiten \textbf{realizar las acciones sobre la comunidad} son las siguientes: 
 		
 		\begin{itemize}
 			\item \textbf{Inicio}: cuando un usuario pinche en esta opción cargara la información por defecto de la página principal de comunidad, que se ha descrito en el párrafo anterior.
 			
-			\item \textbf{Tablón de Anuncios}: este servicio nos permite acceder a los mensajes que se han publicado en la comunidad y mostrará una lista con todos los mensajes, junto con su fecha. Si \textbf{usuario es un administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios.	
+			\item \textbf{Tablón de Anuncios}: este servicio nos permite acceder a los mensajes que se han publicado en la comunidad y mostrará una lista con todos los mensajes, junto con su fecha. Si \textbf{es un administrador}, aparecerá un botón en la parte inferior izquierda, debajo del tablón, con el texto "\textbf{Añadir mensaje}", que desplegará un formulario que permitirá añadir un nuevo mensaje al tablón de anuncios.	
 			
-			\item \textbf{Documentos}: pulsando en esta opción se mostrarán los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los documentos se mostrarán como un conjunto de iconos con un nombre debajo. Tanto el icono como el nombre deberán ser un enlace que al pulsarlo permita a los usuarios descargar el documento en cuestión. 
+			\item \textbf{Documentos}: pulsando en esta opción se mostrarán los \textbf{documentos relativos a la comunidad}, como pueden ser actas de reuniones, facturas, etc. Los documentos se mostrarán como un conjunto de iconos con un nombre debajo. Tanto el icono como el nombre deberán ser un enlace que al pulsarlo permita a los inquilinos descargar el documento en cuestión. 
 			
 			En el caso de que el \textbf{usuario sea un administrador}, debe aparecer un botón con el texto "\textbf{Añadir Documento}" que desplegará una formulario y le permitirá añadir nuevos documentos al directorio. 
 			
-			\item \textbf{Incidencias}: este servicio permitirá a los usuario gestionar las incidencias, mostrando una \textbf{lista con todas las incidencias} de la comunidad, junto con su fecha de creación y su estado. Para un \textbf{usuario}, solo se mostrarán \textbf{sus incidencias} y todos aquellas que hayan sido \textbf{marcadas como públicas} por los usuarios que las hayan creado. Para el administrador, serán visibles todas las incidencias.
+			\item \textbf{Incidencias}: este servicio permitirá a los inquilinos gestionar las incidencias, mostrando una \textbf{lista con todas las incidencias} de la comunidad, junto con su fecha de creación y su estado. Para un \textbf{inquilino}, solo se mostrarán \textbf{sus incidencias} y todos aquellas que hayan sido \textbf{marcadas como públicas} por los inquilinos que las hayan creado. Para el administrador, serán visibles todas las incidencias.
 			
 			Debajo de la lista de incidencias, debe haber un \textbf{botón} con el texto "\textbf{Crear incidencia}", que desplegará un formulario y permitirá a cualquier usuario crear una nueva incidencia. Además, si el \textbf{usuario conectado es el administrador}, aparecerán 2 botones a la derecha de cada incidencia, que permitirán tanto \textbf{borrar las incidencias} como \textbf{cambiar su estado}. En caso de que el usuario no sea administrador, solo aparecerá el botón ``Borrar'' en las incidencias que hayan sido creadas por él mismo.
 			
@@ -600,7 +607,7 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 			
 			Solo los \textbf{administradores} puede modificar esta tabla, mediante un formulario para añadir un registros en el que se podrá seleccionar el tipo de registro, si es un ingreso o gasto, y el tipo de cada uno, así como la cantidad. Cuando se agregue un nuevo registro, el sistema calculará el balance con los nuevos datos y los mostrará. Este formulario se mostrará después de pulsar el botón ``Añadir'' debajo de la tabla de finanzas. Solo se pueden añadir o borrar registros en el ejercicio actual.
 			
-			\item \textbf{Administrar}: esta opción solo es elegible por los usuarios con \textbf{rol de administrador} y permite al administrador \textbf{gestionar} todos los aspectos de una \textbf{comunidad} mediante un panel de control.
+			\item \textbf{Administrar}: esta opción solo es elegible por los \textbf{administradores} y permite al administrador \textbf{gestionar} todos los aspectos de una \textbf{comunidad} mediante un panel de control.
 			
 			En la zona de contenido se mostrará \textbf{información de al comunidad}, que será editable, así como los servicios mencionados en este punto: Incidencias, Documentos, Finanzas, etc., con opciones para editar, consultar añadir o eliminar elementos a cada apartado. Los apartados se mostrarán uno al lado de otro con iconos y al pulsar en ellos se desplegará una lista con todos los elementos que estos contienen, ocultando el resto secciones. Además aparecerá un botón para poder volver hacia atrás a la lista de servicios.
 						
@@ -609,7 +616,7 @@ Las \textbf{páginas} de las que estará compuesta nuestra interfaz son las sigu
 	\end{itemize}
 		
 	
-	\item \textbf{Página de Añadir Comunidad}: esta pantalla, a la que solo tienen acceso los usuarios con rol administrador, permite \textbf{añadir una nueva comunidad} de vecinos. La interfaz mostrará un \textbf{formulario web} con diferentes datos que deberán rellenarse para dar de alta la comunidad, principalmente la \textbf{dirección}, que será única para cada comunidad. En el caso de que se pueda dar de alta la comunidad se mostrará una mensaje de éxito y se redireccionará a la página principal de comunidad. En caso contrario, se mostrará los mensajes de error adecuados.
+	\item \textbf{Página de Añadir Comunidad}: esta pantalla, a la que solo tienen acceso los administradores, permite \textbf{añadir una nueva comunidad} de vecinos. La interfaz mostrará un \textbf{formulario web} con diferentes datos que deberán rellenarse para dar de alta la comunidad, principalmente la \textbf{dirección}, que será única para cada comunidad. En el caso de que se pueda dar de alta la comunidad se mostrará una mensaje de éxito y se redireccionará a la página principal de comunidad. En caso contrario, se mostrará los mensajes de error adecuados.
 	
 	\item \textbf{Página de Perfil}: en esta pantalla, que se accede desde el menú vertical del icono de perfil, se mostrará un \textbf{formulario con toda la información del usuario} en la zona de contenido. Este formulario se podrá \textbf{editar} y actualizar mediante un botón que habrá debajo de él con el texto "Guardar". 
 	
@@ -651,21 +658,21 @@ En este anexo se incluyen varias tablas con los requisitos funcionales y no func
 			el formulario de la página principal, dejando un mensaje y su correo \\ \hline
 			RF3.- Registrarse en la Aplicación & Los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo su correo, nombre, apellidos, nombre
 			de usuario y dirección  \\ \hline
-			RF4.- Generar Solicitud & El sistema deberá generar una solicitud de inscripción en la comunidad que coincida con la dirección que ha especificado el usuario que se ha registrado  \\ \hline
+			RF4.- Generar Solicitud & El sistema deberá generar una solicitud de inscripción en la comunidad que coincida con la dirección que ha especificado el invitado que se ha registrado  \\ \hline
 			RF5.- Aprobar Solicitud: & El administrador de la comunidad deberá poder aceptar o denegar la
-			solicitud de inscripción en la comunidad de un usuario  \\ \hline
-			RF6.- Iniciar Sesión & Un usuario o administrador podrá ingresar al sistema empleando su correo
+			solicitud de inscripción en la comunidad de un invitado  \\ \hline
+			RF6.- Iniciar Sesión & Un inquilino o administrador podrá ingresar al sistema empleando su correo
 			y contraseña como credenciales  \\ \hline
 			RF7.- Añadir Comunidad & El administrador podrá añadir una nueva comunidad de vecinos, independientemente de que 
 			este inscrito ya en alguna otra, especificando un nombre, descripción, imagen y dirección de la comunidad  \\ \hline
-			RF8.- Modificar Perfil &  Un usuario o administrador podrá acceder a su perfil y modificar sus datos
+			RF8.- Modificar Perfil &  Un inquilino o administrador podrá acceder a su perfil y modificar sus datos
 			en el sistema \\ \hline
-			RF9.- Eliminar Usuario & Un usuario podrá eliminar su usuario desde su página de perfil, pudiendo
+			RF9.- Eliminar Usuario & Un inquilino podrá eliminar su usuario desde su página de perfil, pudiendo
 			ser también eliminado por el administrador  \\ \hline
 			RF10.- Eliminar Administrador & El administrador podrá eliminar su información desde su página de perfil, siempre y cuando no este adscrito a ninguna comunidad  \\ \hline
 			RF11.- Eliminar Comunidad &  El administrador podrá eliminar una comunidad de vecinos, que
 			haya creado, desde la sección para administrar la comunidad  \\ \hline
-			RF12.- Cargar Comunidad & Cuando un usuario o administrador inicie sesión, se cargará la página
+			RF12.- Cargar Comunidad & Cuando un inquilino o administrador inicie sesión, se cargará la página
 			principal de la comunidad mostrando los datos de ésta, así como las notificaciones del usuario  \\ \hline
 			RF13.- Notificar Usuario &  El sistema creará notificaciones con los documentos descargados en
 			los últimos 10 días, las reservas de espacios comunes y las incidencias de un usuario, mostrándolos
@@ -683,31 +690,31 @@ En este anexo se incluyen varias tablas con los requisitos funcionales y no func
 		\begin{tabular}{| p{5cm} | p{10cm} |}
 			\hline
 			\textbf{Número y Tipo} & \textbf{Descripción}  \\ \hline
-			RF14.- Consultar Tablón & Un usuario o administrador podrá consultar los mensajes creados en
+			RF14.- Consultar Tablón & Un inquilino o administrador podrá consultar los mensajes creados en
 			el tablón de anuncios \\ \hline
 			RF15.- Gestionar Tablón & El administrador podrá crear o eliminar mensajes del tablón de anuncios de la comunidad \\ \hline
-			RF16.- Consultar Documentos &  Un usuario podrá consular los documentos relativos a la comunidad y descargarlos a su dispositivo\\ \hline
+			RF16.- Consultar Documentos &  Un inquilino podrá consular los documentos relativos a la comunidad y descargarlos a su dispositivo\\ \hline
 			RF17.- Gestionar Documentos & El administrador podrá añadir o eliminar documentos de una comunidad \\ \hline
-			RF18.- Consultar Incidencias &  Un usuario podrá consultar las incidencias publicas o creadas por
+			RF18.- Consultar Incidencias &  Un inquilino podrá consultar las incidencias publicas o creadas por
 			el mismo, mientras que una administrador podrá consultar todas las incidencias relativas a una
 			comunidad \\ \hline
-			RF19.- Gestionar Incidencias & Un usuario podrá borrar o modificar las incidencias creadas por
+			RF19.- Gestionar Incidencias & Un inquilino podrá borrar o modificar las incidencias creadas por
 			el mismo, mientras que el administrador podrá eliminar las incidencias de cualquier usuario \\ \hline
 			RF20.- Modificar Estado de Incidencia &  El administrador podrá cambiar el estado de las incidencias entre: “Creada”, “En Proceso” y “Resuelta”\\ \hline
 			RF21.- Añadir Espacio Común & El administrador podrá añadir espacios comunes especificando
 			su nombre, descripción y horario de reserva \\ \hline
-			RF22.- Reservar Espacio Común & Un usuario podrá reservar un espacio común seleccionando
+			RF22.- Reservar Espacio Común & Un inquilino podrá reservar un espacio común seleccionando
 			en un calendario el día y hora que quiere realizar la reserva, siempre y cuando este libre \\ \hline
-			RF23.- Cancelar Reserva & Un usuario podrá cancelar una reserva de un espacio común desde la
+			RF23.- Cancelar Reserva & Un inquilino podrá cancelar una reserva de un espacio común desde la
 			sección de espacios comunes o desde la página principal de la comunidad  \\ \hline
 			RF24.- Gestionar Espacios Comunes &  El administrador podrá eliminar o modificar la información relativa a un espacio común \\ \hline
-			RF25.- Consultar Finanzas & Un usuario podrá consultar las finanzas de la comunidad en la sección finanzas que se mostrarán en una tabla con los datos estimados para el curso actual, pudiendo
+			RF25.- Consultar Finanzas & Un inquilino podrá consultar las finanzas de la comunidad en la sección finanzas que se mostrarán en una tabla con los datos estimados para el curso actual, pudiendo
 			 también consultar los datos del curso anterior \\ \hline
 			RF26.- Gestionar Finanzas &  El administrador podrá añadir, eliminar o modificar los registros de
 			la tabla de finanzas\\ \hline
 			RF27.- Calcular Finanzas & El sistema realiza el calculo de las finanzas cada vez que se añada o
 			elimine un pago o un ingreso \\ \hline
-			RF28.- Cerrar Sesión &  Un usuario o administrador podrán cerrar la sesión en el sistema desde el
+			RF28.- Cerrar Sesión &  Un inquilino o administrador podrán cerrar la sesión en el sistema desde el
 			icono de usuario \\ \hline
 			RF29.- Administrar Servicios & el administrador web podrá iniciar sesión empleando el usuario
 			WebAdmin y acceder al panel de control para administrar los diferentes servicios web así como
