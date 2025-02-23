@@ -44,8 +44,11 @@
 \contentsline {section}{\numberline {4}Casos de Uso}{21}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Diagrama General de Casos de Uso}{21}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Descripción Casos de Uso Principales}{22}{subsection.4.2}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{26}{appendix.alph1.Alph1}%
-\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{31}{appendix.alph1.Alph2}%
-\contentsline {section}{Glosario}{35}{section*.4}%
-\contentsline {section}{\nonumberline Referencias}{36}{section*.7}%
+\contentsline {section}{\numberline {5}Base de Datos}{25}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Diagrama Entidad/Relación}{25}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Paso a Tablas}{26}{subsection.5.2}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{27}{appendix.alph1.Alph1}%
+\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{32}{appendix.alph1.Alph2}%
+\contentsline {section}{Glosario}{36}{section*.4}%
+\contentsline {section}{\nonumberline Referencias}{37}{section*.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

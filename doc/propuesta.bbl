@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{wiki01}
 {Wikipedia - HTTP}.
@@ -39,5 +39,13 @@
 \bibitem{mit}
 {Licencia MIT}.
 \newblock \\\url{https://opensource.org/license/mit}.
+
+\bibitem{wiki02}
+{Wikipedia - PosgreSQL}.
+\newblock \\\url{https://en.wikipedia.org/wiki/PostgreSQL}.
+
+\bibitem{apache01}
+{Apache - PostgreSQL}.
+\newblock \\\url{https://db.apache.org/ddlutils/databases/postgresql.html}.
 
 \end{thebibliography}

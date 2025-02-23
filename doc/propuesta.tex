@@ -573,6 +573,27 @@ Hay que tener en cuenta que la \textbf{numeración de los casos de uso} que vemo
 \end{figure}
 
 
+\section{Base de Datos}
+En este apartado vamos a describir el \textbf{diseño de la base de datos} que vamos a emplear en nuestra aplicación, mostrando el \textbf{diagrama E/R}, así como su \textbf{paso a tablas}, explicado los puntos que sean necesarios. Además se creará un script para la creación de la base de datos y otro para poblarla con información.
+
+La base de datos de nuestra aplicación es una \textbf{base de datos relacional} que emplea \textbf{SQL} para la realización de las consulta y la creación de la base de datos. La sistema de base de datos elegidos ha sido \textbf{PostgreSQL}, un sistema de gestión de bases de datos objeto-relacional y que pone especial énfasis en la extensibilidad y compatibilidad con SQL. \cite{wiki02}
+
+PostgreSLQ, además, ofrece atomicidad, consistencia, aislamiento, propiedades \gls{ACID}, entre otras cosas. Además es soportada por la mayoría de sistemas operativos y se \textbf{integra perfectamente} con Apache, soportando las versiones de PosgreSQL 7.2.8 o superior. \cite{apache01}
+
+\subsection{Diagrama Entidad/Relación}
+En esta sección se muestra el \textbf{diagrama entidad relación} de nuestra base de datos. Como podemos ver en el diagrama, inicialmente hay un total de \textbf{5 tablas}, pero como veremos en la siguiente sección, las relaciones entre estas tablas dan lugar a \textbf{3 tablas más}, que sumarán un total de \textbf{8 tablas}, pero esto ya lo veremos con más detalle en la siguiente sección con el paso a tablas.
+
+Se ha intentado crear la base de datos de la forma más simple posible, \textbf{sin que haya sido necesario normalizarla}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.50]{diagramaER.png}
+	\caption{Diagrama Entidad/Relación}
+\end{figure}
+
+Como vemos, es un diagrama sencillo, donde se ha intentado \textbf{atomizar cada atributo}, además de evitar las referencias circulares. En la siguiente sección veremos el paso a tablas, aunque con este diagrama, donde ya se incluyen como tablas las relaciones, el paso va a ser más directo aún.
+
+\subsection{Paso a Tablas}
 
 
 
