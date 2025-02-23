@@ -383,7 +383,7 @@ En primer lugar, vamos a establecer los \textbf{requisitos funcionales}. Se va a
 	\item \textbf{RF2 - Contactar Equipo}: Cualquier usuario podrá contactar con el equipo de desarrollo usando el formulario de la página principal, dejando un mensaje y su correo.
 	\item \textbf{RF3 - Registrarse en la Aplicación}: Los invitados podrán registrarse en nuestra aplicación empleando el formulario de la página de registro e introduciendo su correo, nombre, apellidos, nombre de usuario y dirección.
 	\item \textbf{RF4 - Generar Solicitud}: El sistema deberá generar una solicitud de inscripción en la comunidad que coincida con la dirección que ha especificado el usuario que se ha registrado.
-	\item \textbf{RF5 - Aprobar Solicitud}: El administrador de la comunidad deberá poder aceptar o denegar la solicitud de inscripción en la comunidad de un inquilino.
+	\item \textbf{RF5 - Aprobar Solicitud}: El administrador de la comunidad deberá poder aceptar o denegar la solicitud de inscripción en la comunidad de un inquilino. 
 	\item \textbf{RF6 - Iniciar Sesión}: Un inquilino o administrador podrá ingresar al sistema empleando su correo y contraseña como credenciales.
 	\item \textbf{RF7 - Añadir Comunidad}: El administrador podrá añadir una nueva comunidad de vecinos, independientemente de que este inscrito ya en alguna otra, especificando un nombre, descripción, imagen y dirección de la comunidad.
 	\item \textbf{RF8 - Modificar Perfil}: Un inquilino o administrador podrá acceder a su perfil y modificar sus datos en el sistema.
@@ -397,7 +397,7 @@ En primer lugar, vamos a establecer los \textbf{requisitos funcionales}. Se va a
 	\item \textbf{RF16 - Consultar Documentos}: Un inquilino podrá consular los documentos relativos a la comunidad y descargarlos a su dispositivo.
 	\item \textbf{RF17 - Gestionar Documentos}: El administrador podrá añadir o eliminar documentos de una comunidad.
 	\item \textbf{RF18 - Consultar Incidencias}: Un inquilino podrá consultar las incidencias publicas o creadas por el mismo, mientras que una administrador podrá consultar todas las incidencias relativas a una comunidad.
-	\item \textbf{RF19 - Gestionar Incidencias}: Un inquilino podrá borrar o modificar las incidencias creadas por el mismo, mientras que el administrador podrá eliminar las incidencias de cualquier inquilino.
+	\item \textbf{RF19 - Gestionar Incidencias}: Un inquilino podrá crear incidencias, así como borrar o modificar las incidencias creadas por el mismo, mientras que el administrador podrá eliminar las incidencias de cualquier inquilino.
 	\item \textbf{RF20 - Modificar Estado de Incidencia}: El administrador podrá cambiar el estado de las incidencias entre: ``Creada'', ``En Proceso'' y ``Resuelta''.
 	\item \textbf{RF21 - Añadir Espacio Común}: El administrador podrá añadir espacios comunes especificando su nombre, descripción y horario de reserva.
 	\item \textbf{RF22 - Reservar Espacio Común}: Un inquilino podrá reservar un espacio común seleccionando en un calendario el día y hora que quiere realizar la reserva, siempre y cuando este libre.
@@ -532,6 +532,47 @@ Aunque se han intentado incluir todos los casos de uso, hay alguno se ha quedado
 En concreto, el \textbf{CU: Consultar Incidencias}, se ha dejado fuera del diagrama, ya que si inclusión disminuía considerablemente la legibilidad de la parte inferior del diagrama, y si rol, dentro de este, es el mismo que el de otros casos de uso similares como \textbf{Consultar Tablón} ó \textbf{Consultar Zona Común}.
 
 \subsection{Descripción Casos de Uso Principales}
+En esta sección se van a \textbf{describir}, mediante tablas, los \textbf{casos de uso principales} de nuestro software. 
+
+Hay que tener en cuenta que la \textbf{numeración de los casos de uso} que vemos en las tablas puede no empezar desde 0 o tener números faltantes entre una tabla y otra. Esto se debe a que no todos los casos de uso se van a describir en las tablas y la numeración de estos va acorde a su aparición en el diagrama. Por ejemplo, el primer caso de uso va a ser el \textbf{CU03 - Registrarse}, ya que los primeros 2 casos de uso, \textbf{CU01 - Consultar Información} y \textbf{CU02 - Contactar Equipo} no se van a incluir en esta sección.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.56]{CU03.png}
+	\caption{Caso de Uso - Registrarse}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.47]{CU04.png}
+	\caption{Caso de Uso - Inicio de Sesión}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.49]{CU08.png}
+	\caption{Caso de Uso - Crear Incidencia}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.52]{CU10.png}
+	\caption{Caso de Uso - Cambiar Estado Incidencia}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.52]{CU11.png}
+	\caption{Caso de Uso - Reservar Espacio Común}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.48]{CU15.png}
+	\caption{Caso de Uso - Añadir Registro}
+\end{figure}
+
+
 
 
 
@@ -714,7 +755,7 @@ En este anexo se incluyen varias tablas con los requisitos funcionales y no func
 			RF18.- Consultar Incidencias &  Un inquilino podrá consultar las incidencias publicas o creadas por
 			el mismo, mientras que una administrador podrá consultar todas las incidencias relativas a una
 			comunidad \\ \hline
-			RF19.- Gestionar Incidencias & Un inquilino podrá borrar o modificar las incidencias creadas por
+			RF19.- Gestionar Incidencias & Un inquilino podrá crear incidencias, así borrar o modificar las incidencias creadas por
 			el mismo, mientras que el administrador podrá eliminar las incidencias de cualquier usuario \\ \hline
 			RF20.- Modificar Estado de Incidencia &  El administrador podrá cambiar el estado de las incidencias entre: “Creada”, “En Proceso” y “Resuelta”\\ \hline
 			RF21.- Añadir Espacio Común & El administrador podrá añadir espacios comunes especificando
