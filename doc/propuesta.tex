@@ -598,7 +598,7 @@ En primer lugar, vamos a pasar las tablas principales, que en nuestro caso serí
 
 \begin{itemize}
 	\item \textbf{Comunidad}(\underline{id\_comunidad}, nombre, calle, numero, provincia, país)
-	\item \textbf{Usuario}(\underline{correo}, rol, nombre\_usuario, nombre, apellidos, calle, número, piso, letra)
+	\item \textbf{Usuario}(\underline{correo}, rol, nombre\_usuario, nombre, apellidos, calle, número, piso, letra, localidad)
 \end{itemize}
 
 A continuación, vamos a pasar las tablas que dependen de estas para identificarse, y que son \textbf{Credenciales}, \textbf{Zona\_Comun}, \textbf{Mensaje} y \textbf{Incidencia}. En estas tablas hay una relación de M:1 o 1:1 con las tablas principales, por lo que la clave principal se cede desde las tablas principales a éstas.
