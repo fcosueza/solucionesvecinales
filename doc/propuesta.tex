@@ -605,9 +605,9 @@ A continuación, vamos a pasar las tablas que dependen de estas para identificar
 
 \begin{itemize}
 	\item \textbf{Credenciales}(\uline{\dashuline{correo\_usuario}}, password)
-	\item \textbf{Mensaje}(\uline{tiempo\_creacion, \dashuline{comunidad}}, texto)
+	\item \textbf{Mensaje}(\uline{fecha, \dashuline{comunidad}}, texto)
 	\item \textbf{Zona\_Comun}(\uline{nombre, \dashuline{comunidad}}, descripción, imagen, horario\_inicio, horario\_fin)
-	\item \textbf{Incidencia}(\uline{fecha\_creacion, \dashuline{comunidad, usuario}}, descripción, estado)
+	\item \textbf{Incidencia}(\uline{fecha, \dashuline{comunidad, usuario}}, descripción, estado)
 \end{itemize}
 
 Por último, vamos a pasar la tablas que se han generado con relaciones, en concreto, con relaciones M:N entre dos tablas. Estas tablas son \textbf{	inscripción}, \textbf{solicitud} y \textbf{reserva}.
@@ -615,13 +615,15 @@ Por último, vamos a pasar la tablas que se han generado con relaciones, en conc
 \begin{itemize}
 	\item \textbf{inscripción}(\uline{\dashuline{usuario, comunidad}})
 	\item \textbf{solicitud}(\uline{\dashuline{usuario, comunidad}}, estado)
-	\item \textbf{reserva}(\uline{\dashuline{usuario, comunidad, nombre\_zona}}, fecha\_reserva, hora\_inicio, hora\_fin)
+	\item \textbf{reserva}(\uline{\dashuline{usuario, comunidad, zona}}, fecha\_reserva, hora\_inicio, hora\_fin)
 \end{itemize} 
 
 Como vemos, el paso a tablas ha sido prácticamente directo, ya que en el diagrama las relaciones ya se han procesado y se han generado las tablas o los movimientos de claves necesario.
 
 \subsection{Scripts de la Base de Datos}
 Acompañando a este documento se han incluido 2 script, en \textbf{SQL}, para crear la base de datos y poblarla con datos, para poder realizar algunas consulta u operaciones de prueba.
+
+Hay que tener en cuenta, que la base de datos que se va a emplear en la aplicación es \textbf{PostgreSQL}, por lo que aunque la mayoría de sentencias van a ser totalmente compatibles con SQL, puede ser que haya algunos \textbf{tipos de datos}, o algunas \textbf{sentencias}, como por ejemplo, para generar campos de id de forma aleatoria, que \textbf{no estén soportadas} en MySQL ú Oracle. Por eso, para la correcta creación de la base de datos será \textbf{necesario el uso de PostgreSQL}. 
 
 
 \newpage
