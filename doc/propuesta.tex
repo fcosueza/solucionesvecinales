@@ -594,9 +594,34 @@ Se ha intentado crear la base de datos de la forma más simple posible, \textbf{
 Como vemos, es un diagrama sencillo, donde se ha intentado \textbf{atomizar cada atributo}, además de evitar las referencias circulares. En la siguiente sección veremos el paso a tablas, aunque con este diagrama, donde ya se incluyen como tablas las relaciones, el paso va a ser más directo aún.
 
 \subsection{Paso a Tablas}
+En primer lugar, vamos a pasar las tablas principales, que en nuestro caso serían \textbf{Comunidad} y \textbf{Usuario}, que no dependen de ninguna otra tabla.
 
+\begin{itemize}
+	\item \textbf{Comunidad}(\underline{id\_comunidad}, nombre, calle, numero, provincia, país)
+	\item \textbf{Usuario}(\underline{correo}, rol, nombre\_usuario, nombre, apellidos, calle, número, piso, letra)
+\end{itemize}
 
+A continuación, vamos a pasar las tablas que dependen de estas para identificarse, y que son \textbf{Credenciales}, \textbf{Zona\_Comun}, \textbf{Mensaje} y \textbf{Incidencia}. En estas tablas hay una relación de M:1 o 1:1 con las tablas principales, por lo que la clave principal se cede desde las tablas principales a éstas.
 
+\begin{itemize}
+	\item \textbf{Credenciales}(\uline{\dashuline{correo\_usuario}}, password)
+	\item \textbf{Mensaje}(\uline{tiempo\_creacion, \dashuline{comunidad}}, texto)
+	\item \textbf{Zona\_Comun}(\uline{nombre, \dashuline{comunidad}}, descripción, imagen, horario\_inicio, horario\_fin)
+	\item \textbf{Incidencia}(\uline{fecha\_creacion, \dashuline{comunidad, usuario}}, descripción, estado)
+\end{itemize}
+
+Por último, vamos a pasar la tablas que se han generado con relaciones, en concreto, con relaciones M:N entre dos tablas. Estas tablas son \textbf{	inscripción}, \textbf{solicitud} y \textbf{reserva}.
+
+\begin{itemize}
+	\item \textbf{inscripción}(\uline{\dashuline{usuario, comunidad}})
+	\item \textbf{solicitud}(\uline{\dashuline{usuario, comunidad}}, estado)
+	\item \textbf{reserva}(\uline{\dashuline{usuario, comunidad, nombre\_zona}}, fecha\_reserva, hora\_inicio, hora\_fin)
+\end{itemize} 
+
+Como vemos, el paso a tablas ha sido prácticamente directo, ya que en el diagrama las relaciones ya se han procesado y se han generado las tablas o los movimientos de claves necesario.
+
+\subsection{Scripts de la Base de Datos}
+Acompañando a este documento se han incluido 2 script, en \textbf{SQL}, para crear la base de datos y poblarla con datos, para poder realizar algunas consulta u operaciones de prueba.
 
 
 \newpage
