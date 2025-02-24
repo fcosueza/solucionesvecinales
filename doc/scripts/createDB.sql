@@ -18,7 +18,7 @@ CREATE TABLE comunidad(
     pais VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE usuarios(
+CREATE TABLE usuario(
     correo VARCHAR(60) PRIMARY KEY,
     rol userRol NOT NULL,
     nombre_usuario VARCHAR(100) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE usuarios(
 );
 
 CREATE TABLE credenciales(
-    correo_usuario VARCHAR(255) REFERENCES usuarios ON DELETE CASCADE,
+    correo_usuario VARCHAR(255) REFERENCES usuario ON DELETE CASCADE,
     password VARCHAR(255) NOT NULL,
     PRIMARY KEY (correo_usuario)
 );
@@ -56,7 +56,7 @@ CREATE TABLE zona_comun(
 
 CREATE TABLE incidencia(
     comunidad INT REFERENCES comunidad ON DELETE CASCADE,
-    usuario VARCHAR(255) REFERENCES usuarios ON DELETE CASCADE,
+    usuario VARCHAR(255) REFERENCES usuario ON DELETE CASCADE,
     fecha timestamp NOT NULL DEFAULT now(),
     descripcion TEXT NOT NULL,
     estado estado_incidencia NOT NULL,
@@ -75,13 +75,13 @@ CREATE TABLE reserva(
 );
 
 CREATE TABLE incripcion(
-    usuario VARCHAR(255) REFERENCES usuarios ON DELETE CASCADE, 
+    usuario VARCHAR(255) REFERENCES usuario ON DELETE CASCADE, 
     comunidad INT REFERENCES comunidad ON DELETE CASCADE,
     PRIMARY KEY (usuario, comunidad)
 );
 
 CREATE TABLE solicitud(
-    usuario VARCHAR(255) REFERENCES usuarios ON DELETE CASCADE, 
+    usuario VARCHAR(255) REFERENCES usuario ON DELETE CASCADE, 
     comunidad INT REFERENCES comunidad ON DELETE CASCADE,
     estado estado_solicitud NOT NULL,
     PRIMARY KEY (usuario, comunidad)

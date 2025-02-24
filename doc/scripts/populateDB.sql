@@ -2,10 +2,10 @@
 
 INSERT INTO comunidad VALUES (DEFAULT, 'Arrayanes6', 'Arrayanes', 6, 'Granada', 'Granada', 'España');
 
-INSERT INTO usuarios VALUES ('fran@gmail.com', 'administrador', 'fcosueza', 'Francisco', 'Sueza Rodriguez', 'Arrayanes', 6, 4, 'A', 'Granada');
-INSERT INTO usuarios VALUES ('juan@gmail.com', 'inquilino', 'juanjuan', 'Juan', 'Ponce Rodriguez', 'Arrayanes', 6, 2, 'B', 'Granada');
-INSERT INTO usuarios VALUES ('alberto@gmail.com', 'inquilino', 'albertito', 'Alberto', 'Garcia Garcia', 'Arrayanes', 6, 1, 'C', 'Granada');
-INSERT INTO usuarios VALUES ('Maria@gmail.com', 'inquilino', 'armai', 'Maria', 'Morales Cabrera', 'Arrayanes', 6, 2, 'C', 'Granada');
+INSERT INTO usuario VALUES ('fran@gmail.com', 'administrador', 'fcosueza', 'Francisco', 'Sueza Rodriguez', 'Arrayanes', 6, 4, 'A', 'Granada');
+INSERT INTO usuario VALUES ('juan@gmail.com', 'inquilino', 'juanjuan', 'Juan', 'Ponce Rodriguez', 'Arrayanes', 6, 2, 'B', 'Granada');
+INSERT INTO usuario VALUES ('alberto@gmail.com', 'inquilino', 'albertito', 'Alberto', 'Garcia Garcia', 'Arrayanes', 6, 1, 'C', 'Granada');
+INSERT INTO usuario VALUES ('Maria@gmail.com', 'inquilino', 'armai', 'Maria', 'Morales Cabrera', 'Arrayanes', 6, 2, 'C', 'Granada');
 
 INSERT INTO credenciales VALUES('fran@gmail.com', '123456');
 INSERT INTO credenciales VALUES('juan@gmail.com', '123456');
