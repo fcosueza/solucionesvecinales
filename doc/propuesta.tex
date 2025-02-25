@@ -452,8 +452,6 @@ En primer lugar, la ventana deberá contener una \textbf{captura de pantalla de 
 
 El posicionamiento del icono de ayuda deberá realizarse de \textbf{forma visible} e \textbf{intuitiva}, añadiendo además textos alternativo al elemento así como un mensaje que se mostrará al pasar el botón por encima indicando que es al ayuda de la página. 																																					
 
-
-
 \subsubsection{Guía de Instalación, Configuración y Archivo Léeme} 
 Se incluirá una \textbf{guía de instalación en un entorno local} en el que se especificará como se instala el software en un servidor Apache 2.0 y la configuración que se debe realizar, si es necesario. La guía lo explicará paso a paso 
 
@@ -466,10 +464,12 @@ En este aspecto, nuestra aplicación usara una \textbf{Licencia MIT}, que permit
 
 En el repositorio se podrá acceder a una \textbf{copia integra de esta licencia}, así como desde el píe de página de nuestra aplicación. En \href{https://opensource.org/license/mit}{este enlace} se puede acceder al texto completo en inglés de la licencia.
 
-\section{Planificación del Proyecto}
+
+
+\subsection{Planificación del Proyecto}
 En esta sección vamos a realizar una pequeña planificación del proyecto, explicando de forma escueta su alcance y coste, e incluyendo una diagrama de Gantt con la temporalización del proyecto.
 
-\subsection{Alcance}
+\subsubsection{Alcance}
 El proyecto que vamos a desarrollar se llama \textbf{SolucionesVecinales}, y consiste en una aplicación web para la gestión de comunidades de vecinos gratuita y fácil de usar.
 
 Nuestro \textbf{objetivo}, es crear un \textbf{software} que proporcione las herramientas para \textbf{gestionar los principales aspectos} de una \textbf{comunidad de vecinos}. El software ofrecerá herramientas para la gestión de incidencias, reserva de espacios comunes, gestión de documentos, tablón de anuncios y consulta de la finanzas de la comunidad. Todo eso, poniendo especial énfasis en la facilidad de uso y la accesibilidad.
@@ -492,7 +492,7 @@ Las \textbf{entregas} que se han planificado son:
 
 Hay que tener en cuenta que las \textbf{entregas} se han establecido por \textbf{funcionalidades completas}, por lo que se deberá esta trabajando en el \textbf{backend} y el \textbf{frontend} de forma simultánea. Además, todo el proceso irá dirigido por lo test, empleando la \textbf{metodología TDD}.
 
-\subsection{Coste}
+\subsubsection{Coste}
 En el coste de nuestro proyecto hay que incluir varios elementos. Algunos de ellos ya los tenemos adquiridos con antelación, pero aún así, se incluirá en el coste del proyecto, para tenerlo en cuenta.
 
 Para el desarrollo de nuestra aplicación, se va a emplear un \textbf{ordenador portátil} ya adquirido, en concreto un \textbf{HP eq0003ns}, al que se han añadido \textbf{32 GB de RAM}. Además, hay que tener en cuenta el sueldo del desarrollador, ya que solo va a haber uno, durante los 2 meses de desarrollo, a lo que habrá que sumarle el Hosting aproximado, ya que aún se están valorando diferentes opciones. Eso, supone el siguiente costo:
@@ -506,7 +506,7 @@ Para el desarrollo de nuestra aplicación, se va a emplear un \textbf{ordenador 
 
 Este sería el coste inicial del proyecto, pero siempre pueden surgir algún contratiempo que aumente el coste o lo abarate (poco probable).
 
-\subsection{Diagrama de Gantt}
+\subsubsection{Diagrama de Gantt}
 Para finalizar esta pequeña planificación del proyecto, se expone en la siguiente figura un diagrama de Gantt con la cronología de lo que se ha realizado hasta el momento y de lo que aún queda por realizar.
 
 \begin{figure}[ht]
@@ -514,6 +514,12 @@ Para finalizar esta pequeña planificación del proyecto, se expone en la siguie
 	\includegraphics[scale=0.31]{diagrama-gantt.png}
 	\caption{Diagrama de Gantt del Proyecto}
 \end{figure}
+
+\section{Requerimientos de Hardware y Software. Financiación.}
+En esta sección de van a determinar los \textbf{requerimientos tanto de hardware} como de \textbf{software} para nuestro proyecto, así como el personal, la infraestructura y el modo de financiación que se ha elegido.
+
+\subsection{Requisitos Hardware}
+
 
 \section{Casos de Uso}
 En esta sección se ha realizado una extracción de todos los casos de uso para todos los usuarios de nuestro sistema. Una vez que se hayan obtenido todos los casos de uso, se van a representar en primer lugar en un \textbf{diagrama general de casos de uso}, mostrando todos los casos de uso y su relación entre ellos y con cada actor. Además, los \textbf{casos de uso más importantes} se van a detallar en tablas, explicando los pasos a seguir, las precondiciones y postcondiciones.
@@ -623,7 +629,11 @@ Como vemos, el paso a tablas ha sido prácticamente directo, ya que en el diagra
 \subsection{Scripts de la Base de Datos}
 Acompañando a este documento se han incluido 2 script, en \textbf{SQL}, para crear la base de datos y poblarla con datos, para poder realizar algunas consulta u operaciones de prueba.
 
-Hay que tener en cuenta, que la base de datos que se va a emplear en la aplicación es \textbf{PostgreSQL}, por lo que aunque la mayoría de sentencias van a ser totalmente compatibles con SQL, puede ser que haya algunos \textbf{tipos de datos}, o algunas \textbf{sentencias}, como por ejemplo, para generar campos de id de forma aleatoria, que \textbf{no estén soportadas} en MySQL ú Oracle. Por eso, para la correcta creación de la base de datos será \textbf{necesario el uso de PostgreSQL}. 
+Hay que tener en cuenta, que la base de datos que se va a emplear en la aplicación es \textbf{PostgreSQL}, por lo que aunque la mayoría de sentencias van a ser totalmente compatibles con SQL, puede ser que haya algunos \textbf{tipos de datos}, o algunas \textbf{sentencias}, como por ejemplo, para generar campos de id de forma aleatoria, que \textbf{no estén soportadas} en MySQL ú Oracle. Por eso, para la correcta creación de la base de datos será \textbf{necesario el uso de PostgreSQL}.
+
+Respecto al \textbf{tema de los roles}, aunque se han creado y usado, el control de los roles se va a \textbf{implementar en la aplicación} propiamente dicha, en el backend y frontend, por lo que no tiene mucha relevancia si solo se utilizan en la base de datos de forma manual.
+
+Por último, destacar que aunque se ha intentado realizar el diseño de la forma más eficiente, \textbf{puede que haya cambios} en la arquitectura de la base de datos. De ser así, \textbf{se documentará} cada cambio y \textbf{se explicará }el motivo de haberlo  realizado. 
 
 
 \newpage
