@@ -42,14 +42,16 @@
 \contentsline {subsubsection}{\numberline {2.5.2}Coste}{20}{subsubsection.2.5.2}%
 \contentsline {subsubsection}{\numberline {2.5.3}Diagrama de Gantt}{20}{subsubsection.2.5.3}%
 \contentsline {section}{\numberline {3}Requerimientos de Hardware y Software. Financiación.}{21}{section.3}%
-\contentsline {section}{\numberline {4}Casos de Uso}{21}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Diagrama General de Casos de Uso}{21}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Descripción Casos de Uso Principales}{21}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Base de Datos}{24}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Diagrama Entidad/Relación}{24}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Paso a Tablas}{25}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Scripts de la Base de Datos}{26}{subsection.5.3}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{27}{appendix.alph1.Alph1}%
-\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{32}{appendix.alph1.Alph2}%
-\contentsline {section}{\nonumberline Referencias}{37}{section*.5}%
+\contentsline {subsection}{\numberline {3.1}Requisitos Hardware}{21}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Requisitos Software}{21}{subsubsection.3.1.1}%
+\contentsline {section}{\numberline {4}Casos de Uso}{22}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Diagrama General de Casos de Uso}{22}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Descripción Casos de Uso Principales}{22}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Base de Datos}{25}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Diagrama Entidad/Relación}{25}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Paso a Tablas}{26}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Scripts de la Base de Datos}{27}{subsection.5.3}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{28}{appendix.alph1.Alph1}%
+\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{33}{appendix.alph1.Alph2}%
+\contentsline {section}{\nonumberline Referencias}{38}{section*.5}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -519,6 +519,27 @@ Para finalizar esta pequeña planificación del proyecto, se expone en la siguie
 En esta sección de van a determinar los \textbf{requerimientos tanto de hardware} como de \textbf{software} para nuestro proyecto, así como el personal, la infraestructura y el modo de financiación que se ha elegido.
 
 \subsection{Requisitos Hardware}
+Para nuestra aplicación \textbf{no vamos a necesitar} una \textbf{infraestructura hardware muy compleja}, no solo por el tipo de aplicación que vamos a desarrollar, sino porque la aplicación se alojará en un \textbf{servicio de hosting externo}, cuando este en producción. Además, solo hay un desarrollador, por lo no se va a tener que instalar la misma infraestructura que si hubiera un equipo de desarrollo.
+
+A nivel de hardware, nuestra aplicación solo va a necesitar un portátil para su desarrollo. En nuestro caso, es un portátil ya adquirido, un \href{https://support.hp.com/uy-es/document/c06645278}{HP eq0003ns} al que se le han añadido 32GB de RAM, sustituyendo los 8GB que trae por defecto. Aunque el portátil ya esta adquirido, se incluirá en el presupuesto.
+
+Se ha elegido solo este hardware porque nuestra aplicación no necesita muchos recursos para su desarrollo, así que teniendo un ordenador con bastante espacio de almacenamiento y una buena cantidad de memoria RAM, como es el caso, el desarrollo se va a realizar sin problemas.
+
+\subsubsection{Requisitos Software}
+Todo el software que se va a emplear en el proceso de desarrollo es software libre, por lo que no va a suponer un coste para el desarrollo de la aplicación. En estas sección se va a explicar en software más importante que se va a emplear el el desarrollo y el motivo de su elección.
+
+El sistema operativo elegido para el equipo donde se va a desarrollar el software es \textbf{Kubuntu 24.04LTS}. Se ha elegido Linux, y en concreto está distribución, porque es un sistema muy estable, con una gran cantidad de herramientas para el desarrollo de aplicaciones y que se actualiza frecuentemente. Además es gratuito y de código abierto.
+
+Para la parte de \textbf{frontend} se ha decidido emplear \textbf{React.js}, en concreto la \textbf{versión 19}, que ha sido publicada el 5 de Diciembre de 2024. \cite{github01} Esta librería de Javascript o Typescript esta enfocado en el desarrollo \textbf{orientado a componentes}, lo que nos va a permitir desarrollar un cliente modular, con componentes altamente reutilizables. Actualmente es una de las librerías más ampliamente utilizas en el desarrollo frontend.
+
+Para pa parte de \textbf{backend} se va a emplear \textbf{Node 22.14LTS}, que es un \textbf{entorno de ejecución para Javascript} que nos va a permitir desarrollar nuestra aplicación en el servidor empleando este lenguaje o, como es nuestro caso, Typescript. Junto con Node, emplearemos \textbf{Express 4.21}, un framework para node que permite el desarrollo de aplicaciones web en la parte del servidor de forma, rápida y segura, motivo por el que se ha elegido para el desarrollo. Tanto Node como Express tienen un enfoque modular lo que va a proporcionarnos gran versatilidad y alta performance en nuestra aplicación.
+
+Además de este software, como \textbf{base de datos} se va a emplear \textbf{PostgreSQL}, ya que aporta más flexibilidad en cuanto a tipos de datos, escalabilidad, simultaneidad e integridad de los datos que otras bases de datos basadas en SQL. Es además una base de datos de código abierto y gratuita.
+
+Para el testeo de aplicaciones se van a usar varias herramientas, como \textbf{Jest} para el testeo unitario, \textbf{Github Actions} para la integración continua y \textbf{Cypress} para el testing e2e.
+
+Por último, en lo relativo a la \textbf{gestión de proyecto}, se va a emplear por un lado \textbf{GitHub} (Git), como repositorio de código que nos ayudará a llevar un control y un historial de los cambios realizados en nuestra base de código, además de \textbf{Trello}, una aplicación tipo \textbf{Kanban} que nos permitirá organizar de forma eficiente las tareas que se deben realizar, añadiendo subtareas, fecha de entrega, etc.. 
+
 
 
 \section{Casos de Uso}

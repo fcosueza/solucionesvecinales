@@ -40,6 +40,10 @@
 {Licencia MIT}.
 \newblock \\\url{https://opensource.org/license/mit}.
 
+\bibitem{github01}
+{Github - React Repository}.
+\newblock \\\url{https://github.com/facebook/react/releases}.
+
 \bibitem{wiki02}
 {Wikipedia - PosgreSQL}.
 \newblock \\\url{https://en.wikipedia.org/wiki/PostgreSQL}.
