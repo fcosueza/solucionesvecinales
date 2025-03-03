@@ -525,7 +525,7 @@ A nivel de hardware, nuestra aplicación solo va a necesitar un portátil para s
 
 Se ha elegido solo este hardware porque nuestra aplicación no necesita muchos recursos para su desarrollo, así que teniendo un ordenador con bastante espacio de almacenamiento y una buena cantidad de memoria RAM, como es el caso, el desarrollo se va a realizar sin problemas.
 
-\subsubsection{Requisitos Software}
+\subsection{Requisitos Software}
 Todo el software que se va a emplear en el proceso de desarrollo es software libre, por lo que no va a suponer un coste para el desarrollo de la aplicación. En estas sección se va a explicar en software más importante que se va a emplear el el desarrollo y el motivo de su elección.
 
 El sistema operativo elegido para el equipo donde se va a desarrollar el software es \textbf{Kubuntu 24.04LTS}. Se ha elegido Linux, y en concreto está distribución, porque es un sistema muy estable, con una gran cantidad de herramientas para el desarrollo de aplicaciones y que se actualiza frecuentemente. Además es gratuito y de código abierto.
@@ -540,6 +540,20 @@ Para el testeo de aplicaciones se van a usar varias herramientas, como \textbf{J
 
 Por último, en lo relativo a la \textbf{gestión de proyecto}, se va a emplear por un lado \textbf{GitHub} (Git), como repositorio de código que nos ayudará a llevar un control y un historial de los cambios realizados en nuestra base de código, además de \textbf{Trello}, una aplicación tipo \textbf{Kanban} que nos permitirá organizar de forma eficiente las tareas que se deben realizar, añadiendo subtareas, fecha de entrega, etc.. 
 
+\subsection{Requisitos de Personal}
+El personal necesario para desarrollar la aplicación va a ser mínimo, reduciéndose a \textbf{1 desarrollador} que va a ocuparse de todo el proceso de desarrollo de la aplicación. Su sueldo se incluirá en el presupuesto durante los 2 meses que va a llevar el desarrollo del proyecto.
+
+\subsection{Recursos de Interconexión y Hosting}
+Los recursos de interconexión de nuestra aplicación van a ser mínimos, especialmente durante el proceso de desarrollo. En este aspecto, lo único que vamos a necesitar es una \textbf{conexión a internet estable}, que contrataremos con algún proveedor que nos facilitará el router y todo lo necesario para establecer la conexión. Nuestro equipo se conectara por \textbf{red inalámbrica} a la red, por lo que no necesitamos cables de red.
+
+Respecto al \gls{Hosting}, ahora mismo nuestra primera opción es\textbf{ Railway}, un proveedor de hosting bastante completo que permite el despliegue de aplicaciones full stack. En principio, el \textbf{plan Hobby} puede servir para nuestra aplicación, aunque si vemos que el nivel de usuario es grande se puede cambiar al plan Pro. En \href{https://railway.com/}{la página web de Railway} podemos ver con más detalle todos los planes.
+
+\subsection{Alternativas de Diseño}
+En el caso de que el \textbf{equipo de desarrollo creciera}, sería conveniente montar \textbf{un servidor}, donde realizar el desarrollo de aplicación, para que todos los programadores pudieran conectarse, albergando nuestra base de datos y el servidor web, así como el repositorio de código. Esta opción \textbf{encarecería mucho el presupuesto}, pero sería una opción mucho \textbf{más escalable y segura}. Para nuestras circunstancias, el incremento en el coste no merece la pena.
+
+\subsection{Presupuesto}
+
+
 
 
 \section{Casos de Uso}
@@ -548,7 +562,7 @@ En esta sección se ha realizado una extracción de todos los casos de uso para 
 \subsection{Diagrama General de Casos de Uso}
 En esta sección se muestra el diagrama general de casos de uso, elaborado con UML y que incluye todos los casos de uso y sus respectivas relaciones.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.66]{diagrama-CU.png}
 	\caption{Diagrama de Casos de Uso General}
@@ -563,7 +577,7 @@ En esta sección se van a \textbf{describir}, mediante tablas, los \textbf{casos
 
 Hay que tener en cuenta que la \textbf{numeración de los casos de uso} que vemos en las tablas puede no empezar desde 0 o tener números faltantes entre una tabla y otra. Esto se debe a que no todos los casos de uso se van a describir en las tablas y la numeración de estos va acorde a su aparición en el diagrama. Por ejemplo, el primer caso de uso va a ser el \textbf{CU03 - Registrarse}, ya que los primeros 2 casos de uso, \textbf{CU01 - Consultar Información} y \textbf{CU02 - Contactar Equipo} no se van a incluir en esta sección.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.56]{CU03.png}
 	\caption{Caso de Uso - Registrarse}
