@@ -47,15 +47,16 @@
 \contentsline {subsection}{\numberline {3.3}Requisitos de Personal}{22}{subsection.3.3}%
 \contentsline {subsection}{\numberline {3.4}Recursos de Interconexión y Hosting}{22}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Alternativas de Diseño}{22}{subsection.3.5}%
-\contentsline {section}{\numberline {4}Casos de Uso}{22}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Diagrama General de Casos de Uso}{22}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Descripción Casos de Uso Principales}{23}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Base de Datos}{27}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Diagrama Entidad/Relación}{27}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Paso a Tablas}{28}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Scripts de la Base de Datos}{29}{subsection.5.3}%
-\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{30}{appendix.alph1.Alph1}%
-\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{35}{appendix.alph1.Alph2}%
-\contentsline {section}{Glosario}{39}{section*.4}%
-\contentsline {section}{\nonumberline Referencias}{41}{section*.7}%
+\contentsline {subsection}{\numberline {3.6}Presupuesto}{22}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Casos de Uso}{23}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Diagrama General de Casos de Uso}{23}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Descripción Casos de Uso Principales}{24}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Base de Datos}{28}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Diagrama Entidad/Relación}{28}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Paso a Tablas}{29}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Scripts de la Base de Datos}{30}{subsection.5.3}%
+\contentsline {section}{Anexo \numberline {A}Descripción de la Interfaz de Usuario}{31}{appendix.alph1.Alph1}%
+\contentsline {section}{Anexo \numberline {B}Tablas de Requisitos}{36}{appendix.alph1.Alph2}%
+\contentsline {section}{Glosario}{40}{section*.4}%
+\contentsline {section}{\nonumberline Referencias}{42}{section*.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
