@@ -48,6 +48,7 @@
 \contentsline {subsection}{\numberline {3.4}Recursos de Interconexión y Hosting}{22}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Alternativas de Diseño}{22}{subsection.3.5}%
 \contentsline {subsection}{\numberline {3.6}Presupuesto}{22}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Financiación}{23}{subsection.3.7}%
 \contentsline {section}{\numberline {4}Casos de Uso}{23}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Diagrama General de Casos de Uso}{23}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Descripción Casos de Uso Principales}{24}{subsection.4.2}%
