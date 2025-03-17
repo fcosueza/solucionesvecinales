@@ -1,4 +1,4 @@
-DROP DATABASE soluciones_vecinales;
+DROP IF EXISTS DATABASE soluciones_vecinales;
 
 CREATE DATABASE soluciones_vecinales;
 
@@ -75,18 +75,14 @@ CREATE TABLE reserva(
 );
 
 CREATE TABLE incripcion(
-    usuario VARCHAR(255) REFERENCES usuario ON DELETE CASCADE, 
+    usuario VARCHAR(255) REFERENCES usuario ON DELETE CASCADE,
     comunidad INT REFERENCES comunidad ON DELETE CASCADE,
     PRIMARY KEY (usuario, comunidad)
 );
 
 CREATE TABLE solicitud(
-    usuario VARCHAR(255) REFERENCES usuario ON DELETE CASCADE, 
+    usuario VARCHAR(255) REFERENCES usuario ON DELETE CASCADE,
     comunidad INT REFERENCES comunidad ON DELETE CASCADE,
     estado estado_solicitud NOT NULL,
     PRIMARY KEY (usuario, comunidad)
 );
-
-
-
-
