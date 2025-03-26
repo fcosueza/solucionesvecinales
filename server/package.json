@@ -1,15 +1,16 @@
 {
   "name": "solucionesvecinales-server",
+  "private": true,
   "version": "1.0.0",
   "description": "Servidor para la aplicación SolucionesVecinales",
   "type": "module",
-  "main": "server.js",
-  "scripts": {
-    "start:dev": "ts-node src/server.ts",
-    "test": "NODE_ENV=test jest --runInBand --verbose --coverage"
-  },
   "author": "Francisco Sueza Rodríguez",
   "license": "MIT",
+  "scripts": {
+    "start:dev": "ts-node src/server.ts",
+    "test": "NODE_ENV=test jest --runInBand --verbose --coverage",
+    "lint": "eslint ."
+  },
   "devDependencies": {
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
