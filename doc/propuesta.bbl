@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+
+\bibitem{wiki01}
+{Wikipedia - HTTP}.
+\newblock \\\url{https://en.wikipedia.org/wiki/HTTP}.
+
+\bibitem{mdn01}
+{Mozilla Developer Network - HTTP Methods}.
+\newblock \\\url{https://developer.mozilla.org/es/docs/Web/HTTP/Methods}.
+
+\bibitem{mdn02}
+{Mozilla Developer Network - HTTP Methods: GET}.
+\newblock
+  \\\url{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET}.
+
+\bibitem{mdn03}
+{Mozilla Developer Network - HTTP Methods: POST}.
+\newblock
+  \\\url{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST}.
+
+\bibitem{mdn04}
+{Mozilla Developer Network - HTTP Methods: DELETE}.
+\newblock
+  \\\url{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE}.
+
+\bibitem{mdn05}
+{Mozilla Developer Network - HTTP Methods: PUT}.
+\newblock
+  \\\url{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT}.
+
+\bibitem{lopd}
+{Grupo Atico 34 - Cumplimiento de la LOPD}.
+\newblock \\\url{https://protecciondatos-lopd.com/empresas/pagina-web/}.
+
+\bibitem{wai-wcag}
+{W3 - Sumario WCAG 2}.
+\newblock \\\url{https://www.w3.org/WAI/standards-guidelines/wcag/es}.
+
+\bibitem{mit}
+{Licencia MIT}.
+\newblock \\\url{https://opensource.org/license/mit}.
+
+\bibitem{github01}
+{Github - React Repository}.
+\newblock \\\url{https://github.com/facebook/react/releases}.
+
+\bibitem{ico01}
+{ICO Empresas y Emprendedores}.
+\newblock \\\url{https://www.ico.es/ico-empresas-y-emprendedores}.
+
+\bibitem{wiki02}
+{Wikipedia - PosgreSQL}.
+\newblock \\\url{https://en.wikipedia.org/wiki/PostgreSQL}.
+
+\bibitem{apache01}
+{Apache - PostgreSQL}.
+\newblock \\\url{https://db.apache.org/ddlutils/databases/postgresql.html}.
+
+\end{thebibliography}
