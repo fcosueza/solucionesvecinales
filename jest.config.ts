@@ -10,7 +10,8 @@ const config: Config = {
   coverageDirectory: "coverage",
   coverageProvider: "v8",
   testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"]
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  modulePathIgnorePatterns: ["<rootDir>/tests/"]
 };
 
 export default createJestConfig(config);
