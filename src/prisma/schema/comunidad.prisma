@@ -13,5 +13,9 @@
     provincia   String
     pais        String
 
-    mensajes Mensaje[]
+    mensajes    Mensaje[]
+    zonas       Zona[]
+    incidencias Incidencia[]
+    inscritos   Inscripcion[]
+    solicitudes Solicitud[]
  }

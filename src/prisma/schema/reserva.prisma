@@ -1,0 +1,20 @@
+/*
+ * Modelo Reserva
+ *
+ * Modelo que representa las reservas que se realizan en los espacios comunes. Debe estar ligada
+ * a un usuario, una comunidad y un espacio común.
+ */
+
+model Reserva {
+    usuario      String
+    comunidad    Int
+    zona         String
+    fecha        DateTime
+    hora_inicio  DateTime  @db.Time()
+    hora_fin     DateTime  @db.Time()
+
+    usuarioID   Usuario    @relation(fields: [usuario], references: [correo], onDelete: Cascade)
+    zonaID      Zona       @relation(fields: [zona, comunidad], references: [nombre, comunidad], onDelete: Cascade)
+
+    @@id([usuario, comunidad, zona])
+}

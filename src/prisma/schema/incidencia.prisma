@@ -1,0 +1,25 @@
+/*
+ * Modelo Incidencia
+ *
+ * Modelo que define la tabla Incidencia, la cual deberá estar ligada a un usuario y una comunidad. Además, 
+ * define el enum Estado que especifica los estados en los que se puede encontrar una incidencia.
+ */
+
+ enum Estado_Incidencia {
+    creada
+    procesandose
+    solucionada
+ }
+
+model Incidencia {
+    comunidad    Int
+    usuario      String
+    fecha        DateTime           @default(now())
+    descripcion  String
+    estado       Estado_Incidencia  @default(solucionada)
+
+    comunidadID  Comunidad          @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+    usuarioID    Usuario            @relation(fields: [usuario], references: [correo], onDelete: Cascade)
+
+    @@id([comunidad, usuario, fecha])
+}

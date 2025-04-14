@@ -1,0 +1,15 @@
+/*
+ * Modelo Incripcion
+ *
+ * Modelo que representa la inscripción de un usuario a una comunidad de vecinos.
+ */
+
+model Inscripcion {
+    usuario     String
+    comunidad   Int
+
+    usuarioID   Usuario    @relation(fields: [usuario], references: [correo], onDelete: Cascade)
+    comunidadID Comunidad  @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+    @@id([usuario, comunidad])
+}

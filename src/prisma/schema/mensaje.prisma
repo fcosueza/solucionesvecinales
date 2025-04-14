@@ -1,13 +1,14 @@
 /*
  * Modelo Mensaje
  *
- * Modelo de la tabla mensaje que representa los mensajes que una administrador puede 
- * crear en el tablón de anuncios.
+ * Modelo de la tabla mensaje que representa los mensajes que una administrador puede
+ * crear en el tablón de anuncios. Los mensajes deben estar relacionados con algún usuario.
  */
 
  model Mensaje {
     horaCreacion  DateTime @default(now())
     comunidad     Int
-    comunidadID   Comunidad @relation(fields: [comunidad], references: [id])
+    comunidadID   Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
     @@id([horaCreacion, comunidad])
  }

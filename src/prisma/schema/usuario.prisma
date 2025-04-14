@@ -22,5 +22,10 @@
     piso             Int?
     letra            String?  @db.Char(1)
     localidad        String
+
     credenciales     Credenciales?
+    incidencias      Incidencia[]
+    reservas         Reserva[]
+    inscripciones    Inscripcion[]
+    solicitudes      Solicitud[]
 }
