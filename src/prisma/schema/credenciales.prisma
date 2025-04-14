@@ -1,0 +1,11 @@
+/*
+ * Modelo Credenciales
+ *
+ * Modelo de la tabla Credencial que almacena la información de acceso de los usuarios.
+ */
+
+model Credenciales {
+    correoUsuario String   @id
+    password      String
+    usuario       Usuario  @relation(fields: [correoUsuario], references: [correo])
+}

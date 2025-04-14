@@ -5,11 +5,13 @@
  */
 
  model Comunidad {
-    id Int @id @default(autoincrement())
-    nombre String
-    calle String
-    numero Int
-    localidad String
-    provincia String
-    pais String[]
+    id          Int     @id @default(autoincrement())
+    nombre      String
+    calle       String
+    numero      Int
+    localidad   String
+    provincia   String
+    pais        String
+
+    mensajes Mensaje[]
  }
