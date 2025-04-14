@@ -9,7 +9,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../src/app/prisma"
+  output = "../../node_modules/prisma/prisma-client"
   previewFeatures = ["prismaSchemaFolder"]
 }
 
