@@ -1,0 +1,197 @@
+/**
+ * Modelo Comunidad.
+ * Modelo de la tabla comunidad, que es la principal de nuestra base de datos.
+ */
+
+model Comunidad {
+  id        Int    @id @default(autoincrement())
+  nombre    String
+  calle     String
+  numero    Int
+  localidad String
+  provincia String
+  pais      String
+
+  mensajes    Mensaje[]
+  zonas       Zona[]
+  incidencias Incidencia[]
+  inscritos   Inscripcion[]
+  solicitudes Solicitud[]
+}
+
+/**
+ * Modelo Credenciales
+ * Modelo de la tabla Credencial que almacena la información de acceso de los usuarios. Los credenciales deben
+ * estar relacionados con algún usuario para su creación.
+ */
+
+model Credenciales {
+  correoUsuario String @id
+  password      String
+
+  usuario Usuario @relation(fields: [correoUsuario], references: [correo], onDelete: Cascade)
+}
+
+/**
+ * Modelo Incidencia
+ * Modelo que define la tabla Incidencia, la cual deberá estar ligada a un usuario y una comunidad. Además,
+ * define el enum Estado que especifica los estados en los que se puede encontrar una incidencia.
+ */
+
+enum Estado_Incidencia {
+  creada
+  procesandose
+  solucionada
+}
+
+model Incidencia {
+  comunidad   Int
+  usuario     String
+  fecha       DateTime          @default(now())
+  descripcion String
+  estado      Estado_Incidencia @default(solucionada)
+
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+  usuarioID   Usuario   @relation(fields: [usuario], references: [correo], onDelete: Cascade)
+
+  @@id([comunidad, usuario, fecha])
+}
+
+/**
+ * Modelo Incripcion
+ * Modelo que representa la inscripción de un usuario a una comunidad de vecinos.
+ */
+
+model Inscripcion {
+  usuario   String
+  comunidad Int
+
+  usuarioID   Usuario   @relation(fields: [usuario], references: [correo], onDelete: Cascade)
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+  @@id([usuario, comunidad])
+}
+
+/**
+ * Modelo Mensaje
+ * Modelo de la tabla mensaje que representa los mensajes que una administrador puede
+ * crear en el tablón de anuncios. Los mensajes deben estar relacionados con algún usuario.
+ */
+
+model Mensaje {
+  horaCreacion DateTime  @default(now())
+  comunidad    Int
+  comunidadID  Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+  @@id([horaCreacion, comunidad])
+}
+
+/**
+ * Modelo Reserva
+ * Modelo que representa las reservas que se realizan en los espacios comunes. Debe estar ligada
+ * a un usuario, una comunidad y un espacio común.
+ */
+
+model Reserva {
+  usuario     String
+  comunidad   Int
+  zona        String
+  fecha       DateTime
+  hora_inicio DateTime @db.Time()
+  hora_fin    DateTime @db.Time()
+
+  usuarioID Usuario @relation(fields: [usuario], references: [correo], onDelete: Cascade)
+  zonaID    Zona    @relation(fields: [zona, comunidad], references: [nombre, comunidad], onDelete: Cascade)
+
+  @@id([usuario, comunidad, zona])
+}
+
+/**
+ */
+
+enum Estado_Solicitud {
+  pendiente
+  aprobada
+  denegada
+}
+
+model Solicitud {
+  usuario   String
+  comunidad Int
+  estado    Estado_Solicitud @default(pendiente)
+
+  usuarioID   Usuario   @relation(fields: [usuario], references: [correo], onDelete: Cascade)
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+  @@id([usuario, comunidad])
+}
+
+/**
+ * Modelo Usuario.
+ * Modelo de la tabla Usuario, otra de las tablas principales de la aplicación. Además, se define
+ * el Enum rol que especifica los diferentes tipos de usuarios que podemos encontrar en el sistema.
+ */
+
+enum Role {
+  inquilino
+  administrador
+  webAdmin
+}
+
+model Usuario {
+  correo         String  @id
+  rol            Role    @default(inquilino)
+  nombre_usuario String
+  nombre         String
+  apellidos      String
+  calle          String
+  numero         Int
+  piso           Int?
+  letra          String? @db.Char(1)
+  localidad      String
+
+  credenciales  Credenciales?
+  incidencias   Incidencia[]
+  reservas      Reserva[]
+  inscripciones Inscripcion[]
+  solicitudes   Solicitud[]
+}
+
+/**
+ * Modelo Zona
+ * Modelo de la tabla Zona que representa las zonas comunes de la comunidad. Una zona debe pertenecer
+ * a una comunidad para poder ser creada.
+ */
+
+model Zona {
+  nombre      String
+  comunidad   Int
+  descripcion String
+  imagen      String?
+  hora_inicio DateTime
+  hora_fin    DateTime
+
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+  reservas Reserva[]
+
+  @@id([nombre, comunidad])
+}
+
+/**
+ * Archivo schema.prisma
+ * Archivo principal del modelo de prisma que genera el cliente y la conexión a la base de datos.
+ * Emplea la opción prismaSchemaFolder para dividir el modelo en diferentes archivos, los cuales se
+ * pueden encontar en la carpeta schema.
+ */
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../client/"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
