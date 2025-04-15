@@ -1,4 +1,4 @@
-/*
+/**
  * Modelo Incidencia
  *
  * Modelo que define la tabla Incidencia, la cual deberá estar ligada a un usuario y una comunidad. Además, 

@@ -1,4 +1,4 @@
-/*
+/**
  * Modelo Zona
  *
  * Modelo de la tabla Zona que representa las zonas comunes de la comunidad. Una zona debe pertenecer 
@@ -10,8 +10,8 @@
     comunidad    Int
     descripcion  String
     imagen       String?
-    hora_inicio  DateTime
-    hora_fin     DateTime
+    hora_inicio  DateTime @db.Time()
+    hora_fin     DateTime @db.Time()
 
     comunidadID  Comunidad  @relation(fields: [comunidad], references: [id], onDelete: Cascade)
 

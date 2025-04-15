@@ -147,7 +147,8 @@ exports.Prisma.InscripcionScalarFieldEnum = {
 
 exports.Prisma.MensajeScalarFieldEnum = {
   horaCreacion: 'horaCreacion',
-  comunidad: 'comunidad'
+  comunidad: 'comunidad',
+  texto: 'texto'
 };
 
 exports.Prisma.ReservaScalarFieldEnum = {

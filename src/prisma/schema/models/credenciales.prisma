@@ -1,4 +1,4 @@
-/*
+/**
  * Modelo Credenciales
  *
  * Modelo de la tabla Credencial que almacena la información de acceso de los usuarios. Los credenciales deben

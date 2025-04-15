@@ -6245,16 +6245,19 @@ export namespace Prisma {
   export type MensajeMinAggregateOutputType = {
     horaCreacion: Date | null
     comunidad: number | null
+    texto: string | null
   }
 
   export type MensajeMaxAggregateOutputType = {
     horaCreacion: Date | null
     comunidad: number | null
+    texto: string | null
   }
 
   export type MensajeCountAggregateOutputType = {
     horaCreacion: number
     comunidad: number
+    texto: number
     _all: number
   }
 
@@ -6270,16 +6273,19 @@ export namespace Prisma {
   export type MensajeMinAggregateInputType = {
     horaCreacion?: true
     comunidad?: true
+    texto?: true
   }
 
   export type MensajeMaxAggregateInputType = {
     horaCreacion?: true
     comunidad?: true
+    texto?: true
   }
 
   export type MensajeCountAggregateInputType = {
     horaCreacion?: true
     comunidad?: true
+    texto?: true
     _all?: true
   }
 
@@ -6372,6 +6378,7 @@ export namespace Prisma {
   export type MensajeGroupByOutputType = {
     horaCreacion: Date
     comunidad: number
+    texto: string
     _count: MensajeCountAggregateOutputType | null
     _avg: MensajeAvgAggregateOutputType | null
     _sum: MensajeSumAggregateOutputType | null
@@ -6396,27 +6403,31 @@ export namespace Prisma {
   export type MensajeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     horaCreacion?: boolean
     comunidad?: boolean
+    texto?: boolean
     comunidadID?: boolean | ComunidadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mensaje"]>
 
   export type MensajeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     horaCreacion?: boolean
     comunidad?: boolean
+    texto?: boolean
     comunidadID?: boolean | ComunidadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mensaje"]>
 
   export type MensajeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     horaCreacion?: boolean
     comunidad?: boolean
+    texto?: boolean
     comunidadID?: boolean | ComunidadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mensaje"]>
 
   export type MensajeSelectScalar = {
     horaCreacion?: boolean
     comunidad?: boolean
+    texto?: boolean
   }
 
-  export type MensajeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"horaCreacion" | "comunidad", ExtArgs["result"]["mensaje"]>
+  export type MensajeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"horaCreacion" | "comunidad" | "texto", ExtArgs["result"]["mensaje"]>
   export type MensajeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comunidadID?: boolean | ComunidadDefaultArgs<ExtArgs>
   }
@@ -6435,6 +6446,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       horaCreacion: Date
       comunidad: number
+      texto: string
     }, ExtArgs["result"]["mensaje"]>
     composites: {}
   }
@@ -6861,6 +6873,7 @@ export namespace Prisma {
   interface MensajeFieldRefs {
     readonly horaCreacion: FieldRef<"Mensaje", 'DateTime'>
     readonly comunidad: FieldRef<"Mensaje", 'Int'>
+    readonly texto: FieldRef<"Mensaje", 'String'>
   }
     
 
@@ -11933,7 +11946,8 @@ export namespace Prisma {
 
   export const MensajeScalarFieldEnum: {
     horaCreacion: 'horaCreacion',
-    comunidad: 'comunidad'
+    comunidad: 'comunidad',
+    texto: 'texto'
   };
 
   export type MensajeScalarFieldEnum = (typeof MensajeScalarFieldEnum)[keyof typeof MensajeScalarFieldEnum]
@@ -12350,12 +12364,14 @@ export namespace Prisma {
     NOT?: MensajeWhereInput | MensajeWhereInput[]
     horaCreacion?: DateTimeFilter<"Mensaje"> | Date | string
     comunidad?: IntFilter<"Mensaje"> | number
+    texto?: StringFilter<"Mensaje"> | string
     comunidadID?: XOR<ComunidadScalarRelationFilter, ComunidadWhereInput>
   }
 
   export type MensajeOrderByWithRelationInput = {
     horaCreacion?: SortOrder
     comunidad?: SortOrder
+    texto?: SortOrder
     comunidadID?: ComunidadOrderByWithRelationInput
   }
 
@@ -12366,12 +12382,14 @@ export namespace Prisma {
     NOT?: MensajeWhereInput | MensajeWhereInput[]
     horaCreacion?: DateTimeFilter<"Mensaje"> | Date | string
     comunidad?: IntFilter<"Mensaje"> | number
+    texto?: StringFilter<"Mensaje"> | string
     comunidadID?: XOR<ComunidadScalarRelationFilter, ComunidadWhereInput>
   }, "horaCreacion_comunidad">
 
   export type MensajeOrderByWithAggregationInput = {
     horaCreacion?: SortOrder
     comunidad?: SortOrder
+    texto?: SortOrder
     _count?: MensajeCountOrderByAggregateInput
     _avg?: MensajeAvgOrderByAggregateInput
     _max?: MensajeMaxOrderByAggregateInput
@@ -12385,6 +12403,7 @@ export namespace Prisma {
     NOT?: MensajeScalarWhereWithAggregatesInput | MensajeScalarWhereWithAggregatesInput[]
     horaCreacion?: DateTimeWithAggregatesFilter<"Mensaje"> | Date | string
     comunidad?: IntWithAggregatesFilter<"Mensaje"> | number
+    texto?: StringWithAggregatesFilter<"Mensaje"> | string
   }
 
   export type ReservaWhereInput = {
@@ -12875,36 +12894,43 @@ export namespace Prisma {
 
   export type MensajeCreateInput = {
     horaCreacion?: Date | string
+    texto: string
     comunidadID: ComunidadCreateNestedOneWithoutMensajesInput
   }
 
   export type MensajeUncheckedCreateInput = {
     horaCreacion?: Date | string
     comunidad: number
+    texto: string
   }
 
   export type MensajeUpdateInput = {
     horaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    texto?: StringFieldUpdateOperationsInput | string
     comunidadID?: ComunidadUpdateOneRequiredWithoutMensajesNestedInput
   }
 
   export type MensajeUncheckedUpdateInput = {
     horaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
     comunidad?: IntFieldUpdateOperationsInput | number
+    texto?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeCreateManyInput = {
     horaCreacion?: Date | string
     comunidad: number
+    texto: string
   }
 
   export type MensajeUpdateManyMutationInput = {
     horaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    texto?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeUncheckedUpdateManyInput = {
     horaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
     comunidad?: IntFieldUpdateOperationsInput | number
+    texto?: StringFieldUpdateOperationsInput | string
   }
 
   export type ReservaCreateInput = {
@@ -13473,6 +13499,7 @@ export namespace Prisma {
   export type MensajeCountOrderByAggregateInput = {
     horaCreacion?: SortOrder
     comunidad?: SortOrder
+    texto?: SortOrder
   }
 
   export type MensajeAvgOrderByAggregateInput = {
@@ -13482,11 +13509,13 @@ export namespace Prisma {
   export type MensajeMaxOrderByAggregateInput = {
     horaCreacion?: SortOrder
     comunidad?: SortOrder
+    texto?: SortOrder
   }
 
   export type MensajeMinOrderByAggregateInput = {
     horaCreacion?: SortOrder
     comunidad?: SortOrder
+    texto?: SortOrder
   }
 
   export type MensajeSumOrderByAggregateInput = {
@@ -14635,10 +14664,12 @@ export namespace Prisma {
 
   export type MensajeCreateWithoutComunidadIDInput = {
     horaCreacion?: Date | string
+    texto: string
   }
 
   export type MensajeUncheckedCreateWithoutComunidadIDInput = {
     horaCreacion?: Date | string
+    texto: string
   }
 
   export type MensajeCreateOrConnectWithoutComunidadIDInput = {
@@ -14763,6 +14794,7 @@ export namespace Prisma {
     NOT?: MensajeScalarWhereInput | MensajeScalarWhereInput[]
     horaCreacion?: DateTimeFilter<"Mensaje"> | Date | string
     comunidad?: IntFilter<"Mensaje"> | number
+    texto?: StringFilter<"Mensaje"> | string
   }
 
   export type ZonaUpsertWithWhereUniqueWithoutComunidadIDInput = {
@@ -15928,6 +15960,7 @@ export namespace Prisma {
 
   export type MensajeCreateManyComunidadIDInput = {
     horaCreacion?: Date | string
+    texto: string
   }
 
   export type ZonaCreateManyComunidadIDInput = {
@@ -15956,14 +15989,17 @@ export namespace Prisma {
 
   export type MensajeUpdateWithoutComunidadIDInput = {
     horaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    texto?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeUncheckedUpdateWithoutComunidadIDInput = {
     horaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    texto?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeUncheckedUpdateManyWithoutComunidadIDInput = {
     horaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    texto?: StringFieldUpdateOperationsInput | string
   }
 
   export type ZonaUpdateWithoutComunidadIDInput = {
