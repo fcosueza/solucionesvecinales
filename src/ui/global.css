@@ -1,0 +1,23 @@
+/* Variables */
+
+:root {
+  --font-color: black;
+}
+
+/* Basic CSS reset and style */
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%; /* set font size to a multiple of 10 */
+}
+
+body {
+  min-height: 100vh;
+}
