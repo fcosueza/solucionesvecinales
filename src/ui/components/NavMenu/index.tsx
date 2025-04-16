@@ -1,9 +1,5 @@
 import Link from "next/link";
-
-export interface NavItemData {
-  text: string;
-  url: string;
-}
+import { NavItemData } from "@/types/types";
 
 interface Props {
   links: NavItemData[];

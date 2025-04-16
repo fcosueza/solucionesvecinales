@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { NavItemData, NavMenu } from ".";
+import { NavMenu } from ".";
+import { NavItemData } from "@/types/types";
 
 describe("Tests del componente NavMenu...", () => {
   it("Debe renderizar un enlace de forma apropiada.", () => {
