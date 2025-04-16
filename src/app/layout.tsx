@@ -21,10 +21,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <meta
-          name="description"
-          content="Una aplicación libre para la gestión de comunidades de vecinos"
-        />
+        <meta name="description" content="Aplicación para la gestión de comunidades de vecinos" />
 
         <link rel="icon" href="favicon.ico" />
 
