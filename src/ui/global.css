@@ -4,6 +4,9 @@
 
 :root {
   --font-color: black;
+  --background-color: #f9f7f7;
+  --highlight-color: #3f72af;
+  --highlight-dark: #112d4e;
 }
 
 /* Basic CSS reset and style */
@@ -22,4 +25,5 @@ html {
 
 body {
   min-height: 100vh;
+  background-color: var(--background-color);
 }

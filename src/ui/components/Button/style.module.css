@@ -1,10 +1,10 @@
 .button {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: bold;
+  height: fit-content;
   color: white;
-  background-color: #3f72af;
+  background-color: var(--highlight-color);
   padding: 0.6rem 1rem;
-  margin: 1rem;
   border: none;
   border-radius: 1rem;
   transition: transform ease-in-out 0.1s;
@@ -16,7 +16,7 @@
 }
 
 .button:active {
-  background-color: #112d4e;
+  background-color: var(--highlight-dark);
   box-shadow: none;
   transform: scale(0.95);
 }

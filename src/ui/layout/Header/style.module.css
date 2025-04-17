@@ -1,0 +1,21 @@
+.header,
+.navBar {
+  display: flex;
+  flex-direction: row;
+  font-size: 2.5rem;
+  align-items: center;
+  justify-self: center;
+}
+
+.header {
+  display: fixed;
+  width: 80%;
+  height: 10rem;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.navBar {
+  margin-left: auto;
+}
