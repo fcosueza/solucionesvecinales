@@ -1,0 +1,13 @@
+.main {
+  display: flex;
+  width: 63%;
+  margin: 0 auto;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 8rem;
+}

@@ -1,0 +1,16 @@
+.cta {
+  width: 60%;
+  margin: 1rem;
+}
+
+.title {
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--highlight-color);
+  margin-bottom: 1rem;
+}
+
+.para {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
