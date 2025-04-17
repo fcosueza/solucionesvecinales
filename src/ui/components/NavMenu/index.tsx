@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NavItemData } from "@/types/types";
+import style from "./style.module.css";
 
 interface Props {
   links: NavItemData[];
@@ -7,7 +8,13 @@ interface Props {
 }
 
 export const NavMenu = ({ links, orientation = "horizontal" }: Props) => {
-  const link = links[0];
+  const linkList = links.map(link => (
+    <li className={orientation == "horizontal" ? style.horizontal : style.vertical} key={link.url}>
+      <Link className={style.navItem} href={link.url}>
+        {link.text}
+      </Link>
+    </li>
+  ));
 
-  return <Link href={link.url}>{link.text}</Link>;
+  return <ul className={style.navList}>{linkList}</ul>;
 };

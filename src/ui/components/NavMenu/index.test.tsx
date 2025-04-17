@@ -23,4 +23,37 @@ describe("Tests del componente NavMenu...", () => {
     render(<NavMenu links={links} />);
     expect(screen.getByRole("link")).toHaveAttribute("href", links[0].url);
   });
+
+  it("Debe renderizar todos los enlaces que se le han pasado.", () => {
+    const links: NavItemData[] = [
+      { text: "testLink-1", url: "/home" },
+      { text: "testLink-2", url: "/contact" },
+      { text: "testLink-3", url: "/about" }
+    ];
+
+    render(<NavMenu links={links} />);
+    expect(screen.getAllByRole("link")).toHaveLength(3);
+  });
+
+  it("Debe crear el menú en horizontal si no se especifica nada", () => {
+    const links: NavItemData[] = [
+      { text: "testLink-1", url: "/home" },
+      { text: "testLink-2", url: "/contact" },
+      { text: "testLink-3", url: "/about" }
+    ];
+
+    render(<NavMenu links={links} />);
+    expect(screen.getAllByRole("listitem")[0]).toHaveClass("horizontal");
+  });
+
+  it("Debe crear el menú en vertical si se especifica en vertical", () => {
+    const links: NavItemData[] = [
+      { text: "testLink-1", url: "/home" },
+      { text: "testLink-2", url: "/contact" },
+      { text: "testLink-3", url: "/about" }
+    ];
+
+    render(<NavMenu links={links} orientation="vertical" />);
+    expect(screen.getAllByRole("listitem")[0]).toHaveClass("vertical");
+  });
 });
