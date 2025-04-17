@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { NavMenu } from ".";
+import NavMenu from ".";
 import { NavItemData } from "@/types/types";
 
 describe("Tests del componente NavMenu...", () => {
