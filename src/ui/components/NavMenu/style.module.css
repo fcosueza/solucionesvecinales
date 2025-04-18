@@ -10,7 +10,6 @@
   font-weight: bold;
   text-decoration: none;
   margin: 1rem;
-  transition: color ease-in-out 0.2s;
 }
 
 .navItem::after {

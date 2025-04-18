@@ -9,7 +9,6 @@ interface Props {
   buttonText: string;
   buttonFunc: (Event: React.MouseEvent<HTMLElement>) => void;
   burgerMenu?: boolean;
-  fixed?: boolean;
 }
 
 /**
@@ -38,7 +37,7 @@ const Header = ({
     <header id="header" className={style.header}>
       <Logo altText="Logo de SolucionesVecinales" width={220} height={100} />
       <nav id="navbar" className={style.navBar}>
-        <NavMenu links={menuLinks} />
+        {menuLinks.length > 0 ? <NavMenu links={menuLinks} /> : null}
         <Button text={buttonText} onClick={buttonFunc} />
       </nav>
     </header>

@@ -7,10 +7,9 @@ import style from "./style.module.css";
 import { NavItemData } from "@/types/types";
 
 export default function Home() {
-  const title = "Administra tu Comunidad de Vecinos de forma fácil";
-  const para = `Nuestra aplicación te permite conectar desde cualquier dispositivo y 
-    estar al tanto de todo lo que sucede en tu comunidad de vecinos. Solo tienes que registrarte y 
-    empezar a disfrutar de ella de forma totalmente gratuita`;
+  const title = "¡Tu comunidad, más conectada y organizada que nunca!";
+  const para = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
+    consulta las novedades de tu comunidad desde un solo lugar.  `;
   const links: NavItemData[] = [
     { text: "Inicio", url: "#home" },
     { text: "Características", url: "/about" },
@@ -25,7 +24,7 @@ export default function Home() {
           <CTA
             title={title}
             para={para}
-            buttonText="Regístrate ya!!"
+            buttonText="Regístrate Ya!!"
             buttonFunc={() => console.log("Hallo")}
           />
           <Image
@@ -34,6 +33,15 @@ export default function Home() {
             width={700}
             height={400}
           />
+        </section>
+        <section id="motivation" className={style.section}>
+          <div>
+            <h2 className={style.motivation}>
+              Con <span className={style.highlight}>nuestra app</span>, la organización es sencilla
+              y <span className={style.highlight}>cada vecino cuenta</span>. Porque juntos, hacemos
+              del lugar donde vivimos un mejor hogar.
+            </h2>
+          </div>
         </section>
       </main>
     </>

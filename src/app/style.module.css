@@ -1,13 +1,26 @@
-.main {
+.main,
+.section {
   display: flex;
-  width: 63%;
+}
+
+.main {
+  flex-direction: column;
+  width: 65%;
   margin: 0 auto;
 }
 
 .section {
-  display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  margin-top: 8rem;
+  margin: 8rem 0;
+}
+
+.motivation {
+  font-size: 4rem;
+  text-align: center;
+}
+
+.highlight {
+  color: var(--highlight-color);
 }
