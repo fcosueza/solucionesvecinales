@@ -8,8 +8,9 @@ import { NavItemData } from "@/types/types";
 
 export default function Home() {
   const title = "Administra tu Comunidad de Vecinos de forma fácil";
-  const para = `Nuestra aplicación te permite conectar desde cualquier dispositivo y estar al tanto de todo lo que sucede en tu comunidad de vecinos.
-    Solo tienes que registrarte y empezar a disfrutar de ella de forma totalmente gratuita`;
+  const para = `Nuestra aplicación te permite conectar desde cualquier dispositivo y 
+    estar al tanto de todo lo que sucede en tu comunidad de vecinos. Solo tienes que registrarte y 
+    empezar a disfrutar de ella de forma totalmente gratuita`;
   const links: NavItemData[] = [
     { text: "Inicio", url: "#home" },
     { text: "Características", url: "/about" },
