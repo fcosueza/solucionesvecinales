@@ -21,8 +21,8 @@ interface Props {
 
 const NavMenu = ({ links, orientation = "horizontal" }: Props): React.ReactNode => {
   const linkList = links.map(link => (
-    <li className={orientation == "horizontal" ? style.horizontal : style.vertical} key={link.url}>
-      <Link className={style.navItem} href={link.url}>
+    <li className={orientation == "horizontal" ? style.horizontal : style.vertical} key={link.src}>
+      <Link className={style.navItem} href={link.src}>
         {link.text}
       </Link>
     </li>

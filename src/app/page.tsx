@@ -11,16 +11,16 @@ export default function Home() {
   const para = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
     consulta las novedades de tu comunidad desde cualquier lugar.`;
   const links: NavItemData[] = [
-    { text: "Inicio", url: "#home" },
-    { text: "Características", url: "/about" },
-    { text: "Contacto", url: "/contact" }
+    { text: "Inicio", src: "#" },
+    { text: "Características", src: "#about" },
+    { text: "Contacto", src: "#contact" }
   ];
 
   return (
     <>
       <Header menuLinks={links} buttonText="Log In" buttonFunc={() => console.log("Hallo")} />
       <main className={style.main}>
-        <section id="home" className={style.section}>
+        <section className={style.section}>
           <CTA
             title={title}
             para={para}
@@ -43,8 +43,8 @@ export default function Home() {
             </h2>
           </div>
         </section>
-        <section id="zigzag" className={style.zigzag}>
-          <div id="zigzag-left" className={style.section}>
+        <section id="about" className={style.zigzag}>
+          <div className={style.section}>
             <Image
               src="assets/images/devices.svg"
               alt="Imagen de la pantalla de un monitor"
@@ -59,11 +59,11 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div id="zigzag-right" className={style.section}>
+          <div className={style.section}>
             <div className={style.zigzag__text}>
               <h3 className={style.zigzag__title}>Centrada en la accesibilidad</h3>
               <p className={style.zigzag__para}>
-                Con un diseño pensado para ser accesible a todos los usuario, independientemente de
+                Con un diseño pensado para ser accesible a todos los usuarios, independientemente de
                 sus problemas de accesibilidad.
               </p>
             </div>
@@ -75,6 +75,7 @@ export default function Home() {
             />
           </div>
         </section>
+        <footer></footer>
       </main>
     </>
   );

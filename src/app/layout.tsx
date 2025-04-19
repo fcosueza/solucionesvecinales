@@ -7,6 +7,7 @@ import "../ui/global.css";
  * html así como la cabecera.
  *
  * @param children Componentes que se mostrarán en el cuerpo de la página
+ *
  * @returns Código HTML con las etiquetas html, head y body
  */
 
