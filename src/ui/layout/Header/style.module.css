@@ -2,9 +2,9 @@
 .navBar {
   display: flex;
   flex-direction: row;
-  font-size: 2.5rem;
   align-items: center;
   justify-self: center;
+  font-size: 2.5rem;
 }
 
 .header {
@@ -20,4 +20,5 @@
 
 .navBar {
   margin-left: auto;
+  color: black;
 }

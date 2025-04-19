@@ -1,11 +1,11 @@
 import Logo from "@/ui/components/Logo";
 import NavMenu from "@/ui/components/NavMenu";
 import Button from "@/ui/components/Button";
-import { NavItemData } from "@/types/types";
+import { NavItem } from "@/types/types";
 import style from "./style.module.css";
 
 interface Props {
-  menuLinks: NavItemData[];
+  menuLinks: NavItem[];
   buttonText: string;
   buttonFunc: (Event: React.MouseEvent<HTMLElement>) => void;
   burgerMenu?: boolean;

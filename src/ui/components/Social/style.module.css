@@ -9,3 +9,11 @@
 .icon {
   margin: 0 1.5rem;
 }
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.icon:active {
+  transform: scale(0.95);
+}

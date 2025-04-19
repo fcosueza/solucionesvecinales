@@ -5,17 +5,16 @@
 
 .main {
   flex-direction: column;
-  width: 65%;
-  max-width: 140rem;
-  min-width: 100rem;
-  margin: 0 auto;
 }
 
 .section,
 .zigzag {
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  width: 68%;
+  max-width: 140rem;
+  min-width: 125rem;
+  margin: 0 auto;
 }
 
 .zigzag {

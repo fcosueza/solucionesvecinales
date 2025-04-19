@@ -1,10 +1,10 @@
-import { SocialItem } from "@/types/types";
+import { SocialIcon } from "@/types/types";
 import Link from "next/link";
 import Image from "next/image";
 import style from "./style.module.css";
 
 interface Props {
-  icons: SocialItem[];
+  icons: SocialIcon[];
 }
 
 /**
@@ -22,13 +22,14 @@ const Social = ({ icons }: Props): React.ReactNode => {
     <div role="social" className={style.social}>
       {icons.map(icon => {
         return (
-          <Link href={icon.url} key={icon.src} title={icon.title} target="_blank">
+          <Link href={icon.url} key={icon.src} target="_blank">
             <Image
               className={style.icon}
               src={icon.src}
               alt={icon.altText}
               width={icon.width}
               height={icon.height}
+              title={icon.title}
             />
           </Link>
         );

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { NavItemData } from "@/types/types";
+import { NavItem } from "@/types/types";
 import style from "./style.module.css";
 
 interface Props {
-  links: NavItemData[];
+  links: NavItem[];
   orientation?: "horizontal" | "vertical";
   color?: "white" | "black";
 }
@@ -30,7 +30,11 @@ const NavMenu = ({ links, orientation = "horizontal" }: Props): React.ReactNode 
     </li>
   ));
 
-  return <ul className={style.navList}>{linkList}</ul>;
+  return (
+    <ul role="nav" className={style.navList}>
+      {linkList}
+    </ul>
+  );
 };
 
 export default NavMenu;

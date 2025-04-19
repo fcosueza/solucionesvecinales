@@ -3,7 +3,7 @@
  *
  * Tipo que representa los datos de un enlace.
  */
-export interface NavItemData {
+export interface NavItem {
   text: string;
   src: string;
 }
@@ -11,9 +11,9 @@ export interface NavItemData {
 /**
  * Tipo MediaItem
  *
- * Tipo que representa los datos de una imagen.
+ * Tipo que representa los datos de una icono empleado para las redes sociales.
  */
-export interface SocialItem {
+export interface SocialIcon {
   src: string;
   url: string;
   altText: string;

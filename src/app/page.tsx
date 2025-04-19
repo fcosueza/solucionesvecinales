@@ -5,65 +5,79 @@ import CTA from "@/ui/components/CTA";
 import Footer from "@/ui/layout/Footer";
 import Image from "next/image";
 import style from "./style.module.css";
-import { NavItemData } from "@/types/types";
-import { SocialItem } from "@/types/types";
+import { NavItem } from "@/types/types";
+import { SocialIcon } from "@/types/types";
 
+// Titulo y párrafo para el CTA
+const title = "¡Tu comunidad, más conectada y organizada que nunca!";
+const para = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
+  consulta las novedades de tu comunidad!!`;
+
+// Datos de los enlaces del los menús
+const links: NavItem[] = [
+  { text: "Inicio", src: "#" },
+  { text: "Características", src: "#about" },
+  { text: "Contacto", src: "#contact" },
+  { text: "Login", src: "#login" }
+];
+
+// Iconos de redes sociales
+const icons: SocialIcon[] = [
+  {
+    src: "/assets/icons/facebook.png",
+    altText: "Facebook Icon",
+    url: "https://www.facebook.com/",
+    title: "Facebook",
+    width: 50,
+    height: 50
+  },
+  {
+    src: "/assets/icons/github.png",
+    altText: "Github Icon",
+    url: "https://www.github.com/",
+    title: "Github",
+    width: 50,
+    height: 50
+  },
+  {
+    src: "/assets/icons/instagram.png",
+    altText: "Instagram Icon",
+    url: "https://www.instagram.com/",
+    title: "Instagram",
+    width: 50,
+    height: 50
+  },
+  {
+    src: "/assets/icons/linkedin.png",
+    altText: "LinkedIn Icon",
+    url: "https://www.linkedin.com/",
+    title: "LinkedIn",
+    width: 50,
+    height: 50
+  },
+  {
+    src: "/assets/icons/x.png",
+    altText: "X Icon",
+    url: "https://www.x.com/",
+    title: "X",
+    width: 50,
+    height: 50
+  }
+];
+
+/**
+ * Página Home
+ *
+ * Página principal de la aplicación, compuesta de diferentes componentes como un Header,
+ * secciones, footer, etc.
+ *
+ * @returns Nodo de React conteniendo la página principal.
+ */
 export default function Home() {
-  const title = "¡Tu comunidad, más conectada y organizada que nunca!";
-  const para = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
-    consulta las novedades de tu comunidad desde cualquier lugar.`;
-  const links: NavItemData[] = [
-    { text: "Inicio", src: "#" },
-    { text: "Características", src: "#about" },
-    { text: "Contacto", src: "#contact" },
-    { text: "Login", src: "#login" }
-  ];
-  const icons: SocialItem[] = [
-    {
-      src: "/assets/icons/facebook.png",
-      altText: "Facebook Icon",
-      url: "https://www.instagram.com/",
-      title: "Facebook",
-      width: 50,
-      height: 50
-    },
-    {
-      src: "/assets/icons/github.png",
-      altText: "Github Icon",
-      url: "https://www.instagram.com/",
-      title: "Github",
-      width: 50,
-      height: 50
-    },
-    {
-      src: "/assets/icons/instagram.png",
-      altText: "Instagram Icon",
-      url: "https://www.instagram.com/",
-      title: "Instagram",
-      width: 50,
-      height: 50
-    },
-    {
-      src: "/assets/icons/linkedin.png",
-      altText: "LinkedIn Icon",
-      url: "https://www.instagram.com/",
-      title: "LinkedIn",
-      width: 50,
-      height: 50
-    },
-    {
-      src: "/assets/icons/x.png",
-      altText: "X Icon",
-      url: "https://www.instagram.com/",
-      title: "X",
-      width: 50,
-      height: 50
-    }
-  ];
-
   return (
     <>
       <Header menuLinks={links} buttonText="Log In" buttonFunc={() => console.log("Hallo")} />
+
       <main className={style.main}>
         <section className={style.section}>
           <CTA
@@ -79,6 +93,7 @@ export default function Home() {
             height={400}
           />
         </section>
+
         <section id="motivation" className={style.section}>
           <div>
             <h2 className={style.motivation}>
@@ -88,6 +103,7 @@ export default function Home() {
             </h2>
           </div>
         </section>
+
         <section id="about" className={style.zigzag}>
           <div className={style.section}>
             <Image
@@ -121,6 +137,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+
       <Footer links={links} socialIcons={icons} />
     </>
   );

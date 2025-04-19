@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { MediaItem } from "@/types/types";
+import { SocialIcon } from "@/types/types";
 import Social from ".";
 
 describe("Tests del componente Social...", () => {
@@ -9,9 +9,10 @@ describe("Tests del componente Social...", () => {
   });
 
   it("Debe renderizar un icono de forma adecuada", () => {
-    const icons: MediaItem[] = [
+    const icons: SocialIcon[] = [
       {
-        url: "/assets/icons/facebook.png",
+        src: "/assets/icons/facebook.png",
+        url: "https://www.facebook.com/",
         altText: "Facebook Icon",
         title: "Facebook",
         width: 50,
@@ -21,20 +22,22 @@ describe("Tests del componente Social...", () => {
 
     render(<Social icons={icons} />);
     expect(screen.getByRole("img")).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveAttribute("title", "Facebook");
+    expect(screen.getByRole("img")).toHaveProperty("title", "Facebook");
   });
 
   it("Debe renderizar todos los iconos que se le pasen de forma adecuada", () => {
-    const icons: MediaItem[] = [
+    const icons: SocialIcon[] = [
       {
-        url: "/assets/icons/facebook.png",
+        src: "/assets/icons/facebook.png",
+        url: "https://www.facebook.com/",
         altText: "Facebook Icon",
         title: "Facebook",
         width: 50,
         height: 50
       },
       {
-        url: "/assets/icons/linkedin.png",
+        src: "/assets/icons/linkedin.png",
+        url: "https://www.facebook.com/",
         altText: "LinkedIn Icon",
         title: "LinkedIn",
         width: 50,

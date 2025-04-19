@@ -6,14 +6,14 @@ describe("Tests del componente Logo...", () => {
 
   it("Debe renderizar un logo de forma adecuada", () => {
     render(<Logo url={url} altText="Logotipo" />);
-    expect(screen.getByRole("img")).toBeInTheDocument();
+    expect(screen.getByRole("logo")).toBeInTheDocument();
   });
 
   it("Debe renderizar un logo con el texto alternativo indicado", () => {
     const altText = "Logo de la Empresa";
 
     render(<Logo url={url} altText={altText} />);
-    expect(screen.getByRole("img")).toHaveAttribute("alt", altText);
+    expect(screen.getByRole("logo")).toHaveAttribute("alt", altText);
   });
 
   it("Debe renderizar el logo con el tamaño predeterminado si no especifica uno", () => {
@@ -21,8 +21,8 @@ describe("Tests del componente Logo...", () => {
     const defaultHeight = 120;
 
     render(<Logo url={url} altText="Logotipo" />);
-    expect(screen.getByRole("img")).toHaveProperty("width", defaultWidth);
-    expect(screen.getByRole("img")).toHaveProperty("height", defaultHeight);
+    expect(screen.getByRole("logo")).toHaveProperty("width", defaultWidth);
+    expect(screen.getByRole("logo")).toHaveProperty("height", defaultHeight);
   });
 
   it("Debe renderizar un logo con el tamaño indicado", () => {
@@ -30,12 +30,12 @@ describe("Tests del componente Logo...", () => {
     const height = 120;
 
     render(<Logo url={url} altText="Logotipo" width={width} height={height} />);
-    expect(screen.getByRole("img")).toHaveProperty("width", width);
-    expect(screen.getByRole("img")).toHaveProperty("height", height);
+    expect(screen.getByRole("logo")).toHaveProperty("width", width);
+    expect(screen.getByRole("logo")).toHaveProperty("height", height);
   });
 
   it("Debe renderizar un logo de forma adecuada", () => {
     render(<Logo url={url} altText="Logotipo" />);
-    expect(screen.getByRole("img")).toBeInTheDocument();
+    expect(screen.getByRole("logo")).toBeInTheDocument();
   });
 });
