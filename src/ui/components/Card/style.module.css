@@ -1,0 +1,27 @@
+.card {
+  width: fit-content;
+  height: fit-content;
+  max-width: 30rem;
+  margin: 5rem;
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  transition: all ease-in-out 0.3s;
+}
+.card:hover {
+  box-shadow: 0 0.3rem 0.7rem rgba(0, 0, 0, 0.4);
+}
+
+.title,
+.para {
+  padding: 0 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.para {
+  font-size: 1.6rem;
+  padding-bottom: 1.5rem;
+}
