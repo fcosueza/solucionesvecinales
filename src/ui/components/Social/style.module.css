@@ -3,4 +3,9 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-left: 8rem;
+}
+
+.icon {
+  margin: 0 1.5rem;
 }

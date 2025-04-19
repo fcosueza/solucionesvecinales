@@ -2,9 +2,11 @@
 
 import Header from "@/ui/layout/Header";
 import CTA from "@/ui/components/CTA";
+import Footer from "@/ui/layout/Footer";
 import Image from "next/image";
 import style from "./style.module.css";
 import { NavItemData } from "@/types/types";
+import { SocialItem } from "@/types/types";
 
 export default function Home() {
   const title = "¡Tu comunidad, más conectada y organizada que nunca!";
@@ -13,7 +15,50 @@ export default function Home() {
   const links: NavItemData[] = [
     { text: "Inicio", src: "#" },
     { text: "Características", src: "#about" },
-    { text: "Contacto", src: "#contact" }
+    { text: "Contacto", src: "#contact" },
+    { text: "Login", src: "#login" }
+  ];
+  const icons: SocialItem[] = [
+    {
+      src: "/assets/icons/facebook.png",
+      altText: "Facebook Icon",
+      url: "https://www.instagram.com/",
+      title: "Facebook",
+      width: 50,
+      height: 50
+    },
+    {
+      src: "/assets/icons/github.png",
+      altText: "Github Icon",
+      url: "https://www.instagram.com/",
+      title: "Github",
+      width: 50,
+      height: 50
+    },
+    {
+      src: "/assets/icons/instagram.png",
+      altText: "Instagram Icon",
+      url: "https://www.instagram.com/",
+      title: "Instagram",
+      width: 50,
+      height: 50
+    },
+    {
+      src: "/assets/icons/linkedin.png",
+      altText: "LinkedIn Icon",
+      url: "https://www.instagram.com/",
+      title: "LinkedIn",
+      width: 50,
+      height: 50
+    },
+    {
+      src: "/assets/icons/x.png",
+      altText: "X Icon",
+      url: "https://www.instagram.com/",
+      title: "X",
+      width: 50,
+      height: 50
+    }
   ];
 
   return (
@@ -75,8 +120,8 @@ export default function Home() {
             />
           </div>
         </section>
-        <footer></footer>
       </main>
+      <Footer links={links} socialIcons={icons} />
     </>
   );
 }

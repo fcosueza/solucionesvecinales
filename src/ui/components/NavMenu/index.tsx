@@ -5,6 +5,7 @@ import style from "./style.module.css";
 interface Props {
   links: NavItemData[];
   orientation?: "horizontal" | "vertical";
+  color?: "white" | "black";
 }
 
 /**
@@ -15,6 +16,7 @@ interface Props {
  *
  * @param links Array de tipo NavItemData con la información de los enlaces
  * @param orientation Cadena con la orientación del menú
+ * @param color
  *
  * @returns Nodo de react con el menú en formato de lista HTML.
  */

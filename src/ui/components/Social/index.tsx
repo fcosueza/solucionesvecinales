@@ -2,22 +2,31 @@ import { SocialItem } from "@/types/types";
 import Link from "next/link";
 import Image from "next/image";
 import style from "./style.module.css";
-import { link } from "fs";
 
 interface Props {
   icons: SocialItem[];
 }
 
+/**
+ * Componente Social
+ *
+ * Componente que genera un elemento con iconos de redes sociales o similares. Los iconos
+ * son enlaces que se podrán.
+ *
+ * @param icons Array de elementos SocialItem con los iconos de las redes sociales.
+ *
+ * @returns Un nodo de React compuesto por un div y los iconos pasados como parámetros.
+ */
 const Social = ({ icons }: Props): React.ReactNode => {
   return (
     <div role="social" className={style.social}>
       {icons.map(icon => {
         return (
-          <Link href={icon.url} key={icon.src}>
+          <Link href={icon.url} key={icon.src} title={icon.title} target="_blank">
             <Image
+              className={style.icon}
               src={icon.src}
               alt={icon.altText}
-              title={icon.title}
               width={icon.width}
               height={icon.height}
             />

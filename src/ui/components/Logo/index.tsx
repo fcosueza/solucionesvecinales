@@ -3,7 +3,7 @@ import style from "./style.module.css";
 
 interface Props {
   url?: string;
-  altText: string;
+  altText?: string;
   width?: number;
   height?: number;
 }
@@ -25,7 +25,7 @@ interface Props {
 
 const Logo = ({
   url = "assets/images/logo.svg",
-  altText,
+  altText = "Logo de Soluciones Vecinales",
   width = 150,
   height = 120
 }: Props): React.ReactNode => {
