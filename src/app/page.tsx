@@ -9,7 +9,7 @@ import { NavItemData } from "@/types/types";
 export default function Home() {
   const title = "¡Tu comunidad, más conectada y organizada que nunca!";
   const para = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
-    consulta las novedades de tu comunidad desde un solo lugar.  `;
+    consulta las novedades de tu comunidad desde cualquier lugar.`;
   const links: NavItemData[] = [
     { text: "Inicio", url: "#home" },
     { text: "Características", url: "/about" },
@@ -46,35 +46,31 @@ export default function Home() {
         <section id="zigzag" className={style.zigzag}>
           <div id="zigzag-left" className={style.section}>
             <Image
-              src="assets/images/section2-noti.svg"
+              src="assets/images/devices.svg"
               alt="Imagen de la pantalla de un monitor"
-              width={500}
+              width={600}
               height={500}
             />
             <div className={style.zigzag__text}>
-              <h3 className={style.zigzag__title}>
-                Una app accesible y simple de usar por cualquiera
-              </h3>
+              <h3 className={style.zigzag__title}>Adaptada a cualquier dispositivo</h3>
               <p className={style.zigzag__para}>
-                Con un interfaz sencilla y un diseño simple, Soluciones Vecinales puede ser usada
-                por cualquier usuario, independientemente de sus conocimientos informáticos. Además,
-                incluye un sistema de ayuda muy intuitivo.
+                Nuestra aplicación cuenta con una interfaz sencilla y adaptada a cualquier
+                dispositivo, para que pueda ser usarla desde cualquier lugar.
               </p>
             </div>
           </div>
           <div id="zigzag-right" className={style.section}>
             <div className={style.zigzag__text}>
-              <h3 className={style.zigzag__title}>Lorem Ipsum Dolor Sit Amet</h3>
+              <h3 className={style.zigzag__title}>Centrada en la accesibilidad</h3>
               <p className={style.zigzag__para}>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-                veritatis et quasi architecto beatae vitae dicta sunt explicabo
+                Con un diseño pensado para ser accesible a todos los usuario, independientemente de
+                sus problemas de accesibilidad.
               </p>
             </div>
             <Image
-              src="assets/images/section2-easy.svg"
+              src="assets/images/ally.svg"
               alt="Imagen de la pantalla de un monitor"
-              width={500}
+              width={600}
               height={500}
             />
           </div>
