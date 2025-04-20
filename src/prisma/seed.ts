@@ -229,6 +229,24 @@ async function main(): Promise<void> {
   });
 
   console.log("Añadidas solicitudes: ", solicitudes);
+
+  const contactos = await prisma.contacto.createMany({
+    data: [
+      {
+        nombre: "Fran Son",
+        correo: "fran@gmail.com",
+        mensaje: "Lorem ipsum dolo sit amet"
+      },
+      {
+        nombre: "Okina",
+        correo: "Okina@gmail.com",
+        mensaje: "Lorem ipsum dolo sit amet"
+      }
+    ],
+    skipDuplicates: true
+  });
+
+  console.log("Añadidas solicitudes: ", contactos);
 }
 
 main();

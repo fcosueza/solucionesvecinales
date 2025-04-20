@@ -4,10 +4,10 @@ import Footer from ".";
 
 describe("Tests del componente Footer...", () => {
   const links: NavItem[] = [
-    { text: "Inicio", src: "#" },
-    { text: "Características", src: "#about" },
-    { text: "Contacto", src: "#contact" },
-    { text: "Login", src: "#login" }
+    { text: "Inicio", href: "#" },
+    { text: "Características", href: "#about" },
+    { text: "Contacto", href: "#contact" },
+    { text: "Login", href: "#login" }
   ];
 
   const icons: SocialIcon[] = [

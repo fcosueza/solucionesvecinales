@@ -127,6 +127,13 @@ exports.Prisma.ComunidadScalarFieldEnum = {
   pais: 'pais'
 };
 
+exports.Prisma.ContactoScalarFieldEnum = {
+  nombre: 'nombre',
+  correo: 'correo',
+  mensaje: 'mensaje',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.CredencialesScalarFieldEnum = {
   correoUsuario: 'correoUsuario',
   password: 'password'
@@ -222,6 +229,7 @@ exports.Role = exports.$Enums.Role = {
 
 exports.Prisma.ModelName = {
   Comunidad: 'Comunidad',
+  Contacto: 'Contacto',
   Credenciales: 'Credenciales',
   Incidencia: 'Incidencia',
   Inscripcion: 'Inscripcion',

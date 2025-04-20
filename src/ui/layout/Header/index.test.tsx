@@ -7,9 +7,9 @@ describe("Tests del componente Header", () => {
 
   it("Debe renderizar la cabecera correctamente", () => {
     const links: NavItem[] = [
-      { text: "testLink-1", src: "/home" },
-      { text: "testLink-2", src: "/contact" },
-      { text: "testLink-3", src: "/about" }
+      { text: "testLink-1", href: "/home" },
+      { text: "testLink-2", href: "/contact" },
+      { text: "testLink-3", href: "/about" }
     ];
 
     render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
@@ -18,9 +18,9 @@ describe("Tests del componente Header", () => {
 
   it("Debe renderizar el logo de la aplicación", () => {
     const links: NavItem[] = [
-      { text: "testLink-1", src: "/home" },
-      { text: "testLink-2", src: "/contact" },
-      { text: "testLink-3", src: "/about" }
+      { text: "testLink-1", href: "/home" },
+      { text: "testLink-2", href: "/contact" },
+      { text: "testLink-3", href: "/about" }
     ];
 
     render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
@@ -29,9 +29,9 @@ describe("Tests del componente Header", () => {
 
   it("Debe renderizar el menu de la aplicación", () => {
     const links: NavItem[] = [
-      { text: "testLink-1", src: "/home" },
-      { text: "testLink-2", src: "/contact" },
-      { text: "testLink-3", src: "/about" }
+      { text: "testLink-1", href: "/home" },
+      { text: "testLink-2", href: "/contact" },
+      { text: "testLink-3", href: "/about" }
     ];
 
     render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
@@ -47,9 +47,9 @@ describe("Tests del componente Header", () => {
 
   it("Debe renderizar el botón para hacer login", () => {
     const links: NavItem[] = [
-      { text: "testLink-1", src: "/home" },
-      { text: "testLink-2", src: "/contact" },
-      { text: "testLink-3", src: "/about" }
+      { text: "testLink-1", href: "/home" },
+      { text: "testLink-2", href: "/contact" },
+      { text: "testLink-3", href: "/about" }
     ];
 
     render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);

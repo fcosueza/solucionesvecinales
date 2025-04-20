@@ -16,10 +16,10 @@ const paraHero = `Gestiona incidencias, recibe avisos importantes, reserva espac
 
 // Datos de los enlaces del los menús
 const links: NavItem[] = [
-  { text: "Inicio", src: "#" },
-  { text: "Características", src: "#about" },
-  { text: "Contacto", src: "#contact" },
-  { text: "Login", src: "#login" }
+  { text: "Inicio", href: "#" },
+  { text: "Características", href: "#about" },
+  { text: "Contacto", href: "#contact" },
+  { text: "Login", href: "#login" }
 ];
 
 // Iconos de redes sociales

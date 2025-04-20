@@ -20,6 +20,21 @@ model Comunidad {
 }
 
 /**
+ * Modelo Contact
+ * Modelo de la tabla de contactos, donde se almacenarán los mensajes creados
+ * con el formulario de contacto.
+ */
+
+model Contacto {
+  nombre    String
+  correo    String
+  mensaje   String
+  createdAt DateTime @default(now())
+
+  @@id([nombre, correo, createdAt])
+}
+
+/**
  * Modelo Credenciales
  * Modelo de la tabla Credencial que almacena la información de acceso de los usuarios. Los credenciales deben
  * estar relacionados con algún usuario para su creación.

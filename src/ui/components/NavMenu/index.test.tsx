@@ -4,31 +4,31 @@ import { NavItem } from "@/types/types";
 
 describe("Tests del componente NavMenu...", () => {
   it("Debe renderizar un enlace de forma apropiada.", () => {
-    const links: NavItem[] = [{ text: "testLink", src: "/home" }];
+    const links: NavItem[] = [{ text: "testLink", href: "/home" }];
 
     render(<NavMenu links={links} />);
     expect(screen.getByRole("link")).toBeInTheDocument();
   });
 
   it("Debe renderizar un enlace con el texto adecuado.", () => {
-    const links: NavItem[] = [{ text: "testLink", src: "/home" }];
+    const links: NavItem[] = [{ text: "testLink", href: "/home" }];
 
     render(<NavMenu links={links} />);
     expect(screen.getByText(links[0].text)).toBeInTheDocument();
   });
 
   it("Debe renderizar un enlace con el atributo href correctamente", () => {
-    const links: NavItem[] = [{ text: "testLink", src: "/home" }];
+    const links: NavItem[] = [{ text: "testLink", href: "/home" }];
 
     render(<NavMenu links={links} />);
-    expect(screen.getByRole("link")).toHaveAttribute("href", links[0].src);
+    expect(screen.getByRole("link")).toHaveAttribute("href", links[0].url);
   });
 
   it("Debe renderizar todos los enlaces que se le han pasado.", () => {
     const links: NavItem[] = [
-      { text: "testLink-1", src: "/home" },
-      { text: "testLink-2", src: "/contact" },
-      { text: "testLink-3", src: "/about" }
+      { text: "testLink-1", href: "/home" },
+      { text: "testLink-2", href: "/contact" },
+      { text: "testLink-3", href: "/about" }
     ];
 
     render(<NavMenu links={links} />);
@@ -37,9 +37,9 @@ describe("Tests del componente NavMenu...", () => {
 
   it("Debe crear el menú en horizontal si no se especifica nada", () => {
     const links: NavItem[] = [
-      { text: "testLink-1", src: "/home" },
-      { text: "testLink-2", src: "/contact" },
-      { text: "testLink-3", src: "/about" }
+      { text: "testLink-1", href: "/home" },
+      { text: "testLink-2", href: "/contact" },
+      { text: "testLink-3", href: "/about" }
     ];
 
     render(<NavMenu links={links} />);
@@ -48,9 +48,9 @@ describe("Tests del componente NavMenu...", () => {
 
   it("Debe crear el menú en vertical si se especifica en vertical", () => {
     const links: NavItem[] = [
-      { text: "testLink-1", src: "/home" },
-      { text: "testLink-2", src: "/contact" },
-      { text: "testLink-3", src: "/about" }
+      { text: "testLink-1", href: "/home" },
+      { text: "testLink-2", href: "/contact" },
+      { text: "testLink-3", href: "/about" }
     ];
 
     render(<NavMenu links={links} orientation="vertical" />);

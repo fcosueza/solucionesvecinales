@@ -5,7 +5,7 @@
  */
 export interface NavItem {
   text: string;
-  src: string;
+  href: string;
 }
 
 /**
