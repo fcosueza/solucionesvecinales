@@ -5,6 +5,7 @@ import CTA from "@/ui/components/CTA";
 import Footer from "@/ui/layout/Footer";
 import Card from "@/ui/components/Card";
 import Gallery from "@/ui/layout/Gallery";
+import ContactForm from "@/ui/components/Forms/ContactForm";
 import Image from "next/image";
 import style from "./style.module.css";
 import { NavItem } from "@/types/types";
@@ -153,7 +154,7 @@ export default function Home() {
               <h3 className={style.zigzag__title}>Adaptada a cualquier dispositivo</h3>
               <p className={style.zigzag__para}>
                 Nuestra aplicación cuenta con una interfaz sencilla y adaptada a cualquier
-                dispositivo, para que pueda ser usarla desde cualquier lugar.
+                dispositivo, para que puedas usarla desde cualquier lugar.
               </p>
             </div>
           </div>
@@ -189,6 +190,12 @@ export default function Home() {
               );
             })}
           </Gallery>
+        </section>
+        <section className={style.section} id="contact">
+          <div>
+            <h3>¿Tienes alguna dura? Contacta con nosotros!!!</h3>
+            <ContactForm />
+          </div>
         </section>
       </main>
 

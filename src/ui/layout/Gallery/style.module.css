@@ -1,9 +1,19 @@
 .gallery {
+  padding: 8rem 0;
+  background-color: var(--highlight-light);
+}
+
+.title {
+  font-size: 5rem;
+  text-align: center;
+  margin-bottom: 5rem;
+  font-weight: bold;
+  color: var(--highlight-color);
+}
+.container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  padding: 10rem 0;
-  background-color: var(--highlight-light);
 }
