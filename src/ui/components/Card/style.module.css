@@ -1,14 +1,16 @@
 .card {
   width: fit-content;
   height: fit-content;
-  max-width: 30rem;
+  max-width: 32rem;
   margin: 5rem;
+  padding: 1rem;
+  background-color: var(--background-color);
   border: 0.1rem solid rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
   transition: all ease-in-out 0.1s;
 }
 .card:hover {
-  box-shadow: 0 0.1rem 0.3rem 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.2rem 0.3rem 0 rgba(0, 0, 0, 0.3);
 }
 
 .title,

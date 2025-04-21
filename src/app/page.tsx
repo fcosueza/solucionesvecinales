@@ -4,6 +4,7 @@ import Header from "@/ui/layout/Header";
 import CTA from "@/ui/components/CTA";
 import Footer from "@/ui/layout/Footer";
 import Card from "@/ui/components/Card";
+import Gallery from "@/ui/layout/Gallery";
 import Image from "next/image";
 import style from "./style.module.css";
 import { NavItem } from "@/types/types";
@@ -67,10 +68,32 @@ const icons: SocialIcon[] = [
 ];
 
 // Datos para las tarjetas
-const imageURL = "/assets/images/doc.svg";
-const altText = "Imagen de unos documentos";
-const title = "Lorem Ipsum Dolor";
-const para = "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab";
+const cardsData = [
+  {
+    imageURL: "/assets/images/doc.svg",
+    altText: "Imagen de unos documentos",
+    title: "Lorem Ipsum Dolor",
+    para: "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab"
+  },
+  {
+    imageURL: "/assets/images/doc.svg",
+    altText: "Imagen de unos documentos",
+    title: "Lorem Ipsum Dolor",
+    para: "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab"
+  },
+  {
+    imageURL: "/assets/images/doc.svg",
+    altText: "Imagen de unos documentos",
+    title: "Lorem Ipsum Dolor",
+    para: "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab"
+  },
+  {
+    imageURL: "/assets/images/doc.svg",
+    altText: "Imagen de unos documentos",
+    title: "Lorem Ipsum Dolor",
+    para: "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab"
+  }
+];
 
 /**
  * Página Home
@@ -144,14 +167,21 @@ export default function Home() {
           </div>
         </section>
         <section id="gallery">
-          <Card
-            imageURL={imageURL}
-            imageAltText={altText}
-            imageWidth={300}
-            imageHeight={200}
-            cardTitle={title}
-            cardPara={para}
-          />
+          <Gallery>
+            {cardsData.map(data => {
+              return (
+                <Card
+                  imageURL={data.imageURL}
+                  imageAltText={data.altText}
+                  imageWidth={300}
+                  imageHeight={200}
+                  cardTitle={data.title}
+                  cardPara={data.para}
+                  key={data.imageURL}
+                />
+              );
+            })}
+          </Gallery>
         </section>
       </main>
 
