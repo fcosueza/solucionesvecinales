@@ -16,7 +16,14 @@ const paraHero = `Gestiona incidencias, recibe avisos importantes, reserva espac
   consulta las novedades de tu comunidad!!`;
 
 // Datos de los enlaces del los menús
-const links: NavItem[] = [
+
+const linksHeader: NavItem[] = [
+  { text: "Inicio", href: "#" },
+  { text: "Características", href: "#about" },
+  { text: "Contacto", href: "#contact" }
+];
+
+const linksFooter: NavItem[] = [
   { text: "Inicio", href: "#" },
   { text: "Características", href: "#about" },
   { text: "Contacto", href: "#contact" },
@@ -70,28 +77,28 @@ const icons: SocialIcon[] = [
 // Datos para las tarjetas
 const cardsData = [
   {
-    imageURL: "/assets/images/doc.svg",
-    altText: "Imagen de unos documentos",
-    title: "Lorem Ipsum Dolor",
-    para: "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab"
+    imageURL: "/assets/images/notify.svg",
+    altText: "Imagen de una notificación",
+    title: "Tablón de Anuncios",
+    para: "Consulta el tablón de anuncios de tu comunidad y mantente informado de todo lo que sucede en tu comunidad."
   },
   {
-    imageURL: "/assets/images/doc.svg",
-    altText: "Imagen de unos documentos",
-    title: "Lorem Ipsum Dolor",
-    para: "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab"
+    imageURL: "/assets/images/alert.svg",
+    altText: "Imagen de un signo de exclamación",
+    title: "Gestión de Incidencias",
+    para: "Crea y gestiona las incidencias de tu comunidad de forma eficiente y rápida desde cualquier lugar."
   },
   {
-    imageURL: "/assets/images/doc.svg",
-    altText: "Imagen de unos documentos",
-    title: "Lorem Ipsum Dolor",
-    para: "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab"
+    imageURL: "/assets/images/sport.svg",
+    altText: "Imagen de una portería de futbol y un portero",
+    title: "Espacios Comunes",
+    para: "Reserva cualquiera de los espacios comunes de tu comunidad para el día y la hora que quieras."
   },
   {
-    imageURL: "/assets/images/doc.svg",
-    altText: "Imagen de unos documentos",
-    title: "Lorem Ipsum Dolor",
-    para: "Lorem Ipsum Dolor sit atmet consecter blabalbalbalbalbalalbalab"
+    imageURL: "/assets/images/financial.svg",
+    altText: "Imagen de una mujer y un diagrama de barras.",
+    title: "Consulta las Financias",
+    para: "Consulta las finanzas de tu comunidad para estar siempre al tanto del balance anual."
   }
 ];
 
@@ -106,7 +113,7 @@ const cardsData = [
 export default function Home() {
   return (
     <>
-      <Header menuLinks={links} buttonText="Log In" buttonFunc={() => console.log("Hallo")} />
+      <Header menuLinks={linksHeader} buttonText="Log In" buttonFunc={() => console.log("Hallo")} />
 
       <main className={style.main}>
         <section className={style.section}>
@@ -173,8 +180,8 @@ export default function Home() {
                 <Card
                   imageURL={data.imageURL}
                   imageAltText={data.altText}
-                  imageWidth={300}
-                  imageHeight={200}
+                  imageWidth={150}
+                  imageHeight={150}
                   cardTitle={data.title}
                   cardPara={data.para}
                   key={data.imageURL}
@@ -185,7 +192,7 @@ export default function Home() {
         </section>
       </main>
 
-      <Footer links={links} socialIcons={icons} />
+      <Footer links={linksFooter} socialIcons={icons} />
     </>
   );
 }

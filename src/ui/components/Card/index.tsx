@@ -36,7 +36,13 @@ const Card = ({
 }: Props) => {
   return (
     <div role="card" className={style.card}>
-      <Image src={imageURL} alt={imageAltText} width={imageWidth} height={imageHeight} />
+      <Image
+        className={style.img}
+        src={imageURL}
+        alt={imageAltText}
+        width={imageWidth}
+        height={imageHeight}
+      />
       <h3 className={style.title}>{cardTitle}</h3>
       <p className={style.para}>{cardPara}</p>
     </div>
