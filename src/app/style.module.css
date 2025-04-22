@@ -17,6 +17,10 @@
   margin: 0 auto;
 }
 
+.section {
+  padding: 2rem;
+}
+
 .zigzag {
   margin: 0 auto;
   flex-direction: column;

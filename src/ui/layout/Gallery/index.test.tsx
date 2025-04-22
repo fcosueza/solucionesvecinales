@@ -44,4 +44,27 @@ describe("Tests del componente Gallery...", () => {
 
     expect(screen.getByRole("gallery")).toHaveClass("gallery");
   });
+
+  it("Debe renderizar el titulo que se le ha pasado", () => {
+    const title = "Lorem Ipsum Title";
+
+    render(
+      <Gallery title={title}>
+        <div>Test</div>
+      </Gallery>
+    );
+
+    expect(screen.getByRole("heading")).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
+  });
+
+  it("No debe renderizar el titulo si no se pasa ninguno", () => {
+    render(
+      <Gallery>
+        <div>Test</div>
+      </Gallery>
+    );
+
+    expect(screen.queryAllByRole("heading")).toHaveLength(0);
+  });
 });
