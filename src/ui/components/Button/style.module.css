@@ -2,6 +2,7 @@
   font-size: 2rem;
   font-weight: bold;
   height: fit-content;
+  width: fit-content;
   color: white;
   background-color: var(--highlight-color);
   padding: 0.6rem 1rem;
@@ -12,7 +13,6 @@
 
 .button:hover {
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.5);
-  transform: scale(1.05);
 }
 
 .button:active {

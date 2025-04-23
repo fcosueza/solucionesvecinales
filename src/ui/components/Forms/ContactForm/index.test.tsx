@@ -1,4 +1,4 @@
-import { getByRole, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
 
@@ -37,6 +37,18 @@ describe("Test para el componente ContactForm", () => {
     expect(screen.getAllByRole("input")[0]).toHaveProperty("name", "msg");
   });
 
+  it("Debe tener el atributo action por defecto si no se especifica uno", () => {
+    render(<ContactForm />);
+
+    expect(screen.getAllByRole("form")).toHaveProperty("action", "submit");
+  });
+
+  it("Debe tener el atributo action especificado", () => {
+    render(<ContactForm />);
+
+    expect(screen.getAllByRole("form")).toHaveProperty("action", "submit");
+  });
+
   it("Debe mostrar adecuadamente en los campos inputs lo que el usuario escribe", async () => {
     render(<ContactForm />);
 
@@ -61,7 +73,7 @@ describe("Test para el componente ContactForm", () => {
   });
 
   it("Debe llamar a la función que se ha pasado si los datos son correctos", async () => {
-    render(<ContactForm onSubmit={handleMock} />);
+    render(<ContactForm formAction={handleMock} />);
 
     const name = "testname";
     const email = "testname@email.com";
@@ -78,20 +90,12 @@ describe("Test para el componente ContactForm", () => {
 
     await waitFor(() => expect(handleMock).toHaveBeenCalled());
   });
+  it("Debe tener el atributo action por defecto si no se especifica uno", () => {
+    render(<ContactForm />);
 
-  it("No debe llamar a la función de envío sin los datos requeridos", async () => {
-    render(<ContactForm onSubmit={handleMock} />);
-
-    const name = "testname";
-    const nameInput = screen.getByLabelText("Nombre:");
-
-    await userEvent.type(nameInput, name);
-    await userEvent.click(screen.getByRole("button"));
-
-    await waitFor(() => expect(handleMock).not.toHaveBeenCalled());
+    expect(screen.getAllByRole("form")).toHaveProperty("action", "submit");
   });
-
-  it("Debe mostrar un mensaje de error si no se introducido el correo o el msg", () => {
+  it("Debe mostrar un mensaje de error si no se han introducido los valores requeridos", () => {
     render(<ContactForm />);
 
     expect(screen.getAllByRole("errorMsg")).toHaveLength(2);

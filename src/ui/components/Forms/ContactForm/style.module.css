@@ -1,14 +1,37 @@
+.form,
+.form__control {
+  display: flex;
+  flex-direction: column;
+}
+
 .form {
+  width: fit-content;
+  min-width: 50rem;
+  border: 0.1rem solid black;
+  border-radius: 1rem;
+  padding: 2rem 4rem;
+  margin: 5rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
 .form__control {
+  font-size: 2rem;
+  margin: 1rem 0;
 }
 
 .form__label {
+  margin-bottom: 0.5rem;
+}
+
+.form__input,
+.form__textarea {
+  font-size: 2rem;
 }
 
 .form__input {
+  font-size: 2rem;
 }
 
 .form__textarea {
+  margin-bottom: 1rem;
 }

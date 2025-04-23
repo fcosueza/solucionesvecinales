@@ -81,19 +81,19 @@ const cardsData = [
     imageURL: "/assets/images/notify.svg",
     altText: "Imagen de una notificación",
     title: "Tablón de Anuncios",
-    para: "Consulta el tablón de anuncios de tu comunidad y mantente informado de todo lo que sucede en tu comunidad."
+    para: "Consulta el tablón de anuncios de tu comunidad y mantente informado de todo lo que sucede."
   },
   {
     imageURL: "/assets/images/alert.svg",
     altText: "Imagen de un signo de exclamación",
     title: "Gestión de Incidencias",
-    para: "Crea y gestiona las incidencias de tu comunidad de forma eficiente y rápida desde cualquier lugar."
+    para: "Crea y gestiona incidencias en tu comunidad de forma eficiente y rápida desde cualquier lugar."
   },
   {
     imageURL: "/assets/images/sport.svg",
     altText: "Imagen de una portería de futbol y un portero",
     title: "Espacios Comunes",
-    para: "Reserva cualquiera de los espacios comunes de tu comunidad para el día y la hora que quieras."
+    para: "Reserva los espacios comunes de tu comunidad para su disfrute el día y a la hora que quieras."
   },
   {
     imageURL: "/assets/images/financial.svg",
@@ -153,8 +153,8 @@ export default function Home() {
             <div className={style.zigzag__text}>
               <h3 className={style.zigzag__title}>Adaptada a cualquier dispositivo</h3>
               <p className={style.zigzag__para}>
-                Nuestra aplicación cuenta con una interfaz sencilla y adaptada a cualquier
-                dispositivo, para que puedas usarla desde cualquier lugar.
+                Pensada para usarse desde cualquier dispositivo, para que puedas gestionar tu
+                comunidad desde cualquier lugar.
               </p>
             </div>
           </div>
@@ -162,8 +162,8 @@ export default function Home() {
             <div className={style.zigzag__text}>
               <h3 className={style.zigzag__title}>Centrada en la accesibilidad</h3>
               <p className={style.zigzag__para}>
-                Con un diseño pensado para ser accesible a todos los usuarios, independientemente de
-                sus problemas de accesibilidad.
+                Con un diseño simple e intuitivo, nuestra aplicación pone especial énfasis en la
+                accesibilidad y facilidad de uso.
               </p>
             </div>
             <Image
@@ -192,10 +192,20 @@ export default function Home() {
           </Gallery>
         </section>
         <section className={style.section} id="contact">
-          <div>
-            <h3>¿Tienes alguna dura? Contacta con nosotros!!!</h3>
-            <ContactForm />
+          <div className={style.contact__text}>
+            <h3 className={style.contact__title}>Contacta con nosotros!!!</h3>
+            <p className={style.contact__para}>
+              Si tienes alguna duda, sugerencia o simplemente quieres decir hola, no dudes en
+              contactar con nosotros.
+            </p>
+            <Image
+              src="assets/images/contact.svg"
+              width={500}
+              height={300}
+              alt="Hombre mandando un correo"
+            />
           </div>
+          <ContactForm />
         </section>
       </main>
 
