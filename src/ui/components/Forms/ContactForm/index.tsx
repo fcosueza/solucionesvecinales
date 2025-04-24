@@ -1,65 +1,70 @@
 "use client";
 
-import React, { useState, FormEvent } from "react";
+import addContactMsg from "@/actions/add-contact-msg";
+import { useActionState } from "react";
 import Button from "../../Button";
 import style from "./style.module.css";
 
-const ContactForm = (): React.ReactNode => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+const initialState = {
+  message: "",
+  errors: ""
+};
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
-    event.preventDefault();
-    setIsLoading(true);
-    setError(null);
+interface Props {
+  action?: (prevState: any, FormData: FormData) => void;
+}
 
-    try {
-      const formData = new FormData(event.currentTarget);
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        body: formData
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to submit the data. Please try again.");
-      }
-    } catch (error) {
-      setError(error.msg);
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
+  const [state, formAction, isPending] = useActionState<any, FormData>(action, initialState);
 
   return (
     <>
-      <form id="contactForm" role="form" onSubmit={onSubmit} className={style.form}>
+      <form action={formAction} id="contactForm" role="form" className={style.form}>
+        <p className={style.form__msg} aria-live="polite">
+          {state ? state.message : ""}
+        </p>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="name" className={style.form__label}>
-            Nombre:
+            Nombre
           </label>
-          <input type="text" name="name" id="name" className={style.form__input} />
+          <input
+            type="text"
+            name="name"
+            id="name"
+            className={style.form__input}
+            placeholder="Introduzca su nombre..."
+          />
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
-            Correo:
+            Correo<span title="Requerido">*</span>
           </label>
-          <input type="email" name="email" id="email" className={style.form__input} required />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className={style.form__input}
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+            placeholder="Introduzca su correo.."
+            required
+          />
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="msg" className={style.form__label}>
-            Mensaje:
+            Mensaje (mín. 20 caracteres)<span title="Requerido">*</span>
           </label>
           <textarea
             name="msg"
             id="msg"
             rows={5}
             className={style.form__textarea}
+            placeholder="Introduzca un mensaje..."
+            minLength={20}
             required
           ></textarea>
         </div>
-        <Button type="submit" text="Enviar" disabled={isLoading} />
-        {error && <div style={{ color: "red" }}>{error}</div>}
+
+        <Button type="submit" text="Enviar" disabled={isPending} />
       </form>
     </>
   );

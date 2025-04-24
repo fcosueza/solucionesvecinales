@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
 
 describe("Test para el componente ContactForm", () => {
-  const handleMock = jest.fn(e => e.preventDefault());
+  const handleMock = jest.fn();
 
   it("Debe renderizar el formulario de forma correcta.", () => {
     render(<ContactForm />);
@@ -19,21 +19,21 @@ describe("Test para el componente ContactForm", () => {
   it("Debe renderizar los controles para introducir el nombre", () => {
     render(<ContactForm />);
 
-    expect(screen.getByLabelText("Nombre:")).toBeInTheDocument();
+    expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[0]).toHaveProperty("name", "name");
   });
 
   it("Debe renderizar los controles para introducir el correo", () => {
     render(<ContactForm />);
 
-    expect(screen.getByLabelText("Correo:")).toBeInTheDocument();
+    expect(screen.getByLabelText("Correo")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[1]).toHaveProperty("name", "email");
   });
 
   it("Debe renderizar los controles para introducir el mensaje", () => {
     render(<ContactForm />);
 
-    expect(screen.getByLabelText("Mensaje:")).toBeInTheDocument();
+    expect(screen.getByLabelText("Mensaje")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[2]).toHaveProperty("name", "msg");
   });
 
@@ -42,11 +42,11 @@ describe("Test para el componente ContactForm", () => {
 
     const name = "testname";
     const email = "testname@email.com";
-    const msg = "Lorem ipsum dolor sit amet consecterum";
+    const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
-    const nameInput = screen.getByLabelText("Nombre:");
-    const emailInput = screen.getByLabelText("Correo:");
-    const msgInput = screen.getByLabelText("Mensaje:");
+    const nameInput = screen.getByLabelText("Nombre");
+    const emailInput = screen.getByLabelText("Correo");
+    const msgInput = screen.getByLabelText("Mensaje");
 
     await userEvent.type(nameInput, name);
     await userEvent.type(emailInput, email);
@@ -58,15 +58,15 @@ describe("Test para el componente ContactForm", () => {
   });
 
   it("Debe llamar a la función que se ha pasado si los datos son correctos", async () => {
-    render(<ContactForm onSubmit={handleMock} />);
+    render(<ContactForm action={handleMock} />);
 
     const name = "testname";
     const email = "testname@email.com";
     const msg = "Lorem ipsum dolor sit amet consecterum";
 
-    const nameInput = screen.getByLabelText("Nombre:");
-    const emailInput = screen.getByLabelText("Correo:");
-    const msgInput = screen.getByLabelText("Mensaje:");
+    const nameInput = screen.getByLabelText("Nombre");
+    const emailInput = screen.getByLabelText("Correo");
+    const msgInput = screen.getByLabelText("Mensaje");
 
     await userEvent.type(nameInput, name);
     await userEvent.type(emailInput, email);
@@ -77,9 +77,23 @@ describe("Test para el componente ContactForm", () => {
     await waitFor(() => expect(handleMock).toHaveBeenCalled());
   });
 
-  it("Debe mostrar un mensaje de error si no se han introducido los valores requeridos", () => {
-    render(<ContactForm />);
+  it("No debe llamar a la función que se ha pasado si los datos son incorrectos", async () => {
+    render(<ContactForm action={handleMock} />);
 
-    expect(screen.getAllByRole("errorMsg")).toHaveLength(2);
+    const name = "testname";
+    const email = "testname@email.com";
+    const msg = "Lorem ipsum ";
+
+    const nameInput = screen.getByLabelText("Nombre");
+    const emailInput = screen.getByLabelText("Correo");
+    const msgInput = screen.getByLabelText("Mensaje");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(msgInput, msg);
+
+    await userEvent.click(screen.getByRole("button"));
+
+    await waitFor(() => expect(handleMock).toHaveBeenCalled());
   });
 });

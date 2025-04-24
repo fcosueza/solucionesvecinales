@@ -20,18 +20,31 @@
 }
 
 .form__label {
+  font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
 .form__input,
 .form__textarea {
-  font-size: 2rem;
+  font-size: 1.8rem;
+  padding: 0.5rem;
+  outline: none;
 }
 
-.form__input {
-  font-size: 2rem;
+.form__input:focus,
+.form__textarea:focus {
+  border: 0.2rem solid var(--highlight-color);
+  box-shadow: 0 0 0.4rem var(--highlight-color);
 }
 
 .form__textarea {
   margin-bottom: 1rem;
+}
+
+.form__msg {
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+  color: green;
+  transition: all 1s;
 }

@@ -11,7 +11,12 @@ const config: Config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  modulePathIgnorePatterns: ["<rootDir>/tests/"]
+  modulePathIgnorePatterns: ["<rootDir>/tests"],
+  coveragePathIgnorePatterns: [
+    "/node_modules/",
+    "<rootDir>/src/prisma/*",
+    "<rootDir>/src/lib/prisma.ts"
+  ]
 };
 
 export default createJestConfig(config);

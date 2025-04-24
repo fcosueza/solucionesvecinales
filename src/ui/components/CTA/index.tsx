@@ -5,7 +5,7 @@ interface Props {
   title: string;
   para: string;
   buttonText: string;
-  buttonFunc: (Event: React.MouseEvent<HTMLElement>) => void;
+  buttonFunc?: (Event: React.MouseEvent<HTMLElement>) => void;
 }
 
 /**
