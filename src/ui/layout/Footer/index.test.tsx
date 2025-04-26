@@ -38,7 +38,7 @@ describe("Tests del componente Footer...", () => {
   it("Debe renderizar el menú con los enlaces que le hemos pasado de forma vertical", () => {
     render(<Footer links={links} socialIcons={[]} />);
 
-    expect(screen.getByRole("nav")).toBeInTheDocument();
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
     expect(screen.getAllByRole("listitem")).toHaveLength(links.length);
     expect(screen.getAllByRole("listitem")[0]).toHaveClass("vertical");
   });

@@ -35,6 +35,7 @@ describe("Tests del componente Header", () => {
     ];
 
     render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
     expect(screen.getAllByRole("link")).toHaveLength(3);
   });
 

@@ -36,10 +36,10 @@ const Header = ({
   return (
     <header id="header" className={style.header}>
       <Logo altText="Logo de SolucionesVecinales" width={220} height={100} />
-      <nav id="navbar" className={style.navBar}>
+      <div role="toolbar" className={style.navBar}>
         {menuLinks.length > 0 ? <NavMenu links={menuLinks} /> : null}
         <Button text={buttonText} onClick={buttonFunc} />
-      </nav>
+      </div>
     </header>
   );
 };

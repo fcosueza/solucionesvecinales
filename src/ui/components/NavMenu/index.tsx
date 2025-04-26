@@ -31,9 +31,9 @@ const NavMenu = ({ links, orientation = "horizontal" }: Props): React.ReactNode 
   ));
 
   return (
-    <ul role="nav" className={style.navList}>
-      {linkList}
-    </ul>
+    <nav id="navbar">
+      <ul className={style.navList}>{linkList}</ul>
+    </nav>
   );
 };
 

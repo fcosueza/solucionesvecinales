@@ -3,6 +3,12 @@ import NavMenu from ".";
 import { NavItem } from "@/types/types";
 
 describe("Tests del componente NavMenu...", () => {
+  it("Debe renderizar el elemento de navegación", () => {
+    const links: NavItem[] = [{ text: "testLink", href: "/home" }];
+
+    render(<NavMenu links={links} />);
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
+  });
   it("Debe renderizar un enlace de forma apropiada.", () => {
     const links: NavItem[] = [{ text: "testLink", href: "/home" }];
 
@@ -21,7 +27,7 @@ describe("Tests del componente NavMenu...", () => {
     const links: NavItem[] = [{ text: "testLink", href: "/home" }];
 
     render(<NavMenu links={links} />);
-    expect(screen.getByRole("link")).toHaveAttribute("href", links[0].url);
+    expect(screen.getByRole("link")).toHaveAttribute("href", links[0].href);
   });
 
   it("Debe renderizar todos los enlaces que se le han pasado.", () => {
