@@ -10,9 +10,9 @@ const schema = z.object({
 });
 
 /**
- * Action addContactMsg
+ * Server Action addContactMsg
  *
- * Función de tipo Action que se encarga de crear un nuevo mensaje de contacto en el servidor.
+ * Función de tipo Server Action que se encarga de crear un nuevo mensaje de contacto en el servidor.
  *
  * @param prevState Estado previo del componente pasado como parámetro.
  * @param formData Parámetro de tipo FormData con todos los datos del formulario que lo envía.

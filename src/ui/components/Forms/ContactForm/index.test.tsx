@@ -26,14 +26,14 @@ describe("Test para el componente ContactForm", () => {
   it("Debe renderizar los controles para introducir el correo", () => {
     render(<ContactForm />);
 
-    expect(screen.getByLabelText("Correo")).toBeInTheDocument();
+    expect(screen.getByLabelText("Correo *")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[1]).toHaveProperty("name", "email");
   });
 
   it("Debe renderizar los controles para introducir el mensaje", () => {
     render(<ContactForm />);
 
-    expect(screen.getByLabelText("Mensaje")).toBeInTheDocument();
+    expect(screen.getByLabelText("Mensaje (mín. 20 caracteres) *")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[2]).toHaveProperty("name", "msg");
   });
 
@@ -45,8 +45,8 @@ describe("Test para el componente ContactForm", () => {
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
     const nameInput = screen.getByLabelText("Nombre");
-    const emailInput = screen.getByLabelText("Correo");
-    const msgInput = screen.getByLabelText("Mensaje");
+    const emailInput = screen.getByLabelText("Correo *");
+    const msgInput = screen.getByLabelText("Mensaje (mín. 20 caracteres) *");
 
     await userEvent.type(nameInput, name);
     await userEvent.type(emailInput, email);
@@ -65,8 +65,8 @@ describe("Test para el componente ContactForm", () => {
     const msg = "Lorem ipsum dolor sit amet consecterum";
 
     const nameInput = screen.getByLabelText("Nombre");
-    const emailInput = screen.getByLabelText("Correo");
-    const msgInput = screen.getByLabelText("Mensaje");
+    const emailInput = screen.getByLabelText("Correo *");
+    const msgInput = screen.getByLabelText("Mensaje (mín. 20 caracteres) *");
 
     await userEvent.type(nameInput, name);
     await userEvent.type(emailInput, email);
@@ -85,8 +85,8 @@ describe("Test para el componente ContactForm", () => {
     const msg = "Lorem ipsum ";
 
     const nameInput = screen.getByLabelText("Nombre");
-    const emailInput = screen.getByLabelText("Correo");
-    const msgInput = screen.getByLabelText("Mensaje");
+    const emailInput = screen.getByLabelText("Correo *");
+    const msgInput = screen.getByLabelText("Mensaje (mín. 20 caracteres) *");
 
     await userEvent.type(nameInput, name);
     await userEvent.type(emailInput, email);

@@ -52,7 +52,7 @@ describe("Tests del componente Footer...", () => {
   it("Debe renderizar el logo de la aplicación", () => {
     render(<Footer links={links} socialIcons={icons} />);
 
-    expect(screen.getByRole("logo")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Logo" })).toBeInTheDocument();
   });
 
   it("Debe renderizar el parrafo de copyright", () => {

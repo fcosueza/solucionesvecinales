@@ -24,7 +24,7 @@ describe("Tests del componente Header", () => {
     ];
 
     render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
-    expect(screen.getByRole("logo")).toBeInTheDocument();
+    expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
   it("Debe renderizar el menu de la aplicación", () => {

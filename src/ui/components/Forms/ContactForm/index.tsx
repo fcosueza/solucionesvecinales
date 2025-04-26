@@ -14,6 +14,15 @@ interface Props {
   action?: (prevState: any, FormData: FormData) => void;
 }
 
+/**
+ * Componente ContactForm
+ *
+ * Componente que genera un formulario de contacto que permite a un usuario
+ * crear un mensaje en la base de datos.
+ *
+ * @param action Función de tipo Server Action que se encargará de procesas la solicitud del formulario.
+ * @returns
+ */
 const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<any, FormData>(action, initialState);
 
@@ -37,7 +46,7 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
-            Correo<span title="Requerido">*</span>
+            Correo <span title="Requerido">*</span>
           </label>
           <input
             type="email"
@@ -51,7 +60,7 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="msg" className={style.form__label}>
-            Mensaje (mín. 20 caracteres)<span title="Requerido">*</span>
+            Mensaje (mín. 20 caracteres) <span title="Requerido">*</span>
           </label>
           <textarea
             name="msg"

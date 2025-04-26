@@ -25,18 +25,18 @@ interface Props {
 
 const Logo = ({
   url = "assets/images/logo.svg",
-  altText = "Logo de Soluciones Vecinales",
+  altText = "Logo de la aplicación Soluciones Vecinales",
   width = 150,
   height = 120
 }: Props): React.ReactNode => {
   return (
     <Image
-      role="logo"
       className={style.logo}
       src={url}
       width={width}
       height={height}
       alt={altText}
+      aria-label="Logo"
     />
   );
 };
