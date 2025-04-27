@@ -62,7 +62,7 @@ describe("Test para el componente ContactForm", () => {
 
     const name = "testname";
     const email = "testname@email.com";
-    const msg = "Lorem ipsum dolor sit amet consecterum";
+    const msg = "Lorem ipsum dolor sit amet consecterum bla bla bla bla";
 
     const nameInput = screen.getByLabelText("Nombre");
     const emailInput = screen.getByLabelText("Correo *");

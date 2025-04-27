@@ -2,8 +2,6 @@
 
 import prisma from "@/lib/prisma";
 import contactSchema from "@/schemas/common/contact.schema";
-import { revalidatePath } from "next/cache";
-
 /**
  * Server Action addContactMsg
  *
@@ -16,11 +14,8 @@ import { revalidatePath } from "next/cache";
  */
 
 const addContactMsg = async (prevState: any, formData: FormData): Promise<unknown> => {
-  const validatedData = contactSchema.safeParse({
-    name: formData.get("name") as string,
-    email: formData.get("email") as string,
-    msg: formData.get("msg") as string
-  });
+  const fieldData = Object.entries(formData);
+  const validatedData = contactSchema.safeParse(fieldData);
 
   // Si los datos no son validos devolvemos los errores
   if (!validatedData.success) {
@@ -40,10 +35,9 @@ const addContactMsg = async (prevState: any, formData: FormData): Promise<unknow
 
   // Si no se puede crear un mensaje, revolvemos un error.
   if (!res) {
-    throw new Error("No se ha podido crear el mensaje de contacto.");
+    throw new Error("No se ha podido crear el mensaje de contacto");
   }
 
-  revalidatePath("/");
   return {
     message: "Mensaje creado correctamente."
   };

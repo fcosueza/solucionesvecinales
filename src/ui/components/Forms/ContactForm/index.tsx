@@ -23,6 +23,7 @@ interface Props {
  * @param action Función de tipo Server Action que se encargará de procesas la solicitud del formulario.
  * @returns
  */
+
 const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<any, FormData>(action, initialState);
 
@@ -52,7 +53,6 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
             name="email"
             id="email"
             className={style.form__input}
-            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             placeholder="Introduzca su correo.."
             required
           />
