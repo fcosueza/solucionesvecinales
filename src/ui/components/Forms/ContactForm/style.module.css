@@ -29,6 +29,7 @@
   font-size: 1.8rem;
   padding: 0.5rem;
   outline: none;
+  margin-bottom: 1rem;
 }
 
 .form__input:focus,
@@ -37,14 +38,15 @@
   box-shadow: 0 0 0.4rem var(--highlight-color);
 }
 
-.form__textarea {
-  margin-bottom: 1rem;
-}
-
 .form__msg {
   font-size: 2rem;
   text-align: center;
   font-weight: bold;
   color: green;
   transition: all 1s;
+}
+
+.errorMsg {
+  font-size: 1.5rem;
+  color: red;
 }

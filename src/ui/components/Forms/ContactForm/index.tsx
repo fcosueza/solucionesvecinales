@@ -29,9 +29,7 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
   return (
     <>
       <form action={formAction} id="contactForm" role="form" className={style.form}>
-        <p className={style.form__msg} aria-live="polite">
-          {state ? state.message : ""}
-        </p>
+        <p className={style.form__msg} aria-live="polite"></p>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="name" className={style.form__label}>
             Nombre
@@ -43,6 +41,7 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
             className={style.form__input}
             placeholder="Introduzca su nombre..."
           />
+          <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
@@ -57,6 +56,7 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
             placeholder="Introduzca su correo.."
             required
           />
+          <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="msg" className={style.form__label}>
@@ -68,9 +68,9 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
             rows={5}
             className={style.form__textarea}
             placeholder="Introduzca un mensaje..."
-            minLength={20}
             required
           ></textarea>
+          <p className={style.errorMsg}>{state?.errors?.msg && "*" + state.errors.msg}</p>
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />

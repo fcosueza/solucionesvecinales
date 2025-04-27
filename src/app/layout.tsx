@@ -1,5 +1,6 @@
 import "../ui/global.css";
 import { Roboto } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 const roboto = Roboto({ subsets: ["latin"] });
 
@@ -33,7 +34,10 @@ export default function RootLayout({
         <title>Soluciones Vecinales</title>
       </head>
 
-      <body>{children}</body>
+      <body>
+        <Toaster />
+        {children}
+      </body>
     </html>
   );
 }

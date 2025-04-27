@@ -1,13 +1,8 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { z } from "zod";
-
-const schema = z.object({
-  name: z.string({ invalid_type_error: "El nombre no es válido" }),
-  email: z.string().email({ message: "El correo no es válido" }),
-  msg: z.string({ invalid_type_error: "El mensaje debe tener al menos 20 caracteres." }).min(20)
-});
+import contactSchema from "@/schemas/common/contact.schema";
+import { revalidatePath } from "next/cache";
 
 /**
  * Server Action addContactMsg
@@ -21,18 +16,20 @@ const schema = z.object({
  */
 
 const addContactMsg = async (prevState: any, formData: FormData): Promise<unknown> => {
-  const validatedData = schema.safeParse({
+  const validatedData = contactSchema.safeParse({
     name: formData.get("name") as string,
     email: formData.get("email") as string,
     msg: formData.get("msg") as string
   });
 
+  // Si los datos no son validos devolvemos los errores
   if (!validatedData.success) {
     return {
       errors: validatedData.error.flatten().fieldErrors
     };
   }
 
+  // Intentamos crear el mensaje en la base de datos
   const res = await prisma.contacto.create({
     data: {
       nombre: validatedData.data.name,
@@ -41,12 +38,12 @@ const addContactMsg = async (prevState: any, formData: FormData): Promise<unknow
     }
   });
 
+  // Si no se puede crear un mensaje, revolvemos un error.
   if (!res) {
-    return {
-      message: "Error: No se a podido crear el mensaje."
-    };
+    throw new Error("No se ha podido crear el mensaje de contacto.");
   }
 
+  revalidatePath("/");
   return {
     message: "Mensaje creado correctamente."
   };

@@ -19,7 +19,7 @@ interface Props {
  */
 const Social = ({ icons }: Props): React.ReactNode => {
   return (
-    <div role="social" className={style.social}>
+    <div aria-label="social" className={style.social}>
       {icons.map(icon => {
         return (
           <Link href={icon.url} key={icon.src} target="_blank">
