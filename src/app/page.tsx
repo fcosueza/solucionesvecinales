@@ -7,9 +7,10 @@ import Card from "@/ui/components/Card";
 import Gallery from "@/ui/layout/Gallery";
 import ContactForm from "@/ui/components/Forms/ContactForm";
 import Image from "next/image";
-import style from "./style.module.css";
 import { NavItem } from "@/types/types";
 import { SocialIcon } from "@/types/types";
+import { useRouter } from "next/navigation";
+import style from "./style.module.css";
 
 // Titulo y párrafo para el CTA
 const titleHero = "¡Tu comunidad, más conectada y organizada que nunca!";
@@ -112,9 +113,15 @@ const cardsData = [
  * @returns Nodo de React conteniendo la página principal.
  */
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
-      <Header menuLinks={linksHeader} buttonText="Log In" buttonFunc={() => console.log("Hallo")} />
+      <Header
+        menuLinks={linksHeader}
+        buttonText="Log In"
+        buttonFunc={() => router.push("/login")}
+      />
 
       <main className={style.main}>
         <section className={style.section}>
@@ -122,7 +129,7 @@ export default function Home() {
             title={titleHero}
             para={paraHero}
             buttonText="Regístrate Ya!!"
-            buttonFunc={() => console.log("Hallo")}
+            buttonFunc={() => router.push("/register")}
           />
           <Image
             src="/assets/images/hero.svg"
@@ -209,7 +216,7 @@ export default function Home() {
         </section>
       </main>
 
-      <Footer links={linksFooter} socialIcons={icons} />
+      <Footer links={linksFooter} socialIcons={icons} withLogo={true} />
     </>
   );
 }

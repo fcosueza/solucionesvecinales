@@ -10,8 +10,7 @@
   transition: all ease-out 0.1s;
 }
 .card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0.2rem 0.3rem 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.3);
 }
 
 .title,

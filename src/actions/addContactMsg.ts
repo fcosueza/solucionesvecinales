@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import contactSchema from "@/schemas/common/contact.schema";
+
 /**
  * Server Action addContactMsg
  *
@@ -14,7 +15,7 @@ import contactSchema from "@/schemas/common/contact.schema";
  */
 
 const addContactMsg = async (prevState: any, formData: FormData): Promise<unknown> => {
-  const fieldData = Object.entries(formData);
+  const fieldData = Object.fromEntries(formData);
   const validatedData = contactSchema.safeParse(fieldData);
 
   // Si los datos no son validos devolvemos los errores
@@ -25,17 +26,19 @@ const addContactMsg = async (prevState: any, formData: FormData): Promise<unknow
   }
 
   // Intentamos crear el mensaje en la base de datos
-  const res = await prisma.contacto.create({
-    data: {
-      nombre: validatedData.data.name,
-      correo: validatedData.data.email,
-      mensaje: validatedData.data.msg
-    }
-  });
-
-  // Si no se puede crear un mensaje, revolvemos un error.
-  if (!res) {
-    throw new Error("No se ha podido crear el mensaje de contacto");
+  try {
+    await prisma.contacto.create({
+      data: {
+        nombre: validatedData.data.name,
+        correo: validatedData.data.email,
+        mensaje: validatedData.data.msg
+      }
+    });
+  } catch (e: any) {
+    return {
+      message: "Error: No se a podido crear el mensaje",
+      errors: e.message
+    };
   }
 
   return {

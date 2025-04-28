@@ -7,11 +7,10 @@
 .form {
   width: fit-content;
   min-width: 50rem;
-  border: 0.1rem solid black;
+  border: 0.1rem solid rgba(0, 0, 0, 0.3);
   border-radius: 1rem;
   padding: 2rem 4rem;
   margin: 5rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
 .form__control {

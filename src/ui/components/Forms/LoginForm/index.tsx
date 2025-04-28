@@ -1,6 +1,6 @@
 "use client";
 
-import addContactMsg from "@/actions/addContactMsg";
+import logIn from "@/actions/auth/logIn";
 import { useActionState } from "react";
 import Button from "../../Button";
 import style from "./style.module.css";
@@ -24,29 +24,16 @@ interface Props {
  * @returns
  */
 
-const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
+const LoginForm = ({ action = logIn }: Props): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<any, FormData>(action, initialState);
 
   return (
     <>
-      <form action={formAction} id="contactForm" role="form" className={style.form}>
-        <p className={style.form__msg} aria-live="polite"></p>
-        <div role="form-control" className={style.form__control}>
-          <label htmlFor="name" className={style.form__label}>
-            Nombre
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            className={style.form__input}
-            placeholder="Introduzca su nombre..."
-          />
-          <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
-        </div>
+      <form action={formAction} id="loginForm" className={style.form}>
+        <p>{state?.message}</p>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
-            Correo <span title="Requerido">*</span>
+            Correo
           </label>
           <input
             type="email"
@@ -60,18 +47,18 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
           <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
         </div>
         <div role="form-control" className={style.form__control}>
-          <label htmlFor="msg" className={style.form__label}>
-            Mensaje (mín. 20 caracteres) <span title="Requerido">*</span>
+          <label htmlFor="password" className={style.form__label}>
+            Contraseña
           </label>
-          <textarea
-            name="msg"
-            id="msg"
-            rows={5}
-            className={style.form__textarea}
-            placeholder="Introduzca un mensaje..."
-            required
-          ></textarea>
-          <p className={style.errorMsg}>{state?.errors?.msg && "*" + state.errors.msg}</p>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className={style.form__input}
+            min="15"
+            placeholder="Introduzca su contraseña..."
+          />
+          <p className={style.errorMsg}>{state?.errors?.password && "*" + state.errors.password}</p>
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />
@@ -80,4 +67,4 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
   );
 };
 
-export default ContactForm;
+export default LoginForm;
