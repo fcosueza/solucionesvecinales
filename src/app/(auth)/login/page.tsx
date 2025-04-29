@@ -3,6 +3,7 @@
 import Header from "@/ui/layout/Header";
 import Footer from "@/ui/layout/Footer";
 import LoginForm from "@/ui/components/Forms/LoginForm";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { NavItem } from "@/types/types";
 import style from "./style.module.css";
@@ -29,6 +30,9 @@ export default function LogIn() {
       <main className={style.main}>
         <h2 className={style.title}>Inicio de Sesión</h2>
         <LoginForm />
+        <p className={style.para}>
+          ¿Aun no tienes una cuenta? <Link href="/register">Regístrate</Link> de forma gratuita.
+        </p>
       </main>
       <Footer />
     </>

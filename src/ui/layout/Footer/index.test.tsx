@@ -32,7 +32,7 @@ describe("Tests del componente Footer...", () => {
   it("Debe renderizar el contenedor footer de forma adecuada", () => {
     render(<Footer links={links} socialIcons={icons} />);
 
-    expect(screen.getByRole("footer")).toBeInTheDocument();
+    expect(screen.getByRole("contentinfo")).toBeInTheDocument();
   });
 
   it("Debe renderizar el menú con los enlaces que le hemos pasado de forma vertical", () => {
@@ -49,8 +49,8 @@ describe("Tests del componente Footer...", () => {
     expect(screen.getByRole("social")).toBeInTheDocument();
   });
 
-  it("Debe renderizar el logo de la aplicación", () => {
-    render(<Footer links={links} socialIcons={icons} />);
+  it("Debe renderizar el logo de la aplicación cuando se epecifica con logo", () => {
+    render(<Footer links={links} socialIcons={icons} withLogo={true} />);
 
     expect(screen.getByRole("img", { name: "Logo" })).toBeInTheDocument();
   });

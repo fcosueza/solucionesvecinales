@@ -5,7 +5,10 @@ import { z } from "zod";
  */
 const logInSchema = z.object({
   email: z.string().email({ message: "El correo no es válido" }).trim(),
-  password: z.string().min(15, { message: "La contraseña tiene que tener 15 min." }).trim()
+  password: z
+    .string()
+    .min(15, { message: "La contraseña tiene que tener 15 caracteres min." })
+    .trim()
 });
 
 export default logInSchema;

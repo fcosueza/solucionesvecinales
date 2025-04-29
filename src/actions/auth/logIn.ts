@@ -24,14 +24,18 @@ const logIn = async (prevState: any, formData: FormData): Promise<unknown> => {
   // Si no existe el usuario
   if (!user) {
     return {
-      message: "No existe ningún usuario con ese correo."
+      errors: {
+        email: "No existe ningún usuario con ese correo."
+      }
     };
   }
 
   // Si la contraseña no es correcta.
   if (user.password !== validatedData.data.password)
     return {
-      message: "La contraseña no es correcta para este usuario."
+      errors: {
+        password: "La contraseña no es válida para este usuario."
+      }
     };
 
   return {

@@ -29,7 +29,7 @@ const Footer = ({ links, socialIcons, withLogo = false }: Props): React.ReactNod
   const logo = withLogo ? <Logo url="assets/images/logo-white.svg" width={300} height={150} /> : "";
 
   return (
-    <footer role="footer" className={style.footer}>
+    <footer className={style.footer}>
       {menu}
       {social}
       {logo}
