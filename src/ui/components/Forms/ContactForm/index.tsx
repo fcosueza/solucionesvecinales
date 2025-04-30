@@ -2,17 +2,14 @@
 
 import addContactMsg from "@/actions/addContactMsg";
 import { useActionState } from "react";
+import { formActionState } from "@/types/types";
 import Button from "../../Button";
 import style from "./style.module.css";
 
-const initialState = {
-  message: "",
-  errors: ""
+// Estado inicial del formulario
+const initialState: formActionState = {
+  message: ""
 };
-
-interface Props {
-  action?: (prevState: any, formData: FormData) => void;
-}
 
 /**
  * Componente ContactForm
@@ -20,12 +17,14 @@ interface Props {
  * Componente que genera un formulario de contacto que permite a un usuario
  * crear un mensaje en la base de datos.
  *
- * @param action Función de tipo Server Action que se encargará de procesas la solicitud del formulario.
- * @returns
+ * @returns Nodo de React con el formulario de contacto.
  */
 
-const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<any, FormData>(action, initialState);
+const ContactForm = (): React.ReactNode => {
+  const [state, formAction, isPending] = useActionState<formActionState, FormData>(
+    addContactMsg,
+    initialState
+  );
 
   return (
     <>
@@ -41,6 +40,7 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
             id="name"
             className={style.form__input}
             placeholder="Introduzca su nombre..."
+            defaultValue={state?.errors?.name ? "" : (state.payload?.get("name") as string) || ""}
           />
           <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
         </div>
@@ -55,6 +55,7 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
             className={style.form__input}
             pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             placeholder="Introduzca su correo.."
+            defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
             required
           />
           <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
@@ -69,6 +70,7 @@ const ContactForm = ({ action = addContactMsg }: Props): React.ReactNode => {
             rows={5}
             className={style.form__textarea}
             placeholder="Introduzca un mensaje..."
+            defaultValue={state?.errors?.msg ? "" : (state.payload?.get("msg") as string) || ""}
             required
           ></textarea>
           <p className={style.errorMsg}>{state?.errors?.msg && "*" + state.errors.msg}</p>

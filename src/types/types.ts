@@ -21,3 +21,15 @@ export interface SocialIcon {
   width: number;
   height: number;
 }
+
+/**
+ * Tipo formaActionState
+ *
+ * Tipo que representa el estado de procesamiento de un formulario, con  un mensaje, un conjunto de
+ * errores, pertenecientes a cada campo del formulario, y un payload, con los datos actuales del formulario.
+ */
+export interface formActionState {
+  message: string;
+  errors?: Record<string, string | string[]>;
+  payload?: FormData;
+}

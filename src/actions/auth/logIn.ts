@@ -1,16 +1,30 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { formActionState } from "@/types/types";
 import logInSchema from "@/schemas/auth/login.schema";
 
-const logIn = async (prevState: any, formData: FormData): Promise<unknown> => {
+/**
+ * Server Action logIn
+ *
+ * Función de tipo Server Action que se encarga de comprobar los credenciales introducidos por un usuario.
+ *
+ * @param prevState Estado previo del componente pasado como parámetro.
+ * @param formData Parámetro de tipo FormData con todos los datos del formulario que lo envía.
+ *
+ * @returns Promesa con la resolución de la creación en la base de datos.
+ */
+
+const logIn = async (prevState: formActionState, formData: FormData): Promise<formActionState> => {
   const fieldData = Object.fromEntries(formData);
   const validatedData = logInSchema.safeParse(fieldData);
 
   // Si los datos no son validos devolvemos los errores
   if (!validatedData.success) {
     return {
-      errors: validatedData.error.flatten().fieldErrors
+      message: "Error",
+      errors: validatedData.error.flatten().fieldErrors,
+      payload: formData
     };
   }
 
@@ -24,22 +38,26 @@ const logIn = async (prevState: any, formData: FormData): Promise<unknown> => {
   // Si no existe el usuario
   if (!user) {
     return {
+      message: "Error",
       errors: {
         email: "No existe ningún usuario con ese correo."
-      }
+      },
+      payload: formData
     };
   }
 
   // Si la contraseña no es correcta.
   if (user.password !== validatedData.data.password)
     return {
+      message: "Error",
       errors: {
         password: "La contraseña no es válida para este usuario."
-      }
+      },
+      payload: formData
     };
 
   return {
-    message: "Usuario encontrado!!"
+    message: "Success: Usuario encontrado!!"
   };
 };
 

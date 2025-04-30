@@ -4,11 +4,12 @@ import { z } from "zod";
  * Esquema para la validación de los datos del formulario de contacto
  */
 const logInSchema = z.object({
-  email: z.string().email({ message: "El correo no es válido" }).trim(),
-  password: z
+  email: z
     .string()
-    .min(15, { message: "La contraseña tiene que tener 15 caracteres min." })
-    .trim()
+    .email({ message: "El correo no es válido" })
+    .nonempty("El correo es obligatorio.")
+    .trim(),
+  password: z.string().nonempty("La contraseña es obligatoria.").trim()
 });
 
 export default logInSchema;
