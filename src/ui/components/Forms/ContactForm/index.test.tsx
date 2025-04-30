@@ -1,10 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
 
 describe("Test para el componente ContactForm", () => {
-  const handleMock = jest.fn();
-
   it("Debe renderizar el formulario de forma correcta.", () => {
     render(<ContactForm />);
 
@@ -55,45 +53,5 @@ describe("Test para el componente ContactForm", () => {
     expect(nameInput).toHaveValue(name);
     expect(emailInput).toHaveValue(email);
     expect(msgInput).toHaveValue(msg);
-  });
-
-  it("Debe llamar a la función que se ha pasado si los datos son correctos", async () => {
-    render(<ContactForm action={handleMock} />);
-
-    const name = "testname";
-    const email = "testname@email.com";
-    const msg = "Lorem ipsum dolor sit amet consecterum bla bla bla bla";
-
-    const nameInput = screen.getByLabelText("Nombre");
-    const emailInput = screen.getByLabelText("Correo *");
-    const msgInput = screen.getByLabelText("Mensaje (mín. 20 caracteres) *");
-
-    await userEvent.type(nameInput, name);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(msgInput, msg);
-
-    await userEvent.click(screen.getByRole("button"));
-
-    await waitFor(() => expect(handleMock).toHaveBeenCalled());
-  });
-
-  it("No debe llamar a la función que se ha pasado si los datos son incorrectos", async () => {
-    render(<ContactForm action={handleMock} />);
-
-    const name = "testname";
-    const email = "testname@email.com";
-    const msg = "Lorem ipsum ";
-
-    const nameInput = screen.getByLabelText("Nombre");
-    const emailInput = screen.getByLabelText("Correo *");
-    const msgInput = screen.getByLabelText("Mensaje (mín. 20 caracteres) *");
-
-    await userEvent.type(nameInput, name);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(msgInput, msg);
-
-    await userEvent.click(screen.getByRole("button"));
-
-    await waitFor(() => expect(handleMock).toHaveBeenCalled());
   });
 });

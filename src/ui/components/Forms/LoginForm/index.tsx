@@ -28,9 +28,9 @@ const LoginForm = (): React.ReactNode => {
 
   return (
     <>
-      <form action={formAction} id="loginForm" className={style.form}>
+      <form action={formAction} id="loginForm" className={style.form} aria-label="login-form">
         <p>{state?.message}</p>
-        <div role="form-control" className={style.form__control}>
+        <div aria-label="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
             Correo
           </label>
@@ -46,7 +46,7 @@ const LoginForm = (): React.ReactNode => {
           />
           <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
         </div>
-        <div role="form-control" className={style.form__control}>
+        <div aria-label="form-control" className={style.form__control}>
           <label htmlFor="password" className={style.form__label}>
             Contraseña
           </label>

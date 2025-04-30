@@ -5,7 +5,7 @@ import Social from ".";
 describe("Tests del componente Social...", () => {
   it("Debe renderizar el contenedor de forma adecuada", () => {
     render(<Social icons={[]} />);
-    expect(screen.getByRole("social")).toBeInTheDocument();
+    expect(screen.getByLabelText("social")).toBeInTheDocument();
   });
 
   it("Debe renderizar un icono de forma adecuada", () => {

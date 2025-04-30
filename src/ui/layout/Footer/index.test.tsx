@@ -46,7 +46,7 @@ describe("Tests del componente Footer...", () => {
   it("Debe renderizar los iconos sociales que le hemos pasado", () => {
     render(<Footer links={links} socialIcons={icons} />);
 
-    expect(screen.getByRole("social")).toBeInTheDocument();
+    expect(screen.getByLabelText("social")).toBeInTheDocument();
   });
 
   it("Debe renderizar el logo de la aplicación cuando se epecifica con logo", () => {
