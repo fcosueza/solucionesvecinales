@@ -2,7 +2,8 @@
 
 import Header from "@/ui/layout/Header";
 import Footer from "@/ui/layout/Footer";
-import LoginForm from "@/ui/components/Forms/LoginForm";
+import SignUpForm from "@/ui/components/Forms/SignUpForm";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { NavItem } from "@/types/types";
 import style from "./style.module.css";
@@ -28,7 +29,10 @@ export default function Register() {
       />
       <main className={style.main}>
         <h2 className={style.title}>Registro de Usuarios</h2>
-        <LoginForm />
+        <SignUpForm />
+        <p className={style.para}>
+          Si ya estas registrado, <Link href="/login">Inicia Sesión</Link> en tu cuenta.
+        </p>
       </main>
       <Footer />
     </>

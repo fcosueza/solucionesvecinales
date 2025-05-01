@@ -7,7 +7,7 @@
 
  model Contacto {
     nombre     String
-    correo     String  
+    correo     String
     mensaje    String
     createdAt  DateTime @default(now())
 

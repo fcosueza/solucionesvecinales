@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { formActionState } from "@/types/types";
+import { FormActionState } from "@/types/types";
 import logInSchema from "@/schemas/auth/login.schema";
 
 /**
@@ -15,7 +15,7 @@ import logInSchema from "@/schemas/auth/login.schema";
  * @returns Promesa con la resolución de la creación en la base de datos.
  */
 
-const logIn = async (prevState: formActionState, formData: FormData): Promise<formActionState> => {
+const logIn = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const fieldData = Object.fromEntries(formData);
   const validatedData = logInSchema.safeParse(fieldData);
 

@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { formActionState } from "@/types/types";
+import { FormActionState } from "@/types/types";
 import contactSchema from "@/schemas/common/contact.schema";
 
 /**
@@ -16,9 +16,9 @@ import contactSchema from "@/schemas/common/contact.schema";
  */
 
 const addContactMsg = async (
-  prevState: formActionState,
+  prevState: FormActionState,
   formData: FormData
-): Promise<formActionState> => {
+): Promise<FormActionState> => {
   const fieldData = Object.fromEntries(formData);
   const validatedData = contactSchema.safeParse(fieldData);
 

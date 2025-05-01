@@ -28,8 +28,19 @@ export interface SocialIcon {
  * Tipo que representa el estado de procesamiento de un formulario, con  un mensaje, un conjunto de
  * errores, pertenecientes a cada campo del formulario, y un payload, con los datos actuales del formulario.
  */
-export interface formActionState {
+export interface FormActionState {
   message: string;
   errors?: Record<string, string | string[]>;
   payload?: FormData;
+}
+
+/**
+ * Enum userRoles
+ *
+ * Enumerado que define los diferentes roles que puede tener un usuario
+ */
+export enum UserRoles {
+  "inquilino",
+  "administrador",
+  "webAdmin"
 }

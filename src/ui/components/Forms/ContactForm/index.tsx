@@ -2,12 +2,12 @@
 
 import addContactMsg from "@/actions/addContactMsg";
 import { useActionState } from "react";
-import { formActionState } from "@/types/types";
+import { FormActionState } from "@/types/types";
 import Button from "../../Button";
 import style from "./style.module.css";
 
 // Estado inicial del formulario
-const initialState: formActionState = {
+const initialState: FormActionState = {
   message: ""
 };
 
@@ -21,7 +21,7 @@ const initialState: formActionState = {
  */
 
 const ContactForm = (): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<formActionState, FormData>(
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
     addContactMsg,
     initialState
   );

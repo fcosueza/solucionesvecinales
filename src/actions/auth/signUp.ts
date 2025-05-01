@@ -1,25 +1,26 @@
-"user server";
+"use server";
 
 import prisma from "@/lib/prisma";
-import logInSchema from "@/schemas/auth/login.schema";
+import { FormActionState } from "@/types/types";
+import signUpSchema from "@/schemas/auth/signup.schema";
 
-const logIn = async (prevState: any, formData: FormData): Promise<unknown> => {
+const signUp = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const fieldData = Object.entries(formData);
-  const validatedData = logInSchema.safeParse(fieldData);
+  const validatedData = signUpSchema.safeParse(fieldData);
 
   // Si los datos no son validos devolvemos los errores
   if (!validatedData.success) {
     return {
+      message: "Error",
       errors: validatedData.error.flatten().fieldErrors
     };
   }
 
   // Intentamos crear el mensaje en la base de datos
-  const res = await prisma.contacto.create({
+  const res = await prisma.usuario.create({
     data: {
       nombre: validatedData.data.name,
-      correo: validatedData.data.email,
-      mensaje: validatedData.data.msg
+      correo: validatedData.data.email
     }
   });
 
@@ -33,4 +34,4 @@ const logIn = async (prevState: any, formData: FormData): Promise<unknown> => {
   };
 };
 
-export default logIn;
+export default signUp;

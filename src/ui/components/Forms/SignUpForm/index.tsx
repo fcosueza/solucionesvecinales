@@ -1,31 +1,29 @@
 "use client";
 
-import addContactMsg from "@/actions/addContactMsg";
+import signUp from "@/actions/auth/signUp";
 import { useActionState } from "react";
+import { FormActionState } from "@/types/types";
 import Button from "../../Button";
 import style from "./style.module.css";
 
 const initialState = {
-  message: "",
-  errors: ""
+  message: ""
 };
 
-interface Props {
-  action?: (prevState: any, FormData: FormData) => void;
-}
-
 /**
- * Componente ContactForm
+ * Componente SignUpForm
  *
- * Componente que genera un formulario de contacto que permite a un usuario
- * crear un mensaje en la base de datos.
+ * Componente que genera un formulario de registro que permite a un usuario
+ * registrarse en el sistema con sus datos.
  *
- * @param action Función de tipo Server Action que se encargará de procesas la solicitud del formulario.
- * @returns
+ * @return Nodo de React con el formulario de login.
  */
 
-const RegisterForm = ({ action = addContactMsg }: Props): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<any, FormData>(action, initialState);
+const SignUpForm = (): React.ReactNode => {
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
+    signUp,
+    initialState
+  );
 
   return (
     <>
@@ -46,7 +44,20 @@ const RegisterForm = ({ action = addContactMsg }: Props): React.ReactNode => {
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="password" className={style.form__label}>
-            Contraseña <span title="Requerido">*</span>
+            Contraseña (15 caracteres min.) <span title="Requerido">*</span>
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className={style.form__input}
+            placeholder="Introduzca su contraseña..."
+          />
+          <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
+        </div>
+        <div role="form-control" className={style.form__control}>
+          <label htmlFor="password" className={style.form__label}>
+            Repite la Contraseña (15 caracteres min.) <span title="Requerido">*</span>
           </label>
           <input
             type="password"
@@ -64,4 +75,4 @@ const RegisterForm = ({ action = addContactMsg }: Props): React.ReactNode => {
   );
 };
 
-export default RegisterForm;
+export default SignUpForm;

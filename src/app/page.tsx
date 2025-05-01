@@ -129,7 +129,7 @@ export default function Home() {
             title={titleHero}
             para={paraHero}
             buttonText="Regístrate Ya!!"
-            buttonFunc={() => router.push("/register")}
+            buttonFunc={() => router.push("/signup")}
           />
           <Image
             src="/assets/images/hero.svg"

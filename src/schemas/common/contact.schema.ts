@@ -8,13 +8,9 @@ const contactSchema = z.object({
   email: z
     .string()
     .email({ message: "El correo no es válido" })
-    .nonempty("El correo es obligatorio.")
+    .min(1, { message: "El email es obligatorio" })
     .trim(),
-  msg: z
-    .string()
-    .min(20, { message: "El mensaje debe tener al menos 20 caracteres." })
-    .nonempty("El mensaje es obligatorio.")
-    .trim()
+  msg: z.string().min(20, { message: "El mensaje debe tener al menos 20 caracteres" }).trim()
 });
 
 export default contactSchema;

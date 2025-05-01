@@ -3,9 +3,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 10rem;
 }
 
 .title {
   font-size: 5rem;
   color: var(--highlight-color);
+}
+
+.para {
+  font-size: 1.6rem;
 }

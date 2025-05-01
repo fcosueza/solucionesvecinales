@@ -25,13 +25,13 @@ export default function LogIn() {
       <Header
         menuLinks={linksHeader}
         buttonText="Registro"
-        buttonFunc={() => router.push("/register")}
+        buttonFunc={() => router.push("/signup")}
       />
       <main className={style.main}>
         <h2 className={style.title}>Inicio de Sesión</h2>
         <LoginForm />
         <p className={style.para}>
-          ¿Aun no tienes una cuenta? <Link href="/register">Regístrate</Link> de forma gratuita.
+          ¿Aun no tienes una cuenta? <Link href="/signup">Regístrate</Link> de forma gratuita.
         </p>
       </main>
       <Footer />
