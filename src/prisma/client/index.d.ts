@@ -10750,7 +10750,7 @@ export namespace Prisma {
   export type UsuarioGroupByOutputType = {
     correo: string
     rol: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -10861,7 +10861,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       correo: string
       rol: $Enums.Role
-      nombre_usuario: string
+      nombre_usuario: string | null
       nombre: string
       apellidos: string
       calle: string
@@ -13660,7 +13660,7 @@ export namespace Prisma {
     NOT?: UsuarioWhereInput | UsuarioWhereInput[]
     correo?: StringFilter<"Usuario"> | string
     rol?: EnumRoleFilter<"Usuario"> | $Enums.Role
-    nombre_usuario?: StringFilter<"Usuario"> | string
+    nombre_usuario?: StringNullableFilter<"Usuario"> | string | null
     nombre?: StringFilter<"Usuario"> | string
     apellidos?: StringFilter<"Usuario"> | string
     calle?: StringFilter<"Usuario"> | string
@@ -13678,7 +13678,7 @@ export namespace Prisma {
   export type UsuarioOrderByWithRelationInput = {
     correo?: SortOrder
     rol?: SortOrder
-    nombre_usuario?: SortOrder
+    nombre_usuario?: SortOrderInput | SortOrder
     nombre?: SortOrder
     apellidos?: SortOrder
     calle?: SortOrder
@@ -13699,7 +13699,7 @@ export namespace Prisma {
     OR?: UsuarioWhereInput[]
     NOT?: UsuarioWhereInput | UsuarioWhereInput[]
     rol?: EnumRoleFilter<"Usuario"> | $Enums.Role
-    nombre_usuario?: StringFilter<"Usuario"> | string
+    nombre_usuario?: StringNullableFilter<"Usuario"> | string | null
     nombre?: StringFilter<"Usuario"> | string
     apellidos?: StringFilter<"Usuario"> | string
     calle?: StringFilter<"Usuario"> | string
@@ -13717,7 +13717,7 @@ export namespace Prisma {
   export type UsuarioOrderByWithAggregationInput = {
     correo?: SortOrder
     rol?: SortOrder
-    nombre_usuario?: SortOrder
+    nombre_usuario?: SortOrderInput | SortOrder
     nombre?: SortOrder
     apellidos?: SortOrder
     calle?: SortOrder
@@ -13738,7 +13738,7 @@ export namespace Prisma {
     NOT?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
     correo?: StringWithAggregatesFilter<"Usuario"> | string
     rol?: EnumRoleWithAggregatesFilter<"Usuario"> | $Enums.Role
-    nombre_usuario?: StringWithAggregatesFilter<"Usuario"> | string
+    nombre_usuario?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
     nombre?: StringWithAggregatesFilter<"Usuario"> | string
     apellidos?: StringWithAggregatesFilter<"Usuario"> | string
     calle?: StringWithAggregatesFilter<"Usuario"> | string
@@ -14214,7 +14214,7 @@ export namespace Prisma {
   export type UsuarioCreateInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -14232,7 +14232,7 @@ export namespace Prisma {
   export type UsuarioUncheckedCreateInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -14250,7 +14250,7 @@ export namespace Prisma {
   export type UsuarioUpdateInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -14268,7 +14268,7 @@ export namespace Prisma {
   export type UsuarioUncheckedUpdateInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -14286,7 +14286,7 @@ export namespace Prisma {
   export type UsuarioCreateManyInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -14299,7 +14299,7 @@ export namespace Prisma {
   export type UsuarioUpdateManyMutationInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -14312,7 +14312,7 @@ export namespace Prisma {
   export type UsuarioUncheckedUpdateManyInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -14830,17 +14830,6 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -14854,6 +14843,17 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type CredencialesNullableScalarRelationFilter = {
@@ -14935,22 +14935,6 @@ export namespace Prisma {
     _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -14967,6 +14951,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type ZonaNombreComunidadCompoundUniqueInput = {
@@ -15455,16 +15455,16 @@ export namespace Prisma {
     set?: $Enums.Role
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type CredencialesUpdateOneWithoutUsuarioNestedInput = {
@@ -15790,17 +15790,6 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -15815,6 +15804,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -15823,6 +15823,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15850,23 +15867,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type MensajeCreateWithoutComunidadIDInput = {
@@ -16111,7 +16111,7 @@ export namespace Prisma {
   export type UsuarioCreateWithoutCredencialesInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16128,7 +16128,7 @@ export namespace Prisma {
   export type UsuarioUncheckedCreateWithoutCredencialesInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16161,7 +16161,7 @@ export namespace Prisma {
   export type UsuarioUpdateWithoutCredencialesInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16178,7 +16178,7 @@ export namespace Prisma {
   export type UsuarioUncheckedUpdateWithoutCredencialesInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16227,7 +16227,7 @@ export namespace Prisma {
   export type UsuarioCreateWithoutIncidenciasInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16244,7 +16244,7 @@ export namespace Prisma {
   export type UsuarioUncheckedCreateWithoutIncidenciasInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16315,7 +16315,7 @@ export namespace Prisma {
   export type UsuarioUpdateWithoutIncidenciasInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16332,7 +16332,7 @@ export namespace Prisma {
   export type UsuarioUncheckedUpdateWithoutIncidenciasInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16349,7 +16349,7 @@ export namespace Prisma {
   export type UsuarioCreateWithoutInscripcionesInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16366,7 +16366,7 @@ export namespace Prisma {
   export type UsuarioUncheckedCreateWithoutInscripcionesInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16431,7 +16431,7 @@ export namespace Prisma {
   export type UsuarioUpdateWithoutInscripcionesInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16448,7 +16448,7 @@ export namespace Prisma {
   export type UsuarioUncheckedUpdateWithoutInscripcionesInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16573,7 +16573,7 @@ export namespace Prisma {
   export type UsuarioCreateWithoutReservasInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16590,7 +16590,7 @@ export namespace Prisma {
   export type UsuarioUncheckedCreateWithoutReservasInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16646,7 +16646,7 @@ export namespace Prisma {
   export type UsuarioUpdateWithoutReservasInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16663,7 +16663,7 @@ export namespace Prisma {
   export type UsuarioUncheckedUpdateWithoutReservasInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16709,7 +16709,7 @@ export namespace Prisma {
   export type UsuarioCreateWithoutSolicitudesInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16726,7 +16726,7 @@ export namespace Prisma {
   export type UsuarioUncheckedCreateWithoutSolicitudesInput = {
     correo: string
     rol?: $Enums.Role
-    nombre_usuario: string
+    nombre_usuario?: string | null
     nombre: string
     apellidos: string
     calle: string
@@ -16791,7 +16791,7 @@ export namespace Prisma {
   export type UsuarioUpdateWithoutSolicitudesInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string
@@ -16808,7 +16808,7 @@ export namespace Prisma {
   export type UsuarioUncheckedUpdateWithoutSolicitudesInput = {
     correo?: StringFieldUpdateOperationsInput | string
     rol?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    nombre_usuario?: StringFieldUpdateOperationsInput | string
+    nombre_usuario?: NullableStringFieldUpdateOperationsInput | string | null
     nombre?: StringFieldUpdateOperationsInput | string
     apellidos?: StringFieldUpdateOperationsInput | string
     calle?: StringFieldUpdateOperationsInput | string

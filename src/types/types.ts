@@ -40,7 +40,7 @@ export interface FormActionState {
  * Enumerado que define los diferentes roles que puede tener un usuario
  */
 export enum UserRoles {
-  "inquilino",
-  "administrador",
-  "webAdmin"
+  inquilino = "inquilino",
+  administrador = "administrador",
+  webAdmin = "webAdmin"
 }

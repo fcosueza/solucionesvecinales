@@ -25,13 +25,10 @@ const signUpSchema = z
       .string({ message: "La calle no es válida" })
       .min(1, { message: "La calle es obligatoria" })
       .trim(),
-    number: z
+    number: z.coerce
       .number({ message: "El número no es válido" })
-      .gte(1, { message: "El número tiene que ser mayor o igual que 1" })
       .min(1, { message: "El número es obligatorio" }),
-    floor: z
-      .number({ message: "El piso no es válido" })
-      .gte(0, { message: "El piso tiene que ser igual o mayor que 0." }),
+    floor: z.coerce.number({ message: "El piso no es válido" }),
     letter: z
       .string({ message: "La letra no es válida" })
       .max(1, { message: "La letra solo puede contener un carácter" })

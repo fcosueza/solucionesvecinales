@@ -27,7 +27,8 @@ const SignUpForm = (): React.ReactNode => {
 
   return (
     <>
-      <form action={formAction} id="contactForm" aria-label="signup-form" className={style.form}>
+      {console.log(state)}
+      <form action={formAction} id="signupForm" aria-label="signup-form" className={style.form}>
         <h3 className={style.form__title}>Datos de Sesión</h3>
         <hr className={style.form__separator} />
         <div role="form-control" className={style.form__control}>
@@ -40,6 +41,7 @@ const SignUpForm = (): React.ReactNode => {
             id="email"
             className={style.form__input}
             placeholder="Introduzca su correo..."
+            defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
             required
           />
           <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
@@ -52,25 +54,33 @@ const SignUpForm = (): React.ReactNode => {
             type="password"
             name="password"
             id="password"
-            minLength={15}
             className={style.form__input}
+            defaultValue={
+              state?.errors?.password ? "" : (state.payload?.get("password") as string) || ""
+            }
             placeholder="Introduzca su contraseña..."
           />
-          <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
+          <p className={style.errorMsg}>{state?.errors?.password && "*" + state.errors.password}</p>
         </div>
         <div role="form-control" className={style.form__control}>
-          <label htmlFor="password" className={style.form__label}>
+          <label htmlFor="password_repeat" className={style.form__label}>
             Repite la Contraseña (15 caracteres min.) <span title="Requerido">*</span>
           </label>
           <input
             type="password"
-            name="password"
-            id="password"
-            minLength={15}
+            name="password_repeat"
+            id="password_repeat"
             className={style.form__input}
+            defaultValue={
+              state?.errors?.password_repeat
+                ? ""
+                : (state.payload?.get("password_repeat") as string) || ""
+            }
             placeholder="Introduzca su contraseña..."
           />
-          <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
+          <p className={style.errorMsg}>
+            {state?.errors?.password_repeat && "*" + state.errors.password_repeat}
+          </p>
         </div>
 
         <h3 className={style.form__title}>Datos de Usuario</h3>
@@ -84,6 +94,9 @@ const SignUpForm = (): React.ReactNode => {
             name="username"
             id="username"
             className={style.form__input}
+            defaultValue={
+              state?.errors?.username ? "" : (state.payload?.get("username") as string) || ""
+            }
             placeholder="Introduzca su nombre de usuario..."
           />
           <p className={style.errorMsg}>{state?.errors?.username && "*" + state.errors.username}</p>
@@ -97,6 +110,7 @@ const SignUpForm = (): React.ReactNode => {
             name="name"
             id="name"
             className={style.form__input}
+            defaultValue={state?.errors?.name ? "" : (state.payload?.get("name") as string) || ""}
             placeholder="Introduzca su nombre..."
             required
           />
@@ -111,6 +125,9 @@ const SignUpForm = (): React.ReactNode => {
             name="surname"
             id="surname"
             className={style.form__input}
+            defaultValue={
+              state?.errors?.surname ? "" : (state.payload?.get("surname") as string) || ""
+            }
             placeholder="Introduzca sus apellidos..."
             required
           />
@@ -157,6 +174,9 @@ const SignUpForm = (): React.ReactNode => {
             name="address"
             id="address"
             className={style.form__input}
+            defaultValue={
+              state?.errors?.address ? "" : (state.payload?.get("address") as string) || ""
+            }
             placeholder="Introduzca su calle..."
             required
           />
@@ -171,6 +191,9 @@ const SignUpForm = (): React.ReactNode => {
             name="number"
             id="number"
             className={style.form__input}
+            defaultValue={
+              state?.errors?.number ? "" : (state.payload?.get("number") as string) || ""
+            }
             placeholder="Introduzca el número de su casa/edificio..."
             required
           />
@@ -185,13 +208,14 @@ const SignUpForm = (): React.ReactNode => {
             name="floor"
             id="floor"
             className={style.form__input}
+            defaultValue={state?.errors?.floor ? "" : (state.payload?.get("floor") as string) || ""}
             placeholder="Introduzca el piso..."
           />
           <p className={style.errorMsg}>{state?.errors?.floor && "*" + state.errors.floor}</p>
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="letter" className={style.form__label}>
-            Letra <span title="Requerido">*</span>
+            Letra
           </label>
           <input
             type="text"
@@ -200,8 +224,10 @@ const SignUpForm = (): React.ReactNode => {
             minLength={1}
             maxLength={1}
             className={style.form__input}
+            defaultValue={
+              state?.errors?.letter ? "" : (state.payload?.get("letter") as string) || ""
+            }
             placeholder="Introduzca su letra..."
-            required
           />
           <p className={style.errorMsg}>{state?.errors?.letter && "*" + state.errors.letter}</p>
         </div>
@@ -214,6 +240,7 @@ const SignUpForm = (): React.ReactNode => {
             name="city"
             id="city"
             className={style.form__input}
+            defaultValue={state?.errors?.city ? "" : (state.payload?.get("city") as string) || ""}
             placeholder="Introduzca su letra..."
             required
           />

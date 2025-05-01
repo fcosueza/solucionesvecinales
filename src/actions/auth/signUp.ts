@@ -3,35 +3,63 @@
 import prisma from "@/lib/prisma";
 import { FormActionState } from "@/types/types";
 import signUpSchema from "@/schemas/auth/signup.schema";
+import { redirect } from "next/navigation";
 
 const signUp = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const fieldData = Object.entries(formData);
+  const fieldData = Object.fromEntries(formData);
   const validatedData = signUpSchema.safeParse(fieldData);
 
   // Si los datos no son validos devolvemos los errores
   if (!validatedData.success) {
     return {
-      message: "Error",
-      errors: validatedData.error.flatten().fieldErrors
+      message: "Error: Los datos no son correctos",
+      errors: validatedData.error.flatten().fieldErrors,
+      payload: formData
     };
   }
 
-  // Intentamos crear el mensaje en la base de datos
-  const res = await prisma.usuario.create({
+  // Intentamos crear el usuario
+  const user = await prisma.usuario.create({
     data: {
+      correo: validatedData.data.email,
+      rol: validatedData.data.rol,
+      nombre_usuario: validatedData?.data?.username || null,
       nombre: validatedData.data.name,
-      correo: validatedData.data.email
+      apellidos: validatedData.data.surname,
+      calle: validatedData.data.address,
+      numero: validatedData.data.number,
+      piso: validatedData.data.floor || null,
+      letra: validatedData.data.letter || null,
+      localidad: validatedData.data.city
     }
   });
 
-  // Si no se puede crear un mensaje, revolvemos un error.
-  if (!res) {
-    throw new Error("No se ha podido crear el mensaje de contacto");
+  // Si no se puede crear el usuario, revolvemos un error.
+  if (!user) {
+    return {
+      message: "Error: No se ha podido crear el usuario.",
+      payload: formData
+    };
   }
 
-  return {
-    message: "Mensaje creado correctamente."
-  };
+  // Intentamos crear los credenciales
+  const cred = await prisma.credenciales.create({
+    data: {
+      correoUsuario: validatedData.data.email,
+      password: validatedData.data.password
+    }
+  });
+
+  // Si no se puede crear el usuario, revolvemos un error.
+  if (!cred) {
+    return {
+      message: "Error: No se han podido crear los credenciales",
+      payload: formData
+    };
+  }
+
+  // Si se ha podido crear todo bien, redireccionamos a la página de log in
+  redirect("/login");
 };
 
 export default signUp;
