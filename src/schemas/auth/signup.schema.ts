@@ -12,7 +12,7 @@ const signUpSchema = z
       .min(1, { message: "El email es obligatorio" })
       .trim(),
     rol: z.nativeEnum(UserRoles),
-    user: z.string({ message: "El nombre de usuario no es válido" }).trim(),
+    username: z.string({ message: "El nombre de usuario no es válido" }).trim(),
     name: z
       .string({ message: "El nombre no es valido" })
       .min(1, { message: "El nombre es obligatorio" })
@@ -36,7 +36,7 @@ const signUpSchema = z
       .string({ message: "La letra no es válida" })
       .max(1, { message: "La letra solo puede contener un carácter" })
       .trim(),
-    town: z
+    city: z
       .string({ message: "La localidad no es válida" })
       .min(1, { message: "La localidad es obligatoria" })
       .trim(),
