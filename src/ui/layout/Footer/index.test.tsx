@@ -60,4 +60,31 @@ describe("Tests del componente Footer...", () => {
 
     expect(screen.getByRole("paragraph")).toBeInTheDocument();
   });
+
+  it("No debe renderizar el menú si no le pasamos ningún enlace", () => {
+    render(<Footer socialIcons={icons} />);
+
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+  });
+
+  it("No debe renderizar los iconos sociales si no le pasamos ningún enlace", () => {
+    render(<Footer links={links} />);
+
+    expect(screen.queryByRole("social")).not.toBeInTheDocument();
+  });
+
+  it("No debe renderizar el logo si se indica la opción withLogo como false", () => {
+    render(<Footer socialIcons={icons} withLogo={false} />);
+
+    expect(screen.queryByRole("logo")).not.toBeInTheDocument();
+  });
+
+  it("Solo debe renderizar el parrafo de copyright no se pasa ningún elemento", () => {
+    render(<Footer socialIcons={icons} withLogo={false} />);
+
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+    expect(screen.queryByRole("logo")).not.toBeInTheDocument();
+    expect(screen.queryByRole("social")).not.toBeInTheDocument();
+    expect(screen.getByRole("paragraph")).toBeInTheDocument();
+  });
 });
