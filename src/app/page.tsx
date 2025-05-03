@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "@/ui/layout/Header";
 import CTA from "@/ui/components/CTA";
 import Footer from "@/ui/layout/Footer";
@@ -9,7 +7,6 @@ import ContactForm from "@/ui/components/Forms/ContactForm";
 import Image from "next/image";
 import { NavItem } from "@/types/types";
 import { SocialIcon } from "@/types/types";
-import { useRouter } from "next/navigation";
 import style from "./style.module.css";
 
 // Titulo y párrafo para el CTA
@@ -113,15 +110,9 @@ const cardsData = [
  * @returns Nodo de React conteniendo la página principal.
  */
 export default function Home() {
-  const router = useRouter();
-
   return (
     <>
-      <Header
-        menuLinks={linksHeader}
-        buttonText="Log In"
-        buttonFunc={() => router.push("/login")}
-      />
+      <Header menuLinks={linksHeader} buttonText="Log In" buttonRoute="/login" />
 
       <main className={style.main}>
         <section className={style.section}>
@@ -129,7 +120,7 @@ export default function Home() {
             title={titleHero}
             para={paraHero}
             buttonText="Regístrate Ya!!"
-            buttonFunc={() => router.push("/signup")}
+            buttonRoute={"/signup"}
           />
           <Image
             src="/assets/images/hero.svg"

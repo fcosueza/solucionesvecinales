@@ -1,11 +1,14 @@
+"use client";
+
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 import style from "./style.module.css";
 
 interface Props {
   title: string;
   para: string;
   buttonText: string;
-  buttonFunc?: (Event: React.MouseEvent<HTMLElement>) => void;
+  buttonRoute?: string;
 }
 
 /**
@@ -22,12 +25,14 @@ interface Props {
  * @returns No de react con todos los elementos del CTA dentro de un div.
  */
 
-const CTA = ({ title, para, buttonText, buttonFunc }: Props) => {
+const CTA = ({ title, para, buttonText, buttonRoute = "/" }: Props) => {
+  const router = useRouter();
+
   return (
     <div className={style.cta}>
       <h1 className={style.title}>{title}</h1>
       <p className={style.para}>{para}</p>
-      <Button text={buttonText} type="button" onClick={buttonFunc} />
+      <Button text={buttonText} type="button" onClick={() => router.push(buttonRoute)} />
     </div>
   );
 };
