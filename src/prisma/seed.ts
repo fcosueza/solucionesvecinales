@@ -11,100 +11,100 @@ const prisma = new PrismaClient();
  */
 
 async function main(): Promise<void> {
-  const comunidad = await prisma.comunidad.create({
+  const community = await prisma.community.create({
     data: {
-      nombre: "Arrayanes6",
-      calle: "Arrayanes",
-      numero: 6,
-      localidad: "Granada",
-      provincia: "Granada",
-      pais: "España"
+      name: "Arrayanes6",
+      street: "Arrayanes",
+      number: 6,
+      town: "Granada",
+      province: "Granada",
+      country: "España"
     }
   });
 
-  console.log("Añadida la comunidad: ", comunidad);
+  console.log("Añadida la comunidad: ", community);
 
-  const usuarios = await prisma.usuario.createMany({
+  const users = await prisma.user.createMany({
     data: [
       {
-        correo: "fran@gmail.com",
-        rol: "administrador",
-        nombre_usuario: "fcosueza",
-        nombre: "Francisco",
-        apellidos: "Sueza Rodríguez",
-        calle: "Arrayanes",
-        numero: 6,
-        piso: 4,
-        letra: "A",
-        localidad: "Granada"
+        email: "fran@gmail.com",
+        role: "admin",
+        username: "fcosueza",
+        name: "Francisco",
+        surname: "Sueza Rodríguez",
+        street: "Arrayanes",
+        number: 6,
+        floor: 4,
+        letter: "A",
+        town: "Granada"
       },
       {
-        correo: "juan@gmail.com",
-        rol: "inquilino",
-        nombre_usuario: "juanjuan",
-        nombre: "Juan",
-        apellidos: "Ponce Perez",
-        calle: "Arrayanes",
-        numero: 6,
-        piso: 2,
-        letra: "B",
-        localidad: "Granada"
+        email: "juan@gmail.com",
+        role: "tenant",
+        username: "juanjuan",
+        name: "Juan",
+        surname: "Ponce Perez",
+        street: "Arrayanes",
+        number: 6,
+        floor: 2,
+        letter: "B",
+        town: "Granada"
       },
       {
-        correo: "alberto@gmail.com",
-        rol: "inquilino",
-        nombre_usuario: "albertito",
-        nombre: "Alberto",
-        apellidos: "Garcia Garcia",
-        calle: "Arrayanes",
-        numero: 6,
-        piso: 1,
-        letra: "D",
-        localidad: "Granada"
+        email: "alberto@gmail.com",
+        role: "tenant",
+        username: "albertito",
+        name: "Alberto",
+        surname: "Garcia Garcia",
+        street: "Arrayanes",
+        number: 6,
+        floor: 1,
+        letter: "D",
+        town: "Granada"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Usuarios añadidos: ", usuarios);
+  console.log("Usuarios añadidos: ", users);
 
-  const credenciales = await prisma.credenciales.createMany({
+  const credentials = await prisma.credentials.createMany({
     data: [
       {
-        correoUsuario: "fran@gmail.com",
+        user: "fran@gmail.com",
         password: "12345"
       },
       {
-        correoUsuario: "juan@gmail.com",
+        user: "juan@gmail.com",
         password: "5433212"
       },
       {
-        correoUsuario: "alberto@gmail.com",
+        user: "alberto@gmail.com",
         password: "dsnojiaiojs"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Añadidos credenciales: ", credenciales);
+  console.log("Añadidos credenciales: ", credentials);
 
-  const mensajes = await prisma.mensaje.createMany({
+  const messages = await prisma.message.createMany({
     data: [
       {
-        horaCreacion: new Date(),
-        comunidad: 1,
-        texto: "Mensaje de Prueba 1, 2, 3"
+        createdAt: new Date(),
+        community: 1,
+        text: "Mensaje de Prueba 1, 2, 3"
       },
       {
-        horaCreacion: new Date(),
-        comunidad: 1,
-        texto: "Junta de vecinos el día 22 de Marzo"
+        createdAt: new Date(),
+        community: 1,
+        text: "Junta de vecinos el día 22 de Marzo"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Añadidos mensajes: ", mensajes);
+  console.log("Añadidos mensajes: ", messages);
 
   const zonas = await prisma.zona.createMany({
     data: [

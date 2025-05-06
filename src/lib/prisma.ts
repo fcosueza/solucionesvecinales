@@ -3,7 +3,7 @@
  * que solo se cree una instancia del cliente en la aplicación.
  */
 
-import { PrismaClient } from "@/prisma/client";
+import { PrismaClient } from "@/generated/prisma";
 import { withAccelerate } from "@prisma/extension-accelerate";
 
 const globalForPrisma = global as unknown as {

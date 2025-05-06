@@ -1,12 +1,3 @@
-/**
- * Archivo schema.prisma
- *
- * Archivo principal del modelo de prisma que genera el cliente y la conexión a la base de datos.
- * Emplea la opción prismaSchemaFolder para dividir el modelo en diferentes archivos, los cuales se
- * pueden encontar en la carpeta schema.
- */
-
-
 generator client {
   provider = "prisma-client-js"
   output = "../generated/prisma"

@@ -1,0 +1,14 @@
+model Area {
+    name         String
+    community    Int
+    description  String
+    image        String?
+    start_time   DateTime @db.Time()
+    end_time     DateTime @db.Time()
+
+    communityID  Community  @relation(fields: [community], references: [id], onDelete: Cascade)
+
+    @@id([name, community])
+
+    reservations Reservation[]
+ }
