@@ -1,0 +1,21 @@
+/**
+ * Modelo Comunidad.
+ *
+ * Modelo de la tabla comunidad, que es la principal de nuestra base de datos.
+ */
+
+ model Comunidad {
+    id          Int     @id @default(autoincrement())
+    nombre      String
+    calle       String
+    numero      Int
+    localidad   String
+    provincia   String
+    pais        String
+
+    mensajes    Mensaje[]
+    zonas       Zona[]
+    incidencias Incidencia[]
+    inscritos   Inscripcion[]
+    solicitudes Solicitud[]
+ }

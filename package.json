@@ -13,7 +13,7 @@
     "test": "npm run test:unit && npm run test:e2e"
   },
   "prisma": {
-    "schema": "src/prisma/models",
+    "schema": "src/prisma",
     "seed": "tsx src/prisma/seed.ts"
   },
   "dependencies": {

@@ -1,0 +1,21 @@
+/**
+ * Modelo Zona
+ *
+ * Modelo de la tabla Zona que representa las zonas comunes de la comunidad. Una zona debe pertenecer 
+ * a una comunidad para poder ser creada.
+ */
+
+ model Zona {
+    nombre       String
+    comunidad    Int
+    descripcion  String
+    imagen       String?
+    hora_inicio  DateTime @db.Time()
+    hora_fin     DateTime @db.Time()
+
+    comunidadID  Comunidad  @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+    @@id([nombre, comunidad])
+
+    reservas Reserva[]
+ }

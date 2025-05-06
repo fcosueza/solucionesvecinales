@@ -1,0 +1,25 @@
+/*
+ * Modelo Solicitud
+ *
+ * Modelo de la solicitud que se genera cuando un usuario quieres
+ * inscribirse en una comunidad. El administrador deberá aprobar esta
+ * solicitud para que el usuario quede inscrito.
+ *
+ */
+
+enum Estado_Solicitud {
+    pendiente
+    aprobada
+    denegada
+}
+
+model Solicitud {
+    usuario     String
+    comunidad   Int
+    estado      Estado_Solicitud  @default(pendiente)
+
+    usuarioID   Usuario           @relation(fields: [usuario], references: [correo], onDelete: Cascade)
+    comunidadID Comunidad         @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+    @@id([usuario, comunidad])
+}

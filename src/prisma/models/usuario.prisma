@@ -1,0 +1,31 @@
+/**
+ * Modelo Usuario.
+ *
+ * Modelo de la tabla Usuario, otra de las tablas principales de la aplicación. Además, se define
+ * el Enum rol que especifica los diferentes tipos de usuarios que podemos encontrar en el sistema.
+ */
+
+ enum Role {
+    inquilino
+    administrador
+    webAdmin
+ }
+
+ model Usuario {
+    correo           String   @id
+    rol              Role     @default(inquilino)
+    nombre_usuario   String?
+    nombre           String
+    apellidos        String
+    calle            String
+    numero           Int
+    piso             Int?
+    letra            String?  @db.Char(1)
+    localidad        String
+
+    credenciales     Credenciales?
+    incidencias      Incidencia[]
+    reservas         Reserva[]
+    inscripciones    Inscripcion[]
+    solicitudes      Solicitud[]
+}
