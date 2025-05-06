@@ -14,8 +14,11 @@ const config: Config = {
   modulePathIgnorePatterns: ["<rootDir>/tests"],
   coveragePathIgnorePatterns: [
     "/node_modules/",
-    "<rootDir>/src/prisma/*",
-    "<rootDir>/src/lib/prisma.ts"
+    "<rootDir>/src/generated/*",
+    "<rootDir>/src/lib/prisma.ts",
+    "<rootDir>/src/db/*",
+    "<rootDir>/src/schemas/*",
+    "<rootDir>/src/types/*"
   ]
 };
 

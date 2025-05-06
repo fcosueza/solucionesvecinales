@@ -19,18 +19,18 @@ const signUp = async (prevState: FormActionState, formData: FormData): Promise<F
   }
 
   // Intentamos crear el usuario
-  const user = await prisma.usuario.create({
+  const user = await prisma.user.create({
     data: {
-      correo: validatedData.data.email,
-      rol: validatedData.data.rol,
-      nombre_usuario: validatedData?.data?.username || null,
-      nombre: validatedData.data.name,
-      apellidos: validatedData.data.surname,
-      calle: validatedData.data.address,
-      numero: validatedData.data.number,
-      piso: validatedData.data.floor || null,
-      letra: validatedData.data.letter || null,
-      localidad: validatedData.data.city
+      email: validatedData.data.email,
+      role: validatedData.data.role,
+      username: validatedData?.data?.username || null,
+      name: validatedData.data.name,
+      surname: validatedData.data.surname,
+      street: validatedData.data.address,
+      number: validatedData.data.number,
+      floor: validatedData.data.floor || null,
+      letter: validatedData.data.letter || null,
+      town: validatedData.data.city
     }
   });
 
@@ -43,9 +43,9 @@ const signUp = async (prevState: FormActionState, formData: FormData): Promise<F
   }
 
   // Intentamos crear los credenciales
-  const cred = await prisma.credenciales.create({
+  const cred = await prisma.credentials.create({
     data: {
-      correoUsuario: validatedData.data.email,
+      user: validatedData.data.email,
       password: validatedData.data.password
     }
   });

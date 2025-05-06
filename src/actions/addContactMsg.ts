@@ -33,11 +33,11 @@ const addContactMsg = async (
 
   // Intentamos crear el mensaje en la base de datos
   try {
-    await prisma.contacto.create({
+    await prisma.contact.create({
       data: {
-        nombre: validatedData.data.name,
-        correo: validatedData.data.email,
-        mensaje: validatedData.data.msg
+        name: validatedData.data.name,
+        email: validatedData.data.email,
+        message: validatedData.data.msg
       }
     });
   } catch (e: any) {

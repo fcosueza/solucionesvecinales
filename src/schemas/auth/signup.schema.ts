@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UserRoles } from "@/types/types";
+import { UserRole } from "@/types/types";
 
 /**
  * Esquema para la validación de los datos del formulario de registro
@@ -11,7 +11,7 @@ const signUpSchema = z
       .email({ message: "El correo no es válido" })
       .min(1, { message: "El email es obligatorio" })
       .trim(),
-    rol: z.nativeEnum(UserRoles),
+    role: z.nativeEnum(UserRole),
     username: z.string({ message: "El nombre de usuario no es válido" }).trim(),
     name: z
       .string({ message: "El nombre no es valido" })

@@ -141,9 +141,9 @@ const SignUpForm = (): React.ReactNode => {
             <div className={style.form__controlRadio}>
               <input
                 type="radio"
-                id="inquilino"
-                name="rol"
-                value="inquilino"
+                id="tenant"
+                name="role"
+                value="tenant"
                 className={style.form__radio}
                 defaultChecked
               />
@@ -152,9 +152,9 @@ const SignUpForm = (): React.ReactNode => {
             <div className={style.form__controlRadio}>
               <input
                 type="radio"
-                id="administrador"
-                name="rol"
-                value="administrador"
+                id="admin"
+                name="role"
+                value="admin"
                 className={style.form__radio}
               />
               <label htmlFor="administrador">administrador</label>

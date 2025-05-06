@@ -29,9 +29,9 @@ const logIn = async (prevState: FormActionState, formData: FormData): Promise<Fo
   }
 
   // Intentamos crear el mensaje en la base de datos
-  const user = await prisma.credenciales.findUnique({
+  const user = await prisma.credentials.findUnique({
     where: {
-      correoUsuario: validatedData.data.email
+      user: validatedData.data.email
     }
   });
 
