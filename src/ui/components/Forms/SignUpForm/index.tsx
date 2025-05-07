@@ -10,15 +10,6 @@ const initialState = {
   message: ""
 };
 
-/**
- * Componente SignUpForm
- *
- * Componente que genera un formulario de registro que permite a un usuario
- * registrarse en el sistema con sus datos.
- *
- * @return Nodo de React con el formulario de login.
- */
-
 const SignUpForm = (): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
     signUp,
@@ -27,7 +18,6 @@ const SignUpForm = (): React.ReactNode => {
 
   return (
     <>
-      {console.log(state)}
       <form action={formAction} id="signupForm" aria-label="signup-form" className={style.form}>
         <h3 className={style.form__title}>Datos de Sesión</h3>
         <hr className={style.form__separator} />

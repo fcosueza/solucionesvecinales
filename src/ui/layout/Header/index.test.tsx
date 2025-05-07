@@ -1,59 +1,55 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { useRouter } from "next/navigation";
 import { NavItem } from "@/types/types";
 import Header from ".";
 
-describe("Tests del componente Header", () => {
-  const handleMock = jest.fn();
+jest.mock("next/navigation");
 
-  it("Debe renderizar la cabecera correctamente", () => {
-    const links: NavItem[] = [
-      { text: "testLink-1", href: "/home" },
-      { text: "testLink-2", href: "/contact" },
-      { text: "testLink-3", href: "/about" }
-    ];
+(useRouter as jest.Mock).mockReturnValue({
+  push: jest.fn()
+});
 
-    render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
+describe("Layout Component Header test", () => {
+  const links: NavItem[] = [
+    { text: "testLink-1", href: "/home" },
+    { text: "testLink-2", href: "/contact" },
+    { text: "testLink-3", href: "/about" }
+  ];
+
+  it("Must render the Header correctly", () => {
+    render(<Header links={links} buttonText="TestButton" />);
     expect(screen.getByRole("banner")).toBeInTheDocument();
   });
 
-  it("Debe renderizar el logo de la aplicación", () => {
-    const links: NavItem[] = [
-      { text: "testLink-1", href: "/home" },
-      { text: "testLink-2", href: "/contact" },
-      { text: "testLink-3", href: "/about" }
-    ];
-
-    render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
+  it("Must render the Logo correctly", () => {
+    render(<Header links={links} buttonText="TestButton" />);
     expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  it("Debe renderizar el menu de la aplicación", () => {
-    const links: NavItem[] = [
-      { text: "testLink-1", href: "/home" },
-      { text: "testLink-2", href: "/contact" },
-      { text: "testLink-3", href: "/about" }
-    ];
+  it("Must render the NavMenu if the links are passed as props", () => {
+    render(<Header links={links} buttonText="TestButton" />);
 
-    render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
     expect(screen.getByRole("navigation")).toBeInTheDocument();
-    expect(screen.getAllByRole("link")).toHaveLength(3);
+    expect(screen.getAllByRole("listitem")).toHaveLength(links.length);
   });
 
-  it("No debe renderizar el menú de la aplicación si no se pasan", () => {
-    const links: NavItem[] = [];
-
-    render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
-    expect(screen.queryAllByRole("link")).toHaveLength(0);
+  it("Must not render the NavMenu without links", () => {
+    render(<Header buttonText="TestButton" />);
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
   });
 
-  it("Debe renderizar el botón para hacer login", () => {
-    const links: NavItem[] = [
-      { text: "testLink-1", href: "/home" },
-      { text: "testLink-2", href: "/contact" },
-      { text: "testLink-3", href: "/about" }
-    ];
-
-    render(<Header menuLinks={links} buttonText="TestButton" buttonFunc={handleMock} />);
+  it("Must render the Button correctly", () => {
+    render(<Header links={links} buttonText="TestButton" buttonRoute="/" />);
     expect(screen.getByRole("button")).toBeInTheDocument();
+  });
+
+  it("It must call a function when the button is clicked", async () => {
+    const router = useRouter();
+
+    render(<Header links={links} buttonText="TestButton" buttonRoute="/test" />);
+
+    userEvent.click(screen.getByRole("button"));
+    await waitFor(() => expect(router.push).toHaveBeenCalledWith("/"));
   });
 });

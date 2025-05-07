@@ -8,19 +8,6 @@ interface Props {
   color?: "white" | "black";
 }
 
-/**
- * Componente NavMenu
- *
- * Componente que crea un menu con un número determinado de enlaces en posición
- * vertical u horizontal.
- *
- * @param links Array de tipo NavItemData con la información de los enlaces
- * @param orientation Cadena con la orientación del menú
- * @param color
- *
- * @returns Nodo de react con el menú en formato de lista HTML.
- */
-
 const NavMenu = ({ links, orientation = "horizontal" }: Props): React.ReactNode => {
   const linkList = links.map(link => (
     <li className={orientation == "horizontal" ? style.horizontal : style.vertical} key={link.href}>

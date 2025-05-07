@@ -17,7 +17,7 @@ const linksHeader: NavItem[] = [{ text: "Inicio", href: "/" }];
 export default function LogIn() {
   return (
     <>
-      <Header menuLinks={linksHeader} buttonText="Registro" buttonRoute="/signup" />
+      <Header links={linksHeader} buttonText="Registro" buttonRoute="/signup" />
       <main className={style.main}>
         <h2 className={style.title}>Inicio de Sesión</h2>
         <LoginForm />

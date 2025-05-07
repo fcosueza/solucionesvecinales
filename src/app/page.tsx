@@ -112,7 +112,7 @@ const cardsData = [
 export default function Home() {
   return (
     <>
-      <Header menuLinks={linksHeader} buttonText="Log In" buttonRoute="/login" />
+      <Header links={linksHeader} buttonText="Log In" buttonRoute="/login" />
 
       <main className={style.main}>
         <section className={style.section}>
