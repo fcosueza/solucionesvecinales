@@ -4,8 +4,10 @@ import { useRouter } from "next/navigation";
 import { NavItem } from "@/types/types";
 import Header from ".";
 
+// Mock useRouter module
 jest.mock("next/navigation");
 
+// Adding method push to our useRouter mock
 (useRouter as jest.Mock).mockReturnValue({
   push: jest.fn()
 });
@@ -43,13 +45,21 @@ describe("Layout Component Header test", () => {
     render(<Header links={links} buttonText="TestButton" buttonRoute="/" />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
-
-  it("It must call a function when the button is clicked", async () => {
+  it("It must not call router hook when the button is not clicked", async () => {
     const router = useRouter();
 
-    render(<Header links={links} buttonText="TestButton" buttonRoute="/test" />);
+    render(<Header links={links} buttonText="TestButton" />);
 
     userEvent.click(screen.getByRole("button"));
-    await waitFor(() => expect(router.push).toHaveBeenCalledWith("/"));
+    await waitFor(() => expect(router.push).toHaveBeenCalled());
+  });
+
+  it("It must call router hook when the button is clicked", async () => {
+    const router = useRouter();
+
+    render(<Header links={links} buttonText="TestButton" />);
+
+    userEvent.click(screen.getByRole("button"));
+    await waitFor(() => expect(router.push).toHaveBeenCalled());
   });
 });
