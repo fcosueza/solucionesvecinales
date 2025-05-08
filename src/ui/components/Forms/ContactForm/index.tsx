@@ -6,19 +6,9 @@ import { FormActionState } from "@/types/types";
 import Button from "../../Button";
 import style from "./style.module.css";
 
-// Estado inicial del formulario
 const initialState: FormActionState = {
   message: ""
 };
-
-/**
- * Componente ContactForm
- *
- * Componente que genera un formulario de contacto que permite a un usuario
- * crear un mensaje en la base de datos.
- *
- * @returns Nodo de React con el formulario de contacto.
- */
 
 const ContactForm = (): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
@@ -44,6 +34,7 @@ const ContactForm = (): React.ReactNode => {
           />
           <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
         </div>
+
         <div role="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
             Correo <span title="Requerido">*</span>
@@ -60,6 +51,7 @@ const ContactForm = (): React.ReactNode => {
           />
           <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
         </div>
+
         <div role="form-control" className={style.form__control}>
           <label htmlFor="msg" className={style.form__label}>
             Mensaje (mín. 20 caracteres) <span title="Requerido">*</span>

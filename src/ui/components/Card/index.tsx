@@ -10,22 +10,6 @@ interface Props {
   cardPara: string;
 }
 
-/**
- * Componente Card
- *
- * Componente que crea un elemento de tipo "Tarjeta", representado por una imagen, un titulo debajo
- * de esta y un párrafo.
- *
- * @param imageURL Cadena con la URL de la imagen que se empleará.
- * @param imageAltText Cadena con el texto alternativo que se mostrará si no se puede mostrar la imagen.
- * @param imageWidth Número de pixels que tiene de ancho la imagen. Por defecto 100px.
- * @param imageHeight Número de pixels que tiene de alto la imagen. Por defecto 100px
- * @param cardTitle Cadena con el título de la tarjeta.
- * @param cardPara Cadena con el párrafo de la tarjeta.
- *
- * @returns Node de React consistente en una div con los diferentes elementos de la tarjeta dentro.
- */
-
 const Card = ({
   imageURL,
   imageAltText,

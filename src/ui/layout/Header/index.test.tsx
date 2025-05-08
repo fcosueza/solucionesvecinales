@@ -12,40 +12,40 @@ jest.mock("next/navigation");
   push: jest.fn()
 });
 
-describe("Layout Component Header test", () => {
+describe("Layout Component Header test suite", () => {
   const links: NavItem[] = [
     { text: "testLink-1", href: "/home" },
     { text: "testLink-2", href: "/contact" },
     { text: "testLink-3", href: "/about" }
   ];
 
-  it("Must render the Header correctly", () => {
+  it("Should render the Header correctly", () => {
     render(<Header links={links} buttonText="TestButton" />);
     expect(screen.getByRole("banner")).toBeInTheDocument();
   });
 
-  it("Must render the Logo correctly", () => {
+  it("Should render the Logo correctly", () => {
     render(<Header links={links} buttonText="TestButton" />);
     expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  it("Must render the NavMenu if the links are passed as props", () => {
+  it("Should render the NavMenu if the links are passed as props", () => {
     render(<Header links={links} buttonText="TestButton" />);
 
     expect(screen.getByRole("navigation")).toBeInTheDocument();
     expect(screen.getAllByRole("listitem")).toHaveLength(links.length);
   });
 
-  it("Must not render the NavMenu without links", () => {
+  it("Should not render the NavMenu without links", () => {
     render(<Header buttonText="TestButton" />);
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
   });
 
-  it("Must render the Button correctly", () => {
+  it("Should render the Button correctly", () => {
     render(<Header links={links} buttonText="TestButton" buttonRoute="/" />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
-  it("It must not call router hook when the button is not clicked", async () => {
+  it("Should not call router hook when the button is not clicked", async () => {
     const router = useRouter();
 
     render(<Header links={links} buttonText="TestButton" />);
@@ -54,7 +54,7 @@ describe("Layout Component Header test", () => {
     await waitFor(() => expect(router.push).toHaveBeenCalled());
   });
 
-  it("It must call router hook when the button is clicked", async () => {
+  it("Should call router hook when the button is clicked", async () => {
     const router = useRouter();
 
     render(<Header links={links} buttonText="TestButton" />);

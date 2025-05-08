@@ -11,30 +11,30 @@ jest.mock("next/navigation");
   push: jest.fn()
 });
 
-describe("Tests del componente CTA", () => {
+describe("CTA component test suite", () => {
   const title = "Test CTA Title";
   const para = "Lorem ipsum dolor site amet consecterum";
   const buttonText = "TestButton";
 
-  it("Debe renderizar correctamente el titulo del CTA", () => {
+  it("Should render the CTA title correctly", () => {
     render(<CTA title={title} para={para} buttonText={buttonText} />);
 
     expect(screen.getByRole("heading")).toBeInTheDocument();
     expect(screen.getByText(title)).toBeInTheDocument();
   });
 
-  it("Debe renderizar correctamente el parrafo del CTA", () => {
+  it("Should render the CTA paragraph correctly", () => {
     render(<CTA title={title} para={para} buttonText={buttonText} />);
 
     expect(screen.getByRole("paragraph")).toBeInTheDocument();
     expect(screen.getByText(para)).toBeInTheDocument();
   });
 
-  it("Debe renderizar correctamente el botón del CTA", () => {
+  it("Should render the CTA button correctly", () => {
     render(<CTA title={title} para={para} buttonText={buttonText} />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
-  it("It must not call router hook when the button is not clicked", async () => {
+  it("Should not call router hook when the button is not clicked", async () => {
     const router = useRouter();
 
     render(<CTA title={title} para={para} buttonText={buttonText} />);
@@ -43,7 +43,7 @@ describe("Tests del componente CTA", () => {
     await waitFor(() => expect(router.push).not.toHaveBeenCalled());
   });
 
-  it("It must call router hook when the button is clicked", async () => {
+  it("Should call router hook when the button is clicked", async () => {
     const router = useRouter();
 
     render(<CTA title={title} para={para} buttonText={buttonText} />);
