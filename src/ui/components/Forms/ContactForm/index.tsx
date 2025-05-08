@@ -28,11 +28,13 @@ const ContactForm = (): React.ReactNode => {
             type="text"
             name="name"
             id="name"
-            className={style.form__input}
+            className={`${style.form__input} ${state?.errors?.name ? style.inputError : ""}`}
             placeholder="Introduzca su nombre..."
             defaultValue={state?.errors?.name ? "" : (state.payload?.get("name") as string) || ""}
           />
-          <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
+          <p id="nameError" role="alert" aria-live="assertive" className={style.errorMsg}>
+            {state?.errors?.name && "*" + state.errors.name}
+          </p>
         </div>
 
         <div role="form-control" className={style.form__control}>
@@ -43,13 +45,14 @@ const ContactForm = (): React.ReactNode => {
             type="email"
             name="email"
             id="email"
-            className={style.form__input}
-            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+            className={`${style.form__input} ${state?.errors?.email ? style.inputError : ""}`}
             placeholder="Introduzca su correo.."
             defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
             required
           />
-          <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
+          <p id="emailError" role="alert" aria-live="assertive" className={style.errorMsg}>
+            {state?.errors?.email && "*" + state.errors.email}
+          </p>
         </div>
 
         <div role="form-control" className={style.form__control}>
@@ -60,12 +63,16 @@ const ContactForm = (): React.ReactNode => {
             name="msg"
             id="msg"
             rows={5}
-            className={style.form__textarea}
+            className={`${style.form__textarea} ${state?.errors?.msg ? style.inputError : ""}`}
             placeholder="Introduzca un mensaje..."
             defaultValue={state?.errors?.msg ? "" : (state.payload?.get("msg") as string) || ""}
+            aria-invalid="true"
+            aria-errormessage="msgError"
             required
           ></textarea>
-          <p className={style.errorMsg}>{state?.errors?.msg && "*" + state.errors.msg}</p>
+          <p id="msgError" role="alert" aria-live="assertive" className={style.errorMsg}>
+            {state?.errors?.msg && "*" + state.errors.msg}
+          </p>
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />

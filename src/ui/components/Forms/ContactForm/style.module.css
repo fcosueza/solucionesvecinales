@@ -55,3 +55,9 @@
   font-size: 1.6rem;
   color: red;
 }
+
+.inputError,
+.inputError:focus {
+  border: 0.2rem solid rgb(196, 59, 59);
+  box-shadow: 0 0 0.4rem rgb(196, 59, 59);
+}
