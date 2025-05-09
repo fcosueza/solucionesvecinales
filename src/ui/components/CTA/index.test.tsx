@@ -16,14 +16,14 @@ describe("CTA component test suite", () => {
   const para = "Lorem ipsum dolor site amet consecterum";
   const buttonText = "TestButton";
 
-  it("Should render the CTA title correctly", () => {
+  it("Should render the CTA title properly", () => {
     render(<CTA title={title} para={para} buttonText={buttonText} />);
 
     expect(screen.getByRole("heading")).toBeInTheDocument();
     expect(screen.getByText(title)).toBeInTheDocument();
   });
 
-  it("Should render the CTA paragraph correctly", () => {
+  it("Should render the CTA paragraph properly", () => {
     render(<CTA title={title} para={para} buttonText={buttonText} />);
 
     expect(screen.getByRole("paragraph")).toBeInTheDocument();

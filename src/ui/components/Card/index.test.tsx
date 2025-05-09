@@ -7,7 +7,7 @@ describe("Card component test suite...", () => {
   const title = "Lorem Ipsum Dolor";
   const para = "Lorem Ipsum Dolor sit atmet consecterum";
 
-  it("Should render a Card correctly", () => {
+  it("Should render a Card properly", () => {
     render(<Card imageURL={imageURL} imageAltText={altText} cardTitle={title} cardPara={para} />);
 
     expect(screen.getByRole("card")).toBeInTheDocument();

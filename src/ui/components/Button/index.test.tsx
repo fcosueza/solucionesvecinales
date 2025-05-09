@@ -6,7 +6,7 @@ describe("Button component test...", () => {
   const handleMock = jest.fn();
   const text = "prueba";
 
-  it("Should render a button correctly", () => {
+  it("Should render a button properly", () => {
     render(<Button text={text} />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });

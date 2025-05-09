@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import Logo from ".";
 
-describe("Tests del componente Logo...", () => {
+describe("Logo component test suite...", () => {
   const url = "assets/images/logo.svg";
 
-  it("Debe renderizar un logo de forma adecuada", () => {
+  it("Should render the logo ", () => {
     render(<Logo url={url} altText="Logotipo" />);
     expect(screen.getByRole("img")).toBeInTheDocument();
   });

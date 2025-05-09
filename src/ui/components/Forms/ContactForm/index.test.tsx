@@ -8,27 +8,27 @@ describe("ContactForm component test suite...", () => {
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
-  it("Should render form controls correctly", () => {
+  it("Should render form controls properly", () => {
     render(<ContactForm />);
 
     expect(screen.getAllByRole("form-control")).toHaveLength(3);
   });
 
-  it("Should render form control to insert name correctly", () => {
+  it("Should render form control to insert name properly", () => {
     render(<ContactForm />);
 
     expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[0]).toHaveProperty("name", "name");
   });
 
-  it("Should render form control to insert email correctly", () => {
+  it("Should render form control to insert email properly", () => {
     render(<ContactForm />);
 
     expect(screen.getByLabelText("Correo *")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[1]).toHaveProperty("name", "email");
   });
 
-  it("Should render form control to insert message correctly", () => {
+  it("Should render form control to insert message properly", () => {
     render(<ContactForm />);
 
     expect(screen.getByLabelText("Mensaje (mín. 20 caracteres) *")).toBeInTheDocument();
