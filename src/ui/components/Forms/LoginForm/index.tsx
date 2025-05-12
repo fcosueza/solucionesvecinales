@@ -6,19 +6,9 @@ import { FormActionState } from "@/types";
 import Button from "../../Button";
 import style from "./style.module.css";
 
-// Estado inicial del formulario
 const initialState: FormActionState = {
   message: ""
 };
-
-/**
- * Componente ContactForm
- *
- * Componente que genera un formulario de contacto que permite a un usuario
- * crear un mensaje en la base de datos.
- *
- * @returns Nodo de React con el formulario de login.
- */
 
 const LoginForm = (): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
