@@ -39,7 +39,6 @@ describe("CTA component test suite", () => {
 
     render(<CTA title={title} para={para} buttonText={buttonText} />);
 
-    userEvent.click(screen.getByRole("button"));
     await waitFor(() => expect(router.push).not.toHaveBeenCalled());
   });
 
@@ -48,7 +47,7 @@ describe("CTA component test suite", () => {
 
     render(<CTA title={title} para={para} buttonText={buttonText} />);
 
-    userEvent.click(screen.getByRole("button"));
+    await userEvent.click(screen.getByRole("button"));
     await waitFor(() => expect(router.push).toHaveBeenCalled());
   });
 });

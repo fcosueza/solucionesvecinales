@@ -50,8 +50,7 @@ describe("Layout Component Header test suite", () => {
 
     render(<Header links={links} buttonText="TestButton" />);
 
-    userEvent.click(screen.getByRole("button"));
-    await waitFor(() => expect(router.push).toHaveBeenCalled());
+    await waitFor(() => expect(router.push).not.toHaveBeenCalled());
   });
 
   it("Should call router hook when the button is clicked", async () => {
@@ -59,7 +58,7 @@ describe("Layout Component Header test suite", () => {
 
     render(<Header links={links} buttonText="TestButton" />);
 
-    userEvent.click(screen.getByRole("button"));
+    await userEvent.click(screen.getByRole("button"));
     await waitFor(() => expect(router.push).toHaveBeenCalled());
   });
 });

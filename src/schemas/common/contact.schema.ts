@@ -4,7 +4,10 @@ import { z } from "zod";
  * Esquema para la validación de los datos del formulario de contacto
  */
 const contactSchema = z.object({
-  name: z.string({ message: "El nombre no es válido" }).trim(),
+  name: z
+    .string({ message: "El nombre no es válido" })
+    .min(2, { message: "El nombre tiene que tener mas de un carácter" })
+    .trim(),
   email: z
     .string()
     .email({ message: "El correo no es válido" })

@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { FormActionState } from "@/types";
-import logInSchema from "@/lib/schemas/auth/login.schema";
+import logInSchema from "@/schemas/auth/login.schema";
 
 /**
  * Server Action logIn

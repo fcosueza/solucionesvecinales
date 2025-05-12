@@ -42,9 +42,9 @@ describe("ContactForm component test suite...", () => {
     const email = "testname@email.com";
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
-    const nameInput = screen.getByLabelText("Nombre");
-    const emailInput = screen.getByLabelText("Correo *");
-    const msgInput = screen.getByLabelText("Mensaje (mín. 20 caracteres) *");
+    const nameInput = screen.getAllByRole("textbox")[0];
+    const emailInput = screen.getAllByRole("textbox")[1];
+    const msgInput = screen.getAllByRole("textbox")[2];
 
     await userEvent.type(nameInput, name);
     await userEvent.type(emailInput, email);
@@ -55,23 +55,66 @@ describe("ContactForm component test suite...", () => {
     expect(msgInput).toHaveValue(msg);
   });
 
-  it("Should show and error message if the name its not correct", async () => {
+  it("Should show error msg and load error class if the name its not correct", async () => {
     render(<ContactForm />);
 
-    const name = "testname";
+    const name = "t";
     const email = "testname@email.com";
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
-    const nameInput = screen.getByLabelText("Nombre");
-    const emailInput = screen.getByLabelText("Correo *");
-    const msgInput = screen.getByLabelText("Mensaje (mín. 20 caracteres) *");
+    const nameInput = screen.getAllByRole("textbox")[0];
+    const emailInput = screen.getAllByRole("textbox")[1];
+    const msgInput = screen.getAllByRole("textbox")[2];
+    const submitBtn = screen.getByRole("button");
 
     await userEvent.type(nameInput, name);
     await userEvent.type(emailInput, email);
     await userEvent.type(msgInput, msg);
+    await userEvent.click(submitBtn);
 
-    expect(nameInput).toHaveValue(name);
-    expect(emailInput).toHaveValue(email);
-    expect(msgInput).toHaveValue(msg);
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(nameInput).toHaveClass("inputError");
+  });
+
+  it("Should show error msg and load error class if the email its not correct", async () => {
+    render(<ContactForm />);
+
+    const name = "test";
+    const email = "testname@email";
+    const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
+
+    const nameInput = screen.getAllByRole("textbox")[0];
+    const emailInput = screen.getAllByRole("textbox")[1];
+    const msgInput = screen.getAllByRole("textbox")[2];
+    const submitBtn = screen.getByRole("button");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(msgInput, msg);
+    await userEvent.click(submitBtn);
+
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(emailInput).toHaveClass("inputError");
+  });
+
+  it("Should show error msg and load error class if the msg its not correct", async () => {
+    render(<ContactForm />);
+
+    const name = "test";
+    const email = "testname@email.com";
+    const msg = "Lorem ipsum";
+
+    const nameInput = screen.getAllByRole("textbox")[0];
+    const emailInput = screen.getAllByRole("textbox")[1];
+    const msgInput = screen.getAllByRole("textbox")[2];
+    const submitBtn = screen.getByRole("button");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(msgInput, msg);
+    await userEvent.click(submitBtn);
+
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(msgInput).toHaveClass("inputError");
   });
 });

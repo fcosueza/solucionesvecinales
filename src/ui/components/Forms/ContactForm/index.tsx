@@ -19,7 +19,6 @@ const ContactForm = (): React.ReactNode => {
   return (
     <>
       <form action={formAction} id="contactForm" role="form" className={style.form}>
-        <p className={style.form__msg} aria-live="polite"></p>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="name" className={style.form__label}>
             Nombre
@@ -32,9 +31,11 @@ const ContactForm = (): React.ReactNode => {
             placeholder="Introduzca su nombre..."
             defaultValue={state?.errors?.name ? "" : (state.payload?.get("name") as string) || ""}
           />
-          <p id="nameError" role="alert" aria-live="assertive" className={style.errorMsg}>
-            {state?.errors?.name && "*" + state.errors.name}
-          </p>
+          {state?.errors?.name && (
+            <p role="alert" aria-live="assertive" className={style.errorMsg}>
+              {"*" + state.errors.name}
+            </p>
+          )}
         </div>
 
         <div role="form-control" className={style.form__control}>
@@ -50,9 +51,11 @@ const ContactForm = (): React.ReactNode => {
             defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
             required
           />
-          <p id="emailError" role="alert" aria-live="assertive" className={style.errorMsg}>
-            {state?.errors?.email && "*" + state.errors.email}
-          </p>
+          {state?.errors?.email && (
+            <p role="alert" aria-live="assertive" className={style.errorMsg}>
+              {"*" + state.errors.email}
+            </p>
+          )}
         </div>
 
         <div role="form-control" className={style.form__control}>
@@ -70,9 +73,11 @@ const ContactForm = (): React.ReactNode => {
             aria-errormessage="msgError"
             required
           ></textarea>
-          <p id="msgError" role="alert" aria-live="assertive" className={style.errorMsg}>
-            {state?.errors?.msg && "*" + state.errors.msg}
-          </p>
+          {state?.errors?.msg && (
+            <p role="alert" aria-live="assertive" className={style.errorMsg}>
+              {"*" + state.errors.msg}
+            </p>
+          )}
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />
