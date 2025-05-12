@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { SocialIcon } from "@/types/types";
+import { SocialIcon } from "@/types";
 import Social from ".";
 
 describe("Tests del componente Social...", () => {

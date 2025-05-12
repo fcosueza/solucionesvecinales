@@ -1,7 +1,7 @@
 import NavMenu from "@/ui/components/NavMenu";
 import Logo from "@/ui/components/Logo";
 import Social from "@/ui/components/Social";
-import { NavItem, SocialIcon } from "@/types/types";
+import { NavItem, SocialIcon } from "@/types";
 import style from "./style.module.css";
 
 interface Props {

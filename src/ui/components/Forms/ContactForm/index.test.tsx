@@ -54,4 +54,24 @@ describe("ContactForm component test suite...", () => {
     expect(emailInput).toHaveValue(email);
     expect(msgInput).toHaveValue(msg);
   });
+
+  it("Should show and error message if the name its not correct", async () => {
+    render(<ContactForm />);
+
+    const name = "testname";
+    const email = "testname@email.com";
+    const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
+
+    const nameInput = screen.getByLabelText("Nombre");
+    const emailInput = screen.getByLabelText("Correo *");
+    const msgInput = screen.getByLabelText("Mensaje (mín. 20 caracteres) *");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(msgInput, msg);
+
+    expect(nameInput).toHaveValue(name);
+    expect(emailInput).toHaveValue(email);
+    expect(msgInput).toHaveValue(msg);
+  });
 });

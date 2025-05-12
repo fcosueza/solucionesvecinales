@@ -1,8 +1,8 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { FormActionState } from "@/types/types";
-import contactSchema from "@/schemas/common/contact.schema";
+import { FormActionState } from "@/types";
+import contactSchema from "@/lib/schemas/common/contact.schema";
 
 /**
  * Server Action addContactMsg

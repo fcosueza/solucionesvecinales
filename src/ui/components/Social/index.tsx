@@ -1,4 +1,4 @@
-import { SocialIcon } from "@/types/types";
+import { SocialIcon } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 import style from "./style.module.css";

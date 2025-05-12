@@ -2,7 +2,7 @@
 
 import addContactMsg from "@/actions/addContactMsg";
 import { useActionState } from "react";
-import { FormActionState } from "@/types/types";
+import { FormActionState } from "@/types";
 import Button from "../../Button";
 import style from "./style.module.css";
 

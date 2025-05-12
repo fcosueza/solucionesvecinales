@@ -2,7 +2,7 @@ import Header from "@/ui/layout/Header";
 import Footer from "@/ui/layout/Footer";
 import SignUpForm from "@/ui/components/Forms/SignUpForm";
 import Link from "next/link";
-import { NavItem } from "@/types/types";
+import { NavItem } from "@/types";
 import style from "./style.module.css";
 
 const linksHeader: NavItem[] = [{ text: "Inicio", href: "/" }];

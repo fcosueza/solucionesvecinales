@@ -5,8 +5,8 @@ import Card from "@/ui/components/Card";
 import Gallery from "@/ui/layout/Gallery";
 import ContactForm from "@/ui/components/Forms/ContactForm";
 import Image from "next/image";
-import { NavItem } from "@/types/types";
-import { SocialIcon } from "@/types/types";
+import { NavItem } from "@/types";
+import { SocialIcon } from "@/types";
 import style from "./style.module.css";
 
 // Titulo y párrafo para el CTA

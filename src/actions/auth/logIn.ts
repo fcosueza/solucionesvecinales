@@ -1,8 +1,8 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { FormActionState } from "@/types/types";
-import logInSchema from "@/schemas/auth/login.schema";
+import { FormActionState } from "@/types";
+import logInSchema from "@/lib/schemas/auth/login.schema";
 
 /**
  * Server Action logIn

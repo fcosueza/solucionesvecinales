@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
-import { NavItem } from "@/types/types";
+import { NavItem } from "@/types";
 import Header from ".";
 
 // Mock useRouter module

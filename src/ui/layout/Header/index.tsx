@@ -4,7 +4,7 @@ import Logo from "@/ui/components/Logo";
 import NavMenu from "@/ui/components/NavMenu";
 import Button from "@/ui/components/Button";
 import { useRouter } from "next/navigation";
-import { NavItem } from "@/types/types";
+import { NavItem } from "@/types";
 import style from "./style.module.css";
 
 interface Props {

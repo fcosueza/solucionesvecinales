@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { NavItem, SocialIcon } from "@/types/types";
+import { NavItem, SocialIcon } from "@/types";
 import Footer from ".";
 
 describe("Tests del componente Footer...", () => {

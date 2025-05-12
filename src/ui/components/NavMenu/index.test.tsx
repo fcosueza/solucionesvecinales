@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import NavMenu from ".";
-import { NavItem } from "@/types/types";
+import { NavItem } from "@/types";
 
 describe("Tests del componente NavMenu...", () => {
   it("Debe renderizar el elemento de navegación", () => {

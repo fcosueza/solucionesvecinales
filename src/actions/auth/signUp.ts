@@ -1,8 +1,8 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { FormActionState } from "@/types/types";
-import signUpSchema from "@/schemas/auth/signup.schema";
+import { FormActionState } from "@/types";
+import signUpSchema from "@/lib/schemas/auth/signup.schema";
 import { redirect } from "next/navigation";
 
 const signUp = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
