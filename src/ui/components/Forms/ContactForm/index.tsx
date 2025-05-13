@@ -47,6 +47,7 @@ const ContactForm = (): React.ReactNode => {
             name="email"
             id="email"
             className={`${style.form__input} ${state?.errors?.email ? style.inputError : ""}`}
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             placeholder="Introduzca su correo.."
             defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
             required

@@ -19,7 +19,6 @@ const LoginForm = (): React.ReactNode => {
   return (
     <>
       <form action={formAction} id="loginForm" className={style.form} aria-label="login-form">
-        <p>{state?.message}</p>
         <div aria-label="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
             Correo

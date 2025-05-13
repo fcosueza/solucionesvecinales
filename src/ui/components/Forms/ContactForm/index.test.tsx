@@ -80,7 +80,7 @@ describe("ContactForm component test suite...", () => {
     render(<ContactForm />);
 
     const name = "test";
-    const email = "testname@email";
+    const email = "testname@email.c";
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
     const nameInput = screen.getAllByRole("textbox")[0];

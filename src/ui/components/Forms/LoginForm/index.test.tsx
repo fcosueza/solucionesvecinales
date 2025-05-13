@@ -2,31 +2,31 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LoginForm from ".";
 
-describe("Test para el componente LoginForm", () => {
+describe("LoginForm component test suite...", () => {
   it("Debe renderizar el formulario de forma correcta.", () => {
     render(<LoginForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
-  it("Debe renderizar los controles del formulario", () => {
+  it("Should render the form correctly", () => {
     render(<LoginForm />);
 
     expect(screen.getAllByLabelText("form-control")).toHaveLength(2);
   });
 
-  it("Debe renderizar los controles para introducir el correo", () => {
+  it("Should render the controls to insert email", () => {
     render(<LoginForm />);
 
     expect(screen.getByLabelText("Correo")).toBeInTheDocument();
   });
 
-  it("Debe renderizar los controles para introducir la contraseña", () => {
+  it("Should render the controls to insert password", () => {
     render(<LoginForm />);
 
     expect(screen.getByLabelText("Contraseña")).toBeInTheDocument();
   });
 
-  it("Debe mostrar adecuadamente en los campos inputs lo que el usuario escribe", async () => {
+  it("Should show in every field what the user is writing", async () => {
     render(<LoginForm />);
 
     const password = "asssssssasasdsdasdasdasas";
