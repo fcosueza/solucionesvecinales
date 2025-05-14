@@ -3,7 +3,7 @@
 import signUp from "@/actions/auth/signUp";
 import { useActionState } from "react";
 import { FormActionState } from "@/types";
-import Button from "../../Button";
+import Button from "../../../components/Button";
 import style from "./style.module.css";
 
 const initialState = {
