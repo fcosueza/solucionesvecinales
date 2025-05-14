@@ -3,6 +3,7 @@
 import addContactMsg from "@/actions/addContactMsg";
 import { useActionState } from "react";
 import { FormActionState } from "@/types";
+import FormError from "@/ui/components/Form/FormError";
 import Button from "../../../components/Button";
 import style from "./style.module.css";
 
@@ -31,11 +32,7 @@ const ContactForm = (): React.ReactNode => {
             placeholder="Introduzca su nombre..."
             defaultValue={state?.errors?.name ? "" : (state.payload?.get("name") as string) || ""}
           />
-          {state?.errors?.name && (
-            <p role="alert" aria-live="assertive" className={style.errorMsg}>
-              {"*" + state.errors.name}
-            </p>
-          )}
+          {state?.errors?.name && <FormError message={state.errors.name} />}
         </div>
 
         <div role="form-control" className={style.form__control}>
@@ -52,11 +49,7 @@ const ContactForm = (): React.ReactNode => {
             defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
             required
           />
-          {state?.errors?.email && (
-            <p role="alert" aria-live="assertive" className={style.errorMsg}>
-              {"*" + state.errors.email}
-            </p>
-          )}
+          {state?.errors?.email && <FormError message={state.errors.email} />}
         </div>
 
         <div role="form-control" className={style.form__control}>
@@ -74,11 +67,7 @@ const ContactForm = (): React.ReactNode => {
             aria-errormessage="msgError"
             required
           ></textarea>
-          {state?.errors?.msg && (
-            <p role="alert" aria-live="assertive" className={style.errorMsg}>
-              {"*" + state.errors.msg}
-            </p>
-          )}
+          {state?.errors?.msg && <FormError message={state.errors.msg} />}
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />

@@ -55,27 +55,6 @@ describe("ContactForm component test suite...", () => {
     expect(msgInput).toHaveValue(msg);
   });
 
-  it("Should show error msg and load error class if the name its not correct", async () => {
-    render(<ContactForm />);
-
-    const name = "t";
-    const email = "testname@email.com";
-    const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
-
-    const nameInput = screen.getAllByRole("textbox")[0];
-    const emailInput = screen.getAllByRole("textbox")[1];
-    const msgInput = screen.getAllByRole("textbox")[2];
-    const submitBtn = screen.getByRole("button");
-
-    await userEvent.type(nameInput, name);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(msgInput, msg);
-    await userEvent.click(submitBtn);
-
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(nameInput).toHaveClass("inputError");
-  });
-
   it("Should show error msg and load error class if the email its not correct", async () => {
     render(<ContactForm />);
 

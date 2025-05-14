@@ -30,7 +30,7 @@ export interface SocialIcon {
  */
 export interface FormActionState {
   message: string;
-  errors?: Record<string, string | string[]>;
+  errors?: Record<string, string>;
   payload?: FormData;
 }
 
