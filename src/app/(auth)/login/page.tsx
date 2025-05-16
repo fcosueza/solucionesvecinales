@@ -1,6 +1,6 @@
-import Header from "@/ui/layout/Header";
-import Footer from "@/ui/layout/Footer";
-import LoginForm from "@/ui/layout/Form/LoginForm";
+import Header from "@/ui/layouts/Header";
+import Footer from "@/ui/layouts/Footer";
+import LoginForm from "@/ui/layouts/Form/LoginForm";
 import Link from "next/link";
 import { NavItem } from "@/types";
 import style from "./style.module.css";
