@@ -3,7 +3,7 @@ import CTA from "@/ui/components/CTA";
 import Footer from "@/ui/layouts/Footer";
 import Card from "@/ui/components/Card";
 import Gallery from "@/ui/layouts/Gallery";
-import ContactForm from "@/ui/layouts/Form/ContactForm";
+import ContactForm from "@/ui/layouts/Forms/ContactForm";
 import Image from "next/image";
 import { NavItem } from "@/types";
 import { SocialIcon } from "@/types";

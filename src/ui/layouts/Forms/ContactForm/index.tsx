@@ -3,7 +3,7 @@
 import addContactMsg from "@/actions/addContactMsg";
 import { useActionState } from "react";
 import { FormActionState } from "@/types";
-import FormError from "@/ui/components/Form/FormError";
+import FormError from "@/ui/components/FormFields/FormError";
 import Button from "../../../components/Button";
 import style from "./style.module.css";
 
