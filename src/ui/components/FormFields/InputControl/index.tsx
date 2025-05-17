@@ -1,2 +1,2 @@
-const InputFormControl = () => <h1>Hey!!</h1>;
-export default InputFormControl;
+const InputControl = () => <h1>Hey!!</h1>;
+export default InputControl;

@@ -37,7 +37,7 @@ const ContactForm = (): React.ReactNode => {
 
         <div role="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
-            Correo <span title="Requerido">*</span>
+            Correo
           </label>
           <input
             type="email"
@@ -54,7 +54,7 @@ const ContactForm = (): React.ReactNode => {
 
         <div role="form-control" className={style.form__control}>
           <label htmlFor="msg" className={style.form__label}>
-            Mensaje (mín. 20 caracteres) <span title="Requerido">*</span>
+            Mensaje (mín. 20 caracteres)
           </label>
           <textarea
             name="msg"

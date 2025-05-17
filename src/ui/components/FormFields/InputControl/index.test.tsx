@@ -1,42 +1,42 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import InputFormControl from ".";
+import InputControl from ".";
 
 describe("InputFormControl component test suite...", () => {
   it("Should render the control correctly", () => {
-    render(<InputFormControl />);
+    render(<InputControl />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
   it("Should render form controls properly", () => {
-    render(<InputFormControl />);
+    render(<InputControl />);
 
     expect(screen.getAllByRole("form-control")).toHaveLength(3);
   });
 
   it("Should render form control to insert name properly", () => {
-    render(<InputFormControl />);
+    render(<InputControl />);
 
     expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[0]).toHaveProperty("name", "name");
   });
 
   it("Should render form control to insert email properly", () => {
-    render(<InputFormControl />);
+    render(<InputControl />);
 
-    expect(screen.getByLabelText("Correo *")).toBeInTheDocument();
+    expect(screen.getByLabelText("Correo")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[1]).toHaveProperty("name", "email");
   });
 
   it("Should render form control to insert message properly", () => {
-    render(<InputFormControl />);
+    render(<InputControl />);
 
-    expect(screen.getByLabelText("Mensaje (mín. 20 caracteres) *")).toBeInTheDocument();
+    expect(screen.getByLabelText("Mensaje (mín. 20 caracteres)")).toBeInTheDocument();
     expect(screen.getAllByRole("textbox")[2]).toHaveProperty("name", "msg");
   });
 
   it("Should show in input fields what the user is writing", async () => {
-    render(<InputFormControl />);
+    render(<InputControl />);
 
     const name = "testname";
     const email = "testname@email.com";
