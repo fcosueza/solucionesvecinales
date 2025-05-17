@@ -7,13 +7,6 @@ import style from "./style.module.css";
 
 const linksHeader: NavItem[] = [{ text: "Inicio", href: "/" }];
 
-/**
- * Página LogIn
- *
- * Página de la aplicación para que los usuarios puedan hacer login.
- *
- * @returns Nodo de React conteniendo la página de login con el formulario adecuado.
- */
 export default function LogIn() {
   return (
     <>

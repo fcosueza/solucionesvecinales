@@ -101,14 +101,6 @@ const cardsData = [
   }
 ];
 
-/**
- * Página Home
- *
- * Página principal de la aplicación, compuesta de diferentes componentes como un Header,
- * secciones, footer, etc.
- *
- * @returns Nodo de React conteniendo la página principal.
- */
 export default function Home() {
   return (
     <>

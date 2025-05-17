@@ -1,8 +1,5 @@
 import { z } from "zod";
 
-/**
- * Esquema para la validación de los datos del formulario de acceso
- */
 const logInSchema = z.object({
   email: z
     .string()

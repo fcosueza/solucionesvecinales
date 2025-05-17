@@ -7,13 +7,6 @@ import style from "./style.module.css";
 
 const linksHeader: NavItem[] = [{ text: "Inicio", href: "/" }];
 
-/**
- * Página Register
- *
- * Página de la aplicación que permite a un usuarios registrarse si no se ha registrado aún.
- *
- * @returns Nodo de React conteniendo la página de registro con el formulario adecuado.
- */
 export default function Register() {
   return (
     <>

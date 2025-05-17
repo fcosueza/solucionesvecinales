@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { UserRole } from "@/types";
 
-/**
- * Esquema para la validación de los datos del formulario de registro
- */
 const signUpSchema = z
   .object({
     email: z

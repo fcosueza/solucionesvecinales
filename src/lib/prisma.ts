@@ -1,8 +1,3 @@
-/**
- * Archivo que crea el cliente de Prisma y lo liga al objeto global, para
- * que solo se cree una instancia del cliente en la aplicación.
- */
-
 import { PrismaClient } from "@/generated/prisma";
 import { withAccelerate } from "@prisma/extension-accelerate";
 
