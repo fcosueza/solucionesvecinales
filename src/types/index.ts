@@ -13,7 +13,7 @@ export interface SocialIcon {
 
 export interface FormActionState {
   message: string;
-  errors?: Record<string, string>;
+  errors?: Record<string, string | string[]>;
   payload?: FormData;
 }
 
