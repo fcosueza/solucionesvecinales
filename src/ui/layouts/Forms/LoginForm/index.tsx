@@ -1,6 +1,7 @@
 "use client";
 
 import logIn from "@/actions/auth/logIn";
+import FormError from "@/ui/components/FormFields/FormError";
 import { useActionState } from "react";
 import { FormActionState } from "@/types";
 import Button from "../../../components/Button";
@@ -27,13 +28,13 @@ const LoginForm = (): React.ReactNode => {
             type="email"
             name="email"
             id="email"
-            className={style.form__input}
+            className={`${style.form__input} ${state?.errors?.email ? style.inputError : ""}`}
             pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             placeholder="Introduzca su correo.."
             defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
             required
           />
-          <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
+          {state?.errors?.email && <FormError message={state.errors.email} />}
         </div>
         <div aria-label="form-control" className={style.form__control}>
           <label htmlFor="password" className={style.form__label}>
@@ -43,7 +44,7 @@ const LoginForm = (): React.ReactNode => {
             type="password"
             name="password"
             id="password"
-            className={style.form__input}
+            className={`${style.form__input} ${state?.errors?.password ? style.inputError : ""}`}
             min="15"
             placeholder="Introduzca su contraseña..."
             defaultValue={
@@ -51,7 +52,7 @@ const LoginForm = (): React.ReactNode => {
             }
             required
           />
-          <p className={style.errorMsg}>{state?.errors?.password && "*" + state.errors.password}</p>
+          {state?.errors?.password && <FormError message={state.errors.password} />}
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />

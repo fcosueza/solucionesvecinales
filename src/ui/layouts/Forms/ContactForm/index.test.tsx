@@ -74,6 +74,7 @@ describe("ContactForm component test suite...", () => {
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
     expect(nameInput).toHaveClass("inputError");
+    expect(nameInput).toHaveValue("");
   });
 
   it("Should show error msg and load error class if the email its not correct", async () => {
@@ -95,6 +96,7 @@ describe("ContactForm component test suite...", () => {
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
     expect(emailInput).toHaveClass("inputError");
+    expect(emailInput).toHaveValue("");
   });
 
   it("Should show error msg and load error class if the msg its not correct", async () => {
@@ -116,5 +118,6 @@ describe("ContactForm component test suite...", () => {
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
     expect(msgInput).toHaveClass("inputError");
+    expect(msgInput).toHaveValue("");
   });
 });
