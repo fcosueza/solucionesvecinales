@@ -4,18 +4,10 @@ import prisma from "@/lib/prisma";
 import { FormActionState } from "@/types";
 import logInSchema from "@/schemas/auth/login.schema";
 
-/**
- * Server Action logIn
- *
- * Función de tipo Server Action que se encarga de comprobar los credenciales introducidos por un usuario.
- *
- * @param prevState Estado previo del componente pasado como parámetro.
- * @param formData Parámetro de tipo FormData con todos los datos del formulario que lo envía.
- *
- * @returns Promesa con la resolución de la creación en la base de datos.
- */
-
-const logIn = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+const logInAction = async (
+  prevState: FormActionState,
+  formData: FormData
+): Promise<FormActionState> => {
   const fieldData = Object.fromEntries(formData);
   const validatedData = logInSchema.safeParse(fieldData);
 
@@ -61,4 +53,4 @@ const logIn = async (prevState: FormActionState, formData: FormData): Promise<Fo
   };
 };
 
-export default logIn;
+export default logInAction;

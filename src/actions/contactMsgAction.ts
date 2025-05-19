@@ -4,18 +4,7 @@ import prisma from "@/lib/prisma";
 import { FormActionState } from "@/types";
 import contactSchema from "@/schemas/common/contact.schema";
 
-/**
- * Server Action addContactMsg
- *
- * Función de tipo Server Action que se encarga de crear un nuevo mensaje de contacto en el servidor.
- *
- * @param prevState Estado previo del componente pasado como parámetro.
- * @param formData Parámetro de tipo FormData con todos los datos del formulario que lo envía.
- *
- * @returns Promesa con la resolución de la creación en la base de datos.
- */
-
-const addContactMsg = async (
+const contactMsgAction = async (
   prevState: FormActionState,
   formData: FormData
 ): Promise<FormActionState> => {
@@ -49,8 +38,9 @@ const addContactMsg = async (
   }
 
   return {
-    message: "Success: Mensaje creado correctamente."
+    message: "Success: Mensaje creado correctamente.",
+    payload: formData
   };
 };
 
-export default addContactMsg;
+export default contactMsgAction;

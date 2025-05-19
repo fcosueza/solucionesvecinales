@@ -5,7 +5,10 @@ import { FormActionState } from "@/types";
 import signUpSchema from "@/schemas/auth/signup.schema";
 import { redirect } from "next/navigation";
 
-const signUp = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+const signUpAction = async (
+  prevState: FormActionState,
+  formData: FormData
+): Promise<FormActionState> => {
   const fieldData = Object.fromEntries(formData);
   const validatedData = signUpSchema.safeParse(fieldData);
 
@@ -62,4 +65,4 @@ const signUp = async (prevState: FormActionState, formData: FormData): Promise<F
   redirect("/login");
 };
 
-export default signUp;
+export default signUpAction;

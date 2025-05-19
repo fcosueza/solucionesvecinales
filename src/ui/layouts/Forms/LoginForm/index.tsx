@@ -1,6 +1,6 @@
 "use client";
 
-import logIn from "@/actions/auth/logIn";
+import logInAction from "@/actions/auth/logInAction";
 import FormError from "@/ui/components/FormFields/FormError";
 import { useActionState } from "react";
 import { FormActionState } from "@/types";
@@ -13,7 +13,7 @@ const initialState: FormActionState = {
 
 const LoginForm = (): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
-    logIn,
+    logInAction,
     initialState
   );
 

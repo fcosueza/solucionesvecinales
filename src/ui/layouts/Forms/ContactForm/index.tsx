@@ -1,6 +1,6 @@
 "use client";
 
-import addContactMsg from "@/actions/addContactMsg";
+import contactMsgAction from "@/actions/contactMsgAction";
 import { useActionState } from "react";
 import { FormActionState } from "@/types";
 import FormError from "@/ui/components/FormFields/FormError";
@@ -13,7 +13,7 @@ const initialState: FormActionState = {
 
 const ContactForm = (): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
-    addContactMsg,
+    contactMsgAction,
     initialState
   );
 

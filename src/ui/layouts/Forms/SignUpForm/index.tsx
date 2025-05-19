@@ -1,6 +1,6 @@
 "use client";
 
-import signUp from "@/actions/auth/signUp";
+import signUpAction from "@/actions/auth/signUpAction";
 import { useActionState } from "react";
 import { FormActionState } from "@/types";
 import Button from "../../../components/Button";
@@ -12,7 +12,7 @@ const initialState = {
 
 const SignUpForm = (): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
-    signUp,
+    signUpAction,
     initialState
   );
 
