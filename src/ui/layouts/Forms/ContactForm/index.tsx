@@ -63,8 +63,6 @@ const ContactForm = (): React.ReactNode => {
             className={`${style.form__textarea} ${state?.errors?.msg ? style.inputError : ""}`}
             placeholder="Introduzca un mensaje..."
             defaultValue={state?.errors?.msg ? "" : (state.payload?.get("msg") as string) || ""}
-            aria-invalid="true"
-            aria-errormessage="msgError"
             required
           ></textarea>
           {state?.errors?.msg && <FormError message={state.errors.msg} />}

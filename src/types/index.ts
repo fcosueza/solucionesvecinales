@@ -22,3 +22,16 @@ export enum UserRole {
   admin = "admin",
   webAdmin = "webAdmin"
 }
+
+export enum InputType {
+  text = "text",
+  password = "password",
+  number = "number",
+  date = "date",
+  email = "email",
+  hidden = "hidden",
+  range = "range",
+  tel = "tel",
+  file = "file",
+  textarea = "textarea"
+}
