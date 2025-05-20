@@ -18,18 +18,19 @@ const InputControl = ({
   pattern,
   textAreaRows,
   errorMsg,
-  ...commonAttr
+  labelText,
+  ...rest
 }: Props): React.ReactNode => {
   const inputElement: React.ReactNode =
-    commonAttr.type == InputType.textarea ? (
-      <textarea {...commonAttr} rows={textAreaRows}></textarea>
+    rest.type == InputType.textarea ? (
+      <textarea {...rest} rows={textAreaRows}></textarea>
     ) : (
-      <input {...commonAttr} pattern={pattern}></input>
+      <input {...rest} pattern={pattern}></input>
     );
 
   return (
     <div>
-      <label htmlFor={commonAttr.id}>{commonAttr.labelText}</label>
+      <label htmlFor={rest.id}>{labelText}</label>
       {inputElement}
       {errorMsg ? <FormError message={errorMsg} /> : ""}
     </div>
