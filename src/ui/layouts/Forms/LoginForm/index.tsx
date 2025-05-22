@@ -1,7 +1,7 @@
 "use client";
 
 import logInAction from "@/actions/auth/logInAction";
-import FormError from "@/ui/components/FormFields/FormError";
+import FormError from "@/ui/components/FormComp/FormError";
 import { useActionState } from "react";
 import { FormActionState } from "@/types";
 import Button from "../../../components/Button";

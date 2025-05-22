@@ -1,3 +1,8 @@
+export enum UserRole {
+  tenant = "tenant",
+  admin = "admin",
+  webAdmin = "webAdmin"
+}
 export interface NavItem {
   text: string;
   href: string;
@@ -17,12 +22,6 @@ export interface FormActionState {
   payload?: FormData;
 }
 
-export enum UserRole {
-  tenant = "tenant",
-  admin = "admin",
-  webAdmin = "webAdmin"
-}
-
 export enum InputType {
   text = "text",
   password = "password",
@@ -36,12 +35,17 @@ export enum InputType {
   textarea = "textarea"
 }
 
+export enum RadioType {
+  radio = "radio",
+  checkbox = "checkbox"
+}
+
 export interface FormFieldAttrs {
   id: string;
   name?: string;
-  type: InputType;
   labelText: string;
   placeHolder?: string;
   value?: string | number | undefined;
   required?: boolean;
+  errorMsg?: string;
 }

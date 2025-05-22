@@ -1,26 +1,33 @@
 import { FormFieldAttrs } from "@/types";
 import { InputType } from "@/types";
-import FormError from "../FormError";
+import FormError from "../../FormError";
 import style from "./style.module.css";
 
 interface Props extends FormFieldAttrs {
+  type: InputType;
   pattern?: string | undefined;
   rowSize?: number;
-  errorMsg?: string;
 }
 
-const FormInput = ({ rowSize, pattern, errorMsg, labelText, ...rest }: Props): React.ReactNode => {
-  const classes = errorMsg ? style.inputError : style.input;
+const FormInput = ({
+  type,
+  pattern,
+  rowSize,
+  labelText,
+  errorMsg,
+  ...rest
+}: Props): React.ReactNode => {
+  const inputClasses = errorMsg ? style.inputError : style.input;
 
   return (
     <div className={style.control} role="group">
       <label className={style.label} htmlFor={rest.id}>
         {labelText}
       </label>
-      {rest.type == InputType.textarea ? (
-        <textarea className={classes} {...rest} rows={rowSize}></textarea>
+      {type == InputType.textarea ? (
+        <textarea className={inputClasses} {...rest} rows={rowSize}></textarea>
       ) : (
-        <input className={classes} {...rest} pattern={pattern}></input>
+        <input className={inputClasses} {...rest} pattern={pattern}></input>
       )}
       {errorMsg ? <FormError message={errorMsg} /> : ""}
     </div>
