@@ -35,3 +35,13 @@ export enum InputType {
   file = "file",
   textarea = "textarea"
 }
+
+export interface FormFieldAttrs {
+  id: string;
+  name?: string;
+  type: InputType;
+  labelText: string;
+  placeHolder?: string;
+  value?: string | number | undefined;
+  required?: boolean;
+}
