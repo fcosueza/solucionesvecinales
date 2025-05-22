@@ -43,9 +43,7 @@ export enum RadioType {
 export interface FormFieldAttrs {
   id: string;
   name?: string;
-  labelText: string;
-  placeHolder?: string;
+  type: InputType | RadioType;
   value?: string | number | undefined;
   required?: boolean;
-  errorMsg?: string;
 }
