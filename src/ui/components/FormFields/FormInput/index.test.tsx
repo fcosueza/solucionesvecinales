@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import InputControl from ".";
+import FormInput from ".";
 
 describe("InputFormControl component test suite...", () => {
   it("Should render the control correctly", () => {
-    render(<InputControl />);
+    render(<FormInput />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
   it("Should render form controls properly", () => {
-    render(<InputControl />);
+    render(<FormInput />);
 
     expect(screen.getAllByRole("form-control")).toHaveLength(3);
   });
