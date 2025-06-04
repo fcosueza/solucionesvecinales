@@ -11,7 +11,7 @@ describe("FormInput component test suite...", () => {
   };
 
   it("Should render by default a label and an input correctly ", () => {
-    render(<FormInput />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
 
     expect(screen.getByRole("label")).toBeInTheDocument();
     expect(screen.getByRole("textbox")).toBeInTheDocument();
@@ -24,15 +24,26 @@ describe("FormInput component test suite...", () => {
   it("Should render the input with the proper field attributes", () => {
     render(<FormInput labelText={labelTxT} attr={attr} />);
 
+    const input = screen.getByRole("textbox");
+
     expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[0]).toHaveProperty("name", "name");
+    expect(input).toHaveProperty("id", attr.id);
+    expect(input).toHaveProperty("type", attr.type);
   });
 
-  it("Should render form control to insert email properly", () => {
+  it("Should render input with the specified name if not included", () => {
+    const name = "TestName";
+    attr.name = name;
+
     render(<FormInput labelText={labelTxT} attr={attr} />);
 
-    expect(screen.getByLabelText("Correo")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[1]).toHaveProperty("name", "email");
+    expect(screen.getByLabelText(labelTxT)).toHaveProperty("name", name);
+  });
+
+  it("Should render input with a default name if not included", () => {
+    render(<FormInput labelText={labelTxT} attr={attr} />);
+
+    expect(screen.getByLabelText(labelTxT)).toHaveProperty("name", attr.id);
   });
 
   it("Should render form control to insert message properly", () => {
