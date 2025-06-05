@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputType, FormFieldAttrs } from "@/types";
 import FormInput from ".";
+import { use } from "react";
 
 describe("FormInput component test suite...", () => {
   const labelTxT: string = "Testing Label";
@@ -26,7 +27,6 @@ describe("FormInput component test suite...", () => {
 
     const input = screen.getByRole("textbox");
 
-    expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
     expect(input).toHaveProperty("id", attr.id);
     expect(input).toHaveProperty("type", attr.type);
   });
@@ -37,39 +37,46 @@ describe("FormInput component test suite...", () => {
 
     render(<FormInput labelText={labelTxT} attr={attr} />);
 
-    expect(screen.getByLabelText(labelTxT)).toHaveProperty("name", name);
+    expect(screen.getByRole("textbox")).toHaveProperty("name", name);
   });
 
-  it("Should render input with a default name if not included", () => {
+  it("Should render input with a default name if not specified", () => {
     render(<FormInput labelText={labelTxT} attr={attr} />);
 
-    expect(screen.getByLabelText(labelTxT)).toHaveProperty("name", attr.id);
+    expect(screen.getByRole("textbox")).toHaveProperty("name", attr.id);
   });
 
-  it("Should render form control to insert message properly", () => {
-    render(<FormInput labelText={labelTxT} attr={attr} />);
+  it("Should render a textarea with the default rows", () => {
+    const defaultRows = 5;
 
-    expect(screen.getByLabelText("Mensaje (mín. 20 caracteres)")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[2]).toHaveProperty("name", "msg");
+    render(<FormInput labelText={labelTxT} attr={attr} />);
+    expect(screen.getByRole("textbox")).toHaveProperty("rows", defaultRows);
   });
 
-  it("Should show in input fields what the user is writing", async () => {
+  it("Should render a textarea with the specified rows", () => {
+    const rows = 5;
+
+    render(<FormInput labelText={labelTxT} attr={attr} rows={rows} />);
+    expect(screen.getByRole("textbox")).toHaveProperty("rows", rows);
+  });
+
+  it("Should show in input field what the user is writing", async () => {
     render(<FormInput labelText={labelTxT} attr={attr} />);
 
-    const name = "testname";
-    const email = "testname@email.com";
-    const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
+    const userInput = "testname";
+    const nameInput = screen.getByRole("textbox");
 
-    const nameInput = screen.getAllByRole("textbox")[0];
-    const emailInput = screen.getAllByRole("textbox")[1];
-    const msgInput = screen.getAllByRole("textbox")[2];
+    await userEvent.type(nameInput, userInput);
 
-    await userEvent.type(nameInput, name);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(msgInput, msg);
+    expect(nameInput).toHaveValue(userInput);
+  });
 
-    expect(nameInput).toHaveValue(name);
-    expect(emailInput).toHaveValue(email);
-    expect(msgInput).toHaveValue(msg);
+  it("Should show an error msg if there is one", async () => {
+    const errorMsg = "testerror";
+    const errorElement = screen.getByRole("alert");
+
+    render(<FormInput labelText={labelTxT} attr={attr} errorMsg={errorMsg} />);
+    expect(errorElement).toBeInTheDocument();
+    expect(errorElement).toHaveValue(errorMsg);
   });
 });
