@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputType, FormFieldAttrs } from "@/types";
 import FormInput from ".";
-import { use } from "react";
 
 describe("FormInput component test suite...", () => {
   const labelTxT: string = "Testing Label";
