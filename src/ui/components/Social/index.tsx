@@ -22,7 +22,7 @@ const Social = ({ icons }: Props): React.ReactNode => {
     <div aria-label="social" className={style.social}>
       {icons.map(icon => {
         return (
-          <Link href={icon.url} key={icon.src} target="_blank">
+          <Link href={icon.url} key={icon.src} target="_blank" className={style.link}>
             <Image
               className={style.icon}
               src={icon.src}
