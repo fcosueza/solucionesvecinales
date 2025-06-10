@@ -24,9 +24,8 @@ const linksHeader: NavItem[] = [
 
 const linksFooter: NavItem[] = [
   { text: "Inicio", href: "#" },
-  { text: "Características", href: "#about" },
-  { text: "Contacto", href: "#contact" },
-  { text: "Login", href: "#login" }
+  { text: "Mapa del Sitio", href: "#about" },
+  { text: "Política de Privacidad", href: "#contact" }
 ];
 
 // Iconos de redes sociales
