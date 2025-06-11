@@ -9,10 +9,22 @@ interface Props {
 }
 
 const FormInput = ({ labelText, attr, type, rows = 5, errorMsg }: Props): React.ReactNode => {
+  const inputAttr = {
+    id: attr.id,
+    name: attr.name || attr.id,
+    type: type,
+    value: attr.value,
+    required: attr.required || false
+  };
+
   return (
     <div>
-      <label htmlFor="">{labelText}</label>
-      <input type="text" />
+      <label htmlFor={attr.id}>{labelText}</label>
+      {type != InputType.textarea ? (
+        <input {...inputAttr} />
+      ) : (
+        <textarea {...inputAttr} rows={rows} />
+      )}
     </div>
   );
 };

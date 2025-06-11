@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputType, FormFieldAttrs } from "@/types";
 import FormInput from ".";
@@ -30,6 +30,12 @@ describe("FormInput component test suite...", () => {
     expect(input).toHaveProperty("type", inputType);
   });
 
+  it("Should render input with a default name if not specified", () => {
+    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+
+    expect(screen.getByRole("textbox")).toHaveProperty("name", attr.id);
+  });
+
   it("Should render input with the specified name if not included", () => {
     const name = "TestName";
     attr.name = name;
@@ -39,28 +45,22 @@ describe("FormInput component test suite...", () => {
     expect(screen.getByRole("textbox")).toHaveProperty("name", name);
   });
 
-  it("Should render input with a default name if not specified", () => {
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
-
-    expect(screen.getByRole("textbox")).toHaveProperty("name", attr.id);
-  });
-
   it("Should render a textarea with the default rows", () => {
     const defaultRows = 5;
 
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+    render(<FormInput labelText={labelTxT} attr={attr} type={InputType.textarea} />);
     expect(screen.getByRole("textbox")).toHaveProperty("rows", defaultRows);
   });
 
   it("Should render a textarea with the specified rows", () => {
-    const rows = 5;
+    const rows = 10;
 
     render(<FormInput labelText={labelTxT} attr={attr} rows={rows} type={InputType.textarea} />);
     expect(screen.getByRole("textbox")).toHaveProperty("rows", rows);
   });
 
   it("Should show in input field what the user is writing", async () => {
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+    render(<FormInput labelText={labelTxT} attr={attr} type={InputType.text} />);
 
     const userInput = "testname";
     const nameInput = screen.getByRole("textbox");
@@ -68,6 +68,29 @@ describe("FormInput component test suite...", () => {
     await userEvent.type(nameInput, userInput);
 
     expect(nameInput).toHaveValue(userInput);
+  });
+
+  it("Should show in input field the specified value", async () => {
+    const value = "Ipp";
+    attr.value = value;
+
+    render(<FormInput labelText={labelTxT} attr={attr} type={InputType.text} />);
+
+    const userInput = "testname";
+    const nameInput = screen.getByRole("textbox");
+
+    await userEvent.type(nameInput, userInput);
+
+    expect(nameInput).toHaveValue(value);
+  });
+
+  it("Should render input with the required field to false by default", () => {
+    const name = "TestName";
+    attr.name = name;
+
+    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+
+    expect(screen.getByRole("textbox")).toHaveProperty("name", name);
   });
 
   it("Should show an error msg if there is one", async () => {
