@@ -1,16 +1,17 @@
-import { FormFieldAttrs } from "@/types";
+import { FormFieldAttrs, InputType } from "@/types";
 
 interface Props {
   labelText: string;
   attr: FormFieldAttrs;
+  type: InputType;
   rows?: number;
   errorMsg?: string;
 }
 
-const FormInput = ({ labelText, attr, rows = 5, errorMsg }: Props): React.ReactNode => {
+const FormInput = ({ labelText, attr, type, rows = 5, errorMsg }: Props): React.ReactNode => {
   return (
     <div>
-      <label htmlFor=""></label>
+      <label htmlFor="">{labelText}</label>
       <input type="text" />
     </div>
   );

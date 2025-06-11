@@ -43,7 +43,6 @@ export interface FormActionState {
 export interface FormFieldAttrs {
   id: string;
   name?: string;
-  type: InputType | RadioType;
   value?: string | number | undefined;
   required?: boolean;
 }
