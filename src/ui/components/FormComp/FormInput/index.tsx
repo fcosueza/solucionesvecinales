@@ -8,12 +8,12 @@ interface Props {
   errorMsg?: string;
 }
 
-const FormInput = ({ labelText, attr, rows = 5, errorMsg }: Props): React.ReactNode => {
+const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.ReactNode => {
   const inputAttr = {
     id: attr.id,
     name: attr.name || attr.id,
     type: attr.type,
-    value: attr.value,
+    defaultValue: attr.defaultValue,
     required: attr.required || false
   };
 
@@ -25,6 +25,7 @@ const FormInput = ({ labelText, attr, rows = 5, errorMsg }: Props): React.ReactN
       ) : (
         <textarea {...inputAttr} rows={rows} />
       )}
+      {errorMsg ? <FormError message={errorMsg} /> : ""}
     </div>
   );
 };

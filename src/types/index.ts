@@ -46,7 +46,7 @@ export interface FormFieldAttrs {
 }
 
 export interface FormInputAttrs extends FormFieldAttrs {
-  value?: string | number | undefined;
+  defaultValue?: string | number | undefined;
   type: InputType;
   required?: boolean;
 }

@@ -75,16 +75,11 @@ describe("FormInput component test suite...", () => {
 
   it("Should show in input field the specified value", async () => {
     const value = "Ipp";
-    attr.value = value;
+    attr.defaultValue = value;
 
     render(<FormInput labelText={labelTxT} attr={attr} />);
 
-    const userInput = "testname";
-    const nameInput = screen.getByRole("textbox");
-
-    await userEvent.type(nameInput, userInput);
-
-    expect(nameInput).toHaveValue(value);
+    expect(screen.getByRole("textbox")).toHaveValue(value);
   });
 
   it("Should render input with the required field to false by default", () => {
@@ -98,10 +93,12 @@ describe("FormInput component test suite...", () => {
 
   it("Should show an error msg if there is one", async () => {
     const errorMsg = "testerror";
-    const errorElement = screen.getByRole("alert");
 
     render(<FormInput labelText={labelTxT} attr={attr} errorMsg={errorMsg} />);
+
+    const errorElement = screen.getByRole("alert");
+
     expect(errorElement).toBeInTheDocument();
-    expect(errorElement).toHaveValue(errorMsg);
+    expect(errorElement).toHaveTextContent(errorMsg);
   });
 });
