@@ -1,28 +1,29 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { InputType, FormFieldAttrs } from "@/types";
+import { InputType, FormInputAttrs } from "@/types";
 import FormInput from ".";
 
 describe("FormInput component test suite...", () => {
   const labelTxT: string = "Testing Label";
   const inputType = InputType.text;
-  const attr: FormFieldAttrs = {
-    id: "TestID"
+  const attr: FormInputAttrs = {
+    id: "TestID",
+    type: InputType.text
   };
 
   it("Should render by default a label and an input correctly ", () => {
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
 
     expect(screen.getByLabelText(labelTxT)).toBeInTheDocument();
     expect(screen.getByRole("textbox")).toBeInTheDocument();
   });
   it("Should render the label with the proper text", () => {
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
     expect(screen.getByLabelText(labelTxT)).toBeInTheDocument();
   });
 
   it("Should render the input with the proper field attributes", () => {
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
 
     const input = screen.getByRole("textbox");
 
@@ -31,7 +32,7 @@ describe("FormInput component test suite...", () => {
   });
 
   it("Should render input with a default name if not specified", () => {
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
 
     expect(screen.getByRole("textbox")).toHaveProperty("name", attr.id);
   });
@@ -40,27 +41,29 @@ describe("FormInput component test suite...", () => {
     const name = "TestName";
     attr.name = name;
 
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
 
     expect(screen.getByRole("textbox")).toHaveProperty("name", name);
   });
 
   it("Should render a textarea with the default rows", () => {
     const defaultRows = 5;
+    attr.type = InputType.textarea;
 
-    render(<FormInput labelText={labelTxT} attr={attr} type={InputType.textarea} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
     expect(screen.getByRole("textbox")).toHaveProperty("rows", defaultRows);
   });
 
   it("Should render a textarea with the specified rows", () => {
     const rows = 10;
+    attr.type = InputType.textarea;
 
-    render(<FormInput labelText={labelTxT} attr={attr} rows={rows} type={InputType.textarea} />);
+    render(<FormInput labelText={labelTxT} attr={attr} rows={rows} />);
     expect(screen.getByRole("textbox")).toHaveProperty("rows", rows);
   });
 
   it("Should show in input field what the user is writing", async () => {
-    render(<FormInput labelText={labelTxT} attr={attr} type={InputType.text} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
 
     const userInput = "testname";
     const nameInput = screen.getByRole("textbox");
@@ -74,7 +77,7 @@ describe("FormInput component test suite...", () => {
     const value = "Ipp";
     attr.value = value;
 
-    render(<FormInput labelText={labelTxT} attr={attr} type={InputType.text} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
 
     const userInput = "testname";
     const nameInput = screen.getByRole("textbox");
@@ -88,7 +91,7 @@ describe("FormInput component test suite...", () => {
     const name = "TestName";
     attr.name = name;
 
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} />);
+    render(<FormInput labelText={labelTxT} attr={attr} />);
 
     expect(screen.getByRole("textbox")).toHaveProperty("name", name);
   });
@@ -97,7 +100,7 @@ describe("FormInput component test suite...", () => {
     const errorMsg = "testerror";
     const errorElement = screen.getByRole("alert");
 
-    render(<FormInput labelText={labelTxT} attr={attr} type={inputType} errorMsg={errorMsg} />);
+    render(<FormInput labelText={labelTxT} attr={attr} errorMsg={errorMsg} />);
     expect(errorElement).toBeInTheDocument();
     expect(errorElement).toHaveValue(errorMsg);
   });
