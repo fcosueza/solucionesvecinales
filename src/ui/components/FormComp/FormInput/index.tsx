@@ -5,6 +5,7 @@ import style from "./style.module.css";
 interface Props {
   labelText: string;
   attr: FormInputAttrs;
+  defaultValue?: string | number | undefined;
   rows?: number;
   errorMsg?: string | string[];
 }

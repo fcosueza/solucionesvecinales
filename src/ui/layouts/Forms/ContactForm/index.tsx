@@ -25,27 +25,26 @@ const ContactForm = (): React.ReactNode => {
           errorMsg={state?.errors?.name || ""}
           attr={{
             id: "name",
+            name: "name",
             type: InputType.text,
             defaultValue: state?.errors?.name ? "" : (state.payload?.get("name") as string) || "",
             placeholder: "Introduzca su nombre..."
           }}
         />
 
-        <div role="form-control" className={style.form__control}>
-          <label htmlFor="email" className={style.form__label}>
-            Correo
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className={`${style.form__input} ${state?.errors?.email ? style.inputError : ""}`}
-            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-            placeholder="Introduzca su correo.."
-            defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
-            required
-          />
-        </div>
+        <FormInput
+          labelText="Correo"
+          errorMsg={state?.errors?.email || ""}
+          attr={{
+            id: "email",
+            name: "email",
+            type: InputType.email,
+            defaultValue: state?.errors?.email ? "" : (state.payload?.get("email") as string) || "",
+            placeholder: "Introduzca su correo...",
+            pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
+            required: true
+          }}
+        />
 
         <div role="form-control" className={style.form__control}>
           <label htmlFor="msg" className={style.form__label}>

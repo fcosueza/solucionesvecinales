@@ -50,6 +50,7 @@ export interface FormInputAttrs extends FormFieldAttrs {
   type: InputType;
   placeholder?: string;
   pattern?: string;
+  title?: string;
   required?: boolean;
 }
 
