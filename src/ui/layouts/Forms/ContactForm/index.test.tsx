@@ -95,7 +95,7 @@ describe("ContactForm component test suite...", () => {
     await userEvent.click(submitBtn);
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(emailInput).toHaveClass("controls__inputError");
+    expect(emailInput).toHaveClass("control__inputError");
     expect(emailInput).toHaveValue("");
   });
 
@@ -117,7 +117,7 @@ describe("ContactForm component test suite...", () => {
     await userEvent.click(submitBtn);
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(msgInput).toHaveClass("inputError");
+    expect(msgInput).toHaveClass("control__inputError");
     expect(msgInput).toHaveValue("");
   });
 });

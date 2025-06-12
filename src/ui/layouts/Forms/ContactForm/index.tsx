@@ -46,20 +46,18 @@ const ContactForm = (): React.ReactNode => {
           }}
         />
 
-        <div role="form-control" className={style.form__control}>
-          <label htmlFor="msg" className={style.form__label}>
-            Mensaje (mín. 20 caracteres)
-          </label>
-          <textarea
-            name="msg"
-            id="msg"
-            rows={5}
-            className={`${style.form__textarea} ${state?.errors?.msg ? style.inputError : ""}`}
-            placeholder="Introduzca un mensaje..."
-            defaultValue={state?.errors?.msg ? "" : (state.payload?.get("msg") as string) || ""}
-            required
-          ></textarea>
-        </div>
+        <FormInput
+          labelText="Mensaje (mín. 20 caracteres)"
+          errorMsg={state?.errors?.msg || ""}
+          attr={{
+            id: "msg",
+            name: "msg",
+            type: InputType.textarea,
+            defaultValue: state?.errors?.msg ? "" : (state.payload?.get("msg") as string) || "",
+            placeholder: "Introduzca su mensaje...",
+            required: true
+          }}
+        />
 
         <Button type="submit" text="Enviar" disabled={isPending} />
       </form>
