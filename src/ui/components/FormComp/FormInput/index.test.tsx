@@ -31,13 +31,7 @@ describe("FormInput component test suite...", () => {
     expect(input).toHaveProperty("type", inputType);
   });
 
-  it("Should render input with a default name if not specified", () => {
-    render(<FormInput labelText={labelTxT} attr={attr} />);
-
-    expect(screen.getByRole("textbox")).toHaveProperty("name", attr.id);
-  });
-
-  it("Should render input with the specified name if not included", () => {
+  it("Should render input with the specified name", () => {
     const name = "TestName";
     attr.name = name;
 

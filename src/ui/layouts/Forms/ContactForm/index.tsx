@@ -2,9 +2,9 @@
 
 import contactMsgAction from "@/actions/contactMsgAction";
 import { useActionState } from "react";
-import { FormActionState } from "@/types";
-import FormError from "@/ui/components/FormComp/FormError";
-import Button from "../../../components/Button";
+import { FormActionState, InputType } from "@/types";
+import FormInput from "@/ui/components/FormComp/FormInput";
+import Button from "@/ui/components/Button";
 import style from "./style.module.css";
 
 const initialState: FormActionState = {
@@ -20,20 +20,16 @@ const ContactForm = (): React.ReactNode => {
   return (
     <>
       <form action={formAction} id="contactForm" role="form" className={style.form}>
-        <div role="form-control" className={style.form__control}>
-          <label htmlFor="name" className={style.form__label}>
-            Nombre
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            className={`${style.form__input} ${state?.errors?.name ? style.inputError : ""}`}
-            placeholder="Introduzca su nombre..."
-            defaultValue={state?.errors?.name ? "" : (state.payload?.get("name") as string) || ""}
-          />
-          {state?.errors?.name && <FormError message={state.errors.name} />}
-        </div>
+        <FormInput
+          labelText="Nombre"
+          errorMsg={state?.errors?.name || ""}
+          attr={{
+            id: "name",
+            type: InputType.text,
+            defaultValue: state?.errors?.name ? "" : (state.payload?.get("name") as string) || "",
+            placeholder: "Introduzca su nombre..."
+          }}
+        />
 
         <div role="form-control" className={style.form__control}>
           <label htmlFor="email" className={style.form__label}>
@@ -49,7 +45,6 @@ const ContactForm = (): React.ReactNode => {
             defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
             required
           />
-          {state?.errors?.email && <FormError message={state.errors.email} />}
         </div>
 
         <div role="form-control" className={style.form__control}>
@@ -65,7 +60,6 @@ const ContactForm = (): React.ReactNode => {
             defaultValue={state?.errors?.msg ? "" : (state.payload?.get("msg") as string) || ""}
             required
           ></textarea>
-          {state?.errors?.msg && <FormError message={state.errors.msg} />}
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />

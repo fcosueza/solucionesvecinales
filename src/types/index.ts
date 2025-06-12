@@ -48,9 +48,12 @@ export interface FormFieldAttrs {
 export interface FormInputAttrs extends FormFieldAttrs {
   defaultValue?: string | number | undefined;
   type: InputType;
+  placeholder?: string;
+  pattern?: string;
   required?: boolean;
 }
 
 export interface FormRadioAttrs extends FormFieldAttrs {
   value: string | number | undefined;
+  checked?: boolean;
 }

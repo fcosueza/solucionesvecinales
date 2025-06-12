@@ -1,5 +1,4 @@
-.form,
-.form__control {
+.form {
   display: flex;
   flex-direction: column;
 }
@@ -15,6 +14,8 @@
 }
 
 .form__control {
+  display: flex;
+  flex-direction: column;
   font-size: 2rem;
   margin-bottom: 3rem;
 }
@@ -46,14 +47,6 @@
   font-weight: bold;
   color: green;
   transition: all 1s;
-}
-
-.errorMsg {
-  position: relative;
-  bottom: -1rem;
-  left: 0.5rem;
-  font-size: 1.6rem;
-  color: red;
 }
 
 .inputError,

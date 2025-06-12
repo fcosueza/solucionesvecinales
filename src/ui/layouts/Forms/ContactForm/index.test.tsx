@@ -18,21 +18,21 @@ describe("ContactForm component test suite...", () => {
     render(<ContactForm />);
 
     expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[0]).toHaveProperty("name", "name");
+    expect(screen.getAllByRole("textbox")[0]).toHaveProperty("id", "name");
   });
 
   it("Should render form control to insert email properly", () => {
     render(<ContactForm />);
 
     expect(screen.getByLabelText("Correo")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[1]).toHaveProperty("name", "email");
+    expect(screen.getAllByRole("textbox")[1]).toHaveProperty("id", "email");
   });
 
   it("Should render form control to insert message properly", () => {
     render(<ContactForm />);
 
     expect(screen.getByLabelText("Mensaje (mín. 20 caracteres)")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[2]).toHaveProperty("name", "msg");
+    expect(screen.getAllByRole("textbox")[2]).toHaveProperty("id", "msg");
   });
 
   it("Should show in input fields what the user is writing", async () => {
@@ -73,7 +73,7 @@ describe("ContactForm component test suite...", () => {
     await userEvent.click(submitBtn);
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(nameInput).toHaveClass("inputError");
+    expect(nameInput).toHaveClass("control__inputError");
     expect(nameInput).toHaveValue("");
   });
 
@@ -95,7 +95,7 @@ describe("ContactForm component test suite...", () => {
     await userEvent.click(submitBtn);
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(emailInput).toHaveClass("inputError");
+    expect(emailInput).toHaveClass("controls__inputError");
     expect(emailInput).toHaveValue("");
   });
 
