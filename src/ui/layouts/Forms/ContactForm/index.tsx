@@ -22,24 +22,24 @@ const ContactForm = (): React.ReactNode => {
       <form action={formAction} id="contactForm" role="form" className={style.form}>
         <FormInput
           labelText="Nombre"
-          errorMsg={state?.errors?.name || ""}
+          errorMsg={state?.errors?.name ?? ""}
           attr={{
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: state?.errors?.name ? "" : (state.payload?.get("name") as string) || "",
+            defaultValue: state?.errors?.name ? "" : (state.payload?.get("name") as string) ?? "",
             placeholder: "Introduzca su nombre..."
           }}
         />
 
         <FormInput
           labelText="Correo"
-          errorMsg={state?.errors?.email || ""}
+          errorMsg={state?.errors?.email ?? ""}
           attr={{
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: state?.errors?.email ? "" : (state.payload?.get("email") as string) || "",
+            defaultValue: state?.errors?.email ? "" : (state.payload?.get("email") as string) ?? "",
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true
@@ -48,12 +48,12 @@ const ContactForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Mensaje (mín. 20 caracteres)"
-          errorMsg={state?.errors?.msg || ""}
+          errorMsg={state?.errors?.msg ?? ""}
           attr={{
             id: "msg",
             name: "msg",
             type: InputType.textarea,
-            defaultValue: state?.errors?.msg ? "" : (state.payload?.get("msg") as string) || "",
+            defaultValue: state?.errors?.msg ? "" : (state.payload?.get("msg") as string) ?? "",
             placeholder: "Introduzca su mensaje...",
             required: true
           }}
