@@ -3,15 +3,10 @@ import userEvent from "@testing-library/user-event";
 import LoginForm from ".";
 
 describe("LoginForm component test suite...", () => {
-  it("Debe renderizar el formulario de forma correcta.", () => {
-    render(<LoginForm />);
-
-    expect(screen.getByRole("form")).toBeInTheDocument();
-  });
   it("Should render the form correctly", () => {
     render(<LoginForm />);
 
-    expect(screen.getAllByLabelText("form-control")).toHaveLength(2);
+    expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
   it("Should render the controls to insert email", () => {
@@ -56,7 +51,7 @@ describe("LoginForm component test suite...", () => {
     await userEvent.click(screen.getByRole("button"));
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(emailInput).toHaveClass("inputError");
+    expect(emailInput).toHaveClass("control__inputError");
     expect(emailInput).toHaveValue("");
   });
 
@@ -74,7 +69,7 @@ describe("LoginForm component test suite...", () => {
     await userEvent.click(screen.getByRole("button"));
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(passInput).toHaveClass("inputError");
+    expect(passInput).toHaveClass("control__inputError");
     expect(passInput).toHaveValue("");
   });
 });
