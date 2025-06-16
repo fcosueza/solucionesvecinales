@@ -15,7 +15,6 @@ const paraHero = `Gestiona incidencias, recibe avisos importantes, reserva espac
   consulta las novedades de tu comunidad!!`;
 
 // Datos de los enlaces del los menús
-
 const linksHeader: NavItem[] = [
   { text: "Inicio", href: "#" },
   { text: "Características", href: "#about" },
@@ -103,7 +102,7 @@ const cardsData = [
 export default function Home() {
   return (
     <>
-      <Header links={linksHeader} buttonText="Log In" buttonRoute="/login" />
+      <Header links={linksHeader} buttonText="Login" buttonRoute="/login" />
 
       <main className={style.main}>
         <section className={style.section}>
