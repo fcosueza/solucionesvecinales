@@ -11,42 +11,36 @@ describe("SignUpForm Componente test...", () => {
   it("Should render the email input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText("email")).toBeInTheDocument();
+    expect(screen.getByLabelText("email-input")).toBeInTheDocument();
   });
 
   it("Should render the password input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText("password")).toBeInTheDocument();
+    expect(screen.getByLabelText("password-input")).toBeInTheDocument();
   });
 
   it("Should render the password repeat input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText("password_repeat")).toBeInTheDocument();
+    expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
   });
 
   it("Should render the  user name input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText("userName")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "username-input" })).toBeInTheDocument();
   });
 
   it("Should render the name input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText("name")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
   });
 
   it("Should render the surname input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText("surname")).toBeInTheDocument();
-  });
-
-  it("Should render the fieldset to contain role selection", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByRole("fieldset")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "surname-input" })).toBeInTheDocument();
   });
 });

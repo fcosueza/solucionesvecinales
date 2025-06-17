@@ -32,6 +32,7 @@ const SignUpForm = (): React.ReactNode => {
             className={style.form__input}
             placeholder="Introduzca su correo..."
             defaultValue={state?.errors?.email ? "" : (state.payload?.get("email") as string) || ""}
+            aria-label="email-input"
             required
           />
           <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
@@ -49,23 +50,23 @@ const SignUpForm = (): React.ReactNode => {
               state?.errors?.password ? "" : (state.payload?.get("password") as string) || ""
             }
             placeholder="Introduzca su contraseña..."
+            aria-label="password-input"
           />
           <p className={style.errorMsg}>{state?.errors?.password && "*" + state.errors.password}</p>
         </div>
         <div role="form-control" className={style.form__control}>
-          <label htmlFor="password_repeat" className={style.form__label}>
+          <label htmlFor="repeat" className={style.form__label}>
             Repite la Contraseña (15 caracteres min.) <span title="Requerido">*</span>
           </label>
           <input
             type="password"
-            name="password_repeat"
-            id="password_repeat"
+            name="repeat"
+            id="repeat"
             className={style.form__input}
             defaultValue={
-              state?.errors?.password_repeat
-                ? ""
-                : (state.payload?.get("password_repeat") as string) || ""
+              state?.errors?.password_repeat ? "" : (state.payload?.get("repeat") as string) || ""
             }
+            aria-label="repeat-input"
             placeholder="Introduzca su contraseña..."
           />
           <p className={style.errorMsg}>
@@ -87,6 +88,7 @@ const SignUpForm = (): React.ReactNode => {
             defaultValue={
               state?.errors?.username ? "" : (state.payload?.get("username") as string) || ""
             }
+            aria-label="username-input"
             placeholder="Introduzca su nombre de usuario..."
           />
           <p className={style.errorMsg}>{state?.errors?.username && "*" + state.errors.username}</p>
@@ -102,6 +104,7 @@ const SignUpForm = (): React.ReactNode => {
             className={style.form__input}
             defaultValue={state?.errors?.name ? "" : (state.payload?.get("name") as string) || ""}
             placeholder="Introduzca su nombre..."
+            aria-label="name-input"
             required
           />
           <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
@@ -119,6 +122,7 @@ const SignUpForm = (): React.ReactNode => {
               state?.errors?.surname ? "" : (state.payload?.get("surname") as string) || ""
             }
             placeholder="Introduzca sus apellidos..."
+            aria-label="surname-input"
             required
           />
           <p className={style.errorMsg}>{state?.errors?.surname && "*" + state.errors.surname}</p>

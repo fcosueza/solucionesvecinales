@@ -40,12 +40,12 @@ const signUpSchema = z
       .string({ message: "La contraseña no es válida" })
       .min(15, { message: "La contraseña tiene que tener 15 caracteres min." })
       .trim(),
-    password_repeat: z
+    repeat: z
       .string({ message: "La contraseña no es válida" })
       .min(15, { message: "La contraseña tiene que tener 15 caracteres min." })
       .trim()
   })
-  .refine(data => data.password === data.password_repeat, {
+  .refine(data => data.password === data.repeat, {
     message: "Las contraseñas deben coincidir",
     path: ["password_repeat"]
   });

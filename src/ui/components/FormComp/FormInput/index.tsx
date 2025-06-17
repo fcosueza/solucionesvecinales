@@ -19,7 +19,7 @@ const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.R
         {labelText}
       </label>
       {attr.type != InputType.textarea ? (
-        <input className={className} {...attr} />
+        <input className={className} aria-label={`${attr.id}-input`} {...attr} />
       ) : (
         <textarea className={className} {...attr} rows={rows} />
       )}
