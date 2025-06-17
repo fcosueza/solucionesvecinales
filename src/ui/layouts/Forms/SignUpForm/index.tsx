@@ -18,7 +18,7 @@ const SignUpForm = (): React.ReactNode => {
 
   return (
     <>
-      <form action={formAction} id="signupForm" aria-label="signup-form" className={style.form}>
+      <form action={formAction} id="signupForm" role="form" className={style.form}>
         <h3 className={style.form__title}>Datos de Sesión</h3>
         <hr className={style.form__separator} />
         <div role="form-control" className={style.form__control}>
@@ -137,7 +137,7 @@ const SignUpForm = (): React.ReactNode => {
                 className={style.form__radio}
                 defaultChecked
               />
-              <label htmlFor="inquilino">inquilino</label>
+              <label htmlFor="tenant">inquilino</label>
             </div>
             <div className={style.form__controlRadio}>
               <input
@@ -147,7 +147,7 @@ const SignUpForm = (): React.ReactNode => {
                 value="admin"
                 className={style.form__radio}
               />
-              <label htmlFor="administrador">administrador</label>
+              <label htmlFor="admin">administrador</label>
             </div>
             <p className={style.errorMsg}>{state?.errors?.rol && "*" + state.errors.rol}</p>
           </fieldset>
@@ -180,6 +180,7 @@ const SignUpForm = (): React.ReactNode => {
             type="number"
             name="number"
             id="number"
+            min="0"
             className={style.form__input}
             defaultValue={
               state?.errors?.number ? "" : (state.payload?.get("number") as string) || ""
@@ -197,6 +198,7 @@ const SignUpForm = (): React.ReactNode => {
             type="number"
             name="floor"
             id="floor"
+            min="0"
             className={style.form__input}
             defaultValue={state?.errors?.floor ? "" : (state.payload?.get("floor") as string) || ""}
             placeholder="Introduzca el piso..."

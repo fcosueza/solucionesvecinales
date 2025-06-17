@@ -5,7 +5,7 @@
   width: fit-content;
   color: white;
   background-color: var(--highlight-color);
-  padding: 0.6rem 1rem;
+  padding: 1rem;
   border: none;
   border-radius: 1rem;
   transition: transform ease-in-out 0.1s;
