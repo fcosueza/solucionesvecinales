@@ -9,97 +9,97 @@ import { NavItem } from "@/types";
 import { SocialIcon } from "@/types";
 import style from "./style.module.css";
 
-// Titulo y párrafo para el CTA
-const titleHero = "¡Tu comunidad, más conectada y organizada que nunca!";
-const paraHero = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
+export default function Home() {
+  // Titulo y párrafo para el CTA
+  const titleHero = "¡Tu comunidad, más conectada y organizada que nunca!";
+  const paraHero = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
   consulta las novedades de tu comunidad!!`;
 
-// Datos de los enlaces del los menús
-const linksHeader: NavItem[] = [
-  { text: "Inicio", href: "#" },
-  { text: "Características", href: "#about" },
-  { text: "Contacto", href: "#contact" }
-];
+  // Datos de los enlaces del los menús
+  const linksHeader: NavItem[] = [
+    { text: "Inicio", href: "#" },
+    { text: "Características", href: "#about" },
+    { text: "Contacto", href: "#contact" }
+  ];
 
-const linksFooter: NavItem[] = [
-  { text: "Inicio", href: "#" },
-  { text: "Mapa del Sitio", href: "#about" },
-  { text: "Política de Privacidad", href: "#contact" }
-];
+  const linksFooter: NavItem[] = [
+    { text: "Inicio", href: "#" },
+    { text: "Mapa del Sitio", href: "#about" },
+    { text: "Política de Privacidad", href: "#contact" }
+  ];
 
-// Iconos de redes sociales
-const icons: SocialIcon[] = [
-  {
-    src: "/assets/icons/facebook.png",
-    altText: "Facebook Icon",
-    url: "https://www.facebook.com/",
-    title: "Facebook",
-    width: 50,
-    height: 50
-  },
-  {
-    src: "/assets/icons/github.png",
-    altText: "Github Icon",
-    url: "https://www.github.com/",
-    title: "Github",
-    width: 50,
-    height: 50
-  },
-  {
-    src: "/assets/icons/instagram.png",
-    altText: "Instagram Icon",
-    url: "https://www.instagram.com/",
-    title: "Instagram",
-    width: 50,
-    height: 50
-  },
-  {
-    src: "/assets/icons/linkedin.png",
-    altText: "LinkedIn Icon",
-    url: "https://www.linkedin.com/",
-    title: "LinkedIn",
-    width: 50,
-    height: 50
-  },
-  {
-    src: "/assets/icons/x.png",
-    altText: "X Icon",
-    url: "https://www.x.com/",
-    title: "X",
-    width: 50,
-    height: 50
-  }
-];
+  // Iconos de redes sociales
+  const icons: SocialIcon[] = [
+    {
+      src: "/assets/icons/facebook.png",
+      altText: "Facebook Icon",
+      url: "https://www.facebook.com/",
+      title: "Facebook",
+      width: 50,
+      height: 50
+    },
+    {
+      src: "/assets/icons/github.png",
+      altText: "Github Icon",
+      url: "https://www.github.com/",
+      title: "Github",
+      width: 50,
+      height: 50
+    },
+    {
+      src: "/assets/icons/instagram.png",
+      altText: "Instagram Icon",
+      url: "https://www.instagram.com/",
+      title: "Instagram",
+      width: 50,
+      height: 50
+    },
+    {
+      src: "/assets/icons/linkedin.png",
+      altText: "LinkedIn Icon",
+      url: "https://www.linkedin.com/",
+      title: "LinkedIn",
+      width: 50,
+      height: 50
+    },
+    {
+      src: "/assets/icons/x.png",
+      altText: "X Icon",
+      url: "https://www.x.com/",
+      title: "X",
+      width: 50,
+      height: 50
+    }
+  ];
 
-// Datos para las tarjetas
-const cardsData = [
-  {
-    imageURL: "/assets/images/notify.svg",
-    altText: "Imagen de una notificación",
-    title: "Tablón de Anuncios",
-    para: "Consulta el tablón de anuncios de tu comunidad y mantente informado de todo lo que sucede."
-  },
-  {
-    imageURL: "/assets/images/alert.svg",
-    altText: "Imagen de un signo de exclamación",
-    title: "Gestión de Incidencias",
-    para: "Crea y gestiona incidencias en tu comunidad de forma eficiente y rápida desde cualquier lugar."
-  },
-  {
-    imageURL: "/assets/images/sport.svg",
-    altText: "Imagen de una portería de futbol y un portero",
-    title: "Espacios Comunes",
-    para: "Reserva los espacios comunes de tu comunidad para su disfrute el día y a la hora que quieras."
-  },
-  {
-    imageURL: "/assets/images/financial.svg",
-    altText: "Imagen de una mujer y un diagrama de barras.",
-    title: "Consulta las Financias",
-    para: "Consulta las finanzas de tu comunidad para estar siempre al tanto del balance anual."
-  }
-];
+  // Datos para las tarjetas
+  const cardsData = [
+    {
+      imageURL: "/assets/images/notify.svg",
+      altText: "Imagen de una notificación",
+      title: "Tablón de Anuncios",
+      para: "Consulta el tablón de anuncios de tu comunidad y mantente informado de todo lo que sucede."
+    },
+    {
+      imageURL: "/assets/images/alert.svg",
+      altText: "Imagen de un signo de exclamación",
+      title: "Gestión de Incidencias",
+      para: "Crea y gestiona incidencias en tu comunidad de forma eficiente y rápida desde cualquier lugar."
+    },
+    {
+      imageURL: "/assets/images/sport.svg",
+      altText: "Imagen de una portería de futbol y un portero",
+      title: "Espacios Comunes",
+      para: "Reserva los espacios comunes de tu comunidad para su disfrute el día y a la hora que quieras."
+    },
+    {
+      imageURL: "/assets/images/financial.svg",
+      altText: "Imagen de una mujer y un diagrama de barras.",
+      title: "Consulta las Financias",
+      para: "Consulta las finanzas de tu comunidad para estar siempre al tanto del balance anual."
+    }
+  ];
 
-export default function Home() {
   return (
     <>
       <Header links={linksHeader} buttonText="Login" buttonRoute="/login" />
@@ -162,6 +162,7 @@ export default function Home() {
             />
           </div>
         </section>
+
         <section id="gallery">
           <Gallery>
             {cardsData.map(data => {
@@ -179,6 +180,7 @@ export default function Home() {
             })}
           </Gallery>
         </section>
+
         <section className={style.section} id="contact">
           <div className={style.contact__text}>
             <h3 className={style.contact__title}>Contacta con nosotros!!!</h3>
