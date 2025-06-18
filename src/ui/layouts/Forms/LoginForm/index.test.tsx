@@ -12,13 +12,13 @@ describe("LoginForm component test suite...", () => {
   it("Should render the controls to insert email", () => {
     render(<LoginForm />);
 
-    expect(screen.getByLabelText("Correo")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
   });
 
   it("Should render the controls to insert password", () => {
     render(<LoginForm />);
 
-    expect(screen.getByLabelText("Contraseña")).toBeInTheDocument();
+    expect(screen.getByLabelText("password-input")).toBeInTheDocument();
   });
 
   it("Should show in every field what the user is writing", async () => {
@@ -27,8 +27,8 @@ describe("LoginForm component test suite...", () => {
     const email = "testname@email.com";
     const password = "asssssssasasdsdasdasdasas";
 
-    const emailInput = screen.getByLabelText("Correo");
-    const passInput = screen.getByLabelText("Contraseña");
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const passInput = screen.getByLabelText("password-input");
 
     await userEvent.type(emailInput, email);
     await userEvent.type(passInput, password);
@@ -43,8 +43,8 @@ describe("LoginForm component test suite...", () => {
     const email = "testname@email.c";
     const password = "asssssssasasdsdasdasdasas";
 
-    const emailInput = screen.getByLabelText("Correo");
-    const passInput = screen.getByLabelText("Contraseña");
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const passInput = screen.getByLabelText("password-input");
 
     await userEvent.type(emailInput, email);
     await userEvent.type(passInput, password);
@@ -61,8 +61,8 @@ describe("LoginForm component test suite...", () => {
     const email = "testname@email.com";
     const password = "as";
 
-    const emailInput = screen.getByLabelText("Correo");
-    const passInput = screen.getByLabelText("Contraseña");
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const passInput = screen.getByLabelText("password-input");
 
     await userEvent.type(emailInput, email);
     await userEvent.type(passInput, password);
