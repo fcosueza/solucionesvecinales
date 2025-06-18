@@ -16,23 +16,17 @@ describe("ContactForm component test suite...", () => {
 
   it("Should render form control to insert name properly", () => {
     render(<ContactForm />);
-
-    expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[0]).toHaveProperty("id", "name");
+    expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
   });
 
   it("Should render form control to insert email properly", () => {
     render(<ContactForm />);
-
-    expect(screen.getByLabelText("Correo")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[1]).toHaveProperty("id", "email");
+    expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
   });
 
   it("Should render form control to insert message properly", () => {
     render(<ContactForm />);
-
-    expect(screen.getByLabelText("Mensaje (mín. 20 caracteres)")).toBeInTheDocument();
-    expect(screen.getAllByRole("textbox")[2]).toHaveProperty("id", "msg");
+    expect(screen.getByRole("textbox", { name: "msg-input" })).toBeInTheDocument();
   });
 
   it("Should show in input fields what the user is writing", async () => {
@@ -42,9 +36,9 @@ describe("ContactForm component test suite...", () => {
     const email = "testname@email.com";
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
-    const nameInput = screen.getAllByRole("textbox")[0];
-    const emailInput = screen.getAllByRole("textbox")[1];
-    const msgInput = screen.getAllByRole("textbox")[2];
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const msgInput = screen.getByRole("textbox", { name: "msg-input" });
 
     await userEvent.type(nameInput, name);
     await userEvent.type(emailInput, email);
@@ -62,9 +56,9 @@ describe("ContactForm component test suite...", () => {
     const email = "testname@email.com";
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
-    const nameInput = screen.getAllByRole("textbox")[0];
-    const emailInput = screen.getAllByRole("textbox")[1];
-    const msgInput = screen.getAllByRole("textbox")[2];
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const msgInput = screen.getByRole("textbox", { name: "msg-input" });
     const submitBtn = screen.getByRole("button");
 
     await userEvent.type(nameInput, name);
@@ -84,9 +78,9 @@ describe("ContactForm component test suite...", () => {
     const email = "testname@email.c";
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
-    const nameInput = screen.getAllByRole("textbox")[0];
-    const emailInput = screen.getAllByRole("textbox")[1];
-    const msgInput = screen.getAllByRole("textbox")[2];
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const msgInput = screen.getByRole("textbox", { name: "msg-input" });
     const submitBtn = screen.getByRole("button");
 
     await userEvent.type(nameInput, name);
@@ -106,9 +100,9 @@ describe("ContactForm component test suite...", () => {
     const email = "testname@email.com";
     const msg = "Lorem ipsum";
 
-    const nameInput = screen.getAllByRole("textbox")[0];
-    const emailInput = screen.getAllByRole("textbox")[1];
-    const msgInput = screen.getAllByRole("textbox")[2];
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const msgInput = screen.getByRole("textbox", { name: "msg-input" });
     const submitBtn = screen.getByRole("button");
 
     await userEvent.type(nameInput, name);

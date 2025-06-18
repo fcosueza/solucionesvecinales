@@ -5,13 +5,13 @@ import style from "./style.module.css";
 interface Props {
   labelText: string;
   attr: FormInputAttrs;
-  defaultValue?: string | number | undefined;
   rows?: number;
   errorMsg?: string | string[];
 }
 
 const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.ReactNode => {
   const className = `${style.control__input} ${errorMsg ? style.control__inputError : ""}`;
+  const ariaLabel = `${attr.id}-input`;
 
   return (
     <div role="form-control" className={style.control}>
@@ -19,9 +19,9 @@ const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.R
         {labelText}
       </label>
       {attr.type != InputType.textarea ? (
-        <input className={className} aria-label={`${attr.id}-input`} {...attr} />
+        <input className={className} aria-label={ariaLabel} {...attr} />
       ) : (
-        <textarea className={className} {...attr} rows={rows} />
+        <textarea className={className} rows={rows} aria-label={ariaLabel} {...attr} />
       )}
       {errorMsg ? <FormError message={errorMsg} /> : ""}
     </div>
