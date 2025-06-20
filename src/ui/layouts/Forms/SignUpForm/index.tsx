@@ -128,7 +128,7 @@ const SignUpForm = (): React.ReactNode => {
           <p className={style.errorMsg}>{state?.errors?.surname && "*" + state.errors.surname}</p>
         </div>
         <div className={style.form__control}>
-          <fieldset className={style.form__fieldset}>
+          <fieldset className={style.form__fieldset} role="radiogroup">
             <legend className={style.form__label}>
               Selecciona el rol de tu usuario: <span title="Requerido">*</span>
             </legend>
@@ -139,6 +139,7 @@ const SignUpForm = (): React.ReactNode => {
                 name="role"
                 value="tenant"
                 className={style.form__radio}
+                aria-label="tenant-radio"
                 defaultChecked
               />
               <label htmlFor="tenant">inquilino</label>
@@ -149,6 +150,7 @@ const SignUpForm = (): React.ReactNode => {
                 id="admin"
                 name="role"
                 value="admin"
+                aria-label="admin-radio"
                 className={style.form__radio}
               />
               <label htmlFor="admin">administrador</label>
