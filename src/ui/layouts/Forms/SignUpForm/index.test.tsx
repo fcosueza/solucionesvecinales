@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import SignUpForm from ".";
 
 describe("SignUpForm Componente test...", () => {
@@ -42,5 +42,28 @@ describe("SignUpForm Componente test...", () => {
     render(<SignUpForm />);
 
     expect(screen.getByRole("textbox", { name: "surname-input" })).toBeInTheDocument();
+  });
+
+  it("Should render the role selection control", () => {
+    render(<SignUpForm />);
+
+    expect(screen.getByRole("radiogroup")).toBeInTheDocument();
+  });
+
+  it("Should render the 2 roles in the role selection control", () => {
+    render(<SignUpForm />);
+
+    const radioGroup = screen.getByRole("radiogroup");
+
+    expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeInTheDocument();
+    expect(within(radioGroup).getByRole("radio", { name: "admin-radio" })).toBeInTheDocument();
+  });
+
+  it("Should check by default tenant option in role selection control", () => {
+    render(<SignUpForm />);
+
+    const radioGroup = screen.getByRole("radiogroup");
+
+    expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
   });
 });
