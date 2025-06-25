@@ -18,7 +18,7 @@ const signUpSchema = z
       .string({ message: "El apellido no es válido" })
       .min(1, { message: "El apellido es obligatorio" })
       .trim(),
-    address: z
+    street: z
       .string({ message: "La calle no es válida" })
       .min(1, { message: "La calle es obligatoria" })
       .trim(),

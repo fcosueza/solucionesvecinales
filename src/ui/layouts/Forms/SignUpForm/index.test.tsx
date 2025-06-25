@@ -66,4 +66,34 @@ describe("SignUpForm Componente test...", () => {
 
     expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
   });
+
+  it("Should render the street input control", () => {
+    render(<SignUpForm />);
+
+    expect(screen.getByRole("textbox", { name: "street-input" })).toBeInTheDocument();
+  });
+
+  it("Should render the number (address) input control", () => {
+    render(<SignUpForm />);
+
+    expect(screen.getByRole("spinbutton", { name: "number-input" })).toBeInTheDocument();
+  });
+
+  it("Should render the floor input control", () => {
+    render(<SignUpForm />);
+
+    expect(screen.getByRole("spinbutton", { name: "floor-input" })).toBeInTheDocument();
+  });
+
+  it("Should render the letter input control", () => {
+    render(<SignUpForm />);
+
+    expect(screen.getByRole("textbox", { name: "letter-input" })).toBeInTheDocument();
+  });
+
+  it("Should render the city input control", () => {
+    render(<SignUpForm />);
+
+    expect(screen.getByRole("textbox", { name: "city-input" })).toBeInTheDocument();
+  });
 });

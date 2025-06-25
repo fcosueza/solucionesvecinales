@@ -167,13 +167,14 @@ const SignUpForm = (): React.ReactNode => {
           </label>
           <input
             type="text"
-            name="address"
-            id="address"
+            name="street"
+            id="street"
             className={style.form__input}
             defaultValue={
               state?.errors?.address ? "" : (state.payload?.get("address") as string) || ""
             }
             placeholder="Introduzca su calle..."
+            aria-label="street-input"
             required
           />
           <p className={style.errorMsg}>{state?.errors?.address && "*" + state.errors.address}</p>
@@ -192,6 +193,7 @@ const SignUpForm = (): React.ReactNode => {
               state?.errors?.number ? "" : (state.payload?.get("number") as string) || ""
             }
             placeholder="Introduzca el número de su casa/edificio..."
+            aria-label="number-input"
             required
           />
           <p className={style.errorMsg}>{state?.errors?.number && "*" + state.errors.number}</p>
@@ -207,6 +209,7 @@ const SignUpForm = (): React.ReactNode => {
             min="0"
             className={style.form__input}
             defaultValue={state?.errors?.floor ? "" : (state.payload?.get("floor") as string) || ""}
+            aria-label="floor-input"
             placeholder="Introduzca el piso..."
           />
           <p className={style.errorMsg}>{state?.errors?.floor && "*" + state.errors.floor}</p>
@@ -226,6 +229,7 @@ const SignUpForm = (): React.ReactNode => {
               state?.errors?.letter ? "" : (state.payload?.get("letter") as string) || ""
             }
             placeholder="Introduzca su letra..."
+            aria-label="letter-input"
           />
           <p className={style.errorMsg}>{state?.errors?.letter && "*" + state.errors.letter}</p>
         </div>
@@ -240,6 +244,7 @@ const SignUpForm = (): React.ReactNode => {
             className={style.form__input}
             defaultValue={state?.errors?.city ? "" : (state.payload?.get("city") as string) || ""}
             placeholder="Introduzca su letra..."
+            aria-label="city-input"
             required
           />
           <p className={style.errorMsg}>{state?.errors?.city && "*" + state.errors.city}</p>
