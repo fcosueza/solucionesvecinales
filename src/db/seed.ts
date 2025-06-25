@@ -16,7 +16,7 @@ async function main(): Promise<void> {
       name: "Arrayanes6",
       street: "Arrayanes",
       number: 6,
-      town: "Granada",
+      city: "Granada",
       province: "Granada",
       country: "España"
     }
@@ -36,7 +36,8 @@ async function main(): Promise<void> {
         number: 6,
         floor: 4,
         letter: "A",
-        town: "Granada"
+        city: "Granada",
+        country: "España"
       },
       {
         email: "juan@gmail.com",
@@ -48,7 +49,8 @@ async function main(): Promise<void> {
         number: 6,
         floor: 2,
         letter: "B",
-        town: "Granada"
+        city: "Granada",
+        country: "España"
       },
       {
         email: "alberto@gmail.com",
@@ -60,7 +62,8 @@ async function main(): Promise<void> {
         number: 6,
         floor: 1,
         letter: "D",
-        town: "Granada"
+        city: "Granada",
+        country: "España"
       }
     ],
     skipDuplicates: true

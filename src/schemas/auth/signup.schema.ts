@@ -36,6 +36,10 @@ const signUpSchema = z
       .string({ message: "La localidad no es válida" })
       .min(1, { message: "La localidad es obligatoria" })
       .trim(),
+    country: z
+      .string({ message: "El país no es válido" })
+      .min(1, { message: "El país es obligatorio" })
+      .trim(),
     password: z
       .string({ message: "La contraseña no es válida" })
       .min(15, { message: "La contraseña tiene que tener 15 caracteres min." })

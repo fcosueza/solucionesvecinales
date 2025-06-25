@@ -14,7 +14,8 @@ enum UserRole {
     number         Int
     floor          Int?
     letter         String?   @db.Char(1)
-    town           String
+    city           String
+    country        String
 
     credentials   Credentials?
     incident      Incident[]

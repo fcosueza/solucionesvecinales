@@ -29,11 +29,12 @@ const signUpAction = async (
       username: validatedData?.data?.username || null,
       name: validatedData.data.name,
       surname: validatedData.data.surname,
-      street: validatedData.data.address,
+      street: validatedData.data.street,
       number: validatedData.data.number,
       floor: validatedData.data.floor || null,
       letter: validatedData.data.letter || null,
-      town: validatedData.data.city
+      city: validatedData.data.city,
+      country: validatedData.country
     }
   });
 

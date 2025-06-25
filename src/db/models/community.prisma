@@ -3,7 +3,7 @@ model Community {
     name            String
     street          String
     number          Int
-    town            String
+    city            String
     province        String
     country         String
 
