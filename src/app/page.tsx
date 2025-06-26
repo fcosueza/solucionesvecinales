@@ -105,7 +105,7 @@ export default function Home() {
       <Header links={linksHeader} buttonText="Login" buttonRoute="/login" />
 
       <main className={style.main}>
-        <section className={style.section}>
+        <section className={`${style.section} ${style.hero}`}>
           <CTA
             title={titleHero}
             para={paraHero}
