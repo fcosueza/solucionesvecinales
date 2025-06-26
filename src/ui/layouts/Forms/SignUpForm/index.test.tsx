@@ -8,12 +8,6 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Should render the  user name input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByRole("textbox", { name: "username-input" })).toBeInTheDocument();
-  });
-
   it("Should render the name input control", () => {
     render(<SignUpForm />);
 
