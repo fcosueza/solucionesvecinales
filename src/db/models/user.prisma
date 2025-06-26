@@ -7,15 +7,9 @@ enum UserRole {
  model User {
     email          String    @id
     role           UserRole  @default(tenant)
-    username       String?
     name           String
     surname        String
-    street         String
-    number         Int
-    floor          Int?
-    letter         String?   @db.Char(1)
-    city           String
-    country        String
+
 
     credentials   Credentials?
     incident      Incident[]

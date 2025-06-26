@@ -26,15 +26,8 @@ const signUpAction = async (
     data: {
       email: validatedData.data.email,
       role: validatedData.data.role,
-      username: validatedData?.data?.username || null,
       name: validatedData.data.name,
-      surname: validatedData.data.surname,
-      street: validatedData.data.street,
-      number: validatedData.data.number,
-      floor: validatedData.data.floor || null,
-      letter: validatedData.data.letter || null,
-      city: validatedData.data.city,
-      country: validatedData.country
+      surname: validatedData.data.surname
     }
   });
 

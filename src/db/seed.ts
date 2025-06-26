@@ -29,41 +29,20 @@ async function main(): Promise<void> {
       {
         email: "fran@gmail.com",
         role: "admin",
-        username: "fcosueza",
         name: "Francisco",
-        surname: "Sueza Rodríguez",
-        street: "Arrayanes",
-        number: 6,
-        floor: 4,
-        letter: "A",
-        city: "Granada",
-        country: "España"
+        surname: "Sueza Rodríguez"
       },
       {
         email: "juan@gmail.com",
         role: "tenant",
-        username: "juanjuan",
         name: "Juan",
-        surname: "Ponce Perez",
-        street: "Arrayanes",
-        number: 6,
-        floor: 2,
-        letter: "B",
-        city: "Granada",
-        country: "España"
+        surname: "Ponce Perez"
       },
       {
         email: "alberto@gmail.com",
         role: "tenant",
-        username: "albertito",
         name: "Alberto",
-        surname: "Garcia Garcia",
-        street: "Arrayanes",
-        number: 6,
-        floor: 1,
-        letter: "D",
-        city: "Granada",
-        country: "España"
+        surname: "Garcia Garcia"
       }
     ],
     skipDuplicates: true

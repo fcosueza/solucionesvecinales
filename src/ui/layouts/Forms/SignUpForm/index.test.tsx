@@ -8,24 +8,6 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Should render the email input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByLabelText("email-input")).toBeInTheDocument();
-  });
-
-  it("Should render the password input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByLabelText("password-input")).toBeInTheDocument();
-  });
-
-  it("Should render the password repeat input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
-  });
-
   it("Should render the  user name input control", () => {
     render(<SignUpForm />);
 
@@ -66,34 +48,21 @@ describe("SignUpForm Componente test...", () => {
 
     expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
   });
-
-  it("Should render the street input control", () => {
+  it("Should render the email input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByRole("textbox", { name: "street-input" })).toBeInTheDocument();
+    expect(screen.getByLabelText("email-input")).toBeInTheDocument();
   });
 
-  it("Should render the number (address) input control", () => {
+  it("Should render the password input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByRole("spinbutton", { name: "number-input" })).toBeInTheDocument();
+    expect(screen.getByLabelText("password-input")).toBeInTheDocument();
   });
 
-  it("Should render the floor input control", () => {
+  it("Should render the password repeat input control", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByRole("spinbutton", { name: "floor-input" })).toBeInTheDocument();
-  });
-
-  it("Should render the letter input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByRole("textbox", { name: "letter-input" })).toBeInTheDocument();
-  });
-
-  it("Should render the city input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByRole("textbox", { name: "city-input" })).toBeInTheDocument();
+    expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
   });
 });
