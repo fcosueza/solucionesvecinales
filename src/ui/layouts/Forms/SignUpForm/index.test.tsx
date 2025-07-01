@@ -54,7 +54,7 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByLabelText("password-input")).toBeInTheDocument();
   });
 
-  it("Should render the password repeat input control", () => {
+  it("Should render the password-repeat input control", () => {
     render(<SignUpForm />);
 
     expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
