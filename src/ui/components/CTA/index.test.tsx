@@ -4,7 +4,10 @@ import userEvent from "@testing-library/user-event";
 import CTA from ".";
 
 // Mock useRouter module
-jest.mock("next/navigation");
+jest.mock("next/navigation", () => ({
+  ...jest.requireActual("next/navigation"),
+  useRouter: jest.fn()
+}));
 
 // Adding method push to our useRouter mock
 (useRouter as jest.Mock).mockReturnValue({
