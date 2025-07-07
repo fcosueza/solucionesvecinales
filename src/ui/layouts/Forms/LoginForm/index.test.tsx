@@ -9,15 +9,10 @@ describe("LoginForm component test suite...", () => {
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Should render the controls to insert email", () => {
+  it("Should render the controls to insert email and password", () => {
     render(<LoginForm />);
 
     expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
-  });
-
-  it("Should render the controls to insert password", () => {
-    render(<LoginForm />);
-
     expect(screen.getByLabelText("password-input")).toBeInTheDocument();
   });
 

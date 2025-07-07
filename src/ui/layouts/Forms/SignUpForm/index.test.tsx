@@ -8,22 +8,25 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Should render the name input control", () => {
+  it("Should render all the form input controls", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
-  });
-
-  it("Should render the surname input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByRole("textbox", { name: "surname-input" })).toBeInTheDocument();
-  });
-
-  it("Should render the role selection control", () => {
-    render(<SignUpForm />);
-
+    expect(screen.getByLabelText("name-input")).toBeInTheDocument();
+    expect(screen.getByLabelText("surname-input")).toBeInTheDocument();
     expect(screen.getByRole("radiogroup")).toBeInTheDocument();
+    expect(screen.getByLabelText("email-input")).toBeInTheDocument();
+    expect(screen.getByLabelText("password-input")).toBeInTheDocument();
+    expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
+  });
+
+  it("should render all default values in input fields", () => {
+    render(<SignUpForm />);
+
+    expect(screen.getByLabelText("name-input")).toHaveValue("");
+    expect(screen.getByLabelText("surname-input")).toHaveValue("");
+    expect(screen.getByLabelText("email-input")).toHaveValue("");
+    expect(screen.getByLabelText("password-input")).toHaveValue("");
+    expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
   it("Should render the 2 roles in the role selection control", () => {
@@ -41,22 +44,5 @@ describe("SignUpForm Componente test...", () => {
     const radioGroup = screen.getByRole("radiogroup");
 
     expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
-  });
-  it("Should render the email input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByLabelText("email-input")).toBeInTheDocument();
-  });
-
-  it("Should render the password input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByLabelText("password-input")).toBeInTheDocument();
-  });
-
-  it("Should render the password-repeat input control", () => {
-    render(<SignUpForm />);
-
-    expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
   });
 });

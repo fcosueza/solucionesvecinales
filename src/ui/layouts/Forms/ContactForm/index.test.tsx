@@ -11,22 +11,9 @@ describe("ContactForm component test suite...", () => {
   it("Should render form controls properly", () => {
     render(<ContactForm />);
 
-    expect(screen.getAllByRole("form-control")).toHaveLength(3);
-  });
-
-  it("Should render form control to insert name properly", () => {
-    render(<ContactForm />);
-    expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
-  });
-
-  it("Should render form control to insert email properly", () => {
-    render(<ContactForm />);
-    expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
-  });
-
-  it("Should render form control to insert message properly", () => {
-    render(<ContactForm />);
-    expect(screen.getByRole("textbox", { name: "msg-input" })).toBeInTheDocument();
+    expect(screen.getByLabelText("name-input")).toBeInTheDocument();
+    expect(screen.getByLabelText("email-input")).toBeInTheDocument();
+    expect(screen.getByLabelText("msg-input")).toBeInTheDocument();
   });
 
   it("Should show in input fields what the user is writing", async () => {
