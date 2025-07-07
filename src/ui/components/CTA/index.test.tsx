@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { useRouter } from "next/navigation";
+import { useRouter as mockUseRouter } from "next/navigation";
 import userEvent from "@testing-library/user-event";
 import CTA from ".";
 
@@ -10,7 +10,7 @@ jest.mock("next/navigation", () => ({
 }));
 
 // Adding method push to our useRouter mock
-(useRouter as jest.Mock).mockReturnValue({
+(mockUseRouter as jest.Mock).mockReturnValue({
   push: jest.fn()
 });
 
@@ -38,7 +38,7 @@ describe("CTA component test suite", () => {
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
   it("Should not call router hook when the button is not clicked", async () => {
-    const router = useRouter();
+    const router = mockUseRouter();
 
     render(<CTA title={title} para={para} buttonText={buttonText} />);
 
@@ -46,7 +46,7 @@ describe("CTA component test suite", () => {
   });
 
   it("Should call router hook when the button is clicked", async () => {
-    const router = useRouter();
+    const router = mockUseRouter();
 
     render(<CTA title={title} para={para} buttonText={buttonText} />);
 
