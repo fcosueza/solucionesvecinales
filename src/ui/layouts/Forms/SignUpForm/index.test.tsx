@@ -29,7 +29,7 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
-  it("Should render the 2 roles in the role selection control", () => {
+  it("Should render 2 roles in the role selection control", () => {
     render(<SignUpForm />);
 
     const radioGroup = screen.getByRole("radiogroup");
