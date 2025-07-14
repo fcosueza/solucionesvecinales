@@ -1,9 +1,9 @@
 model Message {
-    community    Int
-    text         String
-    createdAt    DateTime  @default(now())
+  community Int
+  text      String
+  createdAt DateTime @default(now())
 
-    communityID  Community @relation(fields: [community], references: [id], onDelete: Cascade)
+  communityID Community @relation(fields: [community], references: [id], onDelete: Cascade)
 
-    @@id([createdAt, community])
- }
+  @@id([createdAt, community])
+}

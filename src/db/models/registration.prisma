@@ -1,9 +1,9 @@
 model Registration {
-    user         String
-    community    Int
+  user      String
+  community Int
 
-    userEmail    User       @relation(fields: [user], references: [email], onDelete: Cascade)
-    communityID  Community  @relation(fields: [community], references: [id], onDelete: Cascade)
+  userEmail   User      @relation(fields: [user], references: [email], onDelete: Cascade)
+  communityID Community @relation(fields: [community], references: [id], onDelete: Cascade)
 
-    @@id([user, community])
+  @@id([user, community])
 }

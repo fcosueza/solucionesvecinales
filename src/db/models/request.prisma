@@ -1,16 +1,16 @@
 enum RequestState {
-    pending
-    approved
-    denied
+  pending
+  approved
+  denied
 }
 
-model Request  {
-    user         String
-    community    Int
-    state        RequestState  @default(pending)
+model Request {
+  user      String
+  community Int
+  state     RequestState @default(pending)
 
-    userEmail    User          @relation(fields: [user], references: [email], onDelete: Cascade)
-    communityID  Community     @relation(fields: [community], references: [id], onDelete: Cascade)
+  userEmail   User      @relation(fields: [user], references: [email], onDelete: Cascade)
+  communityID Community @relation(fields: [community], references: [id], onDelete: Cascade)
 
-    @@id([user, community])
+  @@id([user, community])
 }

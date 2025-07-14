@@ -1,13 +1,13 @@
 model Reservation {
-    user        String
-    community   Int
-    area        String
-    date        DateTime
-    start_time  DateTime  @db.Time()
-    end_time    DateTime  @db.Time()
+  user       String
+  community  Int
+  area       String
+  date       DateTime
+  start_time DateTime @db.Time()
+  end_time   DateTime @db.Time()
 
-    userEmail   User      @relation(fields: [user], references: [email], onDelete: Cascade)
-    areaID      Area      @relation(fields: [area, community], references: [name, community], onDelete: Cascade)
+  userEmail User @relation(fields: [user], references: [email], onDelete: Cascade)
+  areaID    Area @relation(fields: [area, community], references: [name, community], onDelete: Cascade)
 
-    @@id([user, community, area])
+  @@id([user, community, area])
 }

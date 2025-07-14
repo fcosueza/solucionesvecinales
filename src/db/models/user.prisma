@@ -1,19 +1,18 @@
 enum UserRole {
-    tenant
-    admin
-    webAdmin
- }
+  tenant
+  admin
+  webAdmin
+}
 
- model User {
-    email          String    @id
-    role           UserRole  @default(tenant)
-    name           String
-    surname        String
+model User {
+  email   String   @id
+  role    UserRole @default(tenant)
+  name    String
+  surname String
 
-
-    credentials   Credentials?
-    incident      Incident[]
-    reservation   Reservation[]
-    registration  Registration[]
-    request       Request[]
+  credentials  Credentials?
+  incident     Incident[]
+  reservation  Reservation[]
+  registration Registration[]
+  request      Request[]
 }
