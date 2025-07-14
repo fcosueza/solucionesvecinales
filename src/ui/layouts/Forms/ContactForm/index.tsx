@@ -12,10 +12,7 @@ const initialState: FormActionState = {
 };
 
 const ContactForm = (): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
-    contactMsgAction,
-    initialState
-  );
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(contactMsgAction, initialState);
 
   return (
     <>
@@ -27,7 +24,7 @@ const ContactForm = (): React.ReactNode => {
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: state?.errors?.name ? "" : (state.payload?.get("name") as string) ?? "",
+            defaultValue: state?.errors?.name ? "" : ((state.payload?.get("name") as string) ?? ""),
             placeholder: "Introduzca su nombre..."
           }}
         />
@@ -39,7 +36,7 @@ const ContactForm = (): React.ReactNode => {
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: state?.errors?.email ? "" : (state.payload?.get("email") as string) ?? "",
+            defaultValue: state?.errors?.email ? "" : ((state.payload?.get("email") as string) ?? ""),
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true
@@ -53,7 +50,7 @@ const ContactForm = (): React.ReactNode => {
             id: "msg",
             name: "msg",
             type: InputType.textarea,
-            defaultValue: state?.errors?.msg ? "" : (state.payload?.get("msg") as string) ?? "",
+            defaultValue: state?.errors?.msg ? "" : ((state.payload?.get("msg") as string) ?? ""),
             placeholder: "Introduzca su mensaje...",
             required: true
           }}
