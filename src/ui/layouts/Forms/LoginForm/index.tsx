@@ -12,10 +12,7 @@ const initialState: FormActionState = {
 };
 
 const LoginForm = (): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
-    logInAction,
-    initialState
-  );
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(logInAction, initialState);
 
   return (
     <>
@@ -27,7 +24,7 @@ const LoginForm = (): React.ReactNode => {
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: state?.errors?.email ? "" : (state.payload?.get("email") as string) ?? "",
+            defaultValue: state?.errors?.email ? "" : ((state.payload?.get("email") as string) ?? ""),
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true
@@ -42,9 +39,7 @@ const LoginForm = (): React.ReactNode => {
             name: "password",
             type: InputType.text,
             placeholder: "Introduzca su contraseña...",
-            defaultValue: state?.errors?.password
-              ? ""
-              : (state.payload?.get("password") as string) ?? ""
+            defaultValue: state?.errors?.password ? "" : ((state.payload?.get("password") as string) ?? "")
           }}
         />
 
