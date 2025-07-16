@@ -11,10 +11,7 @@ const initialState = {
 };
 
 const SignUpForm = (): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(
-    signUpAction,
-    initialState
-  );
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(signUpAction, initialState);
 
   return (
     <>
@@ -44,9 +41,7 @@ const SignUpForm = (): React.ReactNode => {
             name="surname"
             id="surname"
             className={style.form__input}
-            defaultValue={
-              state?.errors?.surname ? "" : (state.payload?.get("surname") as string) || ""
-            }
+            defaultValue={state?.errors?.surname ? "" : (state.payload?.get("surname") as string) || ""}
             placeholder="Introduzca sus apellidos..."
             aria-label="surname-input"
             required
@@ -110,9 +105,7 @@ const SignUpForm = (): React.ReactNode => {
             name="password"
             id="password"
             className={style.form__input}
-            defaultValue={
-              state?.errors?.password ? "" : (state.payload?.get("password") as string) || ""
-            }
+            defaultValue={state?.errors?.password ? "" : (state.payload?.get("password") as string) || ""}
             placeholder="Introduzca su contraseña..."
             aria-label="password-input"
           />
@@ -127,15 +120,11 @@ const SignUpForm = (): React.ReactNode => {
             name="repeat"
             id="repeat"
             className={style.form__input}
-            defaultValue={
-              state?.errors?.password_repeat ? "" : (state.payload?.get("repeat") as string) || ""
-            }
+            defaultValue={state?.errors?.password_repeat ? "" : (state.payload?.get("repeat") as string) || ""}
             aria-label="repeat-input"
             placeholder="Introduzca su contraseña..."
           />
-          <p className={style.errorMsg}>
-            {state?.errors?.password_repeat && "*" + state.errors.password_repeat}
-          </p>
+          <p className={style.errorMsg}>{state?.errors?.password_repeat && "*" + state.errors.password_repeat}</p>
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />
