@@ -5,11 +5,11 @@ const signUpSchema = z
   .object({
     name: z
       .string({ message: "El nombre no es valido" })
-      .min(1, { message: "El nombre es obligatorio" })
+      .min(2, { message: "El nombre debe tener más de 1 carácter." })
       .trim(),
     surname: z
       .string({ message: "El apellido no es válido" })
-      .min(1, { message: "El apellido es obligatorio" })
+      .min(2, { message: "El apellido debe tener más de 1 carácter" })
       .trim(),
     role: z.nativeEnum(UserRole),
     email: z

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
 
 describe("ContactForm component test suite...", () => {
-  it("Should render a form correctly", () => {
+  it("Should render the form", () => {
     render(<ContactForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();

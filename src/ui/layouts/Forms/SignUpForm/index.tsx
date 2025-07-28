@@ -120,11 +120,11 @@ const SignUpForm = (): React.ReactNode => {
             name="repeat"
             id="repeat"
             className={style.form__input}
-            defaultValue={state?.errors?.password_repeat ? "" : (state.payload?.get("repeat") as string) || ""}
+            defaultValue={state?.errors?.repeat ? "" : (state.payload?.get("repeat") as string) || ""}
             aria-label="repeat-input"
             placeholder="Introduzca su contraseña..."
           />
-          <p className={style.errorMsg}>{state?.errors?.password_repeat && "*" + state.errors.password_repeat}</p>
+          <p className={style.errorMsg}>{state?.errors?.repeat && "*" + state.errors.repeat}</p>
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />
