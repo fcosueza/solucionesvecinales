@@ -3,17 +3,6 @@ import { Roboto } from "next/font/google";
 
 const roboto = Roboto({ subsets: ["latin"] });
 
-/**
- * Componente RootLayout
- *
- * Componente que muestra el layout principal, estableciendo la etiqueta
- * html así como la cabecera.
- *
- * @param children Componentes que se mostrarán en el cuerpo de la página
- *
- * @returns Código HTML con las etiquetas html, head y body
- */
-
 export default function RootLayout({
   children
 }: Readonly<{

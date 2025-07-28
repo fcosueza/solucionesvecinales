@@ -7,16 +7,6 @@ interface Props {
   icons: SocialIcon[];
 }
 
-/**
- * Componente Social
- *
- * Componente que genera un elemento con iconos de redes sociales o similares. Los iconos
- * son enlaces que se podrán.
- *
- * @param icons Array de elementos SocialItem con los iconos de las redes sociales.
- *
- * @returns Un nodo de React compuesto por un div y los iconos pasados como parámetros.
- */
 const Social = ({ icons }: Props): React.ReactNode => {
   return (
     <div aria-label="social" className={style.social}>

@@ -2,14 +2,6 @@ import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
-/**
- * Función main() en seed.ts
- *
- * Función  principal de Prisma para poblar la base de datos con datos de prueba.
- *
- * @return Una promesa de tipo void.
- */
-
 async function main(): Promise<void> {
   const community = await prisma.community.create({
     data: {
