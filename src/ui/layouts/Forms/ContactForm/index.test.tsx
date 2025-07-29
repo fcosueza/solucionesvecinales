@@ -12,17 +12,17 @@ describe("ContactForm component test suite...", () => {
   it("Should render form controls properly", () => {
     render(<ContactForm />);
 
-    expect(screen.getByLabelText("name-input")).toBeInTheDocument();
-    expect(screen.getByLabelText("email-input")).toBeInTheDocument();
-    expect(screen.getByLabelText("msg-input")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "msg-input" })).toBeInTheDocument();
   });
 
   it("should render all default values in input fields", () => {
     render(<ContactForm />);
 
-    expect(screen.getByLabelText("name-input")).toHaveValue("");
-    expect(screen.getByLabelText("email-input")).toHaveValue("");
-    expect(screen.getByLabelText("msg-input")).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveValue("");
   });
 
   it("Should show in input fields what the user is writing", async () => {

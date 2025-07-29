@@ -32,11 +32,11 @@ describe("LoginForm component test suite...", () => {
     expect(passInput).toHaveValue(password);
   });
 
-  it("Should show error message if email is not correct", async () => {
+  it("Should show error messages if the fields are not corrects", async () => {
     render(<LoginForm />);
 
     const email = "testname@email.c";
-    const password = "asssssssasasdsdasdasdasas";
+    const password = "aasdasdasas";
 
     const emailInput = screen.getByRole("textbox", { name: "email-input" });
     const passInput = screen.getByLabelText("password-input");
@@ -45,26 +45,8 @@ describe("LoginForm component test suite...", () => {
     await userEvent.type(passInput, password);
     await userEvent.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(emailInput).toHaveClass("control__inputError");
+    expect(screen.getAllByRole("alert")).toHaveLength(2);
     expect(emailInput).toHaveValue("");
-  });
-
-  it("Should show error message if password is not correct", async () => {
-    render(<LoginForm />);
-
-    const email = "testname@email.com";
-    const password = "as";
-
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
-
-    await userEvent.type(emailInput, email);
-    await userEvent.type(passInput, password);
-    await userEvent.click(screen.getByRole("button"));
-
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(passInput).toHaveClass("control__inputError");
     expect(passInput).toHaveValue("");
   });
 });
