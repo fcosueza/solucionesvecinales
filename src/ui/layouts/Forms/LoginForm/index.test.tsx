@@ -65,6 +65,6 @@ describe("LoginForm component test suite...", () => {
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
     expect(passInput).toHaveValue("");
-    expect();
+    expect(emailInput).toHaveValue(email);
   });
 });
