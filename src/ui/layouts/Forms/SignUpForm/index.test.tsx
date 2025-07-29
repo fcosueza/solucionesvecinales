@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import SignUpForm from ".";
 
 describe("SignUpForm Componente test...", () => {
@@ -11,20 +12,20 @@ describe("SignUpForm Componente test...", () => {
   it("Should render all the form input controls", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText("name-input")).toBeInTheDocument();
-    expect(screen.getByLabelText("surname-input")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "surname-input" })).toBeInTheDocument();
     expect(screen.getByRole("radiogroup")).toBeInTheDocument();
-    expect(screen.getByLabelText("email-input")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
     expect(screen.getByLabelText("password-input")).toBeInTheDocument();
     expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
   });
 
-  it("should render all default values in input fields", () => {
+  it("Should render all default values in input fields", () => {
     render(<SignUpForm />);
 
-    expect(screen.getByLabelText("name-input")).toHaveValue("");
-    expect(screen.getByLabelText("surname-input")).toHaveValue("");
-    expect(screen.getByLabelText("email-input")).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue("");
     expect(screen.getByLabelText("password-input")).toHaveValue("");
     expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
@@ -44,5 +45,35 @@ describe("SignUpForm Componente test...", () => {
     const radioGroup = screen.getByRole("radiogroup");
 
     expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
+  });
+
+  it("Should show error messages if the fields are not corrects", async () => {
+    render(<SignUpForm />);
+
+    const name = "a";
+    const surname = "a";
+    const email = "email@email.c";
+    const password = "blablalbal";
+    const passRepeat = "blabuieon";
+
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const surnameInput = screen.getByRole("textbox", { name: "surname-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const passwordInput = screen.getByLabelText("password-input");
+    const passRepeatInput = screen.getByLabelText("repeat-input");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(surnameInput, surname);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(passwordInput, password);
+    await userEvent.type(passRepeatInput, passRepeat);
+    await userEvent.click(screen.getByRole("button"));
+
+    expect(screen.getAllByRole("alert")).toHaveLength(5);
+    expect(nameInput).toHaveValue("");
+    expect(surnameInput).toHaveValue("");
+    expect(emailInput).toHaveValue("");
+    expect(passwordInput).toHaveValue("");
+    expect(passRepeatInput).toHaveValue("");
   });
 });

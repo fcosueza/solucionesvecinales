@@ -3,26 +3,17 @@ import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
 
 describe("ContactForm component test suite...", () => {
-  it("Should render the form", () => {
+  it("Should render a form correctly", () => {
     render(<ContactForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
-
   it("Should render form controls properly", () => {
     render(<ContactForm />);
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "msg-input" })).toBeInTheDocument();
-  });
-
-  it("should render all default values in input fields", () => {
-    render(<ContactForm />);
-
-    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
-    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
-    expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveValue("");
   });
 
   it("Should show in input fields what the user is writing", async () => {
@@ -45,13 +36,12 @@ describe("ContactForm component test suite...", () => {
     expect(msgInput).toHaveValue(msg);
   });
 
-  it("Should show errors messsages in all fields if the values are not correct", async () => {
+  it("Should show error msg and load error class if the name its not correct", async () => {
     render(<ContactForm />);
 
     const name = "t";
-    const email = "testname@email.c";
-    const msg = "Lorem ipsum dolor";
-    const errorMsgLength = 3;
+    const email = "testname@email.com";
+    const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
     const nameInput = screen.getByRole("textbox", { name: "name-input" });
     const emailInput = screen.getByRole("textbox", { name: "email-input" });
@@ -63,9 +53,52 @@ describe("ContactForm component test suite...", () => {
     await userEvent.type(msgInput, msg);
     await userEvent.click(submitBtn);
 
-    expect(screen.getAllByRole("alert")).toHaveLength(errorMsgLength);
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(nameInput).toHaveClass("control__inputError");
     expect(nameInput).toHaveValue("");
+  });
+
+  it("Should show error msg and load error class if the email its not correct", async () => {
+    render(<ContactForm />);
+
+    const name = "test";
+    const email = "testname@email.c";
+    const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
+
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const msgInput = screen.getByRole("textbox", { name: "msg-input" });
+    const submitBtn = screen.getByRole("button");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(msgInput, msg);
+    await userEvent.click(submitBtn);
+
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(emailInput).toHaveClass("control__inputError");
     expect(emailInput).toHaveValue("");
+  });
+
+  it("Should show error msg and load error class if the msg its not correct", async () => {
+    render(<ContactForm />);
+
+    const name = "test";
+    const email = "testname@email.com";
+    const msg = "Lorem ipsum";
+
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const msgInput = screen.getByRole("textbox", { name: "msg-input" });
+    const submitBtn = screen.getByRole("button");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(msgInput, msg);
+    await userEvent.click(submitBtn);
+
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(msgInput).toHaveClass("control__inputError");
     expect(msgInput).toHaveValue("");
   });
 });

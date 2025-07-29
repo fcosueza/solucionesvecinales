@@ -30,7 +30,9 @@ const SignUpForm = (): React.ReactNode => {
             aria-label="name-input"
             required
           />
-          <p className={style.errorMsg}>{state?.errors?.name && "*" + state.errors.name}</p>
+          <p role="alert" className={style.errorMsg}>
+            {state?.errors?.name && "*" + state.errors.name}
+          </p>
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="surname" className={style.form__label}>
@@ -46,7 +48,9 @@ const SignUpForm = (): React.ReactNode => {
             aria-label="surname-input"
             required
           />
-          <p className={style.errorMsg}>{state?.errors?.surname && "*" + state.errors.surname}</p>
+          <p role="alert" className={style.errorMsg}>
+            {state?.errors?.surname && "*" + state.errors.surname}
+          </p>
         </div>
         <div className={style.form__control}>
           <fieldset className={style.form__fieldset} role="radiogroup">
@@ -76,7 +80,6 @@ const SignUpForm = (): React.ReactNode => {
               />
               <label htmlFor="admin">administrador</label>
             </div>
-            <p className={style.errorMsg}>{state?.errors?.rol && "*" + state.errors.rol}</p>
           </fieldset>
         </div>
 
@@ -94,7 +97,9 @@ const SignUpForm = (): React.ReactNode => {
             aria-label="email-input"
             required
           />
-          <p className={style.errorMsg}>{state?.errors?.email && "*" + state.errors.email}</p>
+          <p role="alert" className={style.errorMsg}>
+            {state?.errors?.email && "*" + state.errors.email}
+          </p>
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="password" className={style.form__label}>
@@ -109,7 +114,9 @@ const SignUpForm = (): React.ReactNode => {
             placeholder="Introduzca su contraseña..."
             aria-label="password-input"
           />
-          <p className={style.errorMsg}>{state?.errors?.password && "*" + state.errors.password}</p>
+          <p role="alert" className={style.errorMsg}>
+            {state?.errors?.password && "*" + state.errors.password}
+          </p>
         </div>
         <div role="form-control" className={style.form__control}>
           <label htmlFor="repeat" className={style.form__label}>
@@ -124,7 +131,9 @@ const SignUpForm = (): React.ReactNode => {
             aria-label="repeat-input"
             placeholder="Introduzca su contraseña..."
           />
-          <p className={style.errorMsg}>{state?.errors?.repeat && "*" + state.errors.repeat}</p>
+          <p role="alert" className={style.errorMsg}>
+            {state?.errors?.repeat && "*" + state.errors.repeat}
+          </p>
         </div>
 
         <Button type="submit" text="Enviar" disabled={isPending} />
