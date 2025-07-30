@@ -17,6 +17,7 @@ const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.R
     <div role="form-control" className={style.control}>
       <label className={style.control__label} htmlFor={attr.id}>
         {labelText}
+        {attr.required ? <span title="Requerido"> *</span> : ""}
       </label>
       {attr.type != InputType.textarea ? (
         <input className={className} aria-label={ariaLabel} {...attr} />
