@@ -28,7 +28,7 @@ const signUpSchema = z
   })
   .refine(data => data.password === data.repeat, {
     message: "Las contraseñas deben coincidir",
-    path: ["password_repeat"]
+    path: ["repeat"]
   });
 
 export default signUpSchema;
