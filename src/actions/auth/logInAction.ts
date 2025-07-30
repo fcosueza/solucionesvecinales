@@ -4,17 +4,15 @@ import prisma from "@/lib/prisma";
 import { FormActionState } from "@/types";
 import logInSchema from "@/schemas/auth/login.schema";
 
-const logInAction = async (
-  prevState: FormActionState,
-  formData: FormData
-): Promise<FormActionState> => {
+const logInAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const fieldData = Object.fromEntries(formData);
   const validatedData = logInSchema.safeParse(fieldData);
 
   // Si los datos no son validos devolvemos los errores
   if (!validatedData.success) {
     return {
-      message: "Error",
+      state: "error",
+      message: "Los datos no son correctos",
       errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
@@ -30,7 +28,8 @@ const logInAction = async (
   // Si no existe el usuario
   if (!user) {
     return {
-      message: "Error",
+      state: "error",
+      message: "Los datos no son correctos.",
       errors: {
         email: "No existe ningún usuario con ese correo."
       },
@@ -41,7 +40,8 @@ const logInAction = async (
   // Si la contraseña no es correcta.
   if (user.password !== validatedData.data.password)
     return {
-      message: "Error",
+      state: "error",
+      message: "Los datos no son correctos",
       errors: {
         password: "La contraseña no es válida para este usuario."
       },
@@ -49,7 +49,8 @@ const logInAction = async (
     };
 
   return {
-    message: "Success: Usuario encontrado!!"
+    state: "success",
+    message: "Usuario y contraseña correctos"
   };
 };
 

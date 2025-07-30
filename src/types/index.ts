@@ -35,6 +35,7 @@ export interface SocialIcon {
 }
 
 export interface FormActionState {
+  state: "error" | "success";
   message: string;
   errors?: Record<string, string | string[]>;
   payload?: FormData;
@@ -46,8 +47,8 @@ export interface FormFieldAttrs {
 }
 
 export interface FormInputAttrs extends FormFieldAttrs {
-  defaultValue?: string | number | undefined;
   type: InputType;
+  defaultValue?: string | number | undefined;
   placeholder?: string;
   pattern?: string;
   title?: string;
