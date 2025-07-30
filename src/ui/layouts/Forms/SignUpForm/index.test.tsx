@@ -59,13 +59,13 @@ describe("SignUpForm Componente test...", () => {
     const nameInput = screen.getByRole("textbox", { name: "name-input" });
     const surnameInput = screen.getByRole("textbox", { name: "surname-input" });
     const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passwordInput = screen.getByLabelText("password-input");
+    const passInput = screen.getByLabelText("password-input");
     const passRepeatInput = screen.getByLabelText("repeat-input");
 
     await userEvent.type(nameInput, name);
     await userEvent.type(surnameInput, surname);
     await userEvent.type(emailInput, email);
-    await userEvent.type(passwordInput, password);
+    await userEvent.type(passInput, password);
     await userEvent.type(passRepeatInput, passRepeat);
     await userEvent.click(screen.getByRole("button"));
 
@@ -73,7 +73,36 @@ describe("SignUpForm Componente test...", () => {
     expect(nameInput).toHaveValue("");
     expect(surnameInput).toHaveValue("");
     expect(emailInput).toHaveValue("");
-    expect(passwordInput).toHaveValue("");
+    expect(passInput).toHaveValue("");
     expect(passRepeatInput).toHaveValue("");
+  });
+
+  it("Should show error message in name but keep data in other fields", async () => {
+    render(<SignUpForm />);
+
+    const name = "a";
+    const surname = "aaaaa";
+    const email = "email@email.com";
+    const password = "blablablablablablablabla";
+    const passRepeat = "blablablablablablablabla";
+
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const surnameInput = screen.getByRole("textbox", { name: "surname-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const passInput = screen.getByLabelText("password-input");
+    const passRepeatInput = screen.getByLabelText("repeat-input");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(surnameInput, surname);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(passInput, password);
+    await userEvent.type(passRepeatInput, passRepeat);
+    await userEvent.click(screen.getByRole("button"));
+
+    expect(nameInput).toHaveValue("");
+    expect(surnameInput).toHaveValue(surname);
+    expect(emailInput).toHaveValue(email);
+    expect(passInput).toHaveValue(password);
+    expect(passRepeatInput).toHaveValue(passRepeat);
   });
 });

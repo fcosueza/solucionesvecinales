@@ -7,6 +7,7 @@ import Button from "../../../components/Button";
 import style from "./style.module.css";
 
 const initialState = {
+  state: "error" as const,
   message: ""
 };
 

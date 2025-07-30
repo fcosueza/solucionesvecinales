@@ -8,6 +8,7 @@ import Button from "@/ui/components/Button";
 import style from "./style.module.css";
 
 const initialState: FormActionState = {
+  state: "error" as const,
   message: ""
 };
 

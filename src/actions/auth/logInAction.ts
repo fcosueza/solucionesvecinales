@@ -29,7 +29,7 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
   if (!user) {
     return {
       state: "error",
-      message: "Los datos no son correctos.",
+      message: "Incorrect form data.",
       errors: {
         email: "No existe ningún usuario con ese correo."
       },
@@ -41,7 +41,7 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
   if (user.password !== validatedData.data.password)
     return {
       state: "error",
-      message: "Los datos no son correctos",
+      message: "Incorrect form data.",
       errors: {
         password: "La contraseña no es válida para este usuario."
       },
@@ -50,7 +50,7 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
 
   return {
     state: "success",
-    message: "Usuario y contraseña correctos"
+    message: "User and password are correct."
   };
 };
 

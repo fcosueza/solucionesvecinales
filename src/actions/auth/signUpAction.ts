@@ -3,19 +3,16 @@
 import prisma from "@/lib/prisma";
 import { FormActionState } from "@/types";
 import signUpSchema from "@/schemas/auth/signup.schema";
-import { redirect } from "next/navigation";
 
-const signUpAction = async (
-  prevState: FormActionState,
-  formData: FormData
-): Promise<FormActionState> => {
+const signUpAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const fieldData = Object.fromEntries(formData);
   const validatedData = signUpSchema.safeParse(fieldData);
 
   // Si los datos no son validos devolvemos los errores
   if (!validatedData.success) {
     return {
-      message: "Error: Los datos no son correctos",
+      state: "error",
+      message: "Incorrect form data.",
       errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
@@ -34,7 +31,8 @@ const signUpAction = async (
   // Si no se puede crear el usuario, revolvemos un error.
   if (!user) {
     return {
-      message: "Error: No se ha podido crear el usuario.",
+      state: "error",
+      message: "User can't be created.",
       payload: formData
     };
   }
@@ -50,13 +48,18 @@ const signUpAction = async (
   // Si no se puede crear el usuario, revolvemos un error.
   if (!cred) {
     return {
-      message: "Error: No se han podido crear los credenciales",
+      state: "error",
+      message: "Credentials can`t be created.",
       payload: formData
     };
   }
 
   // Si se ha podido crear todo bien, redireccionamos a la página de log in
-  redirect("/login");
+  return {
+    state: "success",
+    message: "User created",
+    payload: formData
+  };
 };
 
 export default signUpAction;

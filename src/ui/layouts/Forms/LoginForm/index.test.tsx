@@ -32,7 +32,7 @@ describe("LoginForm component test suite...", () => {
     expect(passInput).toHaveValue(password);
   });
 
-  it("Should show error message if email is not correct and reset value", async () => {
+  it("Should show error message if email is not correct", async () => {
     render(<LoginForm />);
 
     const email = "testname@email.c";
@@ -50,7 +50,7 @@ describe("LoginForm component test suite...", () => {
     expect(passInput).toHaveValue(password);
   });
 
-  it("Should show error message if password is not correct and reset value", async () => {
+  it("Should show error message if password is not correct", async () => {
     render(<LoginForm />);
 
     const email = "testname@email.com";

@@ -4,17 +4,15 @@ import prisma from "@/lib/prisma";
 import { FormActionState } from "@/types";
 import contactSchema from "@/schemas/common/contact.schema";
 
-const contactMsgAction = async (
-  prevState: FormActionState,
-  formData: FormData
-): Promise<FormActionState> => {
+const contactMsgAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const fieldData = Object.fromEntries(formData);
   const validatedData = contactSchema.safeParse(fieldData);
 
   // Si los datos no son validos devolvemos los errores
   if (!validatedData.success) {
     return {
-      message: "Error",
+      state: "error",
+      message: "Incorrect form data.",
       errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
@@ -31,14 +29,16 @@ const contactMsgAction = async (
     });
   } catch (e: any) {
     return {
-      message: "Error: No se a podido crear el mensaje",
+      state: "error",
+      message: "Message cant't be created.",
       errors: e.message,
       payload: formData
     };
   }
 
   return {
-    message: "Success: Mensaje creado correctamente.",
+    state: "success",
+    message: "Message created successfully",
     payload: formData
   };
 };
