@@ -77,11 +77,40 @@ describe("SignUpForm Componente test...", () => {
     expect(passRepeatInput).toHaveValue("");
   });
 
-  it("Should show in every field what the user writes except in wrong name field", async () => {
+  it("Should keep values in every field except in passRepeat, showing and error if the passwords doesn't match", async () => {
+    render(<SignUpForm />);
+
+    const name = "aaaaaaaaaaaaaaaaa";
+    const surname = "aaaaa";
+    const email = "email@email.com";
+    const password = "blablablablablablablabla";
+    const passRepeat = "blablablablablablablable";
+
+    const nameInput = screen.getByRole("textbox", { name: "name-input" });
+    const surnameInput = screen.getByRole("textbox", { name: "surname-input" });
+    const emailInput = screen.getByRole("textbox", { name: "email-input" });
+    const passInput = screen.getByLabelText("password-input");
+    const passRepeatInput = screen.getByLabelText("repeat-input");
+
+    await userEvent.type(nameInput, name);
+    await userEvent.type(surnameInput, surname);
+    await userEvent.type(emailInput, email);
+    await userEvent.type(passInput, password);
+    await userEvent.type(passRepeatInput, passRepeat);
+    await userEvent.click(screen.getByRole("button"));
+
+    expect(nameInput).toHaveValue(name);
+    expect(surnameInput).toHaveValue(surname);
+    expect(emailInput).toHaveValue(email);
+    expect(passInput).toHaveValue(password);
+    expect(passRepeatInput).toHaveValue("");
+  });
+
+  it("Should keep every field data if all data is correct except name which is wrong", async () => {
     render(<SignUpForm />);
 
     const name = "a";
-    const surname = "aaaaa";
+    const surname = "aaaaaaaaaaaa";
     const email = "email@email.com";
     const password = "blablablablablablablabla";
     const passRepeat = "blablablablablablablabla";
@@ -104,34 +133,5 @@ describe("SignUpForm Componente test...", () => {
     expect(emailInput).toHaveValue(email);
     expect(passInput).toHaveValue(password);
     expect(passRepeatInput).toHaveValue(passRepeat);
-  });
-
-  it("Should reset every field which is wrong except in name, which is correct", async () => {
-    render(<SignUpForm />);
-
-    const name = "aaaaaaaaaa";
-    const surname = "a";
-    const email = "email@email.c";
-    const password = "blab";
-    const passRepeat = "bla";
-
-    const nameInput = screen.getByRole("textbox", { name: "name-input" });
-    const surnameInput = screen.getByRole("textbox", { name: "surname-input" });
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
-    const passRepeatInput = screen.getByLabelText("repeat-input");
-
-    await userEvent.type(nameInput, name);
-    await userEvent.type(surnameInput, surname);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(passInput, password);
-    await userEvent.type(passRepeatInput, passRepeat);
-    await userEvent.click(screen.getByRole("button"));
-
-    expect(nameInput).toHaveValue(name);
-    expect(surnameInput).toHaveValue("");
-    expect(emailInput).toHaveValue("");
-    expect(passInput).toHaveValue("");
-    expect(passRepeatInput).toHaveValue("");
   });
 });
