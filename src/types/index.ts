@@ -56,6 +56,8 @@ export interface FormInputAttrs extends FormFieldAttrs {
 }
 
 export interface FormRadioAttrs extends FormFieldAttrs {
-  value: string | number | undefined;
-  checked?: boolean;
+  labelText: string;
+  type: RadioType;
+  value: string | number | undefine
+  defaultChecked?: boolean;
 }
