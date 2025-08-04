@@ -3,7 +3,7 @@ import { FormRadioAttrs, RadioType } from "@/types";
 interface Props {
   legend: string;
   type: RadioType;
-  attr: FormRadioAttrs[];
+  attr: [{ labelText: string; radioAttr: FormRadioAttrs[] }];
   errorMsg?: string | string[];
 }
 
