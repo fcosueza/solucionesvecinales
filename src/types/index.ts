@@ -17,7 +17,7 @@ export enum InputType {
   textarea = "textarea"
 }
 
-export enum RadioType {
+export enum RadioBoxType {
   radio = "radio",
   checkbox = "checkbox"
 }
