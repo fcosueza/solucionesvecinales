@@ -22,13 +22,13 @@ const FormRadioBox = ({ legend, type, elementList, errorMsg = "" }: Props): Reac
         aria-label={`${element.radioAttr.id}-${type}`}
         {...element.radioAttr}
       />
-      <label htmlFor="tenant">inquilino</label>
+      <label htmlFor={element.radioAttr.id}>{element.labelText}</label>
     </div>
   ));
 
   return (
-    <div className={style.control}>
-      <fieldset className={style.fieldset} role="radiogroup">
+    <div className={style.control} role="form-control">
+      <fieldset className={style.fieldset}>
         <legend className={style.legend}>{legend}</legend>
         {items}
         {errorMsg ? <FormError message={errorMsg} /> : ""}

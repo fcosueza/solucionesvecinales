@@ -32,10 +32,16 @@ describe("FormRadioBox component test suite...", () => {
     expect(screen.getByRole("form-control")).toBeInTheDocument();
   });
 
+  it("Should create a fieldset element to group the radiobox elements", () => {
+    render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} />);
+
+    expect(screen.getByRole("group")).toBeInTheDocument();
+  });
+
   it("Should render the legend with the proper text", () => {
     render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} />);
 
-    expect(screen.getByLabelText(legendTxt)).toBeInTheDocument();
+    expect(screen.getByText(legendTxt)).toBeInTheDocument();
   });
 
   it("Should render inputs of the specified type", () => {
@@ -44,18 +50,12 @@ describe("FormRadioBox component test suite...", () => {
     expect(screen.getAllByRole(radioType)).toHaveLength(elements.length);
   });
 
-  it("Should render a textarea with the default rows", () => {
-    const defaultRows = 5;
-
+  it("Should render a the radioboxes with the specified labels", () => {
     render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} />);
-    expect(screen.getByRole("textbox")).toHaveProperty("rows", defaultRows);
-  });
 
-  it("Should render a textarea with the specified rows", () => {
-    const rows = 10;
-
-    render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} />);
-    expect(screen.getByRole("textbox")).toHaveProperty("rows", rows);
+    elements.forEach(elements => {
+      expect(screen.getByLabelText(elements.labelText)).toBeInTheDocument();
+    });
   });
 
   it("Should show in input field what the user is writing", async () => {
