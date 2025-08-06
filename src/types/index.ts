@@ -44,6 +44,7 @@ export interface FormActionState {
 export interface FormFieldAttrs {
   id: string;
   name?: string;
+  required?: boolean;
 }
 
 export interface FormInputAttrs extends FormFieldAttrs {
@@ -52,7 +53,6 @@ export interface FormInputAttrs extends FormFieldAttrs {
   placeholder?: string;
   pattern?: string;
   title?: string;
-  required?: boolean;
 }
 
 export interface FormRadioAttrs extends FormFieldAttrs {
