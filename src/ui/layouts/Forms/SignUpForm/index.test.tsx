@@ -14,7 +14,7 @@ describe("SignUpForm Componente test...", () => {
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "surname-input" })).toBeInTheDocument();
-    expect(screen.getByRole("radiogroup")).toBeInTheDocument();
+    expect(screen.getByRole("group")).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
     expect(screen.getByLabelText("password-input")).toBeInTheDocument();
     expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe("SignUpForm Componente test...", () => {
   it("Should render 2 roles in the role selection control", () => {
     render(<SignUpForm />);
 
-    const radioGroup = screen.getByRole("radiogroup");
+    const radioGroup = screen.getByRole("group");
 
     expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeInTheDocument();
     expect(within(radioGroup).getByRole("radio", { name: "admin-radio" })).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe("SignUpForm Componente test...", () => {
   it("Should check by default tenant option in role selection control", () => {
     render(<SignUpForm />);
 
-    const radioGroup = screen.getByRole("radiogroup");
+    const radioGroup = screen.getByRole("group");
 
     expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
   });

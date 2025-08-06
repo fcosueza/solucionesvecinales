@@ -2,8 +2,9 @@
 
 import signUpAction from "@/actions/auth/signUpAction";
 import { useActionState } from "react";
-import { FormActionState, InputType } from "@/types";
+import { FormActionState, InputType, RadioBoxType } from "@/types";
 import FormInput from "@/ui/components/FormComp/FormInput";
+import FormRadioBox from "@/ui/components/FormComp/FormRadioBox";
 import Button from "../../../components/Button";
 import style from "./style.module.css";
 
@@ -44,36 +45,28 @@ const SignUpForm = (): React.ReactNode => {
           }}
         />
 
-        <div className={style.form__control}>
-          <fieldset className={style.form__fieldset} role="radiogroup">
-            <legend className={style.form__label}>
-              Selecciona el rol de tu usuario: <span title="Requerido">*</span>
-            </legend>
-            <div className={style.form__controlRadio}>
-              <input
-                type="radio"
-                id="tenant"
-                name="role"
-                value="tenant"
-                className={style.form__radio}
-                aria-label="tenant-radio"
-                defaultChecked
-              />
-              <label htmlFor="tenant">inquilino</label>
-            </div>
-            <div className={style.form__controlRadio}>
-              <input
-                type="radio"
-                id="admin"
-                name="role"
-                value="admin"
-                aria-label="admin-radio"
-                className={style.form__radio}
-              />
-              <label htmlFor="admin">administrador</label>
-            </div>
-          </fieldset>
-        </div>
+        <FormRadioBox
+          legend="Selecciona el rol de tu usuario"
+          type={RadioBoxType.radio}
+          name="role"
+          elementList={[
+            {
+              labelText: "inquilino",
+              radioAttr: {
+                id: "tenant",
+                value: "tenant",
+                defaultChecked: true
+              }
+            },
+            {
+              labelText: "administrador",
+              radioAttr: {
+                id: "admin",
+                value: "admin"
+              }
+            }
+          ]}
+        />
 
         <FormInput
           labelText="Correo"

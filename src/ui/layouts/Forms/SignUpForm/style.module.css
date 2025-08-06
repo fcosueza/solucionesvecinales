@@ -1,10 +1,6 @@
-.form,
-.form__control {
+.form {
   display: flex;
   flex-direction: column;
-}
-
-.form {
   width: fit-content;
   min-width: 60rem;
   border: 0.1rem solid rgba(0, 0, 0, 0.3);
@@ -18,16 +14,6 @@
   text-align: center;
   color: var(--highlight-color);
   margin-bottom: 1.5rem;
-}
-
-.form__control {
-  font-size: 2rem;
-  margin-bottom: 3rem;
-}
-
-.form__controlRadio {
-  display: inline;
-  margin: 0 3rem;
 }
 
 .form__label {
@@ -51,14 +37,6 @@
   box-shadow: 0 0 0.4rem var(--highlight-color);
 }
 
-.form__radio {
-  margin-right: 1rem;
-}
-
-.form__fieldset {
-  border: none;
-}
-
 .form__msg {
   font-size: 2rem;
   text-align: center;
@@ -72,12 +50,4 @@
   color: rgba(0, 0, 0, 0.3);
   margin: 0 auto;
   margin-bottom: 5rem;
-}
-
-.errorMsg {
-  position: relative;
-  bottom: -1rem;
-  left: 0.5rem;
-  font-size: 1.6rem;
-  color: red;
 }
