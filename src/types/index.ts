@@ -43,12 +43,12 @@ export interface FormActionState {
 
 export interface FormFieldAttrs {
   id: string;
-  name?: string;
   required?: boolean;
 }
 
 export interface FormInputAttrs extends FormFieldAttrs {
   type: InputType;
+  name?: string;
   defaultValue?: string | number | undefined;
   placeholder?: string;
   pattern?: string;

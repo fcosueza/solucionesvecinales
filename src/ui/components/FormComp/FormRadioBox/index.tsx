@@ -5,20 +5,22 @@ import FormError from "../FormError";
 interface Props {
   legend: string;
   type: RadioBoxType;
+  name: string;
   elementList: { labelText: string; radioAttr: FormRadioAttrs }[];
   errorMsg?: string | string[];
 }
 
 // TODO: Implement checkbox type generation.
 
-const FormRadioBox = ({ legend, type, elementList, errorMsg = "" }: Props): React.ReactNode => {
+const FormRadioBox = ({ legend, type, name, elementList, errorMsg = "" }: Props): React.ReactNode => {
   if (type == RadioBoxType.checkbox) return <h1>checkbox not implemented yet!!</h1>;
 
   const items: React.ReactNode = elementList.map(element => (
-    <div className={style.radioCont} key={`${element.radioAttr.id}`}>
+    <div className={style.controlRadio} key={`${element.radioAttr.id}`}>
       <input
         type={type}
         className={style.radio}
+        name={name}
         aria-label={`${element.radioAttr.id}-${type}`}
         {...element.radioAttr}
       />
