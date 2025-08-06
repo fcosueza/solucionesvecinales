@@ -50,7 +50,7 @@ describe("FormRadioBox component test suite...", () => {
     expect(screen.getAllByRole(radioType)).toHaveLength(elements.length);
   });
 
-  it("Should render a the radioboxes with the specified labels", () => {
+  it("Should render the radioboxes with the specified labels", () => {
     render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} />);
 
     elements.forEach(elements => {
@@ -58,41 +58,21 @@ describe("FormRadioBox component test suite...", () => {
     });
   });
 
-  it("Should show in input field what the user is writing", async () => {
-    render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} />);
-
-    const userInput = "testname";
-    const nameInput = screen.getByRole("textbox");
-
-    await userEvent.type(nameInput, userInput);
-
-    expect(nameInput).toHaveValue(userInput);
-  });
-
-  it("Should show in input field the specified value", async () => {
-    const value = "Ipp";
+  it("Should check by default the specified radiobox", () => {
+    const checkedElement = "Test1";
 
     render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} />);
-
-    expect(screen.getByRole("textbox")).toHaveValue(value);
+    expect(screen.getByLabelText(checkedElement)).toBeChecked();
   });
 
-  it("Should render input with the required field to false by default", () => {
-    const name = "TestName";
-
+  it("Should check the element checked by the user", async () => {
     render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} />);
 
-    expect(screen.getByRole("textbox")).toHaveProperty("name", name);
-  });
+    const element = screen.getByLabelText("Test2");
 
-  it("Should show an error msg if there is one", async () => {
-    const errorMsg = "testerror";
+    await userEvent.click(element);
 
-    render(<FormRadioBox legend={legendTxt} elementList={elements} type={radioType} errorMsg={errorMsg} />);
-
-    const errorElement = screen.getByRole("alert");
-
-    expect(errorElement).toBeInTheDocument();
-    expect(errorElement).toHaveTextContent(errorMsg);
+    expect(element).toBeChecked();
+    expect(screen.getByLabelText("Test1")).not.toBeChecked();
   });
 });
