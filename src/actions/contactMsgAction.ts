@@ -29,7 +29,9 @@ const contactMsgAction = async (prevState: FormActionState, formData: FormData):
     return {
       state: "error",
       message: "Message cant't be created.",
-      errors: e.message,
+      errors: {
+        prisma: e.message
+      },
       payload: formData
     };
   }

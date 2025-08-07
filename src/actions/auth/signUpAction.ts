@@ -32,7 +32,9 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
     return {
       state: "error",
       message: "User can't be created.",
-      errors: e.message,
+      errors: {
+        prisma: e.message
+      },
       payload: formData
     };
   }
@@ -49,7 +51,9 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
     return {
       state: "error",
       message: "Credentials can`t be created.",
-      errors: e.message,
+      errors: {
+        prisma: e.message
+      },
       payload: formData
     };
   }
