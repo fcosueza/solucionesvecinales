@@ -8,28 +8,28 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
   const fieldData = Object.fromEntries(formData);
   const validatedData = logInSchema.safeParse(fieldData);
 
-  // Si los datos no son validos devolvemos los errores
+  // If data is not valid
   if (!validatedData.success) {
     return {
       state: "error",
-      message: "Los datos no son correctos",
+      message: "Incorrect form data",
       errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
   }
 
-  // Intentamos crear el mensaje en la base de datos
+  // Try to create user
   const user = await prisma.credentials.findUnique({
     where: {
       user: validatedData.data.email
     }
   });
 
-  // Si no existe el usuario
+  // User doesn't exits
   if (!user) {
     return {
       state: "error",
-      message: "Incorrect form data.",
+      message: "Incorrect form data",
       errors: {
         email: "No existe ningún usuario con ese correo."
       },
@@ -37,20 +37,22 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
     };
   }
 
-  // Si la contraseña no es correcta.
+  // Incorrect password
   if (user.password !== validatedData.data.password)
     return {
       state: "error",
-      message: "Incorrect form data.",
+      message: "Incorrect form data",
       errors: {
         password: "La contraseña no es válida para este usuario."
       },
       payload: formData
     };
 
+  // User and password corrects
   return {
     state: "success",
-    message: "User and password are correct."
+    message: "User and password are correct.",
+    payload: formData
   };
 };
 

@@ -8,7 +8,7 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
   const fieldData = Object.fromEntries(formData);
   const validatedData = signUpSchema.safeParse(fieldData);
 
-  // Si los datos no son validos devolvemos los errores
+  // If data is not valid
   if (!validatedData.success) {
     return {
       state: "error",
@@ -18,43 +18,43 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
     };
   }
 
-  // Intentamos crear el usuario
-  const user = await prisma.user.create({
-    data: {
-      email: validatedData.data.email,
-      role: validatedData.data.role,
-      name: validatedData.data.name,
-      surname: validatedData.data.surname
-    }
-  });
-
-  // Si no se puede crear el usuario, revolvemos un error.
-  if (!user) {
+  // Try to create the user
+  try {
+    await prisma.user.create({
+      data: {
+        email: validatedData.data.email,
+        role: validatedData.data.role,
+        name: validatedData.data.name,
+        surname: validatedData.data.surname
+      }
+    });
+  } catch (e: any) {
     return {
       state: "error",
       message: "User can't be created.",
+      errors: e.message,
       payload: formData
     };
   }
 
-  // Intentamos crear los credenciales
-  const cred = await prisma.credentials.create({
-    data: {
-      user: validatedData.data.email,
-      password: validatedData.data.password
-    }
-  });
-
-  // Si no se puede crear el usuario, revolvemos un error.
-  if (!cred) {
+  // Try to create credentials
+  try {
+    await prisma.credentials.create({
+      data: {
+        user: validatedData.data.email,
+        password: validatedData.data.password
+      }
+    });
+  } catch (e: any) {
     return {
       state: "error",
       message: "Credentials can`t be created.",
+      errors: e.message,
       payload: formData
     };
   }
 
-  // Si se ha podido crear todo bien, redireccionamos a la página de log in
+  // User created correctly
   return {
     state: "success",
     message: "User created",

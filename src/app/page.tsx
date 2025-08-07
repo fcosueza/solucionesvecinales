@@ -10,12 +10,10 @@ import { SocialIcon } from "@/types";
 import style from "./style.module.css";
 
 export default function Home() {
-  // Titulo y párrafo para el CTA
   const titleHero = "¡Tu comunidad, más conectada y organizada que nunca!";
   const paraHero = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
   consulta las novedades de tu comunidad!!`;
 
-  // Datos de los enlaces del los menús
   const linksHeader: NavItem[] = [
     { text: "Inicio", href: "#" },
     { text: "Características", href: "#about" },
@@ -28,7 +26,6 @@ export default function Home() {
     { text: "Política de Privacidad", href: "#contact" }
   ];
 
-  // Iconos de redes sociales
   const icons: SocialIcon[] = [
     {
       src: "/assets/icons/facebook.png",
@@ -106,26 +103,16 @@ export default function Home() {
 
       <main className={style.main}>
         <section className={`${style.section} ${style.hero}`}>
-          <CTA
-            title={titleHero}
-            para={paraHero}
-            buttonText="Regístrate Ya!!"
-            buttonRoute={"/signup"}
-          />
-          <Image
-            src="/assets/images/hero.svg"
-            alt="Imagen de la pantalla de un monitor"
-            width={700}
-            height={400}
-          />
+          <CTA title={titleHero} para={paraHero} buttonText="Regístrate Ya!!" buttonRoute={"/signup"} />
+          <Image src="/assets/images/hero.svg" alt="Imagen de la pantalla de un monitor" width={700} height={400} />
         </section>
 
         <section id="motivation" className={style.section}>
           <div>
             <h2 className={style.motivation}>
-              Con <span className={style.highlight}>nuestra app</span>, la organización es sencilla
-              y <span className={style.highlight}>cada vecino cuenta</span>. Porque juntos, hacemos
-              del lugar donde vivimos un mejor hogar.
+              Con <span className={style.highlight}>nuestra app</span>, la organización es sencilla y{" "}
+              <span className={style.highlight}>cada vecino cuenta</span>. Porque juntos, hacemos del lugar donde
+              vivimos un mejor hogar.
             </h2>
           </div>
         </section>
@@ -141,8 +128,8 @@ export default function Home() {
             <div className={style.zigzag__text}>
               <h3 className={style.zigzag__title}>Adaptada a cualquier dispositivo</h3>
               <p className={style.zigzag__para}>
-                Pensada para usarse desde cualquier dispositivo, para que puedas gestionar tu
-                comunidad desde cualquier lugar.
+                Pensada para usarse desde cualquier dispositivo, para que puedas gestionar tu comunidad desde cualquier
+                lugar.
               </p>
             </div>
           </div>
@@ -150,16 +137,11 @@ export default function Home() {
             <div className={style.zigzag__text}>
               <h3 className={style.zigzag__title}>Centrada en la accesibilidad</h3>
               <p className={style.zigzag__para}>
-                Con un diseño simple e intuitivo, nuestra aplicación pone especial énfasis en la
-                accesibilidad y facilidad de uso.
+                Con un diseño simple e intuitivo, nuestra aplicación pone especial énfasis en la accesibilidad y
+                facilidad de uso.
               </p>
             </div>
-            <Image
-              src="/assets/images/ally.svg"
-              alt="Imagen de la pantalla de un monitor"
-              width={600}
-              height={500}
-            />
+            <Image src="/assets/images/ally.svg" alt="Imagen de la pantalla de un monitor" width={600} height={500} />
           </div>
         </section>
 
@@ -185,15 +167,9 @@ export default function Home() {
           <div className={style.contact__text}>
             <h3 className={style.contact__title}>Contacta con nosotros!!!</h3>
             <p className={style.contact__para}>
-              Si tienes alguna duda, sugerencia o simplemente quieres decir hola, no dudes en
-              contactar con nosotros.
+              Si tienes alguna duda, sugerencia o simplemente quieres decir hola, no dudes en contactar con nosotros.
             </p>
-            <Image
-              src="assets/images/contact.svg"
-              width={500}
-              height={300}
-              alt="Hombre mandando un correo"
-            />
+            <Image src="assets/images/contact.svg" width={500} height={300} alt="Hombre mandando un correo" />
           </div>
           <ContactForm />
         </section>
