@@ -7,7 +7,6 @@ const roboto = Roboto({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Soluciones Vecinales",
   description: "Aplicación para la gestión de comunidades de vecinos",
-  themeColor: "#000000",
   authors: [{ name: "Francisco Sueza Rodríguez" }],
   icons: {
     icon: "favicon.ico"
