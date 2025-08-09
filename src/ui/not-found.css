@@ -1,0 +1,22 @@
+/* Global Not Found */
+
+.notFound-container {
+  align-self: center;
+  text-align: center;
+}
+
+.notFound-header {
+  font-size: 10rem;
+  color: var(--highlight-color);
+}
+
+.notFound-para {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 4rem;
+}
+
+.notFound-link {
+  font-size: 3rem;
+  font-weight: bold;
+}

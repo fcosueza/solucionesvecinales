@@ -18,7 +18,7 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
     };
   }
 
-  // Try to create user
+  // Try to find user
   const user = await prisma.credentials.findUnique({
     where: {
       user: validatedData.data.email
