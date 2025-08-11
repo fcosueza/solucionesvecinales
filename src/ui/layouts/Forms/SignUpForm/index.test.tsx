@@ -1,4 +1,4 @@
-import { render, screen, within, waitFor } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SignUpForm from ".";
 
@@ -69,12 +69,12 @@ describe("SignUpForm Componente test...", () => {
     await userEvent.type(passRepeatInput, passRepeat);
     await userEvent.click(screen.getByRole("button"));
 
-    await waitFor(() => expect(screen.getAllByRole("alert")).toHaveLength(5));
-    await waitFor(() => expect(nameInput).toHaveValue(""));
-    await waitFor(() => expect(surnameInput).toHaveValue(""));
-    await waitFor(() => expect(emailInput).toHaveValue(""));
-    await waitFor(() => expect(passInput).toHaveValue(""));
-    await waitFor(() => expect(passRepeatInput).toHaveValue(""));
+    expect(screen.getAllByRole("alert")).toHaveLength(5);
+    expect(nameInput).toHaveValue("");
+    expect(surnameInput).toHaveValue("");
+    expect(emailInput).toHaveValue("");
+    expect(passInput).toHaveValue("");
+    expect(passRepeatInput).toHaveValue("");
   });
 
   it("Should keep values in every field except in passRepeat, showing and error if the passwords doesn't match", async () => {
