@@ -11,7 +11,7 @@ const contactMsgAction = async (prevState: FormActionState, formData: FormData):
   if (!validatedData.success) {
     return {
       state: "error",
-      message: "Incorrect form data.",
+      message: "Incorrect form data",
       errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
@@ -28,7 +28,7 @@ const contactMsgAction = async (prevState: FormActionState, formData: FormData):
   } catch (e: any) {
     return {
       state: "error",
-      message: "Message cant't be created.",
+      message: "Message cant't be created",
       errors: {
         prisma: e.message
       },
