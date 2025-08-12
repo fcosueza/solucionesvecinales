@@ -74,4 +74,10 @@ describe("FormRadioBox component test suite...", () => {
     expect(element).toBeChecked();
     expect(screen.getByLabelText("Test1")).not.toBeChecked();
   });
+
+  it("Should rener a error message if its passed one", () => {
+    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} errorMsg={"Error"} />);
+
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+  });
 });
