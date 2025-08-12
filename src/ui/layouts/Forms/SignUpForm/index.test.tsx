@@ -2,6 +2,13 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SignUpForm from ".";
 
+function setup(jsx: React.ReactNode) {
+  return {
+    user: userEvent.setup(),
+    ...render(jsx)
+  };
+}
+
 describe("SignUpForm Componente test...", () => {
   it("Must render the form", () => {
     render(<SignUpForm />);
@@ -48,7 +55,7 @@ describe("SignUpForm Componente test...", () => {
   });
 
   it("Should show error messages if the fields are not corrects", async () => {
-    render(<SignUpForm />);
+    const { user } = setup(<SignUpForm />);
 
     const name = "a";
     const surname = "a";
@@ -56,12 +63,12 @@ describe("SignUpForm Componente test...", () => {
     const password = "blablalbal";
     const passRepeat = "blabuieon";
 
-    await userEvent.type(screen.getByRole("textbox", { name: "name-input" }), name);
-    await userEvent.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
-    await userEvent.type(screen.getByRole("textbox", { name: "email-input" }), email);
-    await userEvent.type(screen.getByLabelText("password-input"), password);
-    await userEvent.type(screen.getByLabelText("repeat-input"), passRepeat);
-    await userEvent.click(screen.getByRole("button"));
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await user.type(screen.getByLabelText("password-input"), password);
+    await user.type(screen.getByLabelText("repeat-input"), passRepeat);
+    await user.click(screen.getByRole("button"));
 
     expect(screen.getAllByRole("alert")).toHaveLength(5);
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
@@ -72,7 +79,7 @@ describe("SignUpForm Componente test...", () => {
   });
 
   it("Should keep values in every field except in passRepeat, showing and error if the passwords doesn't match", async () => {
-    render(<SignUpForm />);
+    const { user } = setup(<SignUpForm />);
 
     const name = "aaaaaaaaaaaaaaaaa";
     const surname = "aaaaa";
@@ -80,12 +87,12 @@ describe("SignUpForm Componente test...", () => {
     const password = "blablablablablablablabla";
     const passRepeat = "blablablablablablablable";
 
-    await userEvent.type(screen.getByRole("textbox", { name: "name-input" }), name);
-    await userEvent.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
-    await userEvent.type(screen.getByRole("textbox", { name: "email-input" }), email);
-    await userEvent.type(screen.getByLabelText("password-input"), password);
-    await userEvent.type(screen.getByLabelText("repeat-input"), passRepeat);
-    await userEvent.click(screen.getByRole("button"));
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await user.type(screen.getByLabelText("password-input"), password);
+    await user.type(screen.getByLabelText("repeat-input"), passRepeat);
+    await user.click(screen.getByRole("button"));
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(name);
     expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
@@ -95,7 +102,7 @@ describe("SignUpForm Componente test...", () => {
   });
 
   it("Should keep every field data if all data is correct except name which is wrong", async () => {
-    render(<SignUpForm />);
+    const { user } = setup(<SignUpForm />);
 
     const name = "a";
     const surname = "aaaaaaaaaaaa";
@@ -103,12 +110,12 @@ describe("SignUpForm Componente test...", () => {
     const password = "blablablablablablablabla";
     const passRepeat = "blablablablablablablabla";
 
-    await userEvent.type(screen.getByRole("textbox", { name: "name-input" }), name);
-    await userEvent.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
-    await userEvent.type(screen.getByRole("textbox", { name: "email-input" }), email);
-    await userEvent.type(screen.getByLabelText("password-input"), password);
-    await userEvent.type(screen.getByLabelText("repeat-input"), passRepeat);
-    await userEvent.click(screen.getByRole("button"));
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await user.type(screen.getByLabelText("password-input"), password);
+    await user.type(screen.getByLabelText("repeat-input"), passRepeat);
+    await user.click(screen.getByRole("button"));
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
     expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
