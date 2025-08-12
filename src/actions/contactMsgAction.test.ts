@@ -16,6 +16,7 @@ describe("contactMsgAction test suite", () => {
     Object.entries(data).forEach(([key, value]) => {
       fd.append(key, value);
     });
+
     return fd;
   };
 
