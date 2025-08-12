@@ -38,8 +38,8 @@ describe("LoginForm component test suite...", () => {
     const email = "testname@email.c";
     const password = "asssssssasasdsdasdasdasas";
 
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
+    const emailInput = await screen.findByRole("textbox", { name: "email-input" });
+    const passInput = await screen.findByLabelText("password-input");
 
     await userEvent.type(emailInput, email);
     await userEvent.type(passInput, password);
@@ -56,8 +56,8 @@ describe("LoginForm component test suite...", () => {
     const email = "testname@email.com";
     const password = "as";
 
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
+    const emailInput = await screen.findByRole("textbox", { name: "email-input" });
+    const passInput = await screen.findByLabelText("password-input");
 
     await userEvent.type(emailInput, email);
     await userEvent.type(passInput, password);
