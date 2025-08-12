@@ -1,37 +1,78 @@
 import { FormActionState } from "@/types";
 import contactMsgAction from "./contactMsgAction";
 
-describe("Test suit for contactMsgAction server action...", () => {
-  const prevState: FormActionState = {
-    state: "error",
-    message: ""
+jest.mock("../lib/prisma", () => ({
+  contact: {
+    create: jest.fn()
+  }
+}));
+
+import prisma from "../lib/prisma";
+
+describe("contactMsgAction test suite", () => {
+  const mockFormData = (data: Record<string, string>) => {
+    const fd = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      fd.append(key, value);
+    });
+    return fd;
   };
 
-  /*it("Should return a error state if the form data is not correct", async () => {
-    const formData: FormData = new FormData();
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-    formData.append("name", "TestName");
-    formData.append("email", "test@gmailc");
-    formData.append("msg", "aaaa");
+  it("Should return an error if validation fails", async () => {
+    const formData = mockFormData({
+      name: "a",
+      email: "not-an-email@gmail.c",
+      msg: "aaa"
+    });
 
-    const data = await contactMsgAction(prevState, formData);
+    const result = await contactMsgAction({} as FormActionState, formData);
 
-    expect(data.state).toBe("error");
-    expect(data.message).toBe("Incorrect form data");
-  });*/
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Incorrect form data");
+    expect(result.errors).toBeDefined();
+    expect(prisma.contact.create).not.toHaveBeenCalled();
+  });
 
-  it("Should return a state of success and a message if msg is successfully created", async () => {
-    const formData: FormData = new FormData();
+  it("Should return an error if prisma can`t create message", async () => {
+    (prisma.contact.create as jest.Mock).mockRejectedValueOnce(new Error("DB error"));
 
-    formData.append("name", "TestName");
-    formData.append("email", "test@gmai.com");
-    formData.append("msg", "This is a testing message FTW. It must be 20 chars long.");
+    const formData = mockFormData({
+      name: "John Doe",
+      email: "john@example.com",
+      msg: "Hello, this is a simple test for contactMsgAction server action"
+    });
 
-    const data = await contactMsgAction(prevState, formData);
+    const result = await contactMsgAction({} as FormActionState, formData);
 
-    console.log(data.errors);
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Message cant't be created");
+    expect(result.errors?.prisma).not.toBeNull();
+  });
 
-    expect(data.state).toBe("error");
-    expect(data.message).toBe("Message created successfully");
+  it("Should return success if the msg has been created correctly", async () => {
+    (prisma.contact.create as jest.Mock).mockResolvedValueOnce({ id: 1 });
+
+    const formData = mockFormData({
+      name: "John Doe",
+      email: "john@example.com",
+      msg: "Hello, this is a simple test for contactMsgAction server action"
+    });
+
+    const result = await contactMsgAction({} as FormActionState, formData);
+
+    expect(result.state).toBe("success");
+    expect(result.message).toBe("Message created successfully");
+    expect(prisma.contact.create).toHaveBeenCalledWith({
+      data: {
+        name: "John Doe",
+        email: "john@example.com",
+        message: "Hello, this is a simple test for contactMsgAction server action"
+      }
+    });
   });
 });
