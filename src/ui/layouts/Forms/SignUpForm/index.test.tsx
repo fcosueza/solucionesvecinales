@@ -1,4 +1,4 @@
-import { render, screen, within, waitFor } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SignUpForm from ".";
 
@@ -56,25 +56,19 @@ describe("SignUpForm Componente test...", () => {
     const password = "blablalbal";
     const passRepeat = "blabuieon";
 
-    const nameInput = screen.getByRole("textbox", { name: "name-input" });
-    const surnameInput = screen.getByRole("textbox", { name: "surname-input" });
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
-    const passRepeatInput = screen.getByLabelText("repeat-input");
-
-    await userEvent.type(nameInput, name);
-    await userEvent.type(surnameInput, surname);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(passInput, password);
-    await userEvent.type(passRepeatInput, passRepeat);
+    await userEvent.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await userEvent.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await userEvent.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await userEvent.type(screen.getByLabelText("password-input"), password);
+    await userEvent.type(screen.getByLabelText("repeat-input"), passRepeat);
     await userEvent.click(screen.getByRole("button"));
 
     expect(screen.getAllByRole("alert")).toHaveLength(5);
-    expect(nameInput).toHaveValue("");
-    expect(surnameInput).toHaveValue("");
-    expect(emailInput).toHaveValue("");
-    expect(passInput).toHaveValue("");
-    expect(passRepeatInput).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue("");
+    expect(screen.getByLabelText("password-input")).toHaveValue("");
+    expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
   it("Should keep values in every field except in passRepeat, showing and error if the passwords doesn't match", async () => {
@@ -86,24 +80,18 @@ describe("SignUpForm Componente test...", () => {
     const password = "blablablablablablablabla";
     const passRepeat = "blablablablablablablable";
 
-    const nameInput = screen.getByRole("textbox", { name: "name-input" });
-    const surnameInput = screen.getByRole("textbox", { name: "surname-input" });
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
-    const passRepeatInput = screen.getByLabelText("repeat-input");
-
-    await userEvent.type(nameInput, name);
-    await userEvent.type(surnameInput, surname);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(passInput, password);
-    await userEvent.type(passRepeatInput, passRepeat);
+    await userEvent.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await userEvent.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await userEvent.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await userEvent.type(screen.getByLabelText("password-input"), password);
+    await userEvent.type(screen.getByLabelText("repeat-input"), passRepeat);
     await userEvent.click(screen.getByRole("button"));
 
-    expect(nameInput).toHaveValue(name);
-    expect(surnameInput).toHaveValue(surname);
-    expect(emailInput).toHaveValue(email);
-    expect(passInput).toHaveValue(password);
-    expect(passRepeatInput).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(name);
+    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
+    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(email);
+    expect(screen.getByLabelText("password-input")).toHaveValue(password);
+    expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
   it("Should keep every field data if all data is correct except name which is wrong", async () => {
@@ -115,23 +103,17 @@ describe("SignUpForm Componente test...", () => {
     const password = "blablablablablablablabla";
     const passRepeat = "blablablablablablablabla";
 
-    const nameInput = screen.getByRole("textbox", { name: "name-input" });
-    const surnameInput = screen.getByRole("textbox", { name: "surname-input" });
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
-    const passRepeatInput = screen.getByLabelText("repeat-input");
-
-    await userEvent.type(nameInput, name);
-    await userEvent.type(surnameInput, surname);
-    await userEvent.type(emailInput, email);
-    await userEvent.type(passInput, password);
-    await userEvent.type(passRepeatInput, passRepeat);
+    await userEvent.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await userEvent.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await userEvent.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await userEvent.type(screen.getByLabelText("password-input"), password);
+    await userEvent.type(screen.getByLabelText("repeat-input"), passRepeat);
     await userEvent.click(screen.getByRole("button"));
 
-    expect(nameInput).toHaveValue("");
-    expect(surnameInput).toHaveValue(surname);
-    expect(emailInput).toHaveValue(email);
-    expect(passInput).toHaveValue(password);
-    expect(passRepeatInput).toHaveValue(passRepeat);
+    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
+    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(email);
+    expect(screen.getByLabelText("password-input")).toHaveValue(password);
+    expect(screen.getByLabelText("repeat-input")).toHaveValue(passRepeat);
   });
 });
