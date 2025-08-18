@@ -70,7 +70,7 @@ describe("SignUpForm Componente test...", () => {
     await user.type(screen.getByLabelText("repeat-input"), passRepeat);
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getAllByRole("alert")).toHaveLength(5);
+    expect(await screen.findAllByRole("alert")).toHaveLength(5);
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
     expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue("");
     expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue("");

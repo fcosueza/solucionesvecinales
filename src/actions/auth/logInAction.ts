@@ -51,7 +51,7 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
   // User and password corrects
   return {
     state: "success",
-    message: "User and password are correct.",
+    message: "User and password are correct",
     payload: formData
   };
 };
