@@ -52,7 +52,7 @@ describe("LoginForm component test suite...", () => {
     await user.type(passInput, password);
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
     expect(emailInput).toHaveValue("");
     expect(passInput).toHaveValue(password);
   });
@@ -70,7 +70,7 @@ describe("LoginForm component test suite...", () => {
     await user.type(passInput, password);
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
     expect(passInput).toHaveValue("");
     expect(emailInput).toHaveValue(email);
   });

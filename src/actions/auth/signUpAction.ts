@@ -12,7 +12,7 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
   if (!validatedData.success) {
     return {
       state: "error",
-      message: "Incorrect form data.",
+      message: "Incorrect form data",
       errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
@@ -31,7 +31,7 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
   } catch (e: any) {
     return {
       state: "error",
-      message: "User can't be created.",
+      message: "User can't be created",
       errors: {
         prisma: e.message
       },
@@ -50,7 +50,7 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
   } catch (e: any) {
     return {
       state: "error",
-      message: "Credentials can`t be created.",
+      message: "Credentials can`t be created",
       errors: {
         prisma: e.message
       },
