@@ -6,8 +6,8 @@ model Reservation {
   start_time DateTime @db.Time()
   end_time   DateTime @db.Time()
 
-  userEmail User @relation(fields: [user], references: [email], onDelete: Cascade)
-  areaID    Area @relation(fields: [area, community], references: [name, community], onDelete: Cascade)
+  userID User @relation(fields: [user], references: [id], onDelete: Cascade)
+  areaID Area @relation(fields: [area, community], references: [name, community], onDelete: Cascade)
 
   @@id([user, community, area])
 }

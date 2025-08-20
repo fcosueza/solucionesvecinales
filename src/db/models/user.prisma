@@ -5,7 +5,8 @@ enum UserRole {
 }
 
 model User {
-  email   String   @id
+  id      String   @id @default(uuid())
+  email   String   @unique
   role    UserRole @default(tenant)
   name    String
   surname String
@@ -13,6 +14,6 @@ model User {
   credentials  Credentials?
   incident     Incident[]
   reservation  Reservation[]
-  registration Registration[]
+  subscription Subscription[]
   request      Request[]
 }

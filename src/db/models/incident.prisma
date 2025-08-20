@@ -12,7 +12,7 @@ model Incident {
   state       IncidentState @default(created)
 
   communityID Community @relation(fields: [community], references: [id], onDelete: Cascade)
-  userEmail   User      @relation(fields: [user], references: [email], onDelete: Cascade)
+  userID      User      @relation(fields: [user], references: [id], onDelete: Cascade)
 
   @@id([community, user, date])
 }

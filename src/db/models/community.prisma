@@ -7,9 +7,9 @@ model Community {
   province String
   country  String
 
-  messages      Message[]
-  areas         Area[]
-  incidents     Incident[]
-  registrations Registration[]
-  requests      Request[]
+  messages     Message[]
+  areas        Area[]
+  incidents    Incident[]
+  subscription Subscription[]
+  requests     Request[]
 }
