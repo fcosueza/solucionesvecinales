@@ -16,7 +16,7 @@ async function main(): Promise<void> {
 
   console.log("Communities added: ", community);
 
-  const users = await prisma.user.createMany({
+  const users = await prisma.user.createManyAndReturn({
     data: [
       {
         email: "fran@gmail.com",
@@ -42,23 +42,29 @@ async function main(): Promise<void> {
 
   console.log("Users added: ", users);
 
-  const credentials = await prisma.credentials.createMany({
-    data: [
-      {
-        user: "fran@gmail.com",
-        password: "12345"
-      },
-      {
-        user: "juan@gmail.com",
-        password: "5433212"
-      },
-      {
-        user: "alberto@gmail.com",
-        password: "dsnojiaiojs"
-      }
-    ],
-    skipDuplicates: true
-  });
+  const usersID = await prisma.user.findMany();
+
+  let credentials;
+
+  if (usersID) {
+    credentials = await prisma.credentials.createMany({
+      data: [
+        {
+          user: users[0].id,
+          password: "12345"
+        },
+        {
+          user: users[1].id,
+          password: "5433212"
+        },
+        {
+          user: users[2].id,
+          password: "dsnojiaiojs"
+        }
+      ],
+      skipDuplicates: true
+    });
+  }
 
   console.log("Credentials added: ", credentials);
 
@@ -116,21 +122,21 @@ async function main(): Promise<void> {
     data: [
       {
         community: 1,
-        user: "fran@gmail.com",
+        user: users[0].id,
         date: new Date(),
         description: "Rotura de bombilla en planta 4",
         state: "created"
       },
       {
         community: 1,
-        user: "fran@gmail.com",
+        user: users[0].id,
         date: new Date(),
         description: "Vecino ruidoso",
         state: "processing"
       },
       {
         community: 1,
-        user: "juan@gmail.com",
+        user: users[2].id,
         date: new Date(),
         description: "Hoyo en campo de futbol",
         state: "solved"
@@ -144,7 +150,7 @@ async function main(): Promise<void> {
   const reservations = await prisma.reservation.createMany({
     data: [
       {
-        user: "fran@gmail.com",
+        user: users[0].id,
         community: 1,
         area: "SPA",
         date: new Date("2024-01-05"),
@@ -152,7 +158,7 @@ async function main(): Promise<void> {
         end_time: new Date("2019-01-01 21:00:00")
       },
       {
-        user: "juan@gmail.com",
+        user: users[1].id,
         community: 1,
         area: "Pista de Padel",
         date: new Date("2024-02-09"),
@@ -165,36 +171,36 @@ async function main(): Promise<void> {
 
   console.log("Reservations added: ", reservations);
 
-  const registrations = await prisma.registration.createMany({
+  const subscriptions = await prisma.subscription.createMany({
     data: [
       {
-        user: "fran@gmail.com",
+        user: users[0].id,
         community: 1
       },
       {
-        user: "juan@gmail.com",
+        user: users[2].id,
         community: 1
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Registrations added: ", registrations);
+  console.log("subscriptions added: ", subscriptions);
 
-  const solicitudes = await prisma.request.createMany({
+  const requests = await prisma.request.createMany({
     data: [
       {
-        user: "fran@gmail.com",
+        user: users[0].id,
         community: 1,
         state: "approved"
       },
       {
-        user: "juan@gmail.com",
+        user: users[1].id,
         community: 1,
         state: "approved"
       },
       {
-        user: "alberto@gmail.com",
+        user: users[2].id,
         community: 1,
         state: "pending"
       }
@@ -202,7 +208,7 @@ async function main(): Promise<void> {
     skipDuplicates: true
   });
 
-  console.log("Requests added: ", solicitudes);
+  console.log("Requests added: ", requests);
 
   const contacts = await prisma.contact.createMany({
     data: [
@@ -220,7 +226,7 @@ async function main(): Promise<void> {
     skipDuplicates: true
   });
 
-  console.log("Añadidas solicitudes: ", contacts);
+  console.log("Added Contact: ", contacts);
 }
 
 main();
