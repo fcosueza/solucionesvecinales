@@ -2,7 +2,7 @@ import { FormActionState } from "@/types";
 import logInAction from "./logInAction";
 
 jest.mock("../../lib/prisma", () => ({
-  credentials: {
+  user: {
     findUnique: jest.fn()
   }
 }));
@@ -35,11 +35,11 @@ describe("logInAction test suite", () => {
     expect(result.state).toBe("error");
     expect(result.message).toBe("Incorrect form data");
     expect(result.errors).toBeDefined();
-    expect(prisma.credentials.findUnique).not.toHaveBeenCalled();
+    expect(prisma.user.findUnique).not.toHaveBeenCalled();
   });
 
   it("Should return an error if the user doesn't exist", async () => {
-    (prisma.credentials.findUnique as jest.Mock).mockResolvedValue("");
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue("");
 
     const formData = mockFormData({
       email: "john@example.com",
@@ -50,11 +50,11 @@ describe("logInAction test suite", () => {
 
     expect(result.state).toBe("error");
     expect(result.message).toBe("Incorrect form data");
-    expect(result.errors?.email).toBe("No existe ningún usuario con ese correo.");
+    expect(result.errors?.email).toBe("No existe ningún usuario con ese correo");
   });
 
   it("Should return an error if the password doesn't match", async () => {
-    (prisma.credentials.findUnique as jest.Mock).mockResolvedValue({ password: "testtesttesttest" });
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({ password: "testtesttesttest" });
 
     const formData = mockFormData({
       email: "john@example.com",
@@ -68,10 +68,10 @@ describe("logInAction test suite", () => {
     expect(result.errors?.password).toBe("La contraseña no es válida para este usuario.");
   });
 
-  it("Should return success if the msg has been created correctly", async () => {
-    (prisma.credentials.findUnique as jest.Mock).mockResolvedValueOnce({
-      email: "john@example.com",
-      password: "aaaaaaaaaaaaaaaaaaaa"
+  it("Should return success if the user exists and password is correct", async () => {
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
+      id: 1,
+      credentials: { password: "aaaaaaaaaaaaaaaaaaaa" }
     });
 
     const formData = mockFormData({

@@ -18,10 +18,13 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
     };
   }
 
-  // Try to find user
-  const user = await prisma.credentials.findUnique({
+  // Try to find user and credentials
+  const user = await prisma.user.findUnique({
     where: {
-      user: validatedData.data.email
+      email: validatedData.data.email
+    },
+    include: {
+      credentials: true
     }
   });
 
@@ -31,14 +34,14 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
       state: "error",
       message: "Incorrect form data",
       errors: {
-        email: "No existe ningún usuario con ese correo."
+        email: "No existe ningún usuario con ese correo"
       },
       payload: formData
     };
   }
 
   // Incorrect password
-  if (user.password !== validatedData.data.password)
+  if (user.credentials?.password !== validatedData.data.password)
     return {
       state: "error",
       message: "Incorrect form data",
@@ -48,7 +51,7 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
       payload: formData
     };
 
-  // User and password corrects
+  // User and password are corrects
   return {
     state: "success",
     message: "User and password are correct",

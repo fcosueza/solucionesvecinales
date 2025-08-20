@@ -18,39 +18,25 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
     };
   }
 
-  // Try to create the user
+  // Try to create the user and credentials
   try {
     await prisma.user.create({
       data: {
         email: validatedData.data.email,
         role: validatedData.data.role,
         name: validatedData.data.name,
-        surname: validatedData.data.surname
+        surname: validatedData.data.surname,
+        credentials: {
+          create: {
+            password: validatedData.data.password
+          }
+        }
       }
     });
   } catch (e: any) {
     return {
       state: "error",
       message: "User can't be created",
-      errors: {
-        prisma: e.message
-      },
-      payload: formData
-    };
-  }
-
-  // Try to create credentials
-  try {
-    await prisma.credentials.create({
-      data: {
-        user: validatedData.data.email,
-        password: validatedData.data.password
-      }
-    });
-  } catch (e: any) {
-    return {
-      state: "error",
-      message: "Credentials can`t be created",
       errors: {
         prisma: e.message
       },
