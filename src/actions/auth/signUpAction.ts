@@ -5,8 +5,8 @@ import { FormActionState } from "@/types";
 import signUpSchema from "@/schemas/auth/signup.schema";
 
 const signUpAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const fieldData = Object.fromEntries(formData);
-  const validatedData = signUpSchema.safeParse(fieldData);
+  const rawData = Object.fromEntries(formData);
+  const validatedData = signUpSchema.safeParse(rawData);
 
   // If data is not valid
   if (!validatedData.success) {

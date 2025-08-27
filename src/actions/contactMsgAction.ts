@@ -5,8 +5,8 @@ import { FormActionState } from "@/types";
 import contactSchema from "@/schemas/common/contact.schema";
 
 const contactMsgAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const fieldData = Object.fromEntries(formData);
-  const validatedData = contactSchema.safeParse(fieldData);
+  const rawData = Object.fromEntries(formData);
+  const validatedData = contactSchema.safeParse(rawData);
 
   if (!validatedData.success) {
     return {
