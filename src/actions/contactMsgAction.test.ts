@@ -1,13 +1,12 @@
 import { FormActionState } from "@/types";
 import contactMsgAction from "./contactMsgAction";
+import prisma from "../lib/prisma";
 
 jest.mock("../lib/prisma", () => ({
   contact: {
     create: jest.fn()
   }
 }));
-
-import prisma from "../lib/prisma";
 
 describe("contactMsgAction test suite", () => {
   const mockFormData = (data: Record<string, string>) => {

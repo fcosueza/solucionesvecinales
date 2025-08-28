@@ -1,13 +1,12 @@
 import { FormActionState } from "@/types";
 import logInAction from "./logInAction";
+import prisma from "../../lib/prisma";
 
 jest.mock("../../lib/prisma", () => ({
   user: {
     findUnique: jest.fn()
   }
 }));
-
-import prisma from "../../lib/prisma";
 
 describe("logInAction test suite", () => {
   const mockFormData = (data: Record<string, string>) => {

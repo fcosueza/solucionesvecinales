@@ -1,13 +1,12 @@
 import { FormActionState } from "@/types";
 import signUpAction from "./signUpAction";
+import prisma from "../../lib/prisma";
 
 jest.mock("../../lib/prisma", () => ({
   user: {
     create: jest.fn()
   }
 }));
-
-import prisma from "../../lib/prisma";
 
 describe("signUpAction test suite", () => {
   const mockFormData = (data: Record<string, string>) => {
