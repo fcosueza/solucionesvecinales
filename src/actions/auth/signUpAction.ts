@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import bcrypt from "bcrypt";
 import { FormActionState } from "@/types";
 import signUpSchema from "@/schemas/auth/signup.schema";
 
@@ -18,6 +19,9 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
     };
   }
 
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(validatedData.data.password, saltRounds);
+
   // Try to create the user and credentials
   try {
     await prisma.user.create({
@@ -28,7 +32,7 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
         surname: validatedData.data.surname,
         credentials: {
           create: {
-            password: validatedData.data.password
+            password: hashedPassword
           }
         }
       }

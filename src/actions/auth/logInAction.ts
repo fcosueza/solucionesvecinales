@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import bcrypt from "bcrypt";
 import { FormActionState } from "@/types";
 import logInSchema from "@/schemas/auth/login.schema";
 
@@ -29,7 +30,7 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
   });
 
   // User doesn't exits
-  if (!user) {
+  if (!user || !user.credentials) {
     return {
       state: "error",
       message: "Incorrect form data",
@@ -40,8 +41,10 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
     };
   }
 
+  const passwordMatch = await bcrypt.compare(validatedData.data.password, user.credentials.password);
+
   // Incorrect password
-  if (user.credentials?.password !== validatedData.data.password)
+  if (!passwordMatch)
     return {
       state: "error",
       message: "Incorrect form data",

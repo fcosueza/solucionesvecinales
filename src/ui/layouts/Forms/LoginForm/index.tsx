@@ -38,7 +38,7 @@ const LoginForm = (): React.ReactNode => {
           attr={{
             id: "password",
             name: "password",
-            type: InputType.text,
+            type: InputType.password,
             placeholder: "Introduzca su contraseña...",
             defaultValue: state?.errors?.password ? "" : ((state.payload?.get("password") as string) ?? ""),
             required: true
