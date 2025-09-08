@@ -1,6 +1,7 @@
 import { FormActionState } from "@/types";
 import logInAction from "./logInAction";
 import prisma from "../../lib/prisma";
+import bcrypt from "bcrypt";
 
 jest.mock("../../lib/prisma", () => ({
   user: {
@@ -53,7 +54,12 @@ describe("logInAction test suite", () => {
   });
 
   it("Should return an error if the password doesn't match", async () => {
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue({ password: "testtesttesttest" });
+    const hashedPassword = await bcrypt.hash("testestestestestestest", 10);
+
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
+      id: 1,
+      credentials: { password: hashedPassword }
+    });
 
     const formData = mockFormData({
       email: "john@example.com",
@@ -68,9 +74,11 @@ describe("logInAction test suite", () => {
   });
 
   it("Should return success if the user exists and password is correct", async () => {
+    const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
+
     (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       id: 1,
-      credentials: { password: "aaaaaaaaaaaaaaaaaaaa" }
+      credentials: { password: hashedPassword }
     });
 
     const formData = mockFormData({
