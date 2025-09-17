@@ -1,12 +1,16 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { FormActionState } from "@/types";
 import contactSchema from "@/schemas/common/contact.schema";
+import { FormActionState } from "@/types";
+import { SafeParseReturnType } from "zod";
+import z from "zod";
+
+type ContactFormFields = z.infer<typeof contactSchema>;
 
 const contactMsgAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const rawData = Object.fromEntries(formData);
-  const validatedData = contactSchema.safeParse(rawData);
+  const rawData: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, ContactFormFields> = contactSchema.safeParse(rawData);
 
   if (!validatedData.success) {
     return {

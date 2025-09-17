@@ -2,12 +2,16 @@
 
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
-import { FormActionState } from "@/types";
 import signUpSchema from "@/schemas/auth/signup.schema";
+import { FormActionState } from "@/types";
+import { SafeParseReturnType } from "zod";
+import z from "zod";
+
+type SignInFields = z.infer<typeof signUpSchema>;
 
 const signUpAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const rawData = Object.fromEntries(formData);
-  const validatedData = signUpSchema.safeParse(rawData);
+  const rawData: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, SignInFields> = signUpSchema.safeParse(rawData);
 
   // If data is not valid
   if (!validatedData.success) {
@@ -19,8 +23,8 @@ const signUpAction = async (prevState: FormActionState, formData: FormData): Pro
     };
   }
 
-  const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(validatedData.data.password, saltRounds);
+  const saltRounds: number = 10;
+  const hashedPassword: string = await bcrypt.hash(validatedData.data.password, saltRounds);
 
   // Try to create the user and credentials
   try {

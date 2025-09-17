@@ -2,12 +2,16 @@
 
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
-import { FormActionState } from "@/types";
 import logInSchema from "@/schemas/auth/login.schema";
+import { FormActionState } from "@/types";
+import { SafeParseReturnType } from "zod";
+import z from "zod";
+
+type LogInFields = z.infer<typeof logInSchema>;
 
 const logInAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const rawData = Object.fromEntries(formData);
-  const validatedData = logInSchema.safeParse(rawData);
+  const rawData: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, LogInFields> = logInSchema.safeParse(rawData);
 
   // If data is not valid
   if (!validatedData.success) {
@@ -41,7 +45,7 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
     };
   }
 
-  const passwordMatch = await bcrypt.compare(validatedData.data.password, user.credentials.password);
+  const passwordMatch: boolean = await bcrypt.compare(validatedData.data.password, user.credentials.password);
 
   // Incorrect password
   if (!passwordMatch)
