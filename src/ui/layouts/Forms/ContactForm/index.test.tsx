@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
+import contactMsgAction from "@/actions/contactMsgAction";
+
+jest.mock("@/actions/contactMsgAction");
 
 function setup(jsx: React.ReactNode) {
   return {
@@ -42,9 +45,23 @@ describe("ContactForm component test suite...", () => {
   it("Should show error msg and load error class if the name its not correct", async () => {
     const { user } = setup(<ContactForm />);
 
+    const formData = new FormData();
+    const mockAction = contactMsgAction as jest.Mock;
+
     const name = "t";
     const email = "testname@email.com";
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
+
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("msg", msg);
+
+    mockAction.mockResolvedValue({
+      state: "error",
+      message: "Incorrect form data",
+      errors: { name: "Nombre incorrecto" },
+      payload: formData
+    });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
     await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
@@ -59,13 +76,28 @@ describe("ContactForm component test suite...", () => {
   it("Should show error msg and load error class if the email its not correct", async () => {
     const { user } = setup(<ContactForm />);
 
+    const formData = new FormData();
+    const mockAction = contactMsgAction as jest.Mock;
+
     const name = "test";
     const email = "testname@email.c";
     const msg = "Lorem ipsum dolor sit amet consecterum asasa asdad asdad";
 
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("msg", msg);
+
+    mockAction.mockResolvedValue({
+      state: "error",
+      message: "Incorrect form data",
+      errors: { email: "El correo es incorrecto" },
+      payload: formData
+    });
+
     await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
     await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
     await user.type(screen.getByRole("textbox", { name: "msg-input" }), msg);
+
     await user.click(screen.getByRole("button"));
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
@@ -76,9 +108,23 @@ describe("ContactForm component test suite...", () => {
   it("Should show error msg and load error class if the msg its not correct", async () => {
     const { user } = setup(<ContactForm />);
 
+    const formData = new FormData();
+    const mockAction = contactMsgAction as jest.Mock;
+
     const name = "test";
     const email = "testname@email.com";
     const msg = "Lorem ipsum";
+
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("msg", msg);
+
+    mockAction.mockResolvedValue({
+      state: "error",
+      message: "Incorrect form data",
+      errors: { msg: "El mensaje es incorrecto" },
+      payload: formData
+    });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
     await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
