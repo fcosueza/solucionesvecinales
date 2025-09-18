@@ -1,6 +1,7 @@
 "use client";
 
 import signUpAction from "@/actions/auth/signUpAction";
+import { redirect } from "next/navigation";
 import { useActionState } from "react";
 import { FormActionState, InputType, RadioBoxType } from "@/types";
 import FormInput from "@/ui/components/FormComp/FormInput";
@@ -15,6 +16,9 @@ const initialState = {
 
 const SignUpForm = (): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<FormActionState, FormData>(signUpAction, initialState);
+
+  // If user is created we redirect to login page
+  if (state.state == "success") redirect("/login");
 
   return (
     <>
