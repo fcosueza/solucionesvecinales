@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LoginForm from ".";
+import logInAction from "@/actions/auth/logInAction";
+
+// Mock logInAction server action
+jest.mock("@/actions/auth/logInAction");
 
 function setup(jsx: React.ReactNode) {
   return {
@@ -42,11 +46,26 @@ describe("LoginForm component test suite...", () => {
   it("Should show error message if email is not correct", async () => {
     const { user } = setup(<LoginForm />);
 
+    const mockAction = logInAction as jest.Mock;
+    const formData = new FormData();
+
     const email = "testname@email.c";
     const password = "asssssssasasdsdasdasdasas";
 
     const emailInput = screen.getByRole("textbox", { name: "email-input" });
     const passInput = screen.getByLabelText("password-input");
+
+    formData.append("email", email);
+    formData.append("password", password);
+
+    mockAction.mockResolvedValue({
+      state: "error",
+      messsage: "Incorrect form data",
+      errors: {
+        email: "email incorrecto"
+      },
+      payload: formData
+    });
 
     await user.type(emailInput, email);
     await user.type(passInput, password);
@@ -60,11 +79,25 @@ describe("LoginForm component test suite...", () => {
   it("Should show error message if password is not correct", async () => {
     const { user } = setup(<LoginForm />);
 
+    const mockAction = logInAction as jest.Mock;
+    const formData = new FormData();
     const email = "testname@email.com";
     const password = "as";
 
     const emailInput = screen.getByRole("textbox", { name: "email-input" });
     const passInput = screen.getByLabelText("password-input");
+
+    formData.append("email", email);
+    formData.append("password", password);
+
+    mockAction.mockResolvedValue({
+      state: "error",
+      messsage: "Incorrect form data",
+      errors: {
+        password: "password incorrecto"
+      },
+      payload: formData
+    });
 
     await user.type(emailInput, email);
     await user.type(passInput, password);

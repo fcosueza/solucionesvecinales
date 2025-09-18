@@ -3,7 +3,7 @@ import logInAction from "./logInAction";
 import prisma from "../../lib/prisma";
 import bcrypt from "bcrypt";
 
-jest.mock("../../lib/prisma", () => ({
+jest.mock("@/lib/prisma", () => ({
   user: {
     findUnique: jest.fn()
   }
