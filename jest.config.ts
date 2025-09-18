@@ -19,7 +19,10 @@ const config: Config = {
     "<rootDir>/src/db/*",
     "<rootDir>/src/schemas/*",
     "<rootDir>/src/types/*"
-  ]
+  ],
+  moduleNameMapper: {
+    "@/(.*)": "<rootDir>/src/$1"
+  }
 };
 
 export default createJestConfig(config);
