@@ -1,3 +1,5 @@
+import { JWTPayload } from "jose";
+
 export enum UserRole {
   tenant = "tenant",
   admin = "admin",
@@ -60,7 +62,12 @@ export interface FormRadioAttrs extends FormFieldAttrs {
   defaultChecked?: boolean;
 }
 
-export interface SessionPayload {
+export interface SessionPayload extends JWTPayload {
   userID: string;
   role: UserRole;
+}
+
+export interface BasicError {
+  error: string;
+  message: string;
 }
