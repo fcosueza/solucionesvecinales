@@ -59,3 +59,8 @@ export interface FormRadioAttrs extends FormFieldAttrs {
   value: string | number | undefined;
   defaultChecked?: boolean;
 }
+
+export interface SessionPayload {
+  userID: string;
+  role: UserRole;
+}
