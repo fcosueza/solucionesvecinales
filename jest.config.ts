@@ -15,7 +15,7 @@ const config: Config = {
   coveragePathIgnorePatterns: [
     "/node_modules/",
     "<rootDir>/src/generated/*",
-    "<rootDir>/src/lib/*",
+    "<rootDir>/src/lib/prisma*",
     "<rootDir>/src/db/*",
     "<rootDir>/src/schemas/*",
     "<rootDir>/src/types/*"
