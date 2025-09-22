@@ -3,8 +3,9 @@
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import logInSchema from "@/schemas/auth/login.schema";
-import { FormActionState } from "@/types";
+import { FormActionState, UserRole } from "@/types";
 import { SafeParseReturnType } from "zod";
+import { createSession } from "@/lib/session";
 import z from "zod";
 
 type LogInFields = z.infer<typeof logInSchema>;
@@ -57,6 +58,8 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
       },
       payload: formData
     };
+
+  await createSession(user.id, user.role as UserRole);
 
   // User and password are corrects
   return {

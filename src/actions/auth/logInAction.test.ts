@@ -1,7 +1,11 @@
 import { FormActionState } from "@/types";
+import { waitFor } from "@testing-library/dom";
 import logInAction from "./logInAction";
 import prisma from "../../lib/prisma";
 import bcrypt from "bcrypt";
+import { createSession } from "@/lib/session";
+
+jest.mock("@/lib/session");
 
 jest.mock("@/lib/prisma", () => ({
   user: {
@@ -90,5 +94,6 @@ describe("logInAction test suite", () => {
 
     expect(result.state).toBe("success");
     expect(result.message).toBe("User and password are correct");
+    await waitFor(() => expect(createSession).toHaveBeenCalledTimes(1));
   });
 });

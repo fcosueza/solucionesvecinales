@@ -3,7 +3,7 @@
 import signUpAction from "@/actions/auth/signUpAction";
 import { redirect } from "next/navigation";
 import { useActionState } from "react";
-import { FormActionState, InputType, RadioBoxType } from "@/types";
+import { FormActionState, InputType, RadioBoxType, UserRole } from "@/types";
 import FormInput from "@/ui/components/FormComp/FormInput";
 import FormRadioBox from "@/ui/components/FormComp/FormRadioBox";
 import Button from "../../../components/Button";
@@ -58,7 +58,7 @@ const SignUpForm = (): React.ReactNode => {
               labelText: "inquilino",
               radioAttr: {
                 id: "tenant",
-                value: "tenant",
+                value: UserRole.tenant,
                 defaultChecked: true
               }
             },
@@ -66,7 +66,7 @@ const SignUpForm = (): React.ReactNode => {
               labelText: "administrador",
               radioAttr: {
                 id: "admin",
-                value: "admin"
+                value: UserRole.admin
               }
             }
           ]}

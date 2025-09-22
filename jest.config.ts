@@ -15,7 +15,7 @@ const config: Config = {
   coveragePathIgnorePatterns: [
     "/node_modules/",
     "<rootDir>/src/generated/*",
-    "<rootDir>/src/lib/prisma.ts",
+    "<rootDir>/src/lib/*",
     "<rootDir>/src/db/*",
     "<rootDir>/src/schemas/*",
     "<rootDir>/src/types/*"
@@ -25,4 +25,7 @@ const config: Config = {
   }
 };
 
-export default createJestConfig(config);
+module.exports = async () => ({
+  ...(await createJestConfig(config)()),
+  transformIgnorePatterns: ["node_modules/(?!(jose)/)"]
+});
