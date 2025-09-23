@@ -10,7 +10,7 @@ import z from "zod";
 
 type LogInFields = z.infer<typeof logInSchema>;
 
-const logInAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+const logInAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const rawData: object = Object.fromEntries(formData);
   const validatedData: SafeParseReturnType<object, LogInFields> = logInSchema.safeParse(rawData);
 
@@ -59,9 +59,9 @@ const logInAction = async (prevState: FormActionState, formData: FormData): Prom
       payload: formData
     };
 
+  // User and password are corrects
   await createSession(user.id, user.role as UserRole);
 
-  // User and password are corrects
   return {
     state: "success",
     message: "User and password are correct",

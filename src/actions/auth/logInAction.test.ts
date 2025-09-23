@@ -1,9 +1,9 @@
 import { FormActionState } from "@/types";
+import { createSession } from "@/lib/session";
 import { waitFor } from "@testing-library/dom";
 import logInAction from "./logInAction";
 import prisma from "../../lib/prisma";
 import bcrypt from "bcrypt";
-import { createSession } from "@/lib/session";
 
 jest.mock("@/lib/session");
 
