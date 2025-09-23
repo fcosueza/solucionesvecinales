@@ -11,7 +11,7 @@ async function decryptSession(session: string | undefined = ""): Promise<Session
     const { payload } = await jwtVerify<SessionPayload>(session, encodedKey, { algorithms: ["HS256"] });
 
     return payload;
-  } catch (error) {
+  } catch (_error) {
     return { error: "session error", message: "Session can't be verified." };
   }
 }
