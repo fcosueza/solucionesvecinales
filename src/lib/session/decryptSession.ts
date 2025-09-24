@@ -12,7 +12,7 @@ async function decryptSession(session: string | undefined = ""): Promise<Session
 
     return payload;
   } catch (_error) {
-    return { error: "session error", message: "Session can't be verified." };
+    return { error: "session error", message: "Session can't be decrypted." };
   }
 }
 

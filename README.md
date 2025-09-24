@@ -5,4 +5,4 @@ stay connected and manage their community with easy.
 
 ## TODO
 
-- Use AuthO or NextAuth for auth, now using basic own developed solution.
+- Use AuthO or NextAuth for authentication. Now using basic own developed solution.
