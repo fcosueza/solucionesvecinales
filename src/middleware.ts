@@ -6,11 +6,11 @@ const protecetedRoutes = ["/dashboard"];
 const publicRoutes = ["/home", "/login", "/signin"];
 
 async function middleware(req: NextRequest): Promise<NextResponse> {
-  const path = req.nextUrl.pathname;
-  const isProtectedRoute = protecetedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
+  const path: string = req.nextUrl.pathname;
+  const isProtectedRoute: boolean = protecetedRoutes.includes(path);
+  const isPublicRoute: boolean = publicRoutes.includes(path);
 
-  const cookie = (await cookies()).get("session")?.value;
+  const cookie: string | undefined = (await cookies()).get("session")?.value;
   const session = await decryptSession(cookie);
 
   if (isProtectedRoute && "error" in session) {
