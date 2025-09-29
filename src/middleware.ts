@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { SessionPayload, BasicError } from "@/types";
 import { decryptSession } from "./lib/session";
 import { cookies } from "next/headers";
 
@@ -11,7 +12,7 @@ async function middleware(req: NextRequest): Promise<NextResponse> {
   const isPublicRoute: boolean = publicRoutes.includes(path);
 
   const cookie: string | undefined = (await cookies()).get("session")?.value;
-  const session = await decryptSession(cookie);
+  const session: SessionPayload | BasicError = await decryptSession(cookie);
 
   if (isProtectedRoute && "error" in session) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));

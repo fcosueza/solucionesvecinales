@@ -12,7 +12,7 @@ const initialState: FormActionState = {
   message: ""
 };
 
-const LoginForm = (): React.ReactNode => {
+const LogInForm = (): React.ReactNode => {
   const [state, formAction, isPending] = useActionState<FormActionState, FormData>(logInAction, initialState);
 
   return (
@@ -51,4 +51,4 @@ const LoginForm = (): React.ReactNode => {
   );
 };
 
-export default LoginForm;
+export default LogInForm;

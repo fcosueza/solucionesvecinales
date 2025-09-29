@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import LoginForm from ".";
+import LogInForm from ".";
 import logInAction from "@/actions/auth/logInAction";
 
 // Mock logInAction server action
@@ -15,20 +15,20 @@ function setup(jsx: React.ReactNode) {
 
 describe("LoginForm component test suite...", () => {
   it("Should render the form correctly", () => {
-    render(<LoginForm />);
+    render(<LogInForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
   it("Should render the controls to insert email and password", () => {
-    render(<LoginForm />);
+    render(<LogInForm />);
 
     expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
     expect(screen.getByLabelText("password-input")).toBeInTheDocument();
   });
 
   it("Should show in every field what the user is writing", async () => {
-    const { user } = setup(<LoginForm />);
+    const { user } = setup(<LogInForm />);
 
     const email = "testname@email.com";
     const password = "asssssssasasdsdasdasdasas";
@@ -44,7 +44,7 @@ describe("LoginForm component test suite...", () => {
   });
 
   it("Should show error message if email is not correct", async () => {
-    const { user } = setup(<LoginForm />);
+    const { user } = setup(<LogInForm />);
 
     const mockAction = logInAction as jest.Mock;
     const formData = new FormData();
@@ -77,7 +77,7 @@ describe("LoginForm component test suite...", () => {
   });
 
   it("Should show error message if password is not correct", async () => {
-    const { user } = setup(<LoginForm />);
+    const { user } = setup(<LogInForm />);
 
     const mockAction = logInAction as jest.Mock;
     const formData = new FormData();
