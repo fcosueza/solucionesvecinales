@@ -13,7 +13,7 @@ function setup(jsx: React.ReactNode) {
   };
 }
 
-describe("LoginForm component test suite...", () => {
+describe("LogInForm component test suite...", () => {
   it("Should render the form correctly", () => {
     render(<LogInForm />);
 
