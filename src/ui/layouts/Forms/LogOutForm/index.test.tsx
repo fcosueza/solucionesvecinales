@@ -63,4 +63,16 @@ describe("LogOutForm component test suite...", () => {
     await user.click(screen.getByRole("button", { name: "No" }));
     expect(router.back).toHaveBeenCalled();
   });
+
+  it("It should render the text passed has props for quesiton and buttons", async () => {
+    const questionText = "Testing question?";
+    const confirmText = "Agreed";
+    const cancelText = "No Agreed";
+
+    render(<LogOutForm questionText={questionText} confirmText={confirmText} cancelText={cancelText} />);
+
+    expect(screen.getByText(questionText)).toBeInTheDocument();
+    expect(screen.getByText(confirmText)).toBeInTheDocument();
+    expect(screen.getByText(cancelText)).toBeInTheDocument();
+  });
 });
