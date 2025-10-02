@@ -2,12 +2,21 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LogOutForm from ".";
 import logOutAction from "@/actions/auth/logOutAction";
-import { redirect } from "next/navigation";
+import { useRouter as mockUseRouter } from "next/router";
 
 // Mock logInAction server action
 jest.mock("@/actions/auth/logOutAction");
-jest.mock("next/navigation");
 
+// Mock useRouter module
+jest.mock("next/router", () => ({
+  ...jest.requireActual("next/router"),
+  useRouter: jest.fn()
+}));
+
+// Adding method push to our useRouter mock
+(mockUseRouter as jest.Mock).mockReturnValue({
+  back: jest.fn()
+});
 function setup(jsx: React.ReactNode) {
   return {
     user: userEvent.setup(),
@@ -25,7 +34,7 @@ describe("LogOutForm component test suite...", () => {
   it("Should render the question text correctly", () => {
     const questionText = "¿Quieres cerrar sesión realmente?";
 
-    render(<LogOutForm text={questionText} />);
+    render(<LogOutForm questionText={questionText} />);
 
     expect(screen.getByText(questionText)).toBeInTheDocument();
   });
@@ -48,9 +57,10 @@ describe("LogOutForm component test suite...", () => {
 
   it("Should call redirect if the cancel button is clicked", async () => {
     const { user } = setup(<LogOutForm />);
+    const router = mockUseRouter();
 
     await user.click(screen.getByRole("button", { name: "cancer-button" }));
 
-    expect(redirect).toHaveBeenCalledTimes(1);
+    expect(router.back).toHaveBeenCalledTimes(1);
   });
 });
