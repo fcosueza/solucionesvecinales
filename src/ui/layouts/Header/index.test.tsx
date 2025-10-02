@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter as mockUseRouter } from "next/navigation";
 import { NavItem } from "@/types";
@@ -53,7 +53,7 @@ describe("Layout Component Header test suite", () => {
 
     render(<Header links={links} buttonText="TestButton" />);
 
-    await waitFor(() => expect(router.push).not.toHaveBeenCalled());
+    expect(router.push).not.toHaveBeenCalled();
   });
 
   it("Should call router hook when the button is clicked", async () => {
@@ -62,6 +62,6 @@ describe("Layout Component Header test suite", () => {
     render(<Header links={links} buttonText="TestButton" />);
 
     await userEvent.click(screen.getByRole("button"));
-    await waitFor(() => expect(router.push).toHaveBeenCalled());
+    expect(router.push).toHaveBeenCalled();
   });
 });

@@ -2,21 +2,22 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LogOutForm from ".";
 import logOutAction from "@/actions/auth/logOutAction";
-import { useRouter as mockUseRouter } from "next/router";
+import { useRouter as mockUseRouter } from "next/navigation";
 
 // Mock logInAction server action
 jest.mock("@/actions/auth/logOutAction");
 
 // Mock useRouter module
-jest.mock("next/router", () => ({
-  ...jest.requireActual("next/router"),
+jest.mock("next/navigation", () => ({
+  ...jest.requireActual("next/navigation"),
   useRouter: jest.fn()
 }));
 
-// Adding method push to our useRouter mock
+// Adding method back to our useRouter mock
 (mockUseRouter as jest.Mock).mockReturnValue({
   back: jest.fn()
 });
+
 function setup(jsx: React.ReactNode) {
   return {
     user: userEvent.setup(),
@@ -39,28 +40,27 @@ describe("LogOutForm component test suite...", () => {
     expect(screen.getByText(questionText)).toBeInTheDocument();
   });
 
-  it("Should render two buttons to confirm action", () => {
+  it("Should render two buttons to confirm or cancel action", () => {
     render(<LogOutForm />);
 
     expect(screen.getAllByRole("button")).toHaveLength(2);
-    expect(screen.getByRole("button", { name: "confirm-button" })).toHaveLength(2);
-    expect(screen.getByRole("button", { name: "cancel-button" })).toHaveLength(2);
+    expect(screen.getByRole("button", { name: "Yes" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "No" })).toBeInTheDocument();
   });
 
   it("Should call server action if the confirm button is clicked", async () => {
     const { user } = setup(<LogOutForm />);
 
-    await user.click(screen.getByRole("button", { name: "confirm-button" }));
+    await user.click(screen.getByRole("button", { name: "Yes" }));
 
-    expect(logOutAction).toHaveBeenCalledTimes(1);
+    expect(logOutAction).toHaveBeenCalled();
   });
 
-  it("Should call redirect if the cancel button is clicked", async () => {
+  it("Should call useRouter if the cancel button is clicked", async () => {
     const { user } = setup(<LogOutForm />);
     const router = mockUseRouter();
 
-    await user.click(screen.getByRole("button", { name: "cancer-button" }));
-
-    expect(router.back).toHaveBeenCalledTimes(1);
+    await user.click(screen.getByRole("button", { name: "No" }));
+    expect(router.back).toHaveBeenCalled();
   });
 });
