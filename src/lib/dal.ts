@@ -13,7 +13,7 @@ const verifySession = cache(async (): Promise<SessionVerification> => {
     return { isAuth: false };
   }
 
-  return { isAuth: true, userID: session.userID };
+  return { isAuth: true, session: session };
 });
 
 export default verifySession;

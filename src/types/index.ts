@@ -69,7 +69,7 @@ export interface SessionPayload extends JWTPayload {
 
 export interface SessionVerification {
   isAuth: boolean;
-  userID?: string;
+  session?: SessionPayload;
 }
 
 export interface BasicError {
