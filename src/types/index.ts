@@ -67,6 +67,11 @@ export interface SessionPayload extends JWTPayload {
   role: UserRole;
 }
 
+export interface SessionVerification {
+  isAuth: boolean;
+  userID?: string;
+}
+
 export interface BasicError {
   error: string;
   message: string;

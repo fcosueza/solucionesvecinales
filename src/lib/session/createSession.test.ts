@@ -15,7 +15,7 @@ jest.mock("next/headers", () => ({
 });
 
 describe("createSession test suite...", () => {
-  it("Should call cokkies.set to set the cookie", async () => {
+  it("Should call cokkies.set to set the session", async () => {
     const cookieStore = await mockCookies();
     const role = UserRole.admin;
     const userId = "1";
