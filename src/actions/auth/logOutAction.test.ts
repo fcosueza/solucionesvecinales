@@ -6,6 +6,10 @@ jest.mock("next/navigation");
 jest.mock("@/lib/session");
 
 describe("logOutAction test suite...", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("Should call deleteSession function", async () => {
     await logOutAction();
 

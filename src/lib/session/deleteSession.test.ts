@@ -6,7 +6,6 @@ jest.mock("next/headers", () => ({
   cookies: jest.fn()
 }));
 
-// Add delete function to cookies mock
 (mockCookies as jest.Mock).mockReturnValue({
   delete: jest.fn()
 });

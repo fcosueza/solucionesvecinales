@@ -6,7 +6,6 @@ import prisma from "../../lib/prisma";
 import bcrypt from "bcrypt";
 
 jest.mock("@/lib/session");
-
 jest.mock("@/lib/prisma", () => ({
   user: {
     findUnique: jest.fn()
