@@ -9,7 +9,7 @@ import z from "zod";
 
 type SignInFields = z.infer<typeof signUpSchema>;
 
-const signUpAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+const signUpAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const rawData: object = Object.fromEntries(formData);
   const validatedData: SafeParseReturnType<object, SignInFields> = signUpSchema.safeParse(rawData);
 

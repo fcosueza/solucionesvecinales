@@ -8,7 +8,7 @@ import z from "zod";
 
 type ContactFormFields = z.infer<typeof contactSchema>;
 
-const contactMsgAction = async (prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+const contactMsgAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const rawData: object = Object.fromEntries(formData);
   const validatedData: SafeParseReturnType<object, ContactFormFields> = contactSchema.safeParse(rawData);
 
