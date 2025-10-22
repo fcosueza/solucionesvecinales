@@ -4,7 +4,7 @@ import { decryptSession } from "./lib/session";
 import { cookies } from "next/headers";
 
 const protectedRoutes = ["/dashboard"];
-const publicRoutes = ["/home", "/login", "/signin"];
+const publicRoutes = ["/home", "/login", "/signup"];
 
 async function middleware(req: NextRequest): Promise<NextResponse> {
   const path: string = req.nextUrl.pathname;
