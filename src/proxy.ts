@@ -25,4 +25,4 @@ async function proxy(req: NextRequest): Promise<NextResponse> {
   return NextResponse.next();
 }
 
-export default middleware;
+export default proxy;
