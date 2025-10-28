@@ -25,4 +25,9 @@ async function proxy(req: NextRequest): Promise<NextResponse> {
   return NextResponse.next();
 }
 
+// Matcher to set in which routes the proxy should not run, like images
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"]
+};
+
 export default proxy;
