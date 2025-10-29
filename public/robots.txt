@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Bloquear rutas internas o de API
+Disallow: /_next/
+Disallow: /static/
+Disallow: /admin/
+Disallow: /dashboard/
+
+# Avoid params and tracking routes
+Disallow: /*?*
+Disallow: /*&*
+
