@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Bloquear rutas internas o de API
+# Block private and internal routes
 Disallow: /_next/
 Disallow: /static/
 Disallow: /admin/
