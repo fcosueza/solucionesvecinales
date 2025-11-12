@@ -11,9 +11,11 @@ model User {
   name    String
   surname String
 
-  credentials  Credentials?
-  incident     Incident[]
-  reservation  Reservation[]
-  subscription Subscription[]
-  request      Request[]
+  credentials Credentials?
+  incident    Incident[]
+  reservation Reservation[]
+  request     Request[]
+
+  tenantComm Community[] @relation("admin")
+  adminComm  Community[] @relation("tenant")
 }

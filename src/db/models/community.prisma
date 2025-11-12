@@ -7,9 +7,12 @@ model Community {
   province String
   country  String
 
-  messages     Message[]
-  areas        Area[]
-  incidents    Incident[]
-  subscription Subscription[]
-  requests     Request[]
+  tenants   User[]     @relation(name: "tenant")
+  messages  Message[]
+  areas     Area[]
+  incidents Incident[]
+  requests  Request[]
+
+  adminId String
+  admin   User   @relation("admin", fields: [adminId], references: [id])
 }
