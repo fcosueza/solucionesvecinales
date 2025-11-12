@@ -3,19 +3,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main(): Promise<void> {
-  const community = await prisma.community.create({
-    data: {
-      name: "Arrayanes6",
-      street: "Arrayanes",
-      number: 6,
-      city: "Granada",
-      province: "Granada",
-      country: "España"
-    }
-  });
-
-  console.log("Communities added: ", community);
-
   const users = await prisma.user.createManyAndReturn({
     data: [
       {
@@ -67,6 +54,22 @@ async function main(): Promise<void> {
   }
 
   console.log("Credentials added: ", credentials);
+
+  const community = await prisma.community.create({
+    data: {
+      name: "Arrayanes6",
+      street: "Arrayanes",
+      number: 6,
+      city: "Granada",
+      province: "Granada",
+      country: "España",
+      admin: {
+        connect: users[0]
+      }
+    }
+  });
+
+  console.log("Communities added: ", community);
 
   const messages = await prisma.message.createMany({
     data: [
@@ -170,22 +173,6 @@ async function main(): Promise<void> {
   });
 
   console.log("Reservations added: ", reservations);
-
-  const subscriptions = await prisma.subscription.createMany({
-    data: [
-      {
-        user: users[0].id,
-        community: 1
-      },
-      {
-        user: users[2].id,
-        community: 1
-      }
-    ],
-    skipDuplicates: true
-  });
-
-  console.log("subscriptions added: ", subscriptions);
 
   const requests = await prisma.request.createMany({
     data: [

@@ -16,6 +16,6 @@ model User {
   reservation Reservation[]
   request     Request[]
 
-  tenantComm Community[] @relation("admin")
-  adminComm  Community[] @relation("tenant")
+  admindComm Community?  @relation("admin")
+  tenantComm Community[] @relation("tenant")
 }

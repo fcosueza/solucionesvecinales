@@ -28,6 +28,7 @@ CREATE TABLE "Community" (
     "city" TEXT NOT NULL,
     "province" TEXT NOT NULL,
     "country" TEXT NOT NULL,
+    "adminID" TEXT NOT NULL,
 
     CONSTRAINT "Community_pkey" PRIMARY KEY ("id")
 );
@@ -71,14 +72,6 @@ CREATE TABLE "Message" (
 );
 
 -- CreateTable
-CREATE TABLE "Subscription" (
-    "user" TEXT NOT NULL,
-    "community" INTEGER NOT NULL,
-
-    CONSTRAINT "Subscription_pkey" PRIMARY KEY ("user","community")
-);
-
--- CreateTable
 CREATE TABLE "Request" (
     "user" TEXT NOT NULL,
     "community" INTEGER NOT NULL,
@@ -110,11 +103,28 @@ CREATE TABLE "User" (
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "_tenant" (
+    "A" INTEGER NOT NULL,
+    "B" TEXT NOT NULL,
+
+    CONSTRAINT "_tenant_AB_pkey" PRIMARY KEY ("A","B")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Community_adminID_key" ON "Community"("adminID");
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
+-- CreateIndex
+CREATE INDEX "_tenant_B_index" ON "_tenant"("B");
+
 -- AddForeignKey
 ALTER TABLE "Area" ADD CONSTRAINT "Area_community_fkey" FOREIGN KEY ("community") REFERENCES "Community"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Community" ADD CONSTRAINT "Community_adminID_fkey" FOREIGN KEY ("adminID") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Credentials" ADD CONSTRAINT "Credentials_user_fkey" FOREIGN KEY ("user") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -129,12 +139,6 @@ ALTER TABLE "Incident" ADD CONSTRAINT "Incident_user_fkey" FOREIGN KEY ("user") 
 ALTER TABLE "Message" ADD CONSTRAINT "Message_community_fkey" FOREIGN KEY ("community") REFERENCES "Community"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_user_fkey" FOREIGN KEY ("user") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_community_fkey" FOREIGN KEY ("community") REFERENCES "Community"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Request" ADD CONSTRAINT "Request_user_fkey" FOREIGN KEY ("user") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -145,3 +149,9 @@ ALTER TABLE "Reservation" ADD CONSTRAINT "Reservation_user_fkey" FOREIGN KEY ("u
 
 -- AddForeignKey
 ALTER TABLE "Reservation" ADD CONSTRAINT "Reservation_area_community_fkey" FOREIGN KEY ("area", "community") REFERENCES "Area"("name", "community") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_tenant" ADD CONSTRAINT "_tenant_A_fkey" FOREIGN KEY ("A") REFERENCES "Community"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_tenant" ADD CONSTRAINT "_tenant_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
