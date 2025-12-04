@@ -4,7 +4,7 @@ import LogInForm from ".";
 import logInAction from "@/actions/auth/logInAction";
 
 // Mock logInAction server action
-jest.mock("@/actions/auth/logInAction");
+jest.mock("@/actions/auth/logInAction", () => jest.fn());
 
 function setup(jsx: React.ReactNode) {
   return {

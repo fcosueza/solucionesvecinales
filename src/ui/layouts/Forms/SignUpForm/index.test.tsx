@@ -4,7 +4,7 @@ import SignUpForm from ".";
 import signUpAction from "@/actions/auth/signUpAction";
 import { redirect } from "next/navigation";
 
-jest.mock("@/actions/auth/signUpAction");
+jest.mock("@/actions/auth/signUpAction", () => jest.fn());
 jest.mock("next/navigation");
 
 function setup(jsx: React.ReactNode) {

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
 import contactMsgAction from "@/actions/contactMsgAction";
 
-jest.mock("@/actions/contactMsgAction");
+jest.mock("@/actions/contactMsgAction", () => jest.fn());
 
 function setup(jsx: React.ReactNode) {
   return {
