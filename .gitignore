@@ -50,5 +50,7 @@ node_modules/
 /playwright/.cache/
 
 # Prisma Client
-
 /src/generated/
+
+# Editor
+.vscode/
