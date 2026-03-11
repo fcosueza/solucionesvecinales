@@ -50,7 +50,7 @@ describe("contactMsgAction test suite", () => {
     const result = await contactMsgAction({} as FormActionState, formData);
 
     expect(result.state).toBe("error");
-    expect(result.message).toBe("Message cant't be created");
+    expect(result.message).toBe("Message can't be created");
     expect(result.errors?.prisma).not.toBeNull();
   });
 
