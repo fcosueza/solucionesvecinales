@@ -19,8 +19,7 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
     return {
       state: "error",
       message: "Incorrect form data",
-      errors: validatedData.error.flatten().fieldErrors,
-      payload: formData
+      errors: validatedData.error.flatten().fieldErrors
     };
   }
 
@@ -64,8 +63,7 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
 
   return {
     state: "success",
-    message: "User and password are correct",
-    payload: formData
+    message: "User and password are correct"
   };
 };
 

@@ -29,12 +29,12 @@ const contactMsgAction = async (_prevState: FormActionState, formData: FormData)
         message: validatedData.data.msg
       }
     });
-  } catch (e: any) {
+  } catch {
     return {
       state: "error",
-      message: "Message cant't be created",
+      message: "Message can't be created",
       errors: {
-        prisma: e.message
+        prisma: "Internal error"
       },
       payload: formData
     };

@@ -18,8 +18,7 @@ const signUpAction = async (_prevState: FormActionState, formData: FormData): Pr
     return {
       state: "error",
       message: "Incorrect form data",
-      errors: validatedData.error.flatten().fieldErrors,
-      payload: formData
+      errors: validatedData.error.flatten().fieldErrors
     };
   }
 
@@ -46,17 +45,15 @@ const signUpAction = async (_prevState: FormActionState, formData: FormData): Pr
       state: "error",
       message: "User can't be created",
       errors: {
-        prisma: e.message
-      },
-      payload: formData
+        prisma: "Internal error"
+      }
     };
   }
 
   // User created correctly
   return {
     state: "success",
-    message: "User created",
-    payload: formData
+    message: "User created"
   };
 };
 
