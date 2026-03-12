@@ -40,7 +40,7 @@ const LogInForm = (): React.ReactNode => {
             name: "password",
             type: InputType.password,
             placeholder: "Introduzca su contraseña...",
-            defaultValue: state?.errors?.password ? "" : ((state.payload?.get("password") as string) ?? ""),
+            defaultValue: "",
             required: true
           }}
         />

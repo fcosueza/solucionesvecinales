@@ -94,7 +94,7 @@ const SignUpForm = (): React.ReactNode => {
             name: "password",
             type: InputType.password,
             placeholder: "Introduzca su contraseña...",
-            defaultValue: state?.errors?.password ? "" : ((state.payload?.get("password") as string) ?? ""),
+            defaultValue: "",
             required: true
           }}
         />
@@ -107,7 +107,7 @@ const SignUpForm = (): React.ReactNode => {
             name: "repeat",
             type: InputType.password,
             placeholder: "Repita la contraseña...",
-            defaultValue: state?.errors?.repeat ? "" : ((state.payload?.get("repeat") as string) ?? ""),
+            defaultValue: "",
             required: true
           }}
         />
