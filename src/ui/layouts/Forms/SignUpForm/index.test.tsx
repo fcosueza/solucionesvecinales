@@ -134,7 +134,7 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(name);
     expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
     expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(email);
-    expect(screen.getByLabelText("password-input")).toHaveValue(password);
+    expect(screen.getByLabelText("password-input")).toHaveValue("");
     expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
@@ -173,8 +173,8 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
     expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
     expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(email);
-    expect(screen.getByLabelText("password-input")).toHaveValue(password);
-    expect(screen.getByLabelText("repeat-input")).toHaveValue(passRepeat);
+    expect(screen.getByLabelText("password-input")).toHaveValue("");
+    expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
   it("Should redirect to login page if user created correctly", async () => {

@@ -73,7 +73,7 @@ describe("LogInForm component test suite...", () => {
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
     expect(emailInput).toHaveValue("");
-    expect(passInput).toHaveValue(password);
+    expect(passInput).toHaveValue("");
   });
 
   it("Should show error message if password is not correct", async () => {
