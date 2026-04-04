@@ -60,7 +60,7 @@ describe("LogInForm component test suite...", () => {
 
     mockAction.mockResolvedValue({
       state: "error",
-      messsage: "Incorrect form data",
+      message: "Incorrect form data",
       errors: {
         email: "email incorrecto"
       },
@@ -92,7 +92,7 @@ describe("LogInForm component test suite...", () => {
 
     mockAction.mockResolvedValue({
       state: "error",
-      messsage: "Incorrect form data",
+      message: "Incorrect form data",
       errors: {
         password: "password incorrecto"
       },
