@@ -1,4 +1,3 @@
 # Soluciones Vecinales
 
-SolucionesVecinales is a user-friendly app that helps property managers, residents, and homeowners
-stay connected and manage their community with easy.
+SolucionesVecinales es una aplicación que ayuda a gestionar comunidades de vecinos de forma eficiente y sencilla.
