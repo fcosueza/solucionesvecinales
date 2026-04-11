@@ -193,7 +193,7 @@ describe("SignUpForm Componente test...", () => {
     formData.append("surname", surname);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("role", "tenant");
+    formData.append("role", "inquilino");
     formData.append("repeat", passRepeat);
 
     mockAction.mockResolvedValue({

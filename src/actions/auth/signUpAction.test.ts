@@ -3,7 +3,7 @@ import signUpAction from "./signUpAction";
 import prisma from "../../lib/prisma";
 
 jest.mock("../../lib/prisma", () => ({
-  user: {
+  usuario: {
     create: jest.fn()
   }
 }));
@@ -38,11 +38,11 @@ describe("signUpAction test suite", () => {
     expect(result.state).toBe("error");
     expect(result.message).toBe("Incorrect form data");
     expect(result.errors).toBeDefined();
-    expect(prisma.user.create).not.toHaveBeenCalled();
+    expect(prisma.usuario.create).not.toHaveBeenCalled();
   });
 
   it("Should return an error if prisma can't create user", async () => {
-    (prisma.user.create as jest.Mock).mockRejectedValue({
+    (prisma.usuario.create as jest.Mock).mockRejectedValue({
       e: {
         message: "Can`t create user"
       }
@@ -50,7 +50,7 @@ describe("signUpAction test suite", () => {
 
     const formData = mockFormData({
       email: "test@email.com",
-      role: "tenant",
+      role: "inquilino",
       name: "testname",
       surname: "testsurname",
       password: "testtesttesttest",
@@ -65,11 +65,11 @@ describe("signUpAction test suite", () => {
   });
 
   it("Should return success if the user has been registred correctly", async () => {
-    (prisma.user.create as jest.Mock).mockResolvedValue({ id: 1 });
+    (prisma.usuario.create as jest.Mock).mockResolvedValue({ id: 1 });
 
     const formData = mockFormData({
       email: "test@email.com",
-      role: "tenant",
+      role: "inquilino",
       name: "testname",
       surname: "testsurname",
       password: "testtesttesttest",
@@ -80,6 +80,6 @@ describe("signUpAction test suite", () => {
 
     expect(result.state).toBe("success");
     expect(result.message).toBe("User created");
-    expect(prisma.user.create).toHaveBeenCalled();
+    expect(prisma.usuario.create).toHaveBeenCalled();
   });
 });

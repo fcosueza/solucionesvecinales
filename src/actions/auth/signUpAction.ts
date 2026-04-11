@@ -27,13 +27,13 @@ const signUpAction = async (_prevState: FormActionState, formData: FormData): Pr
 
   // Try to create the user and credentials
   try {
-    await prisma.user.create({
+    await prisma.usuario.create({
       data: {
         email: validatedData.data.email,
         role: validatedData.data.role,
-        name: validatedData.data.name,
-        surname: validatedData.data.surname,
-        credentials: {
+        nombre: validatedData.data.name,
+        apellido: validatedData.data.surname,
+        credenciales: {
           create: {
             password: hashedPassword
           }

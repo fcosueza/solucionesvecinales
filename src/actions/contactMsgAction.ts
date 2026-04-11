@@ -22,11 +22,11 @@ const contactMsgAction = async (_prevState: FormActionState, formData: FormData)
   }
 
   try {
-    await prisma.contact.create({
+    await prisma.contacto.create({
       data: {
-        name: validatedData.data.name,
-        email: validatedData.data.email,
-        message: validatedData.data.msg
+        nombre: validatedData.data.name,
+        correo: validatedData.data.email,
+        mensaje: validatedData.data.msg
       }
     });
   } catch {

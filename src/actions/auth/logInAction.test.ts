@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 
 jest.mock("@/lib/session");
 jest.mock("@/lib/prisma", () => ({
-  user: {
+  usuario: {
     findUnique: jest.fn()
   }
 }));
@@ -38,11 +38,11 @@ describe("logInAction test suite", () => {
     expect(result.state).toBe("error");
     expect(result.message).toBe("Incorrect form data");
     expect(result.errors).toBeDefined();
-    expect(prisma.user.findUnique).not.toHaveBeenCalled();
+    expect(prisma.usuario.findUnique).not.toHaveBeenCalled();
   });
 
   it("Should return an error if the user doesn't exist", async () => {
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue("");
+    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue(null);
 
     const formData = mockFormData({
       email: "john@example.com",
@@ -59,9 +59,10 @@ describe("logInAction test suite", () => {
   it("Should return an error if the password doesn't match", async () => {
     const hashedPassword = await bcrypt.hash("testestestestestestest", 10);
 
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
-      id: 1,
-      credentials: { password: hashedPassword }
+    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
+      id: "1",
+      role: "admin",
+      credenciales: { password: hashedPassword }
     });
 
     const formData = mockFormData({
@@ -79,9 +80,10 @@ describe("logInAction test suite", () => {
   it("Should return success if the user exists and password is correct", async () => {
     const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
 
-    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
-      id: 1,
-      credentials: { password: hashedPassword }
+    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
+      id: "1",
+      role: "admin",
+      credenciales: { password: hashedPassword }
     });
 
     const formData = mockFormData({

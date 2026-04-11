@@ -5,217 +5,230 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
 async function main(): Promise<void> {
-  const users = await prisma.user.createManyAndReturn({
+  await prisma.usuario.createMany({
     data: [
       {
         email: "fran@gmail.com",
         role: "admin",
-        name: "Francisco",
-        surname: "Sueza Rodríguez"
+        nombre: "Francisco",
+        apellido: "Sueza Rodríguez"
       },
       {
         email: "juan@gmail.com",
-        role: "tenant",
-        name: "Juan",
-        surname: "Ponce Perez"
+        role: "inquilino",
+        nombre: "Juan",
+        apellido: "Ponce Perez"
       },
       {
         email: "alberto@gmail.com",
-        role: "tenant",
-        name: "Alberto",
-        surname: "Garcia Garcia"
+        role: "inquilino",
+        nombre: "Alberto",
+        apellido: "Garcia Garcia"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Users added: ", users);
+  const [admin, juan, alberto] = await Promise.all([
+    prisma.usuario.findUniqueOrThrow({ where: { email: "fran@gmail.com" } }),
+    prisma.usuario.findUniqueOrThrow({ where: { email: "juan@gmail.com" } }),
+    prisma.usuario.findUniqueOrThrow({ where: { email: "alberto@gmail.com" } })
+  ]);
 
-  const usersID = await prisma.user.findMany();
+  console.log("Users added: ", [admin, juan, alberto]);
 
-  let credentials;
+  const credenciales = await prisma.credenciales.createMany({
+    data: [
+      {
+        usuario: admin.id,
+        password: "12345"
+      },
+      {
+        usuario: juan.id,
+        password: "5433212"
+      },
+      {
+        usuario: alberto.id,
+        password: "dsnojiaiojs"
+      }
+    ],
+    skipDuplicates: true
+  });
 
-  if (usersID) {
-    credentials = await prisma.credentials.createMany({
-      data: [
-        {
-          user: users[0].id,
-          password: "12345"
-        },
-        {
-          user: users[1].id,
-          password: "5433212"
-        },
-        {
-          user: users[2].id,
-          password: "dsnojiaiojs"
-        }
-      ],
-      skipDuplicates: true
-    });
-  }
+  console.log("Credentials added: ", credenciales);
 
-  console.log("Credentials added: ", credentials);
-
-  const community = await prisma.community.create({
-    data: {
-      name: "Arrayanes6",
-      street: "Arrayanes",
-      number: 6,
-      city: "Granada",
-      province: "Granada",
-      country: "España",
+  const comunidad = await prisma.comunidad.upsert({
+    where: {
+      adminID: admin.id
+    },
+    update: {},
+    create: {
+      nombre: "Arrayanes6",
+      calle: "Arrayanes",
+      numero: 6,
+      ciudad: "Granada",
+      provincia: "Granada",
+      pais: "España",
       admin: {
-        connect: users[0]
+        connect: {
+          id: admin.id
+        }
       }
     }
   });
 
-  console.log("Communities added: ", community);
+  console.log("Communities added: ", comunidad);
 
-  const messages = await prisma.message.createMany({
+  const mensajes = await prisma.mensaje.createMany({
     data: [
       {
-        createdAt: new Date(),
-        community: 1,
-        text: "Mensaje de Prueba 1, 2, 3"
+        creadoEn: new Date(),
+        comunidad: comunidad.id,
+        texto: "Mensaje de Prueba 1, 2, 3"
       },
       {
-        createdAt: new Date(),
-        community: 1,
-        text: "Junta de vecinos el día 22 de Marzo"
+        creadoEn: new Date(),
+        comunidad: comunidad.id,
+        texto: "Junta de vecinos el día 22 de Marzo"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Messages added: ", messages);
+  console.log("Messages added: ", mensajes);
 
-  const areas = await prisma.area.createMany({
+  const zonas = await prisma.zona.createMany({
     data: [
       {
-        name: "Campo de Fútbol",
-        community: 1,
-        description: "Campo de futbol con hierba artifical",
-        image: null,
-        start_time: new Date("2019-01-01 10:00:00"),
-        end_time: new Date("2019-01-01 20:00:00")
+        nombre: "Campo de Fútbol",
+        comunidad: comunidad.id,
+        descripcion: "Campo de futbol con hierba artifical",
+        imagen: null,
+        hora_inicio: new Date("2019-01-01 10:00:00"),
+        hora_fin: new Date("2019-01-01 20:00:00")
       },
       {
-        name: "Pista de Padel",
-        community: 1,
-        description: "Pista de padel cerrada.",
-        image: null,
-        start_time: new Date("2019-01-01 10:30:00"),
-        end_time: new Date("2019-01-01 20:15:00")
+        nombre: "Pista de Padel",
+        comunidad: comunidad.id,
+        descripcion: "Pista de padel cerrada.",
+        imagen: null,
+        hora_inicio: new Date("2019-01-01 10:30:00"),
+        hora_fin: new Date("2019-01-01 20:15:00")
       },
       {
-        name: "SPA",
-        community: 1,
-        description: "SPA con diferentes tipos de agua y chorros.",
-        image: null,
-        start_time: new Date("2019-01-01 10:00:00"),
-        end_time: new Date("2019-01-01 21:00:00")
+        nombre: "SPA",
+        comunidad: comunidad.id,
+        descripcion: "SPA con diferentes tipos de agua y chorros.",
+        imagen: null,
+        hora_inicio: new Date("2019-01-01 10:00:00"),
+        hora_fin: new Date("2019-01-01 21:00:00")
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Areas added: ", areas);
+  console.log("Areas added: ", zonas);
 
-  const incidents = await prisma.incident.createMany({
+  const incidencias = await prisma.incidencia.createMany({
     data: [
       {
-        community: 1,
-        user: users[0].id,
-        date: new Date(),
-        description: "Rotura de bombilla en planta 4",
-        state: "created"
+        comunidad: comunidad.id,
+        usuario: admin.id,
+        fecha: new Date(),
+        descripcion: "Rotura de bombilla en planta 4",
+        estado: "creado"
       },
       {
-        community: 1,
-        user: users[0].id,
-        date: new Date(),
-        description: "Vecino ruidoso",
-        state: "processing"
+        comunidad: comunidad.id,
+        usuario: admin.id,
+        fecha: new Date(),
+        descripcion: "Vecino ruidoso",
+        estado: "en_proceso"
       },
       {
-        community: 1,
-        user: users[2].id,
-        date: new Date(),
-        description: "Hoyo en campo de futbol",
-        state: "solved"
+        comunidad: comunidad.id,
+        usuario: alberto.id,
+        fecha: new Date(),
+        descripcion: "Hoyo en campo de futbol",
+        estado: "resuelto"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Incidents added: ", incidents);
+  console.log("Incidents added: ", incidencias);
 
-  const reservations = await prisma.reservation.createMany({
+  const reservas = await prisma.reserva.createMany({
     data: [
       {
-        user: users[0].id,
-        community: 1,
-        area: "SPA",
-        date: new Date("2024-01-05"),
-        start_time: new Date("2019-01-01 20:00:00"),
-        end_time: new Date("2019-01-01 21:00:00")
+        usuario: admin.id,
+        comunidad: comunidad.id,
+        zona: "SPA",
+        fecha: new Date("2024-01-05"),
+        hora_inicio: new Date("2019-01-01 20:00:00"),
+        hora_fin: new Date("2019-01-01 21:00:00")
       },
       {
-        user: users[1].id,
-        community: 1,
-        area: "Pista de Padel",
-        date: new Date("2024-02-09"),
-        start_time: new Date("2019-01-01 10:00:00"),
-        end_time: new Date("2019-01-01 14:00:00")
+        usuario: juan.id,
+        comunidad: comunidad.id,
+        zona: "Pista de Padel",
+        fecha: new Date("2024-02-09"),
+        hora_inicio: new Date("2019-01-01 10:00:00"),
+        hora_fin: new Date("2019-01-01 14:00:00")
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Reservations added: ", reservations);
+  console.log("Reservations added: ", reservas);
 
-  const requests = await prisma.request.createMany({
+  const solicitudes = await prisma.solicitud.createMany({
     data: [
       {
-        user: users[0].id,
-        community: 1,
-        state: "approved"
+        usuario: admin.id,
+        comunidad: comunidad.id,
+        estado: "aprobada"
       },
       {
-        user: users[1].id,
-        community: 1,
-        state: "approved"
+        usuario: juan.id,
+        comunidad: comunidad.id,
+        estado: "aprobada"
       },
       {
-        user: users[2].id,
-        community: 1,
-        state: "pending"
+        usuario: alberto.id,
+        comunidad: comunidad.id,
+        estado: "pendiente"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Requests added: ", requests);
+  console.log("Requests added: ", solicitudes);
 
-  const contacts = await prisma.contact.createMany({
+  const contactos = await prisma.contacto.createMany({
     data: [
       {
-        name: "Fran Son",
-        email: "fran@gmail.com",
-        message: "Lorem ipsum dolo sit amet"
+        nombre: "Fran Son",
+        correo: "fran@gmail.com",
+        mensaje: "Lorem ipsum dolo sit amet"
       },
       {
-        name: "Okina",
-        email: "Okina@gmail.com",
-        message: "Lorem ipsum dolo sit amet"
+        nombre: "Okina",
+        correo: "Okina@gmail.com",
+        mensaje: "Lorem ipsum dolo sit amet"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Added Contact: ", contacts);
+  console.log("Added Contact: ", contactos);
 }
 
-main();
+main()
+  .catch(error => {
+    console.error("Seed failed:", error);
+    process.exitCode = 1;
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

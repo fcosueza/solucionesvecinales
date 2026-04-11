@@ -24,17 +24,17 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
   }
 
   // Try to find user and credentials
-  const user = await prisma.user.findUnique({
+  const usuario = await prisma.usuario.findUnique({
     where: {
       email: validatedData.data.email
     },
     include: {
-      credentials: true
+      credenciales: true
     }
   });
 
   // User doesn't exits
-  if (!user || !user.credentials) {
+  if (!usuario || !usuario.credenciales) {
     return {
       state: "error",
       message: "Incorrect form data",
@@ -45,7 +45,7 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
     };
   }
 
-  const passwordMatch: boolean = await bcrypt.compare(validatedData.data.password, user.credentials.password);
+  const passwordMatch: boolean = await bcrypt.compare(validatedData.data.password, usuario.credenciales.password);
 
   // Incorrect password
   if (!passwordMatch)
@@ -59,7 +59,7 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
     };
 
   // User and password are corrects
-  await createSession(user.id, user.role as UserRole);
+  await createSession(usuario.id, usuario.role as UserRole);
 
   return {
     state: "success",

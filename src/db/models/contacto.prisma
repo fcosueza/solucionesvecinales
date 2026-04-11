@@ -1,0 +1,8 @@
+model Contacto {
+  nombre    String
+  correo    String
+  mensaje   String
+  creadoEn  DateTime @default(now())
+
+  @@id([nombre, correo, creadoEn])
+}

@@ -1,0 +1,9 @@
+model Mensaje {
+  comunidad Int
+  texto     String
+  creadoEn  DateTime @default(now())
+
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+  @@id([creadoEn, comunidad])
+}

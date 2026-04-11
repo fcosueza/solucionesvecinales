@@ -1,0 +1,18 @@
+model Comunidad {
+  id        Int    @id @default(autoincrement())
+  nombre    String
+  calle     String
+  numero    Int
+  ciudad    String
+  provincia String
+  pais      String
+
+  mensajes     Mensaje[]
+  zonas        Zona[]
+  incidentes   Incidencia[]
+  solicitudes  Solicitud[]
+
+  propietarios Usuario[] @relation(name: "inquilino")
+  adminID      String @unique
+  admin        Usuario   @relation("admin", fields: [adminID], references: [id])
+}

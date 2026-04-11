@@ -1,0 +1,14 @@
+model Zona {
+  nombre      String
+  comunidad   Int
+  descripcion String
+  hora_inicio DateTime @db.Time()
+  hora_fin    DateTime @db.Time()
+  imagen      String?
+  
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+  reservas Reserva[]
+
+  @@id([nombre, comunidad])
+}

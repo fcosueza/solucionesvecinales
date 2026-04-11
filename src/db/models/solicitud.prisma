@@ -1,0 +1,16 @@
+enum EstadoSolicitud {
+  pendiente
+  aprobada
+  denegada
+}
+
+model Solicitud {
+  usuario      String
+  comunidad Int
+  estado     EstadoSolicitud @default(pendiente)
+
+  usuarioID      Usuario      @relation(fields: [usuario], references: [id], onDelete: Cascade)
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+  @@id([usuario, comunidad])
+}

@@ -1,0 +1,21 @@
+enum Rol {
+  inquilino
+  admin
+  adminWeb
+}
+
+model Usuario {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  role     Rol     @default(inquilino)
+  nombre   String
+  apellido String
+
+  credenciales Credenciales?
+  incidencias  Incidencia[]
+  reservas     Reserva[]
+  solicitudes  Solicitud[]
+
+  adminComm Comunidad?  @relation("admin")
+  inquilinoComm Comunidad[] @relation("inquilino")
+}

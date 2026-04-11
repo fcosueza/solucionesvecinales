@@ -1,9 +1,9 @@
 import { JWTPayload } from "jose";
 
 export enum UserRole {
-  tenant = "tenant",
+  tenant = "inquilino",
   admin = "admin",
-  webAdmin = "webAdmin"
+  webAdmin = "adminWeb"
 }
 
 export enum InputType {

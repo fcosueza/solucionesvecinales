@@ -1,0 +1,18 @@
+enum EstadoIncidencia {
+  creado
+  en_proceso
+  resuelto
+}
+
+model Incidencia {
+  comunidad   Int
+  usuario     String
+  fecha       DateTime         @default(now())
+  descripcion String
+  estado      EstadoIncidencia @default(creado)
+
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+  usuarioID   Usuario   @relation(fields: [usuario], references: [id], onDelete: Cascade)
+
+  @@id([comunidad, usuario, fecha])
+}
