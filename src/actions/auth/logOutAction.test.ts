@@ -5,18 +5,18 @@ import { redirect } from "next/navigation";
 jest.mock("next/navigation");
 jest.mock("@/lib/session");
 
-describe("logOutAction test suite...", () => {
+describe("logOutAction test suite", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("Should call deleteSession function", async () => {
+  it("Debe llamar a la función deleteSession", async () => {
     await logOutAction();
 
     expect(deleteSession).toHaveBeenCalled();
   });
 
-  it("Should redirect the user to home page", async () => {
+  it("Debe redirigir al usuario a la página de inicio", async () => {
     await logOutAction();
 
     expect(redirect).toHaveBeenCalledWith("/");

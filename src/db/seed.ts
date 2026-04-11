@@ -205,23 +205,23 @@ async function main(): Promise<void> {
 
   console.log("Requests added: ", solicitudes);
 
-  const contactos = await prisma.contacto.createMany({
+  const contacto = await prisma.contacto.createMany({
     data: [
       {
         nombre: "Fran Son",
-        correo: "fran@gmail.com",
+        email: "fran@gmail.com",
         mensaje: "Lorem ipsum dolo sit amet"
       },
       {
         nombre: "Okina",
-        correo: "Okina@gmail.com",
+        email: "Okina@gmail.com",
         mensaje: "Lorem ipsum dolo sit amet"
       }
     ],
     skipDuplicates: true
   });
 
-  console.log("Added Contact: ", contactos);
+  console.log("Added Contact: ", contacto);
 }
 
 main()

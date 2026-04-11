@@ -15,6 +15,10 @@ function setup(jsx: React.ReactNode) {
 }
 
 describe("SignUpForm Componente test...", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("Must render the form", () => {
     render(<SignUpForm />);
 

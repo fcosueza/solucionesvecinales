@@ -9,15 +9,23 @@ import z from "zod";
 
 type SignInFields = z.infer<typeof signUpSchema>;
 
+/**
+ * Valida los datos de registro, crea el usuario y almacena sus credenciales de forma segura.
+ *
+ * @param _prevState Estado previo de la acción del formulario.
+ * @param formData Datos enviados desde el formulario de registro.
+ * @returns El nuevo estado de la acción con el resultado del registro.
+ */
+
 const signUpAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const rawData: object = Object.fromEntries(formData);
   const validatedData: SafeParseReturnType<object, SignInFields> = signUpSchema.safeParse(rawData);
 
-  // If data is not valid
+  // Si los datos no son válidos
   if (!validatedData.success) {
     return {
       state: "error",
-      message: "Incorrect form data",
+      message: "Datos del formulario incorrectos",
       errors: validatedData.error.flatten().fieldErrors
     };
   }
@@ -25,7 +33,7 @@ const signUpAction = async (_prevState: FormActionState, formData: FormData): Pr
   const saltRounds: number = 10;
   const hashedPassword: string = await bcrypt.hash(validatedData.data.password, saltRounds);
 
-  // Try to create the user and credentials
+  // Intentar crear el usuario y sus credenciales
   try {
     await prisma.usuario.create({
       data: {
@@ -43,17 +51,17 @@ const signUpAction = async (_prevState: FormActionState, formData: FormData): Pr
   } catch (e: any) {
     return {
       state: "error",
-      message: "User can't be created",
+      message: "No se pudo crear el usuario",
       errors: {
-        prisma: "Internal error"
+        prisma: "Error interno"
       }
     };
   }
 
-  // User created correctly
+  // Usuario creado correctamente
   return {
     state: "success",
-    message: "User created"
+    message: "Usuario creado correctamente"
   };
 };
 

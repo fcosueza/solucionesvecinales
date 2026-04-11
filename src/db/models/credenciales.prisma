@@ -1,6 +1,6 @@
 model Credenciales {
   usuario     String @id
-  password String
+  password    String
 
   usuarioID Usuario @relation(fields: [usuario], references: [id], onDelete: Cascade)
 }

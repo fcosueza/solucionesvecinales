@@ -27,7 +27,7 @@ describe("logInAction test suite", () => {
     jest.clearAllMocks();
   });
 
-  it("Should return an error if validation fails", async () => {
+  it("Debe devolver un error si la validación falla", async () => {
     const formData = mockFormData({
       email: "not-an-email@gmail.c",
       password: "aaa"
@@ -36,12 +36,12 @@ describe("logInAction test suite", () => {
     const result = await logInAction({} as FormActionState, formData);
 
     expect(result.state).toBe("error");
-    expect(result.message).toBe("Incorrect form data");
+    expect(result.message).toBe("Datos del formulario incorrectos");
     expect(result.errors).toBeDefined();
     expect(prisma.usuario.findUnique).not.toHaveBeenCalled();
   });
 
-  it("Should return an error if the user doesn't exist", async () => {
+  it("Debe devolver un error si el usuario no existe", async () => {
     (prisma.usuario.findUnique as jest.Mock).mockResolvedValue(null);
 
     const formData = mockFormData({
@@ -52,11 +52,11 @@ describe("logInAction test suite", () => {
     const result = await logInAction({} as FormActionState, formData);
 
     expect(result.state).toBe("error");
-    expect(result.message).toBe("Incorrect form data");
+    expect(result.message).toBe("Datos del formulario incorrectos");
     expect(result.errors?.email).toBe("No existe ningún usuario con ese correo");
   });
 
-  it("Should return an error if the password doesn't match", async () => {
+  it("Debe devolver un error si la contraseña no coincide", async () => {
     const hashedPassword = await bcrypt.hash("testestestestestestest", 10);
 
     (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
@@ -73,11 +73,11 @@ describe("logInAction test suite", () => {
     const result = await logInAction({} as FormActionState, formData);
 
     expect(result.state).toBe("error");
-    expect(result.message).toBe("Incorrect form data");
+    expect(result.message).toBe("Datos del formulario incorrectos");
     expect(result.errors?.password).toBe("La contraseña no es válida para este usuario.");
   });
 
-  it("Should return success if the user exists and password is correct", async () => {
+  it("Debe devolver éxito si el usuario existe y la contraseña es correcta", async () => {
     const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
 
     (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
@@ -94,7 +94,7 @@ describe("logInAction test suite", () => {
     const result = await logInAction({} as FormActionState, formData);
 
     expect(result.state).toBe("success");
-    expect(result.message).toBe("User and password are correct");
+    expect(result.message).toBe("El usuario y la contraseña son correctos");
     await waitFor(() => expect(createSession).toHaveBeenCalledTimes(1));
   });
 });

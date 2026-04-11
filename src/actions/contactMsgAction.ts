@@ -8,15 +8,23 @@ import z from "zod";
 
 type ContactFormFields = z.infer<typeof contactSchema>;
 
-const contactMsgAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const rawData: object = Object.fromEntries(formData);
-  const validatedData: SafeParseReturnType<object, ContactFormFields> = contactSchema.safeParse(rawData);
+/**
+ * Procesa el formulario de contacto, valida los datos recibidos y guarda el mensaje en la base de datos.
+ *
+ * @param _prevState Estado previo de la acción del formulario.
+ * @param formData Datos enviados desde el formulario de contacto.
+ * @returns El nuevo estado de la acción con el resultado de la operación.
+ */
 
-  if (!validatedData.success) {
+const contactMsgAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+  const datos: object = Object.fromEntries(formData);
+  const datosValidados: SafeParseReturnType<object, ContactFormFields> = contactSchema.safeParse(datos);
+
+  if (!datosValidados.success) {
     return {
       state: "error",
-      message: "Incorrect form data",
-      errors: validatedData.error.flatten().fieldErrors,
+      message: "Datos del formulario incorrectos",
+      errors: datosValidados.error.flatten().fieldErrors,
       payload: formData
     };
   }
@@ -24,17 +32,17 @@ const contactMsgAction = async (_prevState: FormActionState, formData: FormData)
   try {
     await prisma.contacto.create({
       data: {
-        nombre: validatedData.data.name,
-        correo: validatedData.data.email,
-        mensaje: validatedData.data.msg
+        nombre: datosValidados.data.name,
+        email: datosValidados.data.email,
+        mensaje: datosValidados.data.msg
       }
     });
   } catch {
     return {
       state: "error",
-      message: "Message can't be created",
+      message: "No se pudo crear el mensaje",
       errors: {
-        prisma: "Internal error"
+        prisma: "Error interno"
       },
       payload: formData
     };
@@ -42,7 +50,7 @@ const contactMsgAction = async (_prevState: FormActionState, formData: FormData)
 
   return {
     state: "success",
-    message: "Message created successfully",
+    message: "Mensaje creado exitosamente",
     payload: formData
   };
 };
