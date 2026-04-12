@@ -13,6 +13,8 @@ type CamposFormContacto = z.infer<typeof contactSchema>;
  *
  * @param _prevState Estado previo de la acción del formulario.
  * @param formData Datos enviados desde el formulario de contacto.
+ *
+ * @throws Si la validación de los datos falla o si ocurre un error al guardar el mensaje, se devuelve un estado de error con detalles.
  * @returns El nuevo estado de la acción con el resultado de la operación.
  */
 

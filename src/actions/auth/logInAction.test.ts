@@ -12,7 +12,7 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Pruebas de la acción logInAction", () => {
+describe("Pruebas de la server action logInAction", () => {
   const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
@@ -77,7 +77,7 @@ describe("Pruebas de la acción logInAction", () => {
     expect(resultado.errors?.password).toBe("La contraseña no es válida para este usuario.");
   });
 
-  it("Debe devolver éxito si el usuario existe y la contraseña es correcta", async () => {
+  it("Debe devolver success si el usuario existe y la contraseña es correcta", async () => {
     const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
 
     (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({

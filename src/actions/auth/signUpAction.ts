@@ -14,6 +14,8 @@ type CamposRegistro = z.infer<typeof signUpSchema>;
  *
  * @param _prevState Estado previo de la acción del formulario.
  * @param formData Datos enviados desde el formulario de registro.
+ *
+ * @throws Si la validación de los datos falla o si ocurre un error al crear el usuario, se devuelve un estado de error con detalles.
  * @returns El nuevo estado de la acción con el resultado del registro.
  */
 
@@ -21,7 +23,6 @@ const signUpAction = async (_prevState: FormActionState, formData: FormData): Pr
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposRegistro> = signUpSchema.safeParse(datos);
 
-  // Si los datos no son válidos
   if (!datosValidados.success) {
     return {
       state: "error",

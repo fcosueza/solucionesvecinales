@@ -8,7 +8,7 @@ jest.mock("../lib/prisma", () => ({
   }
 }));
 
-describe("Pruebas de la acción contactMsgAction", () => {
+describe("Pruebas de la server action contactMsgAction", () => {
   const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 

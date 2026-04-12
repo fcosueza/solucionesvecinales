@@ -15,6 +15,7 @@ type CamposLogin = z.infer<typeof logInSchema>;
  *
  * @param _prevState Estado previo de la acción del formulario.
  * @param formData Datos enviados desde el formulario de inicio de sesión.
+ *
  * @returns El nuevo estado de la acción con el resultado de la autenticación.
  */
 
@@ -22,7 +23,6 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposLogin> = logInSchema.safeParse(datos);
 
-  // Si los datos no son válidos
   if (!datosValidados.success) {
     return {
       state: "error",
