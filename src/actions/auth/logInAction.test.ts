@@ -12,7 +12,7 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("logInAction test suite", () => {
+describe("Pruebas de la acción logInAction", () => {
   const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 jest.mock("next/navigation");
 jest.mock("@/lib/session");
 
-describe("logOutAction test suite", () => {
+describe("Pruebas de la acción logOutAction", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

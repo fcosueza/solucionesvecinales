@@ -7,7 +7,7 @@ jest.mock("next/headers", () => ({
   cookies: jest.fn()
 }));
 
-describe("actualizarSesion test suite...", () => {
+describe("Pruebas de la función actualizarSesion", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

@@ -13,7 +13,7 @@ jest.mock("jose", () => {
   };
 });
 
-describe("cifrarSesion test suite...", () => {
+describe("Pruebas de la función cifrarSesion", () => {
   const cargaDatos: SessionPayload = { userID: "1", role: UserRole.tenant };
   const fechaExp: Date = new Date(Date.now() + 30000);
 
