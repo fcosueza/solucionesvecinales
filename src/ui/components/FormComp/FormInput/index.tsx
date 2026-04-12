@@ -2,6 +2,7 @@ import { FormInputAttrs, InputType } from "@/types";
 import FormError from "../FormError";
 import style from "./style.module.css";
 
+/** Props del componente FormInput. */
 interface Props {
   labelText: string;
   attr: FormInputAttrs;
@@ -9,9 +10,18 @@ interface Props {
   errorMsg?: string | string[];
 }
 
+/**
+ * Renderiza un input o textarea con estado de error opción
+ *
+ * @param props - Props del componente FormInput.
+ * @param props.labelText - Texto visible asociado a la etiqueta del campo.
+ * @param props.attr - Atributos HTML y configuración del campo.
+ * @param props.rows - Cantidad de filas cuando se renderiza un textarea.
+ * @param props.errorMsg - Mensaje de error opcional para validación.
+ */
 const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.ReactNode => {
-  const className = `${style.control__input} ${errorMsg ? style.control__inputError : ""}`;
-  const ariaLabel = `${attr.id}-input`;
+  const clasesInput = `${style.control__input} ${errorMsg ? style.control__inputError : ""}`;
+  const etiquetaAria = `${attr.id}-input`;
 
   return (
     <div role="form-control" className={style.control}>
@@ -20,9 +30,9 @@ const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.R
         {attr.required ? <span title="Requerido"> *</span> : ""}
       </label>
       {attr.type != InputType.textarea ? (
-        <input className={className} aria-label={ariaLabel} {...attr} />
+        <input className={clasesInput} aria-label={etiquetaAria} {...attr} />
       ) : (
-        <textarea className={className} rows={rows} aria-label={ariaLabel} {...attr} />
+        <textarea className={clasesInput} rows={rows} aria-label={etiquetaAria} {...attr} />
       )}
       {errorMsg ? <FormError message={errorMsg} /> : ""}
     </div>

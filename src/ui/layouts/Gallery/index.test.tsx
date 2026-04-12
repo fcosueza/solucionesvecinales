@@ -46,16 +46,16 @@ describe("Tests del componente Gallery...", () => {
   });
 
   it("Debe renderizar el titulo que se le ha pasado", () => {
-    const title = "Lorem Ipsum Title";
+    const titulo = "Lorem Ipsum Title";
 
     render(
-      <Gallery title={title}>
+      <Gallery title={titulo}>
         <div>Test</div>
       </Gallery>
     );
 
     expect(screen.getByRole("heading")).toBeInTheDocument();
-    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByText(titulo)).toBeInTheDocument();
   });
 
   it("No debe renderizar el titulo si no se pasa ninguno", () => {

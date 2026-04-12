@@ -9,28 +9,34 @@ import FormRadioBox from "@/ui/components/FormComp/FormRadioBox";
 import Button from "../../../components/Button";
 import style from "./style.module.css";
 
-const initialState = {
+const estadoInicial = {
   state: "error" as const,
   message: ""
 };
 
+/**
+ * Renderiza el formulario de registro y gestiona la creación de usuarios.
+ */
 const SignUpForm = (): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(signUpAction, initialState);
+  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
+    signUpAction,
+    estadoInicial
+  );
 
-  // If user is created we redirect to login page
-  if (state.state == "success") redirect("/login");
+  // Si el usuario se crea correctamente, redirige a la página de login.
+  if (estado.state == "success") redirect("/login");
 
   return (
     <>
-      <form action={formAction} id="signupForm" role="form" className={style.form}>
+      <form action={accionFormulario} id="signupForm" role="form" className={style.form}>
         <FormInput
           labelText="Nombre"
-          errorMsg={state?.errors?.name ?? ""}
+          errorMsg={estado?.errors?.name ?? ""}
           attr={{
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: state?.errors?.name ? "" : ((state.payload?.get("name") as string) ?? ""),
+            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? ""),
             placeholder: "Introduzca su nombre...",
             required: true
           }}
@@ -38,12 +44,12 @@ const SignUpForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Apellidos"
-          errorMsg={state?.errors?.surname ?? ""}
+          errorMsg={estado?.errors?.surname ?? ""}
           attr={{
             id: "surname",
             name: "surname",
             type: InputType.text,
-            defaultValue: state?.errors?.surname ? "" : ((state.payload?.get("surname") as string) ?? ""),
+            defaultValue: estado?.errors?.surname ? "" : ((estado.payload?.get("surname") as string) ?? ""),
             placeholder: "Introduzca sus apellidos...",
             required: true
           }}
@@ -74,12 +80,12 @@ const SignUpForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Correo"
-          errorMsg={state?.errors?.email ?? ""}
+          errorMsg={estado?.errors?.email ?? ""}
           attr={{
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: state?.errors?.email ? "" : ((state.payload?.get("email") as string) ?? ""),
+            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true
@@ -88,7 +94,7 @@ const SignUpForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Contraseña (min. 15 caracteres)"
-          errorMsg={state?.errors?.password ?? ""}
+          errorMsg={estado?.errors?.password ?? ""}
           attr={{
             id: "password",
             name: "password",
@@ -101,7 +107,7 @@ const SignUpForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Repita la Contraseña"
-          errorMsg={state?.errors?.repeat ?? ""}
+          errorMsg={estado?.errors?.repeat ?? ""}
           attr={{
             id: "repeat",
             name: "repeat",
@@ -112,7 +118,7 @@ const SignUpForm = (): React.ReactNode => {
           }}
         />
 
-        <Button type="submit" text="Enviar" disabled={isPending} />
+        <Button type="submit" text="Enviar" disabled={estaPendiente} />
       </form>
     </>
   );

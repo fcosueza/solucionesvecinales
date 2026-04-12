@@ -3,11 +3,11 @@ import userEvent from "@testing-library/user-event";
 import { RadioBoxType } from "@/types";
 import FormRadioBox from ".";
 
-describe("FormRadioBox component test suite...", () => {
-  const legendTxt: string = "Testing Label";
-  const name: string = "test";
-  const radioType = RadioBoxType.radio;
-  const elements = [
+describe("Pruebas del componente FormRadioBox", () => {
+  const textoLeyenda: string = "Testing Label";
+  const nombre: string = "test";
+  const tipoRadio = RadioBoxType.radio;
+  const elementos = [
     {
       labelText: "Test1",
       radioAttr: {
@@ -25,58 +25,60 @@ describe("FormRadioBox component test suite...", () => {
     }
   ];
 
-  it("Should render the form control", () => {
-    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} />);
+  it("Debe renderizar el control de formulario", () => {
+    render(<FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} />);
 
     expect(screen.getByRole("form-control")).toBeInTheDocument();
   });
 
-  it("Should create a fieldset element to group the radiobox elements", () => {
-    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} />);
+  it("Debe crear un fieldset para agrupar opciones", () => {
+    render(<FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} />);
 
     expect(screen.getByRole("group")).toBeInTheDocument();
   });
 
-  it("Should render the legend with the proper text", () => {
-    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} />);
+  it("Debe renderizar la leyenda con el texto correcto", () => {
+    render(<FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} />);
 
-    expect(screen.getByText(legendTxt)).toBeInTheDocument();
+    expect(screen.getByText(textoLeyenda)).toBeInTheDocument();
   });
 
-  it("Should render inputs of the specified type", () => {
-    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} />);
+  it("Debe renderizar campos del tipo indicado", () => {
+    render(<FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} />);
 
-    expect(screen.getAllByRole(radioType)).toHaveLength(elements.length);
+    expect(screen.getAllByRole(tipoRadio)).toHaveLength(elementos.length);
   });
 
-  it("Should render the radioboxes with the specified labels", () => {
-    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} />);
+  it("Debe renderizar opciones con las etiquetas indicadas", () => {
+    render(<FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} />);
 
-    elements.forEach(elements => {
-      expect(screen.getByLabelText(elements.labelText)).toBeInTheDocument();
+    elementos.forEach(elemento => {
+      expect(screen.getByLabelText(elemento.labelText)).toBeInTheDocument();
     });
   });
 
-  it("Should check by default the specified radiobox", () => {
-    const checkedElement = "Test1";
+  it("Debe marcar por defecto la opcion indicada", () => {
+    const elementoMarcado = "Test1";
 
-    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} />);
-    expect(screen.getByLabelText(checkedElement)).toBeChecked();
+    render(<FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} />);
+    expect(screen.getByLabelText(elementoMarcado)).toBeChecked();
   });
 
-  it("Should check the element checked by the user", async () => {
-    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} />);
+  it("Debe marcar el elemento que selecciona el usuario", async () => {
+    render(<FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} />);
 
-    const element = screen.getByLabelText("Test2");
+    const elemento = screen.getByLabelText("Test2");
 
-    await userEvent.click(element);
+    await userEvent.click(elemento);
 
-    expect(element).toBeChecked();
+    expect(elemento).toBeChecked();
     expect(screen.getByLabelText("Test1")).not.toBeChecked();
   });
 
-  it("Should rener a error message if its passed one", () => {
-    render(<FormRadioBox legend={legendTxt} name={name} elementList={elements} type={radioType} errorMsg={"Error"} />);
+  it("Debe renderizar un mensaje de error si se envia uno", () => {
+    render(
+      <FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} errorMsg={"Error"} />
+    );
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
   });

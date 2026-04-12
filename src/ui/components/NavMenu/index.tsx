@@ -2,24 +2,32 @@ import Link from "next/link";
 import { NavItem } from "@/types";
 import style from "./style.module.css";
 
+/** Props del componente NavMenu. */
 interface Props {
   links: NavItem[];
   orientation?: "horizontal" | "vertical";
   color?: "white" | "black";
 }
 
+/**
+ * Renderiza un menú de navegación con orientación configurable.
+ * @param props - Props del componente NavMenu.
+ * @param props.links - Lista de enlaces a renderizar en el menú.
+ * @param props.orientation - Orientación del menú: horizontal o vertical.
+ * @param props.color - Variante de color disponible para el menú.
+ */
 const NavMenu = ({ links, orientation = "horizontal" }: Props): React.ReactNode => {
-  const linkList = links.map(link => (
-    <li className={orientation == "horizontal" ? style.horizontal : style.vertical} key={link.href}>
-      <Link className={style.navItem} href={link.href}>
-        {link.text}
+  const listaEnlaces = links.map(enlace => (
+    <li className={orientation == "horizontal" ? style.horizontal : style.vertical} key={enlace.href}>
+      <Link className={style.navItem} href={enlace.href}>
+        {enlace.text}
       </Link>
     </li>
   ));
 
   return (
     <nav id="navbar">
-      <ul className={style.navList}>{linkList}</ul>
+      <ul className={style.navList}>{listaEnlaces}</ul>
     </nav>
   );
 };

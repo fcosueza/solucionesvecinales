@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 jest.mock("@/actions/auth/signUpAction", () => jest.fn());
 jest.mock("next/navigation");
 
-function setup(jsx: React.ReactNode) {
+function configurar(jsx: React.ReactNode) {
   return {
     user: userEvent.setup(),
     ...render(jsx)
@@ -49,50 +49,50 @@ describe("SignUpForm Componente test...", () => {
   it("Should render 2 roles in the role selection control", () => {
     render(<SignUpForm />);
 
-    const radioGroup = screen.getByRole("group");
+    const grupoRadio = screen.getByRole("group");
 
-    expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeInTheDocument();
-    expect(within(radioGroup).getByRole("radio", { name: "admin-radio" })).toBeInTheDocument();
+    expect(within(grupoRadio).getByRole("radio", { name: "tenant-radio" })).toBeInTheDocument();
+    expect(within(grupoRadio).getByRole("radio", { name: "admin-radio" })).toBeInTheDocument();
   });
 
   it("Should check by default tenant option in role selection control", () => {
     render(<SignUpForm />);
 
-    const radioGroup = screen.getByRole("group");
+    const grupoRadio = screen.getByRole("group");
 
-    expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
+    expect(within(grupoRadio).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
   });
 
   it("Should show error messages if the fields are not corrects", async () => {
-    const { user } = setup(<SignUpForm />);
+    const { user } = configurar(<SignUpForm />);
 
-    const mockAction = signUpAction as jest.Mock;
-    const formData = new FormData();
+    const accionMock = signUpAction as jest.Mock;
+    const datosFormulario = new FormData();
 
-    const name = "a";
-    const surname = "a";
-    const email = "email@email.c";
-    const password = "blablalbal";
-    const passRepeat = "blabuieon";
+    const nombre = "a";
+    const apellidos = "a";
+    const correo = "email@email.c";
+    const contrasena = "blablalbal";
+    const repetirContrasena = "blabuieon";
 
-    formData.append("name", name);
-    formData.append("surname", surname);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("repeat", passRepeat);
+    datosFormulario.append("name", nombre);
+    datosFormulario.append("surname", apellidos);
+    datosFormulario.append("email", correo);
+    datosFormulario.append("password", contrasena);
+    datosFormulario.append("repeat", repetirContrasena);
 
-    mockAction.mockResolvedValue({
+    accionMock.mockResolvedValue({
       state: "error",
       messsage: "Incorrect form data",
       errors: { name: "error", surname: "error", email: "error", password: "error", repeat: "error" },
-      payload: formData
+      payload: datosFormulario
     });
 
-    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
-    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
-    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
-    await user.type(screen.getByLabelText("password-input"), password);
-    await user.type(screen.getByLabelText("repeat-input"), passRepeat);
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), nombre);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), apellidos);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), correo);
+    await user.type(screen.getByLabelText("password-input"), contrasena);
+    await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findAllByRole("alert")).toHaveLength(5);
@@ -104,113 +104,113 @@ describe("SignUpForm Componente test...", () => {
   });
 
   it("Should keep values in every field except in passRepeat, showing and error if the passwords doesn't match", async () => {
-    const { user } = setup(<SignUpForm />);
+    const { user } = configurar(<SignUpForm />);
 
-    const mockAction = signUpAction as jest.Mock;
-    const formData = new FormData();
+    const accionMock = signUpAction as jest.Mock;
+    const datosFormulario = new FormData();
 
-    const name = "aaaaaaaaaaaaaaaaa";
-    const surname = "aaaaa";
-    const email = "email@email.com";
-    const password = "blablablablablablablabla";
-    const passRepeat = "blablablablablablablable";
+    const nombre = "aaaaaaaaaaaaaaaaa";
+    const apellidos = "aaaaa";
+    const correo = "email@email.com";
+    const contrasena = "blablablablablablablabla";
+    const repetirContrasena = "blablablablablablablable";
 
-    formData.append("name", name);
-    formData.append("surname", surname);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("repeat", passRepeat);
+    datosFormulario.append("name", nombre);
+    datosFormulario.append("surname", apellidos);
+    datosFormulario.append("email", correo);
+    datosFormulario.append("password", contrasena);
+    datosFormulario.append("repeat", repetirContrasena);
 
-    mockAction.mockResolvedValue({
+    accionMock.mockResolvedValue({
       state: "error",
       messsage: "Incorrect form data",
       errors: { repeat: "error" },
-      payload: formData
+      payload: datosFormulario
     });
 
-    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
-    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
-    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
-    await user.type(screen.getByLabelText("password-input"), password);
-    await user.type(screen.getByLabelText("repeat-input"), passRepeat);
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), nombre);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), apellidos);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), correo);
+    await user.type(screen.getByLabelText("password-input"), contrasena);
+    await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(name);
-    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
-    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(email);
+    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(nombre);
+    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(apellidos);
+    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(correo);
     expect(screen.getByLabelText("password-input")).toHaveValue("");
     expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
   it("Should keep every field data if all data is correct except name which is wrong", async () => {
-    const { user } = setup(<SignUpForm />);
+    const { user } = configurar(<SignUpForm />);
 
-    const mockAction = signUpAction as jest.Mock;
-    const formData = new FormData();
+    const accionMock = signUpAction as jest.Mock;
+    const datosFormulario = new FormData();
 
-    const name = "a";
-    const surname = "aaaaaaaaaaaa";
-    const email = "email@email.com";
-    const password = "blablablablablablablabla";
-    const passRepeat = "blablablablablablablabla";
+    const nombre = "a";
+    const apellidos = "aaaaaaaaaaaa";
+    const correo = "email@email.com";
+    const contrasena = "blablablablablablablabla";
+    const repetirContrasena = "blablablablablablablabla";
 
-    formData.append("name", name);
-    formData.append("surname", surname);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("repeat", passRepeat);
+    datosFormulario.append("name", nombre);
+    datosFormulario.append("surname", apellidos);
+    datosFormulario.append("email", correo);
+    datosFormulario.append("password", contrasena);
+    datosFormulario.append("repeat", repetirContrasena);
 
-    mockAction.mockResolvedValue({
+    accionMock.mockResolvedValue({
       state: "error",
       messsage: "Incorrect form data",
       errors: { name: "error" },
-      payload: formData
+      payload: datosFormulario
     });
 
-    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
-    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
-    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
-    await user.type(screen.getByLabelText("password-input"), password);
-    await user.type(screen.getByLabelText("repeat-input"), passRepeat);
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), nombre);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), apellidos);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), correo);
+    await user.type(screen.getByLabelText("password-input"), contrasena);
+    await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
     await user.click(screen.getByRole("button"));
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
-    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
-    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(email);
+    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(apellidos);
+    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(correo);
     expect(screen.getByLabelText("password-input")).toHaveValue("");
     expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
   it("Should redirect to login page if user created correctly", async () => {
-    const { user } = setup(<SignUpForm />);
+    const { user } = configurar(<SignUpForm />);
 
-    const mockAction = signUpAction as jest.Mock;
-    const formData = new FormData();
+    const accionMock = signUpAction as jest.Mock;
+    const datosFormulario = new FormData();
 
-    const name = "aaaaaaaaaaaa";
-    const surname = "aaaaaaaaaaaa";
-    const email = "email@email.com";
-    const password = "blablablablablablablabla";
-    const passRepeat = "blablablablablablablabla";
+    const nombre = "aaaaaaaaaaaa";
+    const apellidos = "aaaaaaaaaaaa";
+    const correo = "email@email.com";
+    const contrasena = "blablablablablablablabla";
+    const repetirContrasena = "blablablablablablablabla";
 
-    formData.append("name", name);
-    formData.append("surname", surname);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("role", "inquilino");
-    formData.append("repeat", passRepeat);
+    datosFormulario.append("name", nombre);
+    datosFormulario.append("surname", apellidos);
+    datosFormulario.append("email", correo);
+    datosFormulario.append("password", contrasena);
+    datosFormulario.append("role", "inquilino");
+    datosFormulario.append("repeat", repetirContrasena);
 
-    mockAction.mockResolvedValue({
+    accionMock.mockResolvedValue({
       state: "success",
       messsage: "User created correctly",
-      payload: formData
+      payload: datosFormulario
     });
 
-    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
-    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
-    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
-    await user.type(screen.getByLabelText("password-input"), password);
-    await user.type(screen.getByLabelText("repeat-input"), passRepeat);
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), nombre);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), apellidos);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), correo);
+    await user.type(screen.getByLabelText("password-input"), contrasena);
+    await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => expect(redirect).toHaveBeenCalledWith("/login"));

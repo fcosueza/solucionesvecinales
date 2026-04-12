@@ -2,46 +2,46 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Button from ".";
 
-describe("Button component test...", () => {
-  const handleMock = jest.fn();
-  const text = "prueba";
+describe("Pruebas del componente Button", () => {
+  const manejadorMock = jest.fn();
+  const texto = "prueba";
 
-  it("Should render a button properly", () => {
-    render(<Button text={text} />);
+  it("Debe renderizar un botón correctamente", () => {
+    render(<Button text={texto} />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
-  it("Should render a button with the specified text", () => {
-    render(<Button text={text} />);
-    expect(screen.getByText(text)).toBeInTheDocument();
+  it("Debe renderizar un botón con el texto indicado", () => {
+    render(<Button text={texto} />);
+    expect(screen.getByText(texto)).toBeInTheDocument();
   });
 
-  it("Should render a button enabled by default", () => {
-    render(<Button text={text} />);
+  it("Debe renderizar un botón habilitado por defecto", () => {
+    render(<Button text={texto} />);
     expect(screen.getByRole("button")).toHaveProperty("disabled", false);
   });
 
-  it("Should render a button disabled if specified", () => {
-    render(<Button text={text} disabled={true} />);
+  it("Debe renderizar un botón deshabilitado si se indica", () => {
+    render(<Button text={texto} disabled={true} />);
     expect(screen.getByRole("button")).toHaveProperty("disabled", true);
   });
 
-  it("Should render a button with the default type", () => {
-    render(<Button text={text} />);
+  it("Debe renderizar un botón con el tipo por defecto", () => {
+    render(<Button text={texto} />);
     expect(screen.getByRole("button")).toHaveAttribute("type", "button");
   });
 
-  it("Should render a button with the specified type", () => {
-    const type = "reset";
+  it("Debe renderizar un botón con el tipo indicado", () => {
+    const tipo = "reset";
 
-    render(<Button text={text} type={type} />);
+    render(<Button text={texto} type={tipo} />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
-  it("Should call specified function when clicked", async () => {
-    render(<Button text={text} onClick={handleMock} />);
+  it("Debe ejecutar la funcion indicada al hacer click", async () => {
+    render(<Button text={texto} onClick={manejadorMock} />);
     userEvent.click(screen.getByRole("button"));
 
-    await waitFor(() => expect(handleMock).toHaveBeenCalled());
+    await waitFor(() => expect(manejadorMock).toHaveBeenCalled());
   });
 });

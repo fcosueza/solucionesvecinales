@@ -1,56 +1,56 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { useRouter as mockUseRouter } from "next/navigation";
+import { useRouter as enrutadorMock } from "next/navigation";
 import userEvent from "@testing-library/user-event";
 import CTA from ".";
 
-// Mock useRouter module
+// Simula el módulo useRouter.
 jest.mock("next/navigation", () => ({
   ...jest.requireActual("next/navigation"),
   useRouter: jest.fn()
 }));
 
-// Adding method push to our useRouter mock
-(mockUseRouter as jest.Mock).mockReturnValue({
+// Agrega el método push al mock de useRouter.
+(enrutadorMock as jest.Mock).mockReturnValue({
   push: jest.fn()
 });
 
-describe("CTA component test suite", () => {
-  const title = "Test CTA Title";
-  const para = "Lorem ipsum dolor site amet consecterum";
-  const buttonText = "TestButton";
+describe("Pruebas del componente CTA", () => {
+  const titulo = "Test CTA Title";
+  const parrafo = "Lorem ipsum dolor site amet consecterum";
+  const textoBoton = "TestButton";
 
-  it("Should render the CTA title properly", () => {
-    render(<CTA title={title} para={para} buttonText={buttonText} />);
+  it("Debe renderizar el título de CTA correctamente", () => {
+    render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
 
     expect(screen.getByRole("heading")).toBeInTheDocument();
-    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByText(titulo)).toBeInTheDocument();
   });
 
-  it("Should render the CTA paragraph properly", () => {
-    render(<CTA title={title} para={para} buttonText={buttonText} />);
+  it("Debe renderizar el párrafo de CTA correctamente", () => {
+    render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
 
-    expect(screen.getByRole("paragraph")).toBeInTheDocument();
-    expect(screen.getByText(para)).toBeInTheDocument();
+    expect(screen.getByText(parrafo)).toBeInTheDocument();
+    expect(screen.getByText(parrafo)).toBeInTheDocument();
   });
 
-  it("Should render the CTA button correctly", () => {
-    render(<CTA title={title} para={para} buttonText={buttonText} />);
+  it("Debe renderizar el botón de CTA correctamente", () => {
+    render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
-  it("Should not call router hook when the button is not clicked", async () => {
-    const router = mockUseRouter();
+  it("No debe llamar al router si no se hace click en el botón", async () => {
+    const enrutador = enrutadorMock();
 
-    render(<CTA title={title} para={para} buttonText={buttonText} />);
+    render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
 
-    await waitFor(() => expect(router.push).not.toHaveBeenCalled());
+    await waitFor(() => expect(enrutador.push).not.toHaveBeenCalled());
   });
 
-  it("Should call router hook when the button is clicked", async () => {
-    const router = mockUseRouter();
+  it("Debe llamar al router cuando se hace click en el botón", async () => {
+    const enrutador = enrutadorMock();
 
-    render(<CTA title={title} para={para} buttonText={buttonText} />);
+    render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
 
     await userEvent.click(screen.getByRole("button"));
-    await waitFor(() => expect(router.push).toHaveBeenCalled());
+    await waitFor(() => expect(enrutador.push).toHaveBeenCalled());
   });
 });

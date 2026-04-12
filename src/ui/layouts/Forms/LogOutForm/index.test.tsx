@@ -2,23 +2,23 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LogOutForm from ".";
 import logOutAction from "@/actions/auth/logOutAction";
-import { useRouter as mockUseRouter } from "next/navigation";
+import { useRouter as enrutadorMock } from "next/navigation";
 
-// Mock logInAction server action
+// Simula la Server Action logOutAction.
 jest.mock("@/actions/auth/logOutAction");
 
-// Mock useRouter module
+// Simula el módulo useRouter.
 jest.mock("next/navigation", () => ({
   ...jest.requireActual("next/navigation"),
   useRouter: jest.fn()
 }));
 
-// Adding method back to our useRouter mock
-(mockUseRouter as jest.Mock).mockReturnValue({
+// Agrega el método back al mock de useRouter.
+(enrutadorMock as jest.Mock).mockReturnValue({
   back: jest.fn()
 });
 
-function setup(jsx: React.ReactNode) {
+function configurar(jsx: React.ReactNode) {
   return {
     user: userEvent.setup(),
     ...render(jsx)
@@ -33,11 +33,11 @@ describe("LogOutForm component test suite...", () => {
   });
 
   it("Should render the question text correctly", () => {
-    const questionText = "¿Quieres cerrar sesión realmente?";
+    const textoPregunta = "¿Quieres cerrar sesión realmente?";
 
-    render(<LogOutForm questionText={questionText} />);
+    render(<LogOutForm questionText={textoPregunta} />);
 
-    expect(screen.getByText(questionText)).toBeInTheDocument();
+    expect(screen.getByText(textoPregunta)).toBeInTheDocument();
   });
 
   it("Should render two buttons to confirm or cancel action", () => {
@@ -49,7 +49,7 @@ describe("LogOutForm component test suite...", () => {
   });
 
   it("Should call server action if the confirm button is clicked", async () => {
-    const { user } = setup(<LogOutForm />);
+    const { user } = configurar(<LogOutForm />);
 
     await user.click(screen.getByRole("button", { name: "Yes" }));
 
@@ -57,22 +57,22 @@ describe("LogOutForm component test suite...", () => {
   });
 
   it("Should call useRouter if the cancel button is clicked", async () => {
-    const { user } = setup(<LogOutForm />);
-    const router = mockUseRouter();
+    const { user } = configurar(<LogOutForm />);
+    const enrutador = enrutadorMock();
 
     await user.click(screen.getByRole("button", { name: "No" }));
-    expect(router.back).toHaveBeenCalled();
+    expect(enrutador.back).toHaveBeenCalled();
   });
 
   it("It should render the text passed has props for quesiton and buttons", async () => {
-    const questionText = "Testing question?";
-    const confirmText = "Agreed";
-    const cancelText = "No Agreed";
+    const textoPregunta = "Testing question?";
+    const textoConfirmar = "Agreed";
+    const textoCancelar = "No Agreed";
 
-    render(<LogOutForm questionText={questionText} confirmText={confirmText} cancelText={cancelText} />);
+    render(<LogOutForm questionText={textoPregunta} confirmText={textoConfirmar} cancelText={textoCancelar} />);
 
-    expect(screen.getByText(questionText)).toBeInTheDocument();
-    expect(screen.getByText(confirmText)).toBeInTheDocument();
-    expect(screen.getByText(cancelText)).toBeInTheDocument();
+    expect(screen.getByText(textoPregunta)).toBeInTheDocument();
+    expect(screen.getByText(textoConfirmar)).toBeInTheDocument();
+    expect(screen.getByText(textoCancelar)).toBeInTheDocument();
   });
 });

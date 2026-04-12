@@ -7,37 +7,43 @@ import FormInput from "@/ui/components/FormComp/FormInput";
 import Button from "@/ui/components/Button";
 import style from "./style.module.css";
 
-const initialState: FormActionState = {
+const estadoInicial: FormActionState = {
   state: "error" as const,
   message: ""
 };
 
+/**
+ * Renderiza el formulario de contacto y gestiona su envío con Server Actions.
+ */
 const ContactForm = (): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(contactMsgAction, initialState);
+  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
+    contactMsgAction,
+    estadoInicial
+  );
 
   return (
     <>
-      <form action={formAction} id="contactForm" role="form" className={style.form}>
+      <form action={accionFormulario} id="contactForm" role="form" className={style.form}>
         <FormInput
           labelText="Nombre"
-          errorMsg={state?.errors?.name ?? ""}
+          errorMsg={estado?.errors?.name ?? ""}
           attr={{
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: state?.errors?.name ? "" : ((state.payload?.get("name") as string) ?? ""),
+            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? ""),
             placeholder: "Introduzca su nombre..."
           }}
         />
 
         <FormInput
           labelText="Correo"
-          errorMsg={state?.errors?.email ?? ""}
+          errorMsg={estado?.errors?.email ?? ""}
           attr={{
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: state?.errors?.email ? "" : ((state.payload?.get("email") as string) ?? ""),
+            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true
@@ -46,18 +52,18 @@ const ContactForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Mensaje (mín. 20 caracteres)"
-          errorMsg={state?.errors?.msg ?? ""}
+          errorMsg={estado?.errors?.msg ?? ""}
           attr={{
             id: "msg",
             name: "msg",
             type: InputType.textarea,
-            defaultValue: state?.errors?.msg ? "" : ((state.payload?.get("msg") as string) ?? ""),
+            defaultValue: estado?.errors?.msg ? "" : ((estado.payload?.get("msg") as string) ?? ""),
             placeholder: "Introduzca su mensaje...",
             required: true
           }}
         />
 
-        <Button type="submit" text="Enviar" disabled={isPending} />
+        <Button type="submit" text="Enviar" disabled={estaPendiente} />
       </form>
     </>
   );

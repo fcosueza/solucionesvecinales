@@ -6,7 +6,7 @@ import logInAction from "@/actions/auth/logInAction";
 // Mock logInAction server action
 jest.mock("@/actions/auth/logInAction", () => jest.fn());
 
-function setup(jsx: React.ReactNode) {
+function configurar(jsx: React.ReactNode) {
   return {
     user: userEvent.setup(),
     ...render(jsx)
@@ -28,83 +28,83 @@ describe("LogInForm component test suite...", () => {
   });
 
   it("Should show in every field what the user is writing", async () => {
-    const { user } = setup(<LogInForm />);
+    const { user } = configurar(<LogInForm />);
 
-    const email = "testname@email.com";
-    const password = "asssssssasasdsdasdasdasas";
+    const correo = "testname@email.com";
+    const contrasena = "asssssssasasdsdasdasdasas";
 
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
+    const inputCorreo = screen.getByRole("textbox", { name: "email-input" });
+    const inputContrasena = screen.getByLabelText("password-input");
 
-    await user.type(emailInput, email);
-    await user.type(passInput, password);
+    await user.type(inputCorreo, correo);
+    await user.type(inputContrasena, contrasena);
 
-    expect(emailInput).toHaveValue(email);
-    expect(passInput).toHaveValue(password);
+    expect(inputCorreo).toHaveValue(correo);
+    expect(inputContrasena).toHaveValue(contrasena);
   });
 
   it("Should show error message if email is not correct", async () => {
-    const { user } = setup(<LogInForm />);
+    const { user } = configurar(<LogInForm />);
 
-    const mockAction = logInAction as jest.Mock;
-    const formData = new FormData();
+    const accionMock = logInAction as jest.Mock;
+    const datosFormulario = new FormData();
 
-    const email = "testname@email.c";
-    const password = "asssssssasasdsdasdasdasas";
+    const correo = "testname@email.c";
+    const contrasena = "asssssssasasdsdasdasdasas";
 
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
+    const inputCorreo = screen.getByRole("textbox", { name: "email-input" });
+    const inputContrasena = screen.getByLabelText("password-input");
 
-    formData.append("email", email);
-    formData.append("password", password);
+    datosFormulario.append("email", correo);
+    datosFormulario.append("password", contrasena);
 
-    mockAction.mockResolvedValue({
+    accionMock.mockResolvedValue({
       state: "error",
       message: "Incorrect form data",
       errors: {
         email: "email incorrecto"
       },
-      payload: formData
+      payload: datosFormulario
     });
 
-    await user.type(emailInput, email);
-    await user.type(passInput, password);
+    await user.type(inputCorreo, correo);
+    await user.type(inputContrasena, contrasena);
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
-    expect(emailInput).toHaveValue("");
-    expect(passInput).toHaveValue("");
+    expect(inputCorreo).toHaveValue("");
+    expect(inputContrasena).toHaveValue("");
   });
 
   it("Should show error message if password is not correct", async () => {
-    const { user } = setup(<LogInForm />);
+    const { user } = configurar(<LogInForm />);
 
-    const mockAction = logInAction as jest.Mock;
-    const formData = new FormData();
-    const email = "testname@email.com";
-    const password = "as";
+    const accionMock = logInAction as jest.Mock;
+    const datosFormulario = new FormData();
+    const correo = "testname@email.com";
+    const contrasena = "as";
 
-    const emailInput = screen.getByRole("textbox", { name: "email-input" });
-    const passInput = screen.getByLabelText("password-input");
+    const inputCorreo = screen.getByRole("textbox", { name: "email-input" });
+    const inputContrasena = screen.getByLabelText("password-input");
 
-    formData.append("email", email);
-    formData.append("password", password);
+    datosFormulario.append("email", correo);
+    datosFormulario.append("password", contrasena);
 
-    mockAction.mockResolvedValue({
+    accionMock.mockResolvedValue({
       state: "error",
       message: "Incorrect form data",
       errors: {
         password: "password incorrecto"
       },
-      payload: formData
+      payload: datosFormulario
     });
 
-    await user.type(emailInput, email);
-    await user.type(passInput, password);
+    await user.type(inputCorreo, correo);
+    await user.type(inputContrasena, contrasena);
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
-    expect(passInput).toHaveValue("");
-    expect(emailInput).toHaveValue(email);
+    expect(inputContrasena).toHaveValue("");
+    expect(inputCorreo).toHaveValue(correo);
   });
 });

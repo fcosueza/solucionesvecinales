@@ -3,23 +3,29 @@ import Link from "next/link";
 import Image from "next/image";
 import style from "./style.module.css";
 
+/** Props del componente Social. */
 interface Props {
   icons: SocialIcon[];
 }
 
+/**
+ * Renderiza enlaces sociales externos con iconos.
+ * @param props - Props del componente Social.
+ * @param props.icons - Lista de iconos sociales con metadatos de renderizado.
+ */
 const Social = ({ icons }: Props): React.ReactNode => {
   return (
     <div aria-label="social" className={style.social}>
-      {icons.map(icon => {
+      {icons.map(icono => {
         return (
-          <Link href={icon.url} key={icon.src} target="_blank" className={style.link}>
+          <Link href={icono.url} key={icono.src} target="_blank" className={style.link}>
             <Image
               className={style.icon}
-              src={icon.src}
-              alt={icon.altText}
-              width={icon.width}
-              height={icon.height}
-              title={icon.title}
+              src={icono.src}
+              alt={icono.altText}
+              width={icono.width}
+              height={icono.height}
+              title={icono.title}
             />
           </Link>
         );

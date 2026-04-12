@@ -7,25 +7,31 @@ import FormInput from "@/ui/components/FormComp/FormInput";
 import Button from "../../../components/Button";
 import style from "./style.module.css";
 
-const initialState: FormActionState = {
+const estadoInicial: FormActionState = {
   state: "error" as const,
   message: ""
 };
 
+/**
+ * Renderiza el formulario de inicio de sesión y procesa credenciales.
+ */
 const LogInForm = (): React.ReactNode => {
-  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(logInAction, initialState);
+  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
+    logInAction,
+    estadoInicial
+  );
 
   return (
     <>
-      <form action={formAction} id="loginForm" className={style.form} role="form">
+      <form action={accionFormulario} id="loginForm" className={style.form} role="form">
         <FormInput
           labelText="Correo"
-          errorMsg={state?.errors?.email ?? ""}
+          errorMsg={estado?.errors?.email ?? ""}
           attr={{
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: state?.errors?.email ? "" : ((state.payload?.get("email") as string) ?? ""),
+            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true
@@ -34,7 +40,7 @@ const LogInForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Contraseña"
-          errorMsg={state?.errors?.password ?? ""}
+          errorMsg={estado?.errors?.password ?? ""}
           attr={{
             id: "password",
             name: "password",
@@ -45,7 +51,7 @@ const LogInForm = (): React.ReactNode => {
           }}
         />
 
-        <Button type="submit" text="Enviar" disabled={isPending} />
+        <Button type="submit" text="Enviar" disabled={estaPendiente} />
       </form>
     </>
   );

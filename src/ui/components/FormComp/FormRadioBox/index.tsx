@@ -2,6 +2,7 @@ import { FormRadioAttrs, RadioBoxType } from "@/types";
 import style from "./style.module.css";
 import FormError from "../FormError";
 
+/** Props del componente FormRadioBox. */
 interface Props {
   legend: string;
   type: RadioBoxType;
@@ -10,21 +11,30 @@ interface Props {
   errorMsg?: string | string[];
 }
 
-// TODO: Implement checkbox type generation.
+/** TODO: Implementar la generación de tipo checkbox. */
 
+/**
+ * Renderiza controles de radio agrupados con feedback de validación opcional.
+ * @param props - Props del componente FormRadioBox.
+ * @param props.legend - Texto de la leyenda del grupo de opciones.
+ * @param props.type - Tipo de control a renderizar (radio o checkbox).
+ * @param props.name - Nombre compartido por los inputs del grupo.
+ * @param props.elementList - Lista de opciones con etiqueta y atributos del input.
+ * @param props.errorMsg - Mensaje de error opcional para el grupo.
+ */
 const FormRadioBox = ({ legend, type, name, elementList, errorMsg = "" }: Props): React.ReactNode => {
   if (type == RadioBoxType.checkbox) return <h1>checkbox not implemented yet!!</h1>;
 
-  const items: React.ReactNode = elementList.map(element => (
-    <div className={style.controlRadio} key={`${element.radioAttr.id}`}>
+  const elementosRadio: React.ReactNode = elementList.map(elemento => (
+    <div className={style.controlRadio} key={`${elemento.radioAttr.id}`}>
       <input
         type={type}
         className={style.radio}
         name={name}
-        aria-label={`${element.radioAttr.id}-${type}`}
-        {...element.radioAttr}
+        aria-label={`${elemento.radioAttr.id}-${type}`}
+        {...elemento.radioAttr}
       />
-      <label htmlFor={element.radioAttr.id}>{element.labelText}</label>
+      <label htmlFor={elemento.radioAttr.id}>{elemento.labelText}</label>
     </div>
   ));
 
@@ -32,7 +42,7 @@ const FormRadioBox = ({ legend, type, name, elementList, errorMsg = "" }: Props)
     <div className={style.control} role="form-control">
       <fieldset className={style.fieldset}>
         <legend className={style.legend}>{legend}</legend>
-        {items}
+        {elementosRadio}
         {errorMsg ? <FormError message={errorMsg} /> : ""}
       </fieldset>
     </div>
