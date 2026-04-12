@@ -1,5 +1,5 @@
 import { FormActionState } from "@/types";
-import { createSession } from "@/lib/session";
+import { crearSesion } from "@/lib/session";
 import { waitFor } from "@testing-library/dom";
 import logInAction from "./logInAction";
 import prisma from "../../lib/prisma";
@@ -95,6 +95,6 @@ describe("logInAction test suite", () => {
 
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("El usuario y la contraseña son correctos");
-    await waitFor(() => expect(createSession).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(crearSesion).toHaveBeenCalledTimes(1));
   });
 });

@@ -1,33 +1,33 @@
 import { jwtVerify } from "jose";
-import decryptSession from "./decryptSession";
+import descifrarSesion from "./descifrarSesion";
 import { SessionPayload, UserRole } from "@/types";
 
 jest.mock("jose", () => ({
   jwtVerify: jest.fn()
 }));
 
-describe("decryptSession test suite...", () => {
+describe("descifrarSesion test suite...", () => {
   beforeEach(() => {
     jest.resetModules();
   });
 
   it("Should return the payload if the token is correct", async () => {
-    const mockPayload: SessionPayload = { userID: "123", role: UserRole.tenant };
+    const mockCarga: SessionPayload = { userID: "123", role: UserRole.tenant };
 
-    (jwtVerify as jest.Mock).mockResolvedValueOnce({ payload: mockPayload });
+    (jwtVerify as jest.Mock).mockResolvedValueOnce({ payload: mockCarga });
 
-    const result = await decryptSession("valid.token.here");
+    const resultado = await descifrarSesion("valid.token.here");
 
     expect(jwtVerify).toHaveBeenCalledWith("valid.token.here", expect.anything(), { algorithms: ["HS256"] });
-    expect(result).toEqual(mockPayload);
+    expect(resultado).toEqual(mockCarga);
   });
 
   it("Should return an error if jwtVerify throw an exception", async () => {
     (jwtVerify as jest.Mock).mockRejectedValueOnce(new Error("Invalid token"));
 
-    const result = await decryptSession("invalid.token.here");
+    const resultado = await descifrarSesion("invalid.token.here");
 
-    expect(result).toEqual({
+    expect(resultado).toEqual({
       error: "session error",
       message: "Session can't be decrypted."
     });
@@ -36,10 +36,10 @@ describe("decryptSession test suite...", () => {
   it("Should return an error if the tokne is empty", async () => {
     (jwtVerify as jest.Mock).mockRejectedValueOnce(new Error("No token provided"));
 
-    const result = await decryptSession(undefined);
+    const resultado = await descifrarSesion(undefined);
 
     expect(jwtVerify).toHaveBeenCalled();
-    expect(result).toEqual({
+    expect(resultado).toEqual({
       error: "session error",
       message: "Session can't be decrypted."
     });

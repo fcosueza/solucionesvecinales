@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import logInSchema from "@/schemas/auth/login.schema";
 import { FormActionState, UserRole } from "@/types";
 import { SafeParseReturnType } from "zod";
-import { createSession } from "@/lib/session";
+import { crearSesion } from "@/lib/session";
 import z from "zod";
 
 type CamposLogin = z.infer<typeof logInSchema>;
@@ -67,7 +67,7 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
     };
 
   // El usuario y la contraseña son correctos
-  await createSession(usuario.id, usuario.role as UserRole);
+  await crearSesion(usuario.id, usuario.role as UserRole);
 
   return {
     state: "success",

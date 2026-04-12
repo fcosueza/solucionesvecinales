@@ -2,18 +2,18 @@ import "server-only";
 
 import { cache } from "react";
 import { cookies } from "next/headers";
-import { decryptSession } from "@/lib/session";
+import { descifrarSesion } from "@/lib/session";
 import { BasicError, SessionPayload, SessionVerification } from "@/types";
 
 const verifySession = cache(async (): Promise<SessionVerification> => {
-  const cookie: string | undefined = (await cookies()).get("session")?.value;
-  const session: SessionPayload | BasicError = await decryptSession(cookie);
+  const valorCookie: string | undefined = (await cookies()).get("session")?.value;
+  const sesion: SessionPayload | BasicError = await descifrarSesion(valorCookie);
 
-  if ("error" in session) {
+  if ("error" in sesion) {
     return { isAuth: false };
   }
 
-  return { isAuth: true, session: session };
+  return { isAuth: true, session: sesion };
 });
 
 export default verifySession;

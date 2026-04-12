@@ -1,5 +1,5 @@
 import { cookies as mockCookies } from "next/headers";
-import deleteSession from "./deleteSession";
+import eliminarSesion from "./eliminarSesion";
 
 // Mock cookies
 jest.mock("next/headers", () => ({
@@ -10,11 +10,11 @@ jest.mock("next/headers", () => ({
   delete: jest.fn()
 });
 
-describe("deleteSession testing suite..", () => {
+describe("eliminarSesion testing suite..", () => {
   it("Should call cookies delete function to delete the user session", async () => {
-    const cookieStore = await mockCookies();
-    await deleteSession();
+    const almacenCookies = await mockCookies();
+    await eliminarSesion();
 
-    expect(cookieStore.delete).toHaveBeenCalled();
+    expect(almacenCookies.delete).toHaveBeenCalled();
   });
 });

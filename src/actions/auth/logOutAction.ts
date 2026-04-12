@@ -1,6 +1,6 @@
 "use server";
 
-import { deleteSession } from "@/lib/session";
+import { eliminarSesion } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 /**
@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
  */
 
 const logOutAction = async (): Promise<void> => {
-  await deleteSession();
+  await eliminarSesion();
   redirect("/");
 };
 

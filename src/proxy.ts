@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SessionPayload, BasicError } from "@/types";
-import { decryptSession } from "./lib/session";
+import { descifrarSesion } from "./lib/session";
 import { cookies } from "next/headers";
 
 const protectedRoutes = ["/dashboard"];
@@ -20,14 +20,14 @@ async function proxy(req: NextRequest): Promise<NextResponse> {
   const isProtectedRoute: boolean = protectedRoutes.includes(path);
   const isPublicRoute: boolean = publicRoutes.includes(path);
 
-  const cookie: string | undefined = (await cookies()).get("session")?.value;
-  const session: SessionPayload | BasicError = await decryptSession(cookie);
+  const valorCookie: string | undefined = (await cookies()).get("session")?.value;
+  const sesion: SessionPayload | BasicError = await descifrarSesion(valorCookie);
 
-  if (isProtectedRoute && "error" in session) {
+  if (isProtectedRoute && "error" in sesion) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  if (isPublicRoute && "userID" in session && !req.nextUrl.pathname.startsWith("/dashboard")) {
+  if (isPublicRoute && "userID" in sesion && !req.nextUrl.pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
   }
 
