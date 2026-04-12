@@ -7,7 +7,7 @@ import { FormActionState } from "@/types";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
-type SignInFields = z.infer<typeof signUpSchema>;
+type CamposRegistro = z.infer<typeof signUpSchema>;
 
 /**
  * Valida los datos de registro, crea el usuario y almacena sus credenciales de forma segura.
@@ -18,29 +18,29 @@ type SignInFields = z.infer<typeof signUpSchema>;
  */
 
 const signUpAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const rawData: object = Object.fromEntries(formData);
-  const validatedData: SafeParseReturnType<object, SignInFields> = signUpSchema.safeParse(rawData);
+  const datos: object = Object.fromEntries(formData);
+  const datosValidados: SafeParseReturnType<object, CamposRegistro> = signUpSchema.safeParse(datos);
 
   // Si los datos no son válidos
-  if (!validatedData.success) {
+  if (!datosValidados.success) {
     return {
       state: "error",
       message: "Datos del formulario incorrectos",
-      errors: validatedData.error.flatten().fieldErrors
+      errors: datosValidados.error.flatten().fieldErrors
     };
   }
 
-  const saltRounds: number = 10;
-  const hashedPassword: string = await bcrypt.hash(validatedData.data.password, saltRounds);
+  const salCifrado: number = 10;
+  const hashedPassword: string = await bcrypt.hash(datosValidados.data.password, salCifrado);
 
   // Intentar crear el usuario y sus credenciales
   try {
     await prisma.usuario.create({
       data: {
-        email: validatedData.data.email,
-        role: validatedData.data.role,
-        nombre: validatedData.data.name,
-        apellido: validatedData.data.surname,
+        email: datosValidados.data.email,
+        role: datosValidados.data.role,
+        nombre: datosValidados.data.name,
+        apellido: datosValidados.data.surname,
         credenciales: {
           create: {
             password: hashedPassword
@@ -48,7 +48,7 @@ const signUpAction = async (_prevState: FormActionState, formData: FormData): Pr
         }
       }
     });
-  } catch (e: any) {
+  } catch (error: any) {
     return {
       state: "error",
       message: "No se pudo crear el usuario",

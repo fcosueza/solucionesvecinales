@@ -8,7 +8,7 @@ import { SafeParseReturnType } from "zod";
 import { createSession } from "@/lib/session";
 import z from "zod";
 
-type LogInFields = z.infer<typeof logInSchema>;
+type CamposLogin = z.infer<typeof logInSchema>;
 
 /**
  * Valida las credenciales del usuario, comprueba su contraseña y crea la sesión si el acceso es correcto.
@@ -19,22 +19,22 @@ type LogInFields = z.infer<typeof logInSchema>;
  */
 
 const logInAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const rawData: object = Object.fromEntries(formData);
-  const validatedData: SafeParseReturnType<object, LogInFields> = logInSchema.safeParse(rawData);
+  const datos: object = Object.fromEntries(formData);
+  const datosValidados: SafeParseReturnType<object, CamposLogin> = logInSchema.safeParse(datos);
 
   // Si los datos no son válidos
-  if (!validatedData.success) {
+  if (!datosValidados.success) {
     return {
       state: "error",
       message: "Datos del formulario incorrectos",
-      errors: validatedData.error.flatten().fieldErrors
+      errors: datosValidados.error.flatten().fieldErrors
     };
   }
 
   // Buscar el usuario y sus credenciales
   const usuario = await prisma.usuario.findUnique({
     where: {
-      email: validatedData.data.email
+      email: datosValidados.data.email
     },
     include: {
       credenciales: true
@@ -53,9 +53,9 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
     };
   }
 
-  const passwordMatch: boolean = await bcrypt.compare(validatedData.data.password, usuario.credenciales.password);
+  const passwordMatch: boolean = await bcrypt.compare(datosValidados.data.password, usuario.credenciales.password);
 
-  // Contraseña incorrecta
+  // Password incorrecto
   if (!passwordMatch)
     return {
       state: "error",

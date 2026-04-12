@@ -9,7 +9,7 @@ jest.mock("../lib/prisma", () => ({
 }));
 
 describe("contactMsgAction test suite", () => {
-  const mockFormData = (data: Record<string, string>) => {
+  const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -24,13 +24,13 @@ describe("contactMsgAction test suite", () => {
   });
 
   it("Debe devolver un error si la validación falla", async () => {
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       name: "a",
       email: "not-an-email@gmail.c",
       msg: "aaa"
     });
 
-    const resultado = await contactMsgAction({} as FormActionState, formData);
+    const resultado = await contactMsgAction({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
@@ -41,13 +41,13 @@ describe("contactMsgAction test suite", () => {
   it("Debe devolver un error si Prisma no puede crear el mensaje", async () => {
     (prisma.contacto.create as jest.Mock).mockRejectedValueOnce(new Error("DB error"));
 
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       name: "John Doe",
       email: "john@example.com",
       msg: "Hola, este es un mensaje de prueba para contactMsgAction"
     });
 
-    const resultado = await contactMsgAction({} as FormActionState, formData);
+    const resultado = await contactMsgAction({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("No se pudo crear el mensaje");
@@ -57,13 +57,13 @@ describe("contactMsgAction test suite", () => {
   it("Debe devolver éxito si el mensaje se crea correctamente", async () => {
     (prisma.contacto.create as jest.Mock).mockResolvedValueOnce({ id: 1 });
 
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       name: "John Doe",
       email: "john@example.com",
       msg: "Hola, este es un mensaje de prueba para contactMsgAction"
     });
 
-    const resultado = await contactMsgAction({} as FormActionState, formData);
+    const resultado = await contactMsgAction({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("Mensaje creado exitosamente");

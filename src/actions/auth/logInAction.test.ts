@@ -13,7 +13,7 @@ jest.mock("@/lib/prisma", () => ({
 }));
 
 describe("logInAction test suite", () => {
-  const mockFormData = (data: Record<string, string>) => {
+  const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -28,32 +28,32 @@ describe("logInAction test suite", () => {
   });
 
   it("Debe devolver un error si la validación falla", async () => {
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       email: "not-an-email@gmail.c",
       password: "aaa"
     });
 
-    const result = await logInAction({} as FormActionState, formData);
+    const resultado = await logInAction({} as FormActionState, datosForm);
 
-    expect(result.state).toBe("error");
-    expect(result.message).toBe("Datos del formulario incorrectos");
-    expect(result.errors).toBeDefined();
+    expect(resultado.state).toBe("error");
+    expect(resultado.message).toBe("Datos del formulario incorrectos");
+    expect(resultado.errors).toBeDefined();
     expect(prisma.usuario.findUnique).not.toHaveBeenCalled();
   });
 
   it("Debe devolver un error si el usuario no existe", async () => {
     (prisma.usuario.findUnique as jest.Mock).mockResolvedValue(null);
 
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       email: "john@example.com",
       password: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     });
 
-    const result = await logInAction({} as FormActionState, formData);
+    const resultado = await logInAction({} as FormActionState, datosForm);
 
-    expect(result.state).toBe("error");
-    expect(result.message).toBe("Datos del formulario incorrectos");
-    expect(result.errors?.email).toBe("No existe ningún usuario con ese correo");
+    expect(resultado.state).toBe("error");
+    expect(resultado.message).toBe("Datos del formulario incorrectos");
+    expect(resultado.errors?.email).toBe("No existe ningún usuario con ese correo");
   });
 
   it("Debe devolver un error si la contraseña no coincide", async () => {
@@ -65,16 +65,16 @@ describe("logInAction test suite", () => {
       credenciales: { password: hashedPassword }
     });
 
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       email: "john@example.com",
       password: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     });
 
-    const result = await logInAction({} as FormActionState, formData);
+    const resultado = await logInAction({} as FormActionState, datosForm);
 
-    expect(result.state).toBe("error");
-    expect(result.message).toBe("Datos del formulario incorrectos");
-    expect(result.errors?.password).toBe("La contraseña no es válida para este usuario.");
+    expect(resultado.state).toBe("error");
+    expect(resultado.message).toBe("Datos del formulario incorrectos");
+    expect(resultado.errors?.password).toBe("La contraseña no es válida para este usuario.");
   });
 
   it("Debe devolver éxito si el usuario existe y la contraseña es correcta", async () => {
@@ -86,15 +86,15 @@ describe("logInAction test suite", () => {
       credenciales: { password: hashedPassword }
     });
 
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       email: "john@example.com",
       password: "aaaaaaaaaaaaaaaaaaaa"
     });
 
-    const result = await logInAction({} as FormActionState, formData);
+    const resultado = await logInAction({} as FormActionState, datosForm);
 
-    expect(result.state).toBe("success");
-    expect(result.message).toBe("El usuario y la contraseña son correctos");
+    expect(resultado.state).toBe("success");
+    expect(resultado.message).toBe("El usuario y la contraseña son correctos");
     await waitFor(() => expect(createSession).toHaveBeenCalledTimes(1));
   });
 });

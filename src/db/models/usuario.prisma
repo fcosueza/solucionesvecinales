@@ -7,7 +7,7 @@ enum Rol {
 model Usuario {
   id       String  @id @default(uuid())
   email    String  @unique
-  role     Rol     @default(inquilino)
+  rol      Rol     @default(inquilino)
   nombre   String
   apellido String
 

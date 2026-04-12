@@ -6,7 +6,7 @@ import { FormActionState } from "@/types";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
-type ContactFormFields = z.infer<typeof contactSchema>;
+type CamposFormContacto = z.infer<typeof contactSchema>;
 
 /**
  * Procesa el formulario de contacto, valida los datos recibidos y guarda el mensaje en la base de datos.
@@ -18,7 +18,7 @@ type ContactFormFields = z.infer<typeof contactSchema>;
 
 const contactMsgAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
-  const datosValidados: SafeParseReturnType<object, ContactFormFields> = contactSchema.safeParse(datos);
+  const datosValidados: SafeParseReturnType<object, CamposFormContacto> = contactSchema.safeParse(datos);
 
   if (!datosValidados.success) {
     return {

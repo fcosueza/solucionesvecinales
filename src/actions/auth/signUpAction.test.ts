@@ -9,7 +9,7 @@ jest.mock("../../lib/prisma", () => ({
 }));
 
 describe("signUpAction test suite", () => {
-  const mockFormData = (data: Record<string, string>) => {
+  const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -24,7 +24,7 @@ describe("signUpAction test suite", () => {
   });
 
   it("Debe devolver un error si la validación falla", async () => {
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       email: "test@email.c",
       role: "failrole",
       name: "a",
@@ -33,11 +33,11 @@ describe("signUpAction test suite", () => {
       repeat: "a"
     });
 
-    const result = await signUpAction({} as FormActionState, formData);
+    const resultado = await signUpAction({} as FormActionState, datosForm);
 
-    expect(result.state).toBe("error");
-    expect(result.message).toBe("Datos del formulario incorrectos");
-    expect(result.errors).toBeDefined();
+    expect(resultado.state).toBe("error");
+    expect(resultado.message).toBe("Datos del formulario incorrectos");
+    expect(resultado.errors).toBeDefined();
     expect(prisma.usuario.create).not.toHaveBeenCalled();
   });
 
@@ -48,7 +48,7 @@ describe("signUpAction test suite", () => {
       }
     });
 
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       email: "test@email.com",
       role: "inquilino",
       name: "testname",
@@ -57,17 +57,17 @@ describe("signUpAction test suite", () => {
       repeat: "testtesttesttest"
     });
 
-    const result = await signUpAction({} as FormActionState, formData);
+    const resultado = await signUpAction({} as FormActionState, datosForm);
 
-    expect(result.state).toBe("error");
-    expect(result.message).toBe("No se pudo crear el usuario");
-    expect(result.errors?.prisma).not.toBeNull();
+    expect(resultado.state).toBe("error");
+    expect(resultado.message).toBe("No se pudo crear el usuario");
+    expect(resultado.errors?.prisma).not.toBeNull();
   });
 
   it("Debe devolver éxito si el usuario se ha registrado correctamente", async () => {
     (prisma.usuario.create as jest.Mock).mockResolvedValue({ id: 1 });
 
-    const formData = mockFormData({
+    const datosForm = crearFormData({
       email: "test@email.com",
       role: "inquilino",
       name: "testname",
@@ -76,10 +76,10 @@ describe("signUpAction test suite", () => {
       repeat: "testtesttesttest"
     });
 
-    const result = await signUpAction({} as FormActionState, formData);
+    const resultado = await signUpAction({} as FormActionState, datosForm);
 
-    expect(result.state).toBe("success");
-    expect(result.message).toBe("Usuario creado correctamente");
+    expect(resultado.state).toBe("success");
+    expect(resultado.message).toBe("Usuario creado correctamente");
     expect(prisma.usuario.create).toHaveBeenCalled();
   });
 });
