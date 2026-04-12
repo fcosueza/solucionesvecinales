@@ -14,18 +14,18 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("SignUpForm Componente test...", () => {
+describe("Suite de pruebas del componente SignUpForm...", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("Must render the form", () => {
+  it("Debe renderizar el formulario", () => {
     render(<SignUpForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Should render all the form input controls", () => {
+  it("Debe renderizar todos los campos del formulario", () => {
     render(<SignUpForm />);
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
   });
 
-  it("Should render all default values in input fields", () => {
+  it("Debe renderizar todos los valores predeterminados en los campos", () => {
     render(<SignUpForm />);
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
@@ -46,7 +46,7 @@ describe("SignUpForm Componente test...", () => {
     expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
-  it("Should render 2 roles in the role selection control", () => {
+  it("Debe renderizar 2 roles en el control de selección de rol", () => {
     render(<SignUpForm />);
 
     const grupoRadio = screen.getByRole("group");
@@ -55,7 +55,7 @@ describe("SignUpForm Componente test...", () => {
     expect(within(grupoRadio).getByRole("radio", { name: "admin-radio" })).toBeInTheDocument();
   });
 
-  it("Should check by default tenant option in role selection control", () => {
+  it("Debe marcar por defecto la opción de inquilino en el control de selección de rol", () => {
     render(<SignUpForm />);
 
     const grupoRadio = screen.getByRole("group");
@@ -63,7 +63,7 @@ describe("SignUpForm Componente test...", () => {
     expect(within(grupoRadio).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
   });
 
-  it("Should show error messages if the fields are not corrects", async () => {
+  it("Debe mostrar mensajes de error si los campos no son correctos", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUpAction as jest.Mock;
@@ -96,14 +96,16 @@ describe("SignUpForm Componente test...", () => {
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findAllByRole("alert")).toHaveLength(5);
-    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
-    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue("");
-    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue("");
-    expect(screen.getByLabelText("password-input")).toHaveValue("");
-    expect(screen.getByLabelText("repeat-input")).toHaveValue("");
+    await waitFor(() => {
+      expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+      expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue("");
+      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue("");
+      expect(screen.getByLabelText("password-input")).toHaveValue("");
+      expect(screen.getByLabelText("repeat-input")).toHaveValue("");
+    });
   });
 
-  it("Should keep values in every field except in passRepeat, showing and error if the passwords doesn't match", async () => {
+  it("Debe mantener valores en todos los campos excepto en repetirContraseña, mostrando error si las contraseñas no coinciden", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUpAction as jest.Mock;
@@ -135,14 +137,16 @@ describe("SignUpForm Componente test...", () => {
     await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(nombre);
-    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(apellidos);
-    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(correo);
-    expect(screen.getByLabelText("password-input")).toHaveValue("");
-    expect(screen.getByLabelText("repeat-input")).toHaveValue("");
+    await waitFor(() => {
+      expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(nombre);
+      expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(apellidos);
+      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(correo);
+      expect(screen.getByLabelText("password-input")).toHaveValue("");
+      expect(screen.getByLabelText("repeat-input")).toHaveValue("");
+    });
   });
 
-  it("Should keep every field data if all data is correct except name which is wrong", async () => {
+  it("Debe mantener los datos de todos los campos si todos son correctos excepto nombre que es incorrecto", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUpAction as jest.Mock;
@@ -174,14 +178,16 @@ describe("SignUpForm Componente test...", () => {
     await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
-    expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(apellidos);
-    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(correo);
-    expect(screen.getByLabelText("password-input")).toHaveValue("");
-    expect(screen.getByLabelText("repeat-input")).toHaveValue("");
+    await waitFor(() => {
+      expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+      expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(apellidos);
+      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(correo);
+      expect(screen.getByLabelText("password-input")).toHaveValue("");
+      expect(screen.getByLabelText("repeat-input")).toHaveValue("");
+    });
   });
 
-  it("Should redirect to login page if user created correctly", async () => {
+  it("Debe redirigir a la página de inicio de sesión si el usuario se creó correctamente", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUpAction as jest.Mock;

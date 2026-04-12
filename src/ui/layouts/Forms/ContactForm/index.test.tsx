@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
 import contactMsgAction from "@/actions/contactMsgAction";
@@ -12,13 +12,13 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("ContactForm component test suite...", () => {
-  it("Should render a form correctly", () => {
+describe("Suite de pruebas del componente ContactForm...", () => {
+  it("Debe renderizar un formulario correctamente", () => {
     render(<ContactForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
-  it("Should render form controls properly", () => {
+  it("Debe renderizar los campos del formulario correctamente", () => {
     render(<ContactForm />);
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("ContactForm component test suite...", () => {
     expect(screen.getByRole("textbox", { name: "msg-input" })).toBeInTheDocument();
   });
 
-  it("Should show in input fields what the user is writing", async () => {
+  it("Debe mostrar en los campos lo que está escribiendo el usuario", async () => {
     const { user } = configurar(<ContactForm />);
 
     const nombre = "testname";
@@ -42,7 +42,7 @@ describe("ContactForm component test suite...", () => {
     expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveValue(mensaje);
   });
 
-  it("Should show error msg and load error class if the name its not correct", async () => {
+  it("Debe mostrar el mensaje de error y aplicar la clase si el nombre es incorrecto", async () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
@@ -68,12 +68,14 @@ describe("ContactForm component test suite...", () => {
     await user.type(screen.getByRole("textbox", { name: "msg-input" }), mensaje);
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveClass("control__inputError");
-    expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole("textbox", { name: "name-input" })).toHaveClass("control__inputError");
+      expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
+    });
   });
 
-  it("Should show error msg and load error class if the email its not correct", async () => {
+  it("Debe mostrar el mensaje de error y aplicar la clase si el correo es incorrecto", async () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
@@ -100,12 +102,14 @@ describe("ContactForm component test suite...", () => {
 
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveClass("control__inputError");
-    expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue("");
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveClass("control__inputError");
+      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue("");
+    });
   });
 
-  it("Should show error msg and load error class if the msg its not correct", async () => {
+  it("Debe mostrar el mensaje de error y aplicar la clase si el mensaje es incorrecto", async () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
@@ -131,8 +135,10 @@ describe("ContactForm component test suite...", () => {
     await user.type(screen.getByRole("textbox", { name: "msg-input" }), mensaje);
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveClass("control__inputError");
-    expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveValue("");
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveClass("control__inputError");
+      expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveValue("");
+    });
   });
 });

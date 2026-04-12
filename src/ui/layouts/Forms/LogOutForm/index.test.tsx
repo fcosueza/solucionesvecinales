@@ -25,14 +25,14 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("LogOutForm component test suite...", () => {
-  it("Should render the form element correctly", () => {
+describe("Suite de pruebas del componente LogOutForm...", () => {
+  it("Debe renderizar el elemento del formulario correctamente", () => {
     render(<LogOutForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Should render the question text correctly", () => {
+  it("Debe renderizar el texto de la pregunta correctamente", () => {
     const textoPregunta = "¿Quieres cerrar sesión realmente?";
 
     render(<LogOutForm questionText={textoPregunta} />);
@@ -40,7 +40,7 @@ describe("LogOutForm component test suite...", () => {
     expect(screen.getByText(textoPregunta)).toBeInTheDocument();
   });
 
-  it("Should render two buttons to confirm or cancel action", () => {
+  it("Debe renderizar dos botones para confirmar o cancelar la acción", () => {
     render(<LogOutForm />);
 
     expect(screen.getAllByRole("button")).toHaveLength(2);
@@ -48,7 +48,7 @@ describe("LogOutForm component test suite...", () => {
     expect(screen.getByRole("button", { name: "No" })).toBeInTheDocument();
   });
 
-  it("Should call server action if the confirm button is clicked", async () => {
+  it("Debe ejecutar la acción del servidor si se hace clic en el botón de confirmación", async () => {
     const { user } = configurar(<LogOutForm />);
 
     await user.click(screen.getByRole("button", { name: "Yes" }));
@@ -56,7 +56,7 @@ describe("LogOutForm component test suite...", () => {
     expect(logOutAction).toHaveBeenCalled();
   });
 
-  it("Should call useRouter if the cancel button is clicked", async () => {
+  it("Debe llamar a useRouter si se hace clic en el botón de cancelación", async () => {
     const { user } = configurar(<LogOutForm />);
     const enrutador = enrutadorMock();
 
@@ -64,7 +64,7 @@ describe("LogOutForm component test suite...", () => {
     expect(enrutador.back).toHaveBeenCalled();
   });
 
-  it("It should render the text passed has props for quesiton and buttons", async () => {
+  it("Debe renderizar el texto pasado como props para pregunta y botones", async () => {
     const textoPregunta = "Testing question?";
     const textoConfirmar = "Agreed";
     const textoCancelar = "No Agreed";
