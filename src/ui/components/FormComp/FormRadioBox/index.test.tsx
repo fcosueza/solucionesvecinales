@@ -57,7 +57,7 @@ describe("Pruebas del componente FormRadioBox", () => {
     });
   });
 
-  it("Debe marcar por defecto la opcion indicada", () => {
+  it("Debe marcar por defecto la opción indicada", () => {
     const elementoMarcado = "Test1";
 
     render(<FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} />);
@@ -75,7 +75,7 @@ describe("Pruebas del componente FormRadioBox", () => {
     expect(screen.getByLabelText("Test1")).not.toBeChecked();
   });
 
-  it("Debe renderizar un mensaje de error si se envia uno", () => {
+  it("Debe renderizar un mensaje de error si se le proporciona uno", () => {
     render(
       <FormRadioBox legend={textoLeyenda} name={nombre} elementList={elementos} type={tipoRadio} errorMsg={"Error"} />
     );

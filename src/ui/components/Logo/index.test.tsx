@@ -16,7 +16,7 @@ describe("Pruebas del componente Logo", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", textoAlternativo);
   });
 
-  it("Debe renderizar el logo con el tamano predeterminado si no se indica uno", () => {
+  it("Debe renderizar el logo con el tamaño predeterminado si no se indica uno", () => {
     const anchoPredeterminado = 150;
     const altoPredeterminado = 120;
 
@@ -25,17 +25,12 @@ describe("Pruebas del componente Logo", () => {
     expect(screen.getByRole("img")).toHaveProperty("width", anchoPredeterminado);
   });
 
-  it("Debe renderizar un logo con el tamano indicado", () => {
+  it("Debe renderizar un logo con el tamaño indicado", () => {
     const ancho = 150;
     const alto = 120;
 
     render(<Logo url={rutaLogo} altText="Logotipo" width={ancho} height={alto} />);
     expect(screen.getByRole("img")).toHaveProperty("width", ancho);
     expect(screen.getByRole("img")).toHaveProperty("height", alto);
-  });
-
-  it("Debe renderizar un logo de forma adecuada", () => {
-    render(<Logo url={rutaLogo} altText="Logotipo" />);
-    expect(screen.getByRole("img")).toBeInTheDocument();
   });
 });

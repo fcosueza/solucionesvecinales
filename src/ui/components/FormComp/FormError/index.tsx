@@ -6,7 +6,7 @@ interface Props {
 }
 
 /**
- * Muestra un mensaje de error de validación para campos de formulario.
+ * Componente de formulario que muestra un mensaje de error de validación.
  *
  * @param props - Props del componente FormError.
  * @param props.message - Mensaje o lista de mensajes a mostrar.

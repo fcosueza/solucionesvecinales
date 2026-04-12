@@ -7,13 +7,13 @@ describe("Pruebas del componente Card", () => {
   const titulo = "Lorem Ipsum Dolor";
   const parrafo = "Lorem Ipsum Dolor sit atmet consecterum";
 
-  it("Debe renderizar una Card correctamente", () => {
+  it("Debe renderizar una tarjeta correctamente", () => {
     render(<Card imageURL={urlImagen} imageAltText={textoAlternativo} cardTitle={titulo} cardPara={parrafo} />);
 
     expect(screen.getByRole("card")).toBeInTheDocument();
   });
 
-  it("Debe renderizar una Card con la imagen y dimensiones indicadas", () => {
+  it("Debe renderizar una tarjeta con la imagen y dimensiones indicadas", () => {
     const anchoImagen = 120;
     const altoImagen = 200;
 
@@ -33,14 +33,14 @@ describe("Pruebas del componente Card", () => {
     expect(screen.getByRole("img")).toHaveProperty("height", altoImagen);
   });
 
-  it("Debe renderizar una Card con el título indicado", () => {
+  it("Debe renderizar una tarjeta con el título indicado", () => {
     render(<Card imageURL={urlImagen} imageAltText={textoAlternativo} cardTitle={titulo} cardPara={parrafo} />);
 
     expect(screen.getByRole("heading")).toBeInTheDocument();
     expect(screen.getByText(titulo)).toBeInTheDocument();
   });
 
-  it("Debe renderizar una Card con el párrafo indicado", () => {
+  it("Debe renderizar una tarjeta con el párrafo indicado", () => {
     render(<Card imageURL={urlImagen} imageAltText={textoAlternativo} cardTitle={titulo} cardPara={parrafo} />);
 
     expect(screen.getByText(parrafo)).toBeInTheDocument();

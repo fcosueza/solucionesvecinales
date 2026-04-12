@@ -10,7 +10,8 @@ interface Props {
 }
 
 /**
- * Renderiza un menú de navegación con orientación configurable.
+ * Componente que renderiza un menú de navegación con orientación configurable y con elementos indicados.
+ *
  * @param props - Props del componente NavMenu.
  * @param props.links - Lista de enlaces a renderizar en el menú.
  * @param props.orientation - Orientación del menú: horizontal o vertical.

@@ -11,7 +11,7 @@ interface Props {
 }
 
 /**
- * Renderiza un input o textarea con estado de error opción
+ * Componente de formulario que renderiza un input o textarea con estado de error opcional.
  *
  * @param props - Props del componente FormInput.
  * @param props.labelText - Texto visible asociado a la etiqueta del campo.

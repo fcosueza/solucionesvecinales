@@ -13,7 +13,7 @@ interface Props {
 }
 
 /**
- * Bloque de llamada a la acción con título, párrafo y botón de navegación.
+ * Componente que crea un elemento CTA (Call to Action) con título, párrafo y botón de navegación.
  *
  * @param props - Props del componente CTA.
  * @param props.title - Título principal mostrado en el bloque.

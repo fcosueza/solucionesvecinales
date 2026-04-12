@@ -9,7 +9,8 @@ interface Props {
 }
 
 /**
- * Renderiza enlaces sociales externos con iconos.
+ * Componente que renderiza enlaces sociales externos con iconos.
+ *
  * @param props - Props del componente Social.
  * @param props.icons - Lista de iconos sociales con metadatos de renderizado.
  */

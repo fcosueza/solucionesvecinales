@@ -12,7 +12,7 @@ interface Props {
 }
 
 /**
- * Muestra una tarjeta con imagen, título y párrafo descriptivo.
+ * Componente que crea una tarjeta con imagen, título y párrafo descriptivo.
  *
  * @param props - Props del componente Card.
  * @param props.imageURL - URL de la imagen de la tarjeta.

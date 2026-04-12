@@ -14,7 +14,8 @@ interface Props {
 /** TODO: Implementar la generación de tipo checkbox. */
 
 /**
- * Renderiza controles de radio agrupados con feedback de validación opcional.
+ * Componente de formulario que renderiza controles de radio agrupados con feedback de validación opcional.
+ *
  * @param props - Props del componente FormRadioBox.
  * @param props.legend - Texto de la leyenda del grupo de opciones.
  * @param props.type - Tipo de control a renderizar (radio o checkbox).

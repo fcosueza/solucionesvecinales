@@ -40,7 +40,7 @@ describe("Pruebas del componente FormInput", () => {
     expect(screen.getByRole("textbox")).toHaveProperty("name", nombre);
   });
 
-  it("Debe renderizar un textarea con filas por defecto", () => {
+  it("Debe renderizar un textarea con un número de filas por defecto", () => {
     const filasPredeterminadas = 5;
     atributos.type = InputType.textarea;
 
@@ -48,7 +48,7 @@ describe("Pruebas del componente FormInput", () => {
     expect(screen.getByRole("textbox")).toHaveProperty("rows", filasPredeterminadas);
   });
 
-  it("Debe renderizar un textarea con filas indicadas", () => {
+  it("Debe renderizar un textarea con las filas indicadas", () => {
     const filas = 10;
     atributos.type = InputType.textarea;
 
@@ -76,16 +76,7 @@ describe("Pruebas del componente FormInput", () => {
     expect(screen.getByRole("textbox")).toHaveValue(valor);
   });
 
-  it("Debe mantener obligatorio en false por defecto", () => {
-    const nombre = "TestName";
-    atributos.name = nombre;
-
-    render(<FormInput labelText={textoEtiqueta} attr={atributos} />);
-
-    expect(screen.getByRole("textbox")).toHaveProperty("name", nombre);
-  });
-
-  it("Debe mostrar un mensaje de error cuando existe", async () => {
+  it("Debe mostrar un mensaje de error cuando se le proporciona", async () => {
     const mensajeError = "testerror";
 
     render(<FormInput labelText={textoEtiqueta} attr={atributos} errorMsg={mensajeError} />);

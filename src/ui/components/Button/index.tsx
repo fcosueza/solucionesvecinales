@@ -11,7 +11,7 @@ interface Props {
 }
 
 /**
- * Componente de botón reutilizable para acciones de usuario.
+ * Componente que crea un botón reutilizable para acciones de usuario.
  *
  * @param props - Props del componente Button.
  * @param props.text - Texto visible dentro del botón.

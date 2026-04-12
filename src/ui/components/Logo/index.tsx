@@ -10,7 +10,8 @@ interface Props {
 }
 
 /**
- * Renderiza el logo del proyecto con dimensiones opcionales.
+ * Componente que renderiza el logo del proyecto con dimensiones opcionales.
+ *
  * @param props - Props del componente Logo.
  * @param props.url - Ruta del recurso de imagen del logo.
  * @param props.altText - Texto alternativo para accesibilidad.

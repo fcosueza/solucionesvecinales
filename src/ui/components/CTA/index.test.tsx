@@ -19,21 +19,21 @@ describe("Pruebas del componente CTA", () => {
   const parrafo = "Lorem ipsum dolor site amet consecterum";
   const textoBoton = "TestButton";
 
-  it("Debe renderizar el título de CTA correctamente", () => {
+  it("Debe renderizar el título del CTA correctamente", () => {
     render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
 
     expect(screen.getByRole("heading")).toBeInTheDocument();
     expect(screen.getByText(titulo)).toBeInTheDocument();
   });
 
-  it("Debe renderizar el párrafo de CTA correctamente", () => {
+  it("Debe renderizar el párrafo del CTA correctamente", () => {
     render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
 
     expect(screen.getByText(parrafo)).toBeInTheDocument();
     expect(screen.getByText(parrafo)).toBeInTheDocument();
   });
 
-  it("Debe renderizar el botón de CTA correctamente", () => {
+  it("Debe renderizar el botón del CTA correctamente", () => {
     render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });

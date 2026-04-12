@@ -52,7 +52,7 @@ describe("Pruebas del componente NavMenu", () => {
     expect(screen.getAllByRole("listitem")[0]).toHaveClass("horizontal");
   });
 
-  it("Debe crear el menú en vertical si se especifica vertical", () => {
+  it("Debe crear el menú en vertical si se especifica esta opción", () => {
     const enlaces: NavItem[] = [
       { text: "testLink-1", href: "/home" },
       { text: "testLink-2", href: "/contact" },
