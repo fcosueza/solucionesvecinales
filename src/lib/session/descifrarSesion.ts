@@ -5,9 +5,11 @@ import { jwtVerify } from "jose";
 
 /**
  * Descifra un token JWT de sesión y valida su integridad criptográfica.
- * Si el token no es válido o falla la verificación, retorna un error.
+ * Si el token no es válido o falla la verificación, devuelve un error.
  *
  * @param token Token JWT cifrado, o indefinido
+ *
+ * @throws {Error} Si ocurre un error durante la verificación del token
  * @returns Los datos de sesión si es válido, o un objeto de error
  */
 async function descifrarSesion(token: string | undefined = ""): Promise<SessionPayload | BasicError> {

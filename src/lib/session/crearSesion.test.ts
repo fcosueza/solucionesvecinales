@@ -10,8 +10,8 @@ jest.mock("next/headers", () => ({
 }));
 
 describe("Pruebas de la función crearSesion", () => {
-  const mockEstablece = jest.fn();
-  const mockAlmacenCookies = { set: mockEstablece };
+  const mockSet = jest.fn();
+  const mockAlmacenCookies = { set: mockSet };
   const mockCifrarSesion = cifrarSesion as jest.Mock;
   const mockFnCookies = cookies as jest.Mock;
 
@@ -34,7 +34,7 @@ describe("Pruebas de la función crearSesion", () => {
 
     expect(mockCifrarSesion).toHaveBeenCalledWith({ userID: idUsuario, role: rol }, expect.any(Date));
     expect(mockFnCookies).toHaveBeenCalled();
-    expect(mockEstablece).toHaveBeenCalledWith(
+    expect(mockSet).toHaveBeenCalledWith(
       "session",
       tokenFalso,
       expect.objectContaining({
@@ -46,13 +46,13 @@ describe("Pruebas de la función crearSesion", () => {
     );
   });
 
-  it("No debe llamar a establecer si la generación de token falla", async () => {
+  it("No debe llamar a mockSet si la generación del token falla", async () => {
     mockCifrarSesion.mockRejectedValueOnce(new Error("encryption failed"));
 
     await expect(crearSesion("user123", "USER" as UserRole)).rejects.toThrow("encryption failed");
 
     expect(mockCifrarSesion).toHaveBeenCalled();
-    expect(mockEstablece).not.toHaveBeenCalled();
+    expect(mockSet).not.toHaveBeenCalled();
   });
 
   it("Debe lanzar un error si fallan las cookies", async () => {
@@ -61,6 +61,6 @@ describe("Pruebas de la función crearSesion", () => {
 
     await expect(crearSesion("id", "USER" as UserRole)).rejects.toThrow("Cookies API error");
 
-    expect(mockEstablece).not.toHaveBeenCalled();
+    expect(mockSet).not.toHaveBeenCalled();
   });
 });

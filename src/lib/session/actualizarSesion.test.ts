@@ -12,7 +12,7 @@ describe("Pruebas de la función actualizarSesion", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe retornar null si no hay cookie de sesión", async () => {
+  it("Debe devolver null si no hay cookie de sesión", async () => {
     (cookies as jest.Mock).mockResolvedValue({
       get: jest.fn().mockReturnValue(undefined)
     });
@@ -21,7 +21,7 @@ describe("Pruebas de la función actualizarSesion", () => {
     expect(resultado).toBeNull();
   });
 
-  it("Debe retornar null si descifrarSesión retorna un error", async () => {
+  it("Debe devolver null si descifrarSesion devuelve un error", async () => {
     (descifrarSesion as jest.Mock).mockResolvedValue({ error: "Invalid token" });
     (cookies as jest.Mock).mockResolvedValue({
       get: jest.fn().mockReturnValue({ value: "mockToken" })
@@ -31,7 +31,7 @@ describe("Pruebas de la función actualizarSesion", () => {
     expect(resultado).toBeNull();
   });
 
-  it("Debe refrescar la cookie de sesión si la sesión es válida", async () => {
+  it("Debe actualizar la cookie de sesión si la sesión es válida", async () => {
     const mockEstablece = jest.fn();
     const mockObtiene = jest.fn().mockReturnValue({ value: "validToken" });
 

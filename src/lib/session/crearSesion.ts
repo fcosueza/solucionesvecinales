@@ -10,7 +10,8 @@ import { UserRole } from "@/types";
  *
  * @param idUsuario El ID único del usuario
  * @param rol El rol del usuario (admin, inquilino, etc.)
- * @returns Promesa sin valor de retorno
+ *
+ * @returns Promesa sin valor devuelto
  */
 async function crearSesion(idUsuario: string, rol: UserRole): Promise<void> {
   const diasEnMs: number = 7 * 24 * 60 * 60 * 1000;

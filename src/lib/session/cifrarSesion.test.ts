@@ -34,7 +34,7 @@ describe("Pruebas de la función cifrarSesion", () => {
     expect(instanciaMock.sign).toHaveBeenCalled();
   });
 
-  it("Debe retornar el token simulado", async () => {
+  it("Debe devolver el token", async () => {
     const resultado = await cifrarSesion(cargaDatos, fechaExp);
 
     expect(resultado).toBe("mocked.jwt.token");
