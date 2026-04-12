@@ -10,7 +10,7 @@ jest.mock("next/headers", () => ({
   delete: jest.fn()
 });
 
-describe("Pruebas de la función eliminarSesion", () => {
+describe("Suite de pruebas de la función eliminarSesion", () => {
   it("Debe llamar a la función eliminarSesion para borrar la sesión del usuario", async () => {
     const almacenCookies = await mockCookies();
     await eliminarSesion();

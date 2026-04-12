@@ -18,6 +18,8 @@ interface Props {
  * @param props.attr - Atributos HTML y configuración del campo.
  * @param props.rows - Cantidad de filas cuando se renderiza un textarea.
  * @param props.errorMsg - Mensaje de error opcional para validación.
+ *
+ * @returns El campo de formulario con etiqueta y estado de error como un elemento React.
  */
 const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.ReactNode => {
   const clasesInput = `${style.control__input} ${errorMsg ? style.control__inputError : ""}`;

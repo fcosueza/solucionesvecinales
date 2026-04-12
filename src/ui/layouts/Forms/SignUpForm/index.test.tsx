@@ -14,7 +14,7 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("Suite de pruebas del componente SignUpForm...", () => {
+describe("Suite de pruebas del componente SignUpForm", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

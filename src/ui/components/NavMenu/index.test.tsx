@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import NavMenu from ".";
 import { NavItem } from "@/types";
 
-describe("Pruebas del componente NavMenu", () => {
+describe("Suite de pruebas del componente NavMenu", () => {
   it("Debe renderizar el elemento de navegación", () => {
     const enlaces: NavItem[] = [{ text: "testLink", href: "/home" }];
 

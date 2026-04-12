@@ -17,6 +17,8 @@ interface Props {
  * @param props.altText - Texto alternativo para accesibilidad.
  * @param props.width - Ancho del logo en píxeles.
  * @param props.height - Alto del logo en píxeles.
+ *
+ * @returns El logo del proyecto como un elemento React.
  */
 const Logo = ({
   url = "assets/images/logo.svg",

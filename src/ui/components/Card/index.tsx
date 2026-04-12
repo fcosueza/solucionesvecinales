@@ -1,5 +1,6 @@
 import Image from "next/image";
 import style from "./style.module.css";
+import React from "react";
 
 /** Props del componente Card. */
 interface Props {
@@ -21,8 +22,17 @@ interface Props {
  * @param props.imageHeight - Alto de la imagen en píxeles.
  * @param props.cardTitle - Título principal de la tarjeta.
  * @param props.cardPara - Párrafo descriptivo de la tarjeta.
+ *
+ * @returns La tarjeta con imagen, título y párrafo como un elemento React.
  */
-const Card = ({ imageURL, imageAltText, imageWidth = 100, imageHeight = 100, cardTitle, cardPara }: Props) => {
+const Card = ({
+  imageURL,
+  imageAltText,
+  imageWidth = 100,
+  imageHeight = 100,
+  cardTitle,
+  cardPara
+}: Props): React.ReactNode => {
   return (
     <div role="card" className={style.card}>
       <Image className={style.img} src={imageURL} alt={imageAltText} width={imageWidth} height={imageHeight} />

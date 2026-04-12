@@ -16,6 +16,8 @@ interface Props {
  * @param props.links - Lista de enlaces a renderizar en el menú.
  * @param props.orientation - Orientación del menú: horizontal o vertical.
  * @param props.color - Variante de color disponible para el menú.
+ *
+ * @returns El menú de navegación con los enlaces indicados como un elemento React.
  */
 const NavMenu = ({ links, orientation = "horizontal" }: Props): React.ReactNode => {
   const listaEnlaces = links.map(enlace => (

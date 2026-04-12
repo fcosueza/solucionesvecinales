@@ -13,7 +13,9 @@ const estadoInicial: FormActionState = {
 };
 
 /**
- * Renderiza el formulario de inicio de sesión y procesa credenciales.
+ * Componente que renderiza el formulario de inicio de sesión y procesa credenciales.
+ *
+ * @returns El formulario de inicio de sesión como un elemento React.
  */
 const LogInForm = (): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(

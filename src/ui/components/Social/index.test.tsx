@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { SocialIcon } from "@/types";
 import Social from ".";
 
-describe("Pruebas del componente Social", () => {
+describe("Suite de pruebas del componente Social", () => {
   it("Debe renderizar el contenedor de forma adecuada", () => {
     render(<Social icons={[]} />);
     expect(screen.getByLabelText("social")).toBeInTheDocument();

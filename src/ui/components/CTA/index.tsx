@@ -20,6 +20,8 @@ interface Props {
  * @param props.para - Texto descriptivo del bloque.
  * @param props.buttonText - Texto del botón de acción.
  * @param props.buttonRoute - Ruta a la que navega el botón.
+ *
+ * @returns El bloque CTA con título, párrafo y botón como un elemento React.
  */
 const CTA = ({ title, para, buttonText, buttonRoute = "/" }: Props): React.ReactNode => {
   const enrutador = useRouter();

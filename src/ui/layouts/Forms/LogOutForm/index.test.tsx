@@ -25,7 +25,7 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("Suite de pruebas del componente LogOutForm...", () => {
+describe("Suite de pruebas del componente LogOutForm", () => {
   it("Debe renderizar el elemento del formulario correctamente", () => {
     render(<LogOutForm />);
 
@@ -48,7 +48,7 @@ describe("Suite de pruebas del componente LogOutForm...", () => {
     expect(screen.getByRole("button", { name: "No" })).toBeInTheDocument();
   });
 
-  it("Debe ejecutar la acción del servidor si se hace clic en el botón de confirmación", async () => {
+  it("Debe ejecutar la server action si se hace click en el botón de confirmación", async () => {
     const { user } = configurar(<LogOutForm />);
 
     await user.click(screen.getByRole("button", { name: "Yes" }));
@@ -56,7 +56,7 @@ describe("Suite de pruebas del componente LogOutForm...", () => {
     expect(logOutAction).toHaveBeenCalled();
   });
 
-  it("Debe llamar a useRouter si se hace clic en el botón de cancelación", async () => {
+  it("Debe llamar a useRouter si se hace click en el botón de cancelación", async () => {
     const { user } = configurar(<LogOutForm />);
     const enrutador = enrutadorMock();
 

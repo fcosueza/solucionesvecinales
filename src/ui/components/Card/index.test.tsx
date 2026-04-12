@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Card from ".";
 
-describe("Pruebas del componente Card", () => {
+describe("Suite de pruebas del componente Card", () => {
   const urlImagen = "/assets/image/doc.svg";
   const textoAlternativo = "Imagen de unos documentos";
   const titulo = "Lorem Ipsum Dolor";

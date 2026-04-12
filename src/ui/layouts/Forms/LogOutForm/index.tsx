@@ -12,11 +12,14 @@ interface Props {
 }
 
 /**
- * Renderiza un formulario de confirmación para cerrar sesión.
+ * Componente que renderiza un formulario de confirmación para cerrar sesión.
+ *
  * @param props - Props del componente LogOutForm.
  * @param props.questionText - Pregunta mostrada al usuario.
  * @param props.confirmText - Texto del botón de confirmación.
  * @param props.cancelText - Texto del botón de cancelación.
+ *
+ * @returns El formulario de confirmación de cierre de sesión como un elemento React.
  */
 const LogOutForm = ({
   questionText = "You want to logout?",

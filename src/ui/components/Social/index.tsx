@@ -13,6 +13,8 @@ interface Props {
  *
  * @param props - Props del componente Social.
  * @param props.icons - Lista de iconos sociales con metadatos de renderizado.
+ *
+ * @returns Los enlaces sociales con iconos como un elemento React.
  */
 const Social = ({ icons }: Props): React.ReactNode => {
   return (

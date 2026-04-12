@@ -10,6 +10,8 @@ interface Props {
  *
  * @param props - Props del componente FormError.
  * @param props.message - Mensaje o lista de mensajes a mostrar.
+ *
+ * @returns El mensaje de error de validación del formulario como un elemento React.
  */
 const FormError = ({ message }: Props): React.ReactNode => (
   <p role="alert" aria-live="assertive" className={style.errorMsg}>

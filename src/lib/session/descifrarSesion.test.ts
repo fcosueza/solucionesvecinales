@@ -6,7 +6,7 @@ jest.mock("jose", () => ({
   jwtVerify: jest.fn()
 }));
 
-describe("Pruebas de la función descifrarSesion", () => {
+describe("Suite de pruebas de la función descifrarSesion", () => {
   beforeEach(() => {
     jest.resetModules();
   });

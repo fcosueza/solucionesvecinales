@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Button from ".";
 
-describe("Pruebas del componente Button", () => {
+describe("Suite de pruebas del componente Button", () => {
   const manejadorMock = jest.fn();
   const texto = "prueba";
 

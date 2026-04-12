@@ -16,12 +16,15 @@ interface Props {
 }
 
 /**
- * Renderiza la cabecera principal con logo, menú y botón de acción.
+ * Componente que renderiza la cabecera principal con logo, menú y botón de acción.
+ *
  * @param props - Props del componente Header.
  * @param props.links - Lista opcional de enlaces para el menú de navegación.
  * @param props.buttonText - Texto visible del botón principal.
  * @param props.buttonRoute - Ruta de destino al pulsar el botón.
  * @param props.burgerMenu - Indicador de modo menú hamburguesa.
+ *
+ * @returns La cabecera principal con logo, menú y botón como un elemento React.
  */
 const Header = ({ links, buttonText, buttonRoute = "/" }: Props): React.ReactNode => {
   const menuNavegacion = links ? <NavMenu links={links} /> : "";

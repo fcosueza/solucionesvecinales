@@ -18,6 +18,8 @@ interface Props {
  * @param props.type - Tipo del botón HTML.
  * @param props.onClick - Callback que se ejecuta al hacer click.
  * @param props.disabled - Estado habilitado o deshabilitado del botón.
+ *
+ * @returns El botón reutilizable como un elemento React.
  */
 const Button = ({ text, type = "button", onClick, disabled = false }: Props): React.ReactNode => {
   return (

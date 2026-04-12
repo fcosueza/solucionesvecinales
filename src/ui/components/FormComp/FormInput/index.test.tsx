@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { InputType, FormInputAttrs } from "@/types";
 import FormInput from ".";
 
-describe("Pruebas del componente FormInput", () => {
+describe("Suite de pruebas del componente FormInput", () => {
   const textoEtiqueta: string = "Testing Label";
   const tipoInput = InputType.text;
   const atributos: FormInputAttrs = {

@@ -14,7 +14,7 @@ jest.mock("next/navigation", () => ({
   push: jest.fn()
 });
 
-describe("Pruebas del componente CTA", () => {
+describe("Suite de pruebas del componente CTA", () => {
   const titulo = "Test CTA Title";
   const parrafo = "Lorem ipsum dolor site amet consecterum";
   const textoBoton = "TestButton";

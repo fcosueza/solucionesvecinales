@@ -13,7 +13,9 @@ const estadoInicial: FormActionState = {
 };
 
 /**
- * Renderiza el formulario de contacto y gestiona su envío con Server Actions.
+ * Componente que renderiza el formulario de contacto y procesa la información usando Server Actions.
+ *
+ * @returns El formulario de contacto como un elemento React.
  */
 const ContactForm = (): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(

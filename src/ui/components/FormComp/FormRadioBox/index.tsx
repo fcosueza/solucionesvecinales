@@ -22,6 +22,8 @@ interface Props {
  * @param props.name - Nombre compartido por los inputs del grupo.
  * @param props.elementList - Lista de opciones con etiqueta y atributos del input.
  * @param props.errorMsg - Mensaje de error opcional para el grupo.
+ *
+ * @returns El grupo de controles de radio con feedback de validación como un elemento React.
  */
 const FormRadioBox = ({ legend, type, name, elementList, errorMsg = "" }: Props): React.ReactNode => {
   if (type == RadioBoxType.checkbox) return <h1>checkbox not implemented yet!!</h1>;

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Logo from ".";
 
-describe("Pruebas del componente Logo", () => {
+describe("Suite de pruebas del componente Logo", () => {
   const rutaLogo = "assets/images/logo.svg";
 
   it("Debe renderizar el logo", () => {

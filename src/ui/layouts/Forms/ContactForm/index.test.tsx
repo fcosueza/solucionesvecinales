@@ -12,7 +12,7 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("Suite de pruebas del componente ContactForm...", () => {
+describe("Suite de pruebas del componente ContactForm", () => {
   it("Debe renderizar un formulario correctamente", () => {
     render(<ContactForm />);
 

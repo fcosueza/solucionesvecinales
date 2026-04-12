@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Gallery from ".";
 
-describe("Tests del componente Gallery...", () => {
+describe("Suite de pruebas del componente Gallery", () => {
   it("Debe renderizar el componente gallery correctamente", () => {
     render(
       <Gallery>

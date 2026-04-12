@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import FormError from ".";
 
-describe("Pruebas del componente FormError", () => {
+describe("Suite de pruebas del componente FormError", () => {
   const mensajePrueba = "An error has ocurred.";
 
   it("Debe renderizar el mensaje de error correctamente", () => {

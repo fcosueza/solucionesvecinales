@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LogInForm from ".";
 import logInAction from "@/actions/auth/logInAction";
 
-// Mock logInAction server action
+// Simula la Server Action logInAction
 jest.mock("@/actions/auth/logInAction", () => jest.fn());
 
 function configurar(jsx: React.ReactNode) {
@@ -13,21 +13,21 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("LogInForm component test suite...", () => {
-  it("Should render the form correctly", () => {
+describe("Suite de pruebas del componente LogInForm", () => {
+  it("Debe renderizar el formulario correctamente", () => {
     render(<LogInForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Should render the controls to insert email and password", () => {
+  it("Debe renderizar los campos para insertar el correo y la contraseña", () => {
     render(<LogInForm />);
 
     expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
     expect(screen.getByLabelText("password-input")).toBeInTheDocument();
   });
 
-  it("Should show in every field what the user is writing", async () => {
+  it("Debe mostrar en cada campo lo que está escribiendo el usuario", async () => {
     const { user } = configurar(<LogInForm />);
 
     const correo = "testname@email.com";
@@ -43,10 +43,10 @@ describe("LogInForm component test suite...", () => {
     expect(inputContrasena).toHaveValue(contrasena);
   });
 
-  it("Should show error message if email is not correct", async () => {
+  it("Debe mostrar el mensaje de error si el correo es incorrecto", async () => {
     const { user } = configurar(<LogInForm />);
 
-    const accionMock = logInAction as jest.Mock;
+    const actionMock = logInAction as jest.Mock;
     const datosFormulario = new FormData();
 
     const correo = "testname@email.c";
@@ -58,7 +58,7 @@ describe("LogInForm component test suite...", () => {
     datosFormulario.append("email", correo);
     datosFormulario.append("password", contrasena);
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
       message: "Incorrect form data",
       errors: {
@@ -72,14 +72,16 @@ describe("LogInForm component test suite...", () => {
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
-    expect(inputCorreo).toHaveValue("");
-    expect(inputContrasena).toHaveValue("");
+    await waitFor(() => {
+      expect(inputCorreo).toHaveValue("");
+      expect(inputContrasena).toHaveValue("");
+    });
   });
 
-  it("Should show error message if password is not correct", async () => {
+  it("Debe mostrar mensaje de error si la contraseña es incorrecta", async () => {
     const { user } = configurar(<LogInForm />);
 
-    const accionMock = logInAction as jest.Mock;
+    const actionMock = logInAction as jest.Mock;
     const datosFormulario = new FormData();
     const correo = "testname@email.com";
     const contrasena = "as";
@@ -90,7 +92,7 @@ describe("LogInForm component test suite...", () => {
     datosFormulario.append("email", correo);
     datosFormulario.append("password", contrasena);
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
       message: "Incorrect form data",
       errors: {
@@ -104,7 +106,9 @@ describe("LogInForm component test suite...", () => {
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
-    expect(inputContrasena).toHaveValue("");
-    expect(inputCorreo).toHaveValue(correo);
+    await waitFor(() => {
+      expect(inputContrasena).toHaveValue("");
+      expect(inputCorreo).toHaveValue(correo);
+    });
   });
 });

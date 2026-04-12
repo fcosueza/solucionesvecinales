@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { RadioBoxType } from "@/types";
 import FormRadioBox from ".";
 
-describe("Pruebas del componente FormRadioBox", () => {
+describe("Suite de pruebas del componente FormRadioBox", () => {
   const textoLeyenda: string = "Testing Label";
   const nombre: string = "test";
   const tipoRadio = RadioBoxType.radio;

@@ -15,7 +15,9 @@ const estadoInicial = {
 };
 
 /**
- * Renderiza el formulario de registro y gestiona la creación de usuarios.
+ * Componente que renderiza el formulario de registro y gestiona la creación de usuarios.
+ *
+ * @returns El formulario de registro como un elemento React.
  */
 const SignUpForm = (): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(

@@ -9,7 +9,7 @@ jest.mock("next/headers", () => ({
   cookies: jest.fn()
 }));
 
-describe("Pruebas de la función crearSesion", () => {
+describe("Suite de pruebas de la función crearSesion", () => {
   const mockSet = jest.fn();
   const mockAlmacenCookies = { set: mockSet };
   const mockCifrarSesion = cifrarSesion as jest.Mock;

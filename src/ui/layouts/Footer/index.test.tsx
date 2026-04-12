@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { NavItem, SocialIcon } from "@/types";
 import Footer from ".";
 
-describe("Tests del componente Footer...", () => {
+describe("Suite de pruebas del componente Footer", () => {
   const enlaces: NavItem[] = [
     { text: "Inicio", href: "#" },
     { text: "Características", href: "#about" },
@@ -79,7 +79,7 @@ describe("Tests del componente Footer...", () => {
     expect(screen.queryByRole("logo")).not.toBeInTheDocument();
   });
 
-  it("Solo debe renderizar el parrafo de copyright no se pasa ningún elemento", () => {
+  it("Solo debe renderizar el parrafo de copyright si no se pasa ningún elemento", () => {
     render(<Footer socialIcons={iconos} withLogo={false} />);
 
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
