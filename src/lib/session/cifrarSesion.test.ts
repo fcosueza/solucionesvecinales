@@ -17,13 +17,13 @@ describe("cifrarSesion test suite...", () => {
   const cargaDatos: SessionPayload = { userID: "1", role: UserRole.tenant };
   const fechaExp: Date = new Date(Date.now() + 30000);
 
-  it("Should cretate a token with protected header", async () => {
+  it("Debe crear un token con encabezado protegido", async () => {
     await cifrarSesion(cargaDatos, fechaExp);
 
     expect(SignJWT).toHaveBeenCalled();
   });
 
-  it("Should cretate a token with the specified expiration time", async () => {
+  it("Debe crear un token con la hora de expiración especificada", async () => {
     const instanciaMock = (SignJWT as jest.Mock).mock.results[0].value;
 
     await cifrarSesion(cargaDatos, fechaExp);
@@ -34,7 +34,7 @@ describe("cifrarSesion test suite...", () => {
     expect(instanciaMock.sign).toHaveBeenCalled();
   });
 
-  it("Should return de mocked token", async () => {
+  it("Debe retornar el token simulado", async () => {
     const resultado = await cifrarSesion(cargaDatos, fechaExp);
 
     expect(resultado).toBe("mocked.jwt.token");

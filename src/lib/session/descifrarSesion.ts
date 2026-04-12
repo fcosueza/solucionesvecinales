@@ -4,11 +4,11 @@ import { SessionPayload, BasicError } from "@/types";
 import { jwtVerify } from "jose";
 
 /**
- * Descifra un token JWT de sesion y valida su integridad criptografica.
- * Si el token no es valido o falla la verificacion, retorna un error.
+ * Descifra un token JWT de sesión y valida su integridad criptográfica.
+ * Si el token no es válido o falla la verificación, retorna un error.
  *
  * @param token Token JWT cifrado, o indefinido
- * @returns Los datos de sesion si es valido, o un objeto de error
+ * @returns Los datos de sesión si es válido, o un objeto de error
  */
 async function descifrarSesion(token: string | undefined = ""): Promise<SessionPayload | BasicError> {
   const secreto: string | undefined = process.env.SESSION_SECRET;

@@ -5,10 +5,10 @@ import { cookies } from "next/headers";
 import { UserRole } from "@/types";
 
 /**
- * Crea una nueva sesion de usuario y la almacena en una cookie segura.
- * La sesion contiene la informacion basica del usuario y expira despues de 7 dias.
+ * Crea una nueva sesión de usuario y la almacena en una cookie segura.
+ * La sesión contiene la información básica del usuario y expira después de 7 días.
  *
- * @param idUsuario El ID unico del usuario
+ * @param idUsuario El ID único del usuario
  * @param rol El rol del usuario (admin, inquilino, etc.)
  * @returns Promesa sin valor de retorno
  */

@@ -4,11 +4,12 @@ import { cookies } from "next/headers";
 import descifrarSesion from "./descifrarSesion";
 
 /**
- * Actualiza la fecha de expiracion de la sesion actual, extendiendo su duracion por 7 dias.
+ * Actualiza la fecha de expiración de la sesión actual, extendiendo su duración por 7 días.
  * Esto asegura que usuarios activos permanezcan conectados sin interrupciones.
  *
- * @returns Null si no hay sesion valida, o void si se actualizo correctamente
+ * @returns Null si no hay sesión válida, o void si se actualizó correctamente
  */
+
 async function actualizarSesion(): Promise<null | void> {
   const token = (await cookies()).get("session")?.value;
   const datos = await descifrarSesion(token);

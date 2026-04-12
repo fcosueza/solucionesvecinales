@@ -11,7 +11,7 @@ describe("descifrarSesion test suite...", () => {
     jest.resetModules();
   });
 
-  it("Should return the payload if the token is correct", async () => {
+  it("Debe retornar la carga si el token es correcto", async () => {
     const mockCarga: SessionPayload = { userID: "123", role: UserRole.tenant };
 
     (jwtVerify as jest.Mock).mockResolvedValueOnce({ payload: mockCarga });
@@ -22,7 +22,7 @@ describe("descifrarSesion test suite...", () => {
     expect(resultado).toEqual(mockCarga);
   });
 
-  it("Should return an error if jwtVerify throw an exception", async () => {
+  it("Debe retornar un error si jwtVerify lanza una excepción", async () => {
     (jwtVerify as jest.Mock).mockRejectedValueOnce(new Error("Invalid token"));
 
     const resultado = await descifrarSesion("invalid.token.here");
@@ -33,7 +33,7 @@ describe("descifrarSesion test suite...", () => {
     });
   });
 
-  it("Should return an error if the tokne is empty", async () => {
+  it("Debe retornar un error si el token está vacío", async () => {
     (jwtVerify as jest.Mock).mockRejectedValueOnce(new Error("No token provided"));
 
     const resultado = await descifrarSesion(undefined);

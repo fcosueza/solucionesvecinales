@@ -20,7 +20,7 @@ describe("crearSesion test suite...", () => {
     mockFnCookies.mockResolvedValue(mockAlmacenCookies);
   });
 
-  it("Should create the session correctly", async () => {
+  it("Debe crear la sesión correctamente", async () => {
     const tokenFalso = "encrypted-session-token";
     mockCifrarSesion.mockResolvedValue(tokenFalso);
 
@@ -46,7 +46,7 @@ describe("crearSesion test suite...", () => {
     );
   });
 
-  it("Should not call set if the token generation fails", async () => {
+  it("No debe llamar a establecer si la generación de token falla", async () => {
     mockCifrarSesion.mockRejectedValueOnce(new Error("encryption failed"));
 
     await expect(crearSesion("user123", "USER" as UserRole)).rejects.toThrow("encryption failed");
@@ -55,7 +55,7 @@ describe("crearSesion test suite...", () => {
     expect(mockEstablece).not.toHaveBeenCalled();
   });
 
-  it("Should throw and error if cookies fail", async () => {
+  it("Debe lanzar un error si fallan las cookies", async () => {
     mockCifrarSesion.mockResolvedValue("some-token");
     mockFnCookies.mockRejectedValueOnce(new Error("Cookies API error"));
 
