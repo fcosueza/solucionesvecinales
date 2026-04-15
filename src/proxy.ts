@@ -12,6 +12,7 @@ const rutasPublicas = ["/home", "/login", "/signup"];
  * y envía al `dashboard` si un usuario autenticado intenta acceder a rutas públicas.
  *
  * @param req Solicitud entrante de Next.js.
+ *
  * @returns Una respuesta que continúa la navegación o redirige al usuario.
  */
 

@@ -5,17 +5,17 @@ import Link from "next/link";
 import { NavItem } from "@/types";
 import style from "./style.module.css";
 
-const linksHeader: NavItem[] = [{ text: "Inicio", href: "/" }];
+const enlacesCabecera: NavItem[] = [{ text: "Inicio", href: "/" }];
 
 export default function Register() {
   return (
     <>
-      <Header links={linksHeader} buttonText="Log In" buttonRoute="/login" />
+      <Header links={enlacesCabecera} buttonText="Iniciar sesión" buttonRoute="/login" />
       <main className={style.main}>
-        <h2 className={style.title}>Registro de Usuarios</h2>
+        <h2 className={style.title}>Registro de usuarios</h2>
         <SignUpForm />
         <p className={style.para}>
-          Si ya estas registrado, <Link href="/login">Inicia Sesión</Link> en tu cuenta.
+          Si ya estás registrado, <Link href="/login">inicia sesión</Link> en tu cuenta.
         </p>
       </main>
       <Footer />

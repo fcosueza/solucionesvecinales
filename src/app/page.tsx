@@ -9,26 +9,26 @@ import { NavItem } from "@/types";
 import { SocialIcon } from "@/types";
 import style from "./style.module.css";
 
-const titleHero = "¡Tu comunidad, más conectada y organizada que nunca!";
-const paraHero = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
-  consulta las novedades de tu comunidad!!`;
+const tituloHero = "¡Tu comunidad, más conectada y organizada que nunca!";
+const parraHero = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
+  consulta las novedades de tu comunidad.`;
 
-const linksHeader: NavItem[] = [
+const enlacesCabecera: NavItem[] = [
   { text: "Inicio", href: "#" },
   { text: "Características", href: "#about" },
   { text: "Contacto", href: "#contact" }
 ];
 
-const linksFooter: NavItem[] = [
+const enlacesFooter: NavItem[] = [
   { text: "Inicio", href: "#" },
   { text: "Mapa del Sitio", href: "#about" },
   { text: "Política de Privacidad", href: "#contact" }
 ];
 
-const icons: SocialIcon[] = [
+const iconosSociales: SocialIcon[] = [
   {
     src: "/assets/icons/facebook.png",
-    altText: "Facebook Icon",
+    altText: "Icono de Facebook",
     url: "https://www.facebook.com/",
     title: "Facebook",
     width: 50,
@@ -36,7 +36,7 @@ const icons: SocialIcon[] = [
   },
   {
     src: "/assets/icons/github.png",
-    altText: "Github Icon",
+    altText: "Icono de GitHub",
     url: "https://www.github.com/",
     title: "Github",
     width: 50,
@@ -44,7 +44,7 @@ const icons: SocialIcon[] = [
   },
   {
     src: "/assets/icons/instagram.png",
-    altText: "Instagram Icon",
+    altText: "Icono de Instagram",
     url: "https://www.instagram.com/",
     title: "Instagram",
     width: 50,
@@ -52,7 +52,7 @@ const icons: SocialIcon[] = [
   },
   {
     src: "/assets/icons/linkedin.png",
-    altText: "LinkedIn Icon",
+    altText: "Icono de LinkedIn",
     url: "https://www.linkedin.com/",
     title: "LinkedIn",
     width: 50,
@@ -60,7 +60,7 @@ const icons: SocialIcon[] = [
   },
   {
     src: "/assets/icons/x.png",
-    altText: "X Icon",
+    altText: "Icono de X",
     url: "https://www.x.com/",
     title: "X",
     width: 50,
@@ -69,7 +69,7 @@ const icons: SocialIcon[] = [
 ];
 
 // Datos para las tarjetas
-const cardsData = [
+const datosTarjetas = [
   {
     imageURL: "/assets/images/notify.svg",
     altText: "Imagen de una notificación",
@@ -91,7 +91,7 @@ const cardsData = [
   {
     imageURL: "/assets/images/financial.svg",
     altText: "Imagen de una mujer y un diagrama de barras.",
-    title: "Consulta las Financias",
+    title: "Consulta las finanzas",
     para: "Consulta las finanzas de tu comunidad para estar siempre al tanto del balance anual."
   }
 ];
@@ -99,11 +99,11 @@ const cardsData = [
 export default function Home() {
   return (
     <>
-      <Header links={linksHeader} buttonText="Login" buttonRoute="/login" />
+      <Header links={enlacesCabecera} buttonText="Iniciar sesión" buttonRoute="/login" />
 
       <main className={style.main}>
         <section className={`${style.section} ${style.hero}`}>
-          <CTA title={titleHero} para={paraHero} buttonText="Regístrate Ya!!" buttonRoute={"/signup"} />
+          <CTA title={tituloHero} para={parraHero} buttonText="Regístrate ahora" buttonRoute={"/signup"} />
           <Image src="/assets/images/hero.svg" alt="Imagen de la pantalla de un monitor" width={700} height={400} />
         </section>
 
@@ -147,7 +147,7 @@ export default function Home() {
 
         <section id="gallery">
           <Gallery>
-            {cardsData.map(data => {
+            {datosTarjetas.map(data => {
               return (
                 <Card
                   imageURL={data.imageURL}
@@ -165,9 +165,10 @@ export default function Home() {
 
         <section className={style.section} id="contact">
           <div className={style.contact__text}>
-            <h3 className={style.contact__title}>Contacta con nosotros!!!</h3>
+            <h3 className={style.contact__title}>Contacta con nosotros</h3>
             <p className={style.contact__para}>
-              Si tienes alguna duda, sugerencia o simplemente quieres decir hola, no dudes en contactar con nosotros.
+              Si tienes alguna duda, sugerencia o simplemente quieres saludarnos, no dudes en ponerte en contacto con
+              nosotros.
             </p>
             <Image src="assets/images/contact.svg" width={500} height={300} alt="Hombre mandando un correo" />
           </div>
@@ -175,7 +176,7 @@ export default function Home() {
         </section>
       </main>
 
-      <Footer links={linksFooter} socialIcons={icons} withLogo={true} />
+      <Footer links={enlacesFooter} socialIcons={iconosSociales} withLogo={true} />
     </>
   );
 }
