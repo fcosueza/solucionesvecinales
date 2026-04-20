@@ -1,6 +1,7 @@
 import "../ui/global.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import SonnerToaster from "@/ui/components/SonnerToaster";
 
 const roboto = Roboto({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={roboto.className}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <SonnerToaster />
+      </body>
     </html>
   );
 }
