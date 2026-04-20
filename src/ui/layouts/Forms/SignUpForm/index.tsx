@@ -2,11 +2,12 @@
 
 import signUpAction from "@/actions/auth/signUpAction";
 import { redirect } from "next/navigation";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { FormActionState, InputType, RadioBoxType, UserRole } from "@/types";
 import FormInput from "@/ui/components/FormComp/FormInput";
 import FormRadioBox from "@/ui/components/FormComp/FormRadioBox";
 import Button from "../../../components/Button";
+import { toast } from "sonner";
 import style from "./style.module.css";
 
 const estadoInicial = {
@@ -25,8 +26,17 @@ const SignUpForm = (): React.ReactNode => {
     estadoInicial
   );
 
-  // Si el usuario se crea correctamente, redirige a la página de login.
-  if (estado.state == "success") redirect("/login");
+  useEffect(() => {
+    if (!estado.message || estado.state !== "error") return;
+
+    toast.error(estado.message);
+  }, [estado]);
+
+  // Si el usuario se crea correctamente, muestra un toast y redirige a login.
+  if (estado.state == "success") {
+    toast.success(estado.message || "Usuario creado correctamente");
+    redirect("/login");
+  }
 
   return (
     <>

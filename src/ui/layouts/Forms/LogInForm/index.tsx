@@ -1,10 +1,11 @@
 "use client";
 
 import logInAction from "@/actions/auth/logInAction";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { FormActionState, InputType } from "@/types";
 import FormInput from "@/ui/components/FormComp/FormInput";
 import Button from "../../../components/Button";
+import { toast } from "sonner";
 import style from "./style.module.css";
 
 const estadoInicial: FormActionState = {
@@ -22,6 +23,17 @@ const LogInForm = (): React.ReactNode => {
     logInAction,
     estadoInicial
   );
+
+  useEffect(() => {
+    if (!estado.message) return;
+
+    if (estado.state === "success") {
+      toast.success(estado.message);
+      return;
+    }
+
+    toast.error(estado.message);
+  }, [estado]);
 
   return (
     <>
