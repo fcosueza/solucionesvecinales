@@ -110,3 +110,47 @@ test.describe("Contenido de las secciones", () => {
     await expect(seccionContacto.getByRole("button", { name: "Enviar" })).toBeVisible();
   });
 });
+
+test.describe("contenido del footer", () => {
+  test("El footer contiene los enlaces de navegación correctos", async ({ page }) => {
+    await page.goto("http://localhost:3000");
+
+    const footer = page.getByRole("contentinfo");
+
+    await expect(footer).toBeVisible();
+    await expect(footer.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "#");
+    await expect(footer.getByRole("link", { name: "Mapa del Sitio" })).toHaveAttribute("href", "#about");
+    await expect(footer.getByRole("link", { name: "Política de Privacidad" })).toHaveAttribute("href", "#contact");
+  });
+
+  test("El footer muestra los iconos sociales esperados con enlaces externos", async ({ page }) => {
+    await page.goto("http://localhost:3000");
+
+    const footer = page.getByRole("contentinfo");
+    const social = footer.getByLabel("social");
+    const socialLinks = social.locator("a");
+
+    await expect(social).toBeVisible();
+    await expect(socialLinks).toHaveCount(5);
+    await expect(socialLinks.nth(0)).toHaveAttribute("href", "https://www.facebook.com/");
+    await expect(socialLinks.nth(1)).toHaveAttribute("href", "https://www.github.com/");
+    await expect(socialLinks.nth(2)).toHaveAttribute("href", "https://www.instagram.com/");
+    await expect(socialLinks.nth(3)).toHaveAttribute("href", "https://www.linkedin.com/");
+    await expect(socialLinks.nth(4)).toHaveAttribute("href", "https://www.x.com/");
+    await expect(socialLinks.first()).toHaveAttribute("target", "_blank");
+    await expect(footer.getByRole("img", { name: "Icono de Facebook" })).toBeVisible();
+    await expect(footer.getByRole("img", { name: "Icono de GitHub" })).toBeVisible();
+    await expect(footer.getByRole("img", { name: "Icono de Instagram" })).toBeVisible();
+    await expect(footer.getByRole("img", { name: "Icono de LinkedIn" })).toBeVisible();
+    await expect(footer.getByRole("img", { name: "Icono de X" })).toBeVisible();
+  });
+
+  test("El footer muestra el logo y el texto de copyright", async ({ page }) => {
+    await page.goto("http://localhost:3000");
+
+    const footer = page.getByRole("contentinfo");
+
+    await expect(footer.getByRole("img", { name: /Logo/i })).toBeVisible();
+    await expect(footer.getByText(/Copyright/i)).toContainText("Software under MIT License.");
+  });
+});
