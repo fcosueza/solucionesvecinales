@@ -3,9 +3,16 @@ import userEvent from "@testing-library/user-event";
 import SignUpForm from ".";
 import signUpAction from "@/actions/auth/signUpAction";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 jest.mock("@/actions/auth/signUpAction", () => jest.fn());
 jest.mock("next/navigation");
+jest.mock("sonner", () => ({
+  toast: {
+    success: jest.fn(),
+    error: jest.fn()
+  }
+}));
 
 function configurar(jsx: React.ReactNode) {
   return {
@@ -220,5 +227,51 @@ describe("Suite de pruebas del componente SignUpForm", () => {
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => expect(redirect).toHaveBeenCalledWith("/login"));
+  });
+
+  it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {
+    const { user } = configurar(<SignUpForm />);
+
+    const accionMock = signUpAction as jest.Mock;
+    const mensaje = "Error al crear el usuario";
+
+    accionMock.mockResolvedValue({
+      state: "error",
+      message: mensaje
+    });
+
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), "NombreValido");
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), "ApellidoValido");
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), "test@email.com");
+    await user.type(screen.getByLabelText("password-input"), "password123456");
+    await user.type(screen.getByLabelText("repeat-input"), "password123456");
+    await user.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith(mensaje);
+    });
+  });
+
+  it("Debe llamar a toast.success con el mensaje cuando el usuario se crea correctamente", async () => {
+    const { user } = configurar(<SignUpForm />);
+
+    const accionMock = signUpAction as jest.Mock;
+    const mensaje = "Usuario creado correctamente";
+
+    accionMock.mockResolvedValue({
+      state: "success",
+      message: mensaje
+    });
+
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), "NombreValido");
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), "ApellidoValido");
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), "test@email.com");
+    await user.type(screen.getByLabelText("password-input"), "password123456");
+    await user.type(screen.getByLabelText("repeat-input"), "password123456");
+    await user.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(toast.success).toHaveBeenCalledWith(mensaje);
+    });
   });
 });

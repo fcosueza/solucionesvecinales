@@ -2,8 +2,15 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
 import contactMsgAction from "@/actions/contactMsgAction";
+import { toast } from "sonner";
 
 jest.mock("@/actions/contactMsgAction", () => jest.fn());
+jest.mock("sonner", () => ({
+  toast: {
+    success: jest.fn(),
+    error: jest.fn()
+  }
+}));
 
 function configurar(jsx: React.ReactNode) {
   return {
@@ -13,6 +20,10 @@ function configurar(jsx: React.ReactNode) {
 }
 
 describe("Suite de pruebas del componente ContactForm", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("Debe renderizar un formulario correctamente", () => {
     render(<ContactForm />);
 
@@ -139,6 +150,46 @@ describe("Suite de pruebas del componente ContactForm", () => {
     await waitFor(() => {
       expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveClass("control__inputError");
       expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveValue("");
+    });
+  });
+
+  it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {
+    const { user } = configurar(<ContactForm />);
+
+    const accionMock = contactMsgAction as jest.Mock;
+    const mensaje = "Ha ocurrido un error al enviar el mensaje";
+
+    accionMock.mockResolvedValue({
+      state: "error",
+      message: mensaje
+    });
+
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), "test@email.com");
+    await user.type(screen.getByRole("textbox", { name: "msg-input" }), "Lorem ipsum dolor sit amet consecterum");
+    await user.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith(mensaje);
+    });
+  });
+
+  it("Debe llamar a toast.success con el mensaje cuando la acción se completa correctamente", async () => {
+    const { user } = configurar(<ContactForm />);
+
+    const accionMock = contactMsgAction as jest.Mock;
+    const mensaje = "Mensaje enviado correctamente";
+
+    accionMock.mockResolvedValue({
+      state: "success",
+      message: mensaje
+    });
+
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), "test@email.com");
+    await user.type(screen.getByRole("textbox", { name: "msg-input" }), "Lorem ipsum dolor sit amet consecterum");
+    await user.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(toast.success).toHaveBeenCalledWith(mensaje);
     });
   });
 });

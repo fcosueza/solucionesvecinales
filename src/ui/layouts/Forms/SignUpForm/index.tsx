@@ -28,7 +28,6 @@ const SignUpForm = (): React.ReactNode => {
 
   useEffect(() => {
     if (!estado.message || estado.state !== "error") return;
-
     toast.error(estado.message);
   }, [estado]);
 
