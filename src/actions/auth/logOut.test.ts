@@ -1,4 +1,4 @@
-import logOutAction from "./logOutAction";
+import logOut from "./logOut";
 import { eliminarSesion } from "@/lib/session";
 import { redirect } from "next/navigation";
 
@@ -11,13 +11,13 @@ describe("Suite de pruebas de logOutAction", () => {
   });
 
   it("Debe llamar a la funcio eliminarSesion", async () => {
-    await logOutAction();
+    await logOut();
 
     expect(eliminarSesion).toHaveBeenCalled();
   });
 
   it("Debe redirigir al usuario a la página de inicio", async () => {
-    await logOutAction();
+    await logOut();
 
     expect(redirect).toHaveBeenCalledWith("/");
   });

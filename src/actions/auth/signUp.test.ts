@@ -1,5 +1,5 @@
 import { FormActionState } from "@/types";
-import signUpAction from "./signUpAction";
+import signUp from "./signUp";
 import prisma from "../../lib/prisma";
 
 jest.mock("../../lib/prisma", () => ({
@@ -33,7 +33,7 @@ describe("Suite de pruebas de signUpAction", () => {
       repeat: "a"
     });
 
-    const resultado = await signUpAction({} as FormActionState, datosForm);
+    const resultado = await signUp({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
@@ -57,7 +57,7 @@ describe("Suite de pruebas de signUpAction", () => {
       repeat: "testtesttesttest"
     });
 
-    const resultado = await signUpAction({} as FormActionState, datosForm);
+    const resultado = await signUp({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("No se pudo crear el usuario");
@@ -76,7 +76,7 @@ describe("Suite de pruebas de signUpAction", () => {
       repeat: "testtesttesttest"
     });
 
-    const resultado = await signUpAction({} as FormActionState, datosForm);
+    const resultado = await signUp({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("Usuario creado correctamente");

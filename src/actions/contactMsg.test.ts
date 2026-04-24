@@ -1,5 +1,5 @@
 import { FormActionState } from "@/types";
-import contactMsgAction from "./contactMsgAction";
+import contactMsg from "./contactMsg";
 import prisma from "../lib/prisma";
 
 jest.mock("../lib/prisma", () => ({
@@ -30,7 +30,7 @@ describe("Suite de pruebas de contactMsgAction", () => {
       msg: "aaa"
     });
 
-    const resultado = await contactMsgAction({} as FormActionState, datosForm);
+    const resultado = await contactMsg({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
@@ -47,7 +47,7 @@ describe("Suite de pruebas de contactMsgAction", () => {
       msg: "Hola, este es un mensaje de prueba para contactMsgAction"
     });
 
-    const resultado = await contactMsgAction({} as FormActionState, datosForm);
+    const resultado = await contactMsg({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("No se pudo crear el mensaje");
@@ -63,7 +63,7 @@ describe("Suite de pruebas de contactMsgAction", () => {
       msg: "Hola, este es un mensaje de prueba para contactMsgAction"
     });
 
-    const resultado = await contactMsgAction({} as FormActionState, datosForm);
+    const resultado = await contactMsg({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("Mensaje creado exitosamente");

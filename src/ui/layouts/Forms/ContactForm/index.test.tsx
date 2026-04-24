@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
-import contactMsgAction from "@/actions/contactMsgAction";
+import contactMsg from "@/actions/contactMsg";
 import { toast } from "sonner";
 
-jest.mock("@/actions/contactMsgAction", () => jest.fn());
+jest.mock("@/actions/contactMsg", () => jest.fn());
 jest.mock("sonner", () => ({
   toast: {
     success: jest.fn(),
@@ -57,7 +57,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
-    const accionMock = contactMsgAction as jest.Mock;
+    const accionMock = contactMsg as jest.Mock;
 
     const nombre = "t";
     const correo = "testname@email.com";
@@ -90,7 +90,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
-    const accionMock = contactMsgAction as jest.Mock;
+    const accionMock = contactMsg as jest.Mock;
 
     const nombre = "test";
     const correo = "testname@email.c";
@@ -124,7 +124,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
-    const accionMock = contactMsgAction as jest.Mock;
+    const accionMock = contactMsg as jest.Mock;
 
     const nombre = "test";
     const correo = "testname@email.com";
@@ -156,7 +156,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
   it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {
     const { user } = configurar(<ContactForm />);
 
-    const accionMock = contactMsgAction as jest.Mock;
+    const accionMock = contactMsg as jest.Mock;
     const mensaje = "Ha ocurrido un error al enviar el mensaje";
 
     accionMock.mockResolvedValue({
@@ -176,7 +176,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
   it("Debe llamar a toast.success con el mensaje cuando la acción se completa correctamente", async () => {
     const { user } = configurar(<ContactForm />);
 
-    const accionMock = contactMsgAction as jest.Mock;
+    const accionMock = contactMsg as jest.Mock;
     const mensaje = "Mensaje enviado correctamente";
 
     accionMock.mockResolvedValue({

@@ -104,7 +104,7 @@ export default function Home() {
       <main className={style.main}>
         <section className={`${style.section} ${style.hero}`}>
           <CTA title={tituloHero} para={parraHero} buttonText="Regístrate ahora" buttonRoute={"/signup"} />
-          <Image src="/assets/images/hero.svg" alt="Imagen de la pantalla de un monitor" width={700} height={400} />
+          <Image src="/assets/images/hero.svg" alt="Imagen de la pantalla de un monitor" className={style.hero__image} width={699} height={618} loading="eager"/>
         </section>
 
         <section id="motivation" className={style.section}>

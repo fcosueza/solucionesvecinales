@@ -18,7 +18,7 @@ type CamposFormContacto = z.infer<typeof contactSchema>;
  * @returns El nuevo estado de la acción con el resultado de la operación.
  */
 
-const contactMsgAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+const contactMsg = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposFormContacto> = contactSchema.safeParse(datos);
 
@@ -57,4 +57,4 @@ const contactMsgAction = async (_prevState: FormActionState, formData: FormData)
   };
 };
 
-export default contactMsgAction;
+export default contactMsg;

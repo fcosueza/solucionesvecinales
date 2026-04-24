@@ -1,6 +1,6 @@
 "use client";
 
-import logInAction from "@/actions/auth/logInAction";
+import logIn from "@/actions/auth/logIn";
 import { useActionState, useEffect } from "react";
 import { FormActionState, InputType } from "@/types";
 import FormInput from "@/ui/components/FormComp/FormInput";
@@ -20,7 +20,7 @@ const estadoInicial: FormActionState = {
  */
 const LogInForm = (): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
-    logInAction,
+    logIn,
     estadoInicial
   );
 

@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LogOutForm from ".";
-import logOutAction from "@/actions/auth/logOutAction";
+import logOut from "@/actions/auth/logOut";
 import { useRouter as enrutadorMock } from "next/navigation";
 
 // Simula la Server Action logOutAction.
-jest.mock("@/actions/auth/logOutAction");
+jest.mock("@/actions/auth/logOut");
 
 // Simula el módulo useRouter.
 jest.mock("next/navigation", () => ({
@@ -53,7 +53,7 @@ describe("Suite de pruebas del componente LogOutForm", () => {
 
     await user.click(screen.getByRole("button", { name: "Yes" }));
 
-    expect(logOutAction).toHaveBeenCalled();
+    expect(logOut).toHaveBeenCalled();
   });
 
   it("Debe llamar a useRouter si se hace click en el botón de cancelación", async () => {

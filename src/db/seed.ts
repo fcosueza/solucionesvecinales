@@ -9,19 +9,19 @@ async function main(): Promise<void> {
     data: [
       {
         email: "fran@gmail.com",
-        role: "admin",
+        rol: "admin",
         nombre: "Francisco",
         apellido: "Sueza Rodríguez"
       },
       {
         email: "juan@gmail.com",
-        role: "inquilino",
+        rol: "inquilino",
         nombre: "Juan",
         apellido: "Ponce Perez"
       },
       {
         email: "alberto@gmail.com",
-        role: "inquilino",
+        rol: "inquilino",
         nombre: "Alberto",
         apellido: "Garcia Garcia"
       }

@@ -9,9 +9,9 @@ import { redirect } from "next/navigation";
  * @returns No devuelve ningún valor; finaliza redirigiendo al usuario.
  */
 
-const logOutAction = async (): Promise<void> => {
+const logOut = async (): Promise<void> => {
   await eliminarSesion();
   redirect("/");
 };
 
-export default logOutAction;
+export default logOut;

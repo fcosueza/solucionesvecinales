@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/ui/components/Button";
-import logOutAction from "@/actions/auth/logOutAction";
+import logOut from "@/actions/auth/logOut";
 import { useRouter } from "next/navigation";
 
 /** Props del componente LogOutForm. */
@@ -30,7 +30,7 @@ const LogOutForm = ({
 
   return (
     <>
-      <form action={logOutAction} id="logOutFOrm" role="form">
+      <form action={logOut} id="logOutFOrm" role="form">
         <h3>{questionText}</h3>
         <Button text={confirmText} type="submit" />
         <Button text={cancelText} type="button" onClick={() => enrutador.back()} />

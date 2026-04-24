@@ -19,7 +19,7 @@ type CamposRegistro = z.infer<typeof signUpSchema>;
  * @returns El nuevo estado de la acción con el resultado del registro.
  */
 
-const signUpAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+const signUp = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposRegistro> = signUpSchema.safeParse(datos);
 
@@ -66,4 +66,4 @@ const signUpAction = async (_prevState: FormActionState, formData: FormData): Pr
   };
 };
 
-export default signUpAction;
+export default signUp;

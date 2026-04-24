@@ -1,6 +1,6 @@
 "use client";
 
-import signUpAction from "@/actions/auth/signUpAction";
+import signUp from "@/actions/auth/signUp";
 import { redirect } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { FormActionState, InputType, RadioBoxType, UserRole } from "@/types";
@@ -22,7 +22,7 @@ const estadoInicial = {
  */
 const SignUpForm = (): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
-    signUpAction,
+    signUp,
     estadoInicial
   );
 

@@ -19,7 +19,7 @@ type CamposLogin = z.infer<typeof logInSchema>;
  * @returns El nuevo estado de la acción con el resultado de la autenticación.
  */
 
-const logInAction = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+const logIn = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposLogin> = logInSchema.safeParse(datos);
 
@@ -67,7 +67,7 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
     };
 
   // El usuario y la contraseña son correctos
-  await crearSesion(usuario.id, usuario.role as UserRole);
+  await crearSesion(usuario.id, usuario.rol as UserRole);
 
   return {
     state: "success",
@@ -75,4 +75,4 @@ const logInAction = async (_prevState: FormActionState, formData: FormData): Pro
   };
 };
 
-export default logInAction;
+export default logIn;

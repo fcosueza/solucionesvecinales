@@ -53,6 +53,11 @@
   height: auto;
 }
 
+.hero__image {
+  margin-top: 5rem;
+  height: 45rem;
+}
+
 .motivation {
   font-size: 4.5rem;
   text-align: center;

@@ -1,6 +1,6 @@
 "use client";
 
-import contactMsgAction from "@/actions/contactMsgAction";
+import contactMsg from "@/actions/contactMsg";
 import { useActionState, useEffect } from "react";
 import { FormActionState, InputType } from "@/types";
 import FormInput from "@/ui/components/FormComp/FormInput";
@@ -20,7 +20,7 @@ const estadoInicial: FormActionState = {
  */
 const ContactForm = (): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
-    contactMsgAction,
+    contactMsg,
     estadoInicial
   );
 

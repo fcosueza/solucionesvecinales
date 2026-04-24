@@ -1,11 +1,11 @@
 import { waitFor, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SignUpForm from ".";
-import signUpAction from "@/actions/auth/signUpAction";
+import signUp from "@/actions/auth/signUp";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
-jest.mock("@/actions/auth/signUpAction", () => jest.fn());
+jest.mock("@/actions/auth/signUp", () => jest.fn());
 jest.mock("next/navigation");
 jest.mock("sonner", () => ({
   toast: {
@@ -73,7 +73,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
   it("Debe mostrar mensajes de error si los campos no son correctos", async () => {
     const { user } = configurar(<SignUpForm />);
 
-    const accionMock = signUpAction as jest.Mock;
+    const accionMock = signUp as jest.Mock;
     const datosFormulario = new FormData();
 
     const nombre = "a";
@@ -115,7 +115,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
   it("Debe mantener valores en todos los campos excepto en repetirContraseña, mostrando error si las contraseñas no coinciden", async () => {
     const { user } = configurar(<SignUpForm />);
 
-    const accionMock = signUpAction as jest.Mock;
+    const accionMock = signUp as jest.Mock;
     const datosFormulario = new FormData();
 
     const nombre = "aaaaaaaaaaaaaaaaa";
@@ -156,7 +156,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
   it("Debe mantener los datos de todos los campos si todos son correctos excepto nombre que es incorrecto", async () => {
     const { user } = configurar(<SignUpForm />);
 
-    const accionMock = signUpAction as jest.Mock;
+    const accionMock = signUp as jest.Mock;
     const datosFormulario = new FormData();
 
     const nombre = "a";
@@ -197,7 +197,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
   it("Debe redirigir a la página de inicio de sesión si el usuario se creó correctamente", async () => {
     const { user } = configurar(<SignUpForm />);
 
-    const accionMock = signUpAction as jest.Mock;
+    const accionMock = signUp as jest.Mock;
     const datosFormulario = new FormData();
 
     const nombre = "aaaaaaaaaaaa";
@@ -232,7 +232,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
   it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {
     const { user } = configurar(<SignUpForm />);
 
-    const accionMock = signUpAction as jest.Mock;
+    const accionMock = signUp as jest.Mock;
     const mensaje = "Error al crear el usuario";
 
     accionMock.mockResolvedValue({
@@ -255,7 +255,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
   it("Debe llamar a toast.success con el mensaje cuando el usuario se crea correctamente", async () => {
     const { user } = configurar(<SignUpForm />);
 
-    const accionMock = signUpAction as jest.Mock;
+    const accionMock = signUp as jest.Mock;
     const mensaje = "Usuario creado correctamente";
 
     accionMock.mockResolvedValue({

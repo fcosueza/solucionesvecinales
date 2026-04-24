@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LogInForm from ".";
-import logInAction from "@/actions/auth/logInAction";
+import logIn from "@/actions/auth/logIn";
 import { toast } from "sonner";
 
 // Simula la Server Action logInAction
-jest.mock("@/actions/auth/logInAction", () => jest.fn());
+jest.mock("@/actions/auth/logIn", () => jest.fn());
 jest.mock("sonner", () => ({
   toast: {
     success: jest.fn(),
@@ -57,7 +57,7 @@ describe("Suite de pruebas del componente LogInForm", () => {
   it("Debe mostrar el mensaje de error si el correo es incorrecto", async () => {
     const { user } = configurar(<LogInForm />);
 
-    const actionMock = logInAction as jest.Mock;
+    const actionMock = logIn as jest.Mock;
     const datosFormulario = new FormData();
 
     const correo = "testname@email.c";
@@ -92,7 +92,7 @@ describe("Suite de pruebas del componente LogInForm", () => {
   it("Debe mostrar mensaje de error si la contraseña es incorrecta", async () => {
     const { user } = configurar(<LogInForm />);
 
-    const actionMock = logInAction as jest.Mock;
+    const actionMock = logIn as jest.Mock;
     const datosFormulario = new FormData();
     const correo = "testname@email.com";
     const contrasena = "as";
@@ -126,7 +126,7 @@ describe("Suite de pruebas del componente LogInForm", () => {
   it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {
     const { user } = configurar(<LogInForm />);
 
-    const actionMock = logInAction as jest.Mock;
+    const actionMock = logIn as jest.Mock;
     const mensaje = "Credenciales incorrectas";
 
     actionMock.mockResolvedValue({
@@ -146,7 +146,7 @@ describe("Suite de pruebas del componente LogInForm", () => {
   it("Debe llamar a toast.success con el mensaje cuando el inicio de sesión es correcto", async () => {
     const { user } = configurar(<LogInForm />);
 
-    const actionMock = logInAction as jest.Mock;
+    const actionMock = logIn as jest.Mock;
     const mensaje = "Sesión iniciada correctamente";
 
     actionMock.mockResolvedValue({

@@ -1,7 +1,7 @@
 import { FormActionState } from "@/types";
 import { crearSesion } from "@/lib/session";
 import { waitFor } from "@testing-library/dom";
-import logInAction from "./logInAction";
+import logIn from "./logIn";
 import prisma from "../../lib/prisma";
 import bcrypt from "bcrypt";
 
@@ -33,7 +33,7 @@ describe("Suite de pruebas de logInAction", () => {
       password: "aaa"
     });
 
-    const resultado = await logInAction({} as FormActionState, datosForm);
+    const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
@@ -49,7 +49,7 @@ describe("Suite de pruebas de logInAction", () => {
       password: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     });
 
-    const resultado = await logInAction({} as FormActionState, datosForm);
+    const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
@@ -70,7 +70,7 @@ describe("Suite de pruebas de logInAction", () => {
       password: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     });
 
-    const resultado = await logInAction({} as FormActionState, datosForm);
+    const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
@@ -91,7 +91,7 @@ describe("Suite de pruebas de logInAction", () => {
       password: "aaaaaaaaaaaaaaaaaaaa"
     });
 
-    const resultado = await logInAction({} as FormActionState, datosForm);
+    const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("El usuario y la contraseña son correctos");
