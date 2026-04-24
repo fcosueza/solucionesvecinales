@@ -10,11 +10,17 @@
 .header {
   position: sticky;
   top: 0;
+  z-index: 100;
   width: 100%;
   height: 10rem;
   overflow: hidden;
   padding: 5rem;
   background-color: rgba(249, 247, 247, 0.98);
+  transition: box-shadow 0.2s ease;
+}
+
+.headerScrolled {
+   box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3);
 }
 
 .navBar {

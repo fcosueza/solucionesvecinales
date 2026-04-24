@@ -4,6 +4,7 @@ import Logo from "@/ui/components/Logo";
 import NavMenu from "@/ui/components/NavMenu";
 import Button from "@/ui/components/Button";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { NavItem } from "@/types";
 import style from "./style.module.css";
 
@@ -29,9 +30,23 @@ interface Props {
 const Header = ({ links, buttonText, buttonRoute = "/" }: Props): React.ReactNode => {
   const menuNavegacion = links ? <NavMenu links={links} /> : "";
   const enrutador = useRouter();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = (): void => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   return (
-    <header id="header" className={style.header}>
+    <header id="header" className={`${style.header} ${isScrolled ? style.headerScrolled : ""}`}>
       <Logo altText="Logo de SolucionesVecinales" width={220} height={100} />
       <div role="toolbar" className={style.navBar}>
         {menuNavegacion}
