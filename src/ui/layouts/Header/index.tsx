@@ -17,7 +17,8 @@ interface Props {
 }
 
 /**
- * Componente que renderiza la cabecera principal con logo, menú y botón de acción.
+ * Componente que renderiza la cabecera principal con logo, menú y botón de acción. Cuando la 
+ * página hace scroll, se añade una sombra a la cabecera para mejorar la visibilidad.
  *
  * @param props - Props del componente Header.
  * @param props.links - Lista opcional de enlaces para el menú de navegación.
@@ -30,23 +31,24 @@ interface Props {
 const Header = ({ links, buttonText, buttonRoute = "/" }: Props): React.ReactNode => {
   const menuNavegacion = links ? <NavMenu links={links} /> : "";
   const enrutador = useRouter();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [cabeceraDesplazada, setCabeceraDesplazada] = useState(false);
 
+  // Efecto para detectar el scroll y actualizar el estado de la cabecera
   useEffect(() => {
-    const onScroll = (): void => {
-      setIsScrolled(window.scrollY > 0);
+    const alDesplazar = (): void => {
+      setCabeceraDesplazada(window.scrollY > 0);
     };
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    alDesplazar();
+    window.addEventListener("scroll", alDesplazar, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", alDesplazar);
     };
   }, []);
 
   return (
-    <header id="header" className={`${style.header} ${isScrolled ? style.headerScrolled : ""}`}>
+    <header id="header" className={`${style.header} ${cabeceraDesplazada ? style["header--scrolled"] : ""}`}>
       <Logo altText="Logo de SolucionesVecinales" width={220} height={100} />
       <div role="toolbar" className={style.navBar}>
         {menuNavegacion}

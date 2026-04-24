@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter as enrutadorMock } from "next/navigation";
 import { NavItem } from "@/types";
@@ -63,5 +63,39 @@ describe("Suite de pruebas de Header", () => {
 
     await userEvent.click(screen.getByRole("button"));
     expect(enrutador.push).toHaveBeenCalled();
+  });
+
+  it("No debe mostrar sombra si la página está al inicio", () => {
+    Object.defineProperty(window, "scrollY", {
+      value: 0,
+      writable: true,
+      configurable: true
+    });
+
+    render(<Header links={enlaces} buttonText="TestButton" />);
+
+    expect(screen.getByRole("banner")).not.toHaveClass("header--scrolled");
+  });
+
+  it("Debe añadir sombra al hacer scroll", async () => {
+    Object.defineProperty(window, "scrollY", {
+      value: 0,
+      writable: true,
+      configurable: true
+    });
+
+    render(<Header links={enlaces} buttonText="TestButton" />);
+
+    Object.defineProperty(window, "scrollY", {
+      value: 100,
+      writable: true,
+      configurable: true
+    });
+    
+    fireEvent.scroll(window);
+
+    await waitFor(() => {
+      expect(screen.getByRole("banner")).toHaveClass("header--scrolled");
+    });
   });
 });
