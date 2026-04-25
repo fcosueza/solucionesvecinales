@@ -39,7 +39,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
     await prisma.usuario.create({
       data: {
         email: datosValidados.data.email,
-        role: datosValidados.data.role,
+        rol: datosValidados.data.role,
         nombre: datosValidados.data.name,
         apellido: datosValidados.data.surname,
         credenciales: {
@@ -54,7 +54,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
       state: "error",
       message: "No se pudo crear el usuario",
       errors: {
-        prisma: "Error interno"
+        prisma: error.message
       }
     };
   }

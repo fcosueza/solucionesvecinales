@@ -1,5 +1,6 @@
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import bcrypt from "bcrypt";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
@@ -37,23 +38,45 @@ async function main(): Promise<void> {
 
   console.log("Users added: ", [admin, juan, alberto]);
 
-  const credenciales = await prisma.credenciales.createMany({
-    data: [
-      {
+  const saltRounds = 10;
+  const plainPasswords = {
+    admin: "123451234512345",
+    juan: "5433212543321254",
+    alberto: "dsnojiaiojsdsnojiaiojs"
+  };
+
+  const [adminPassword, juanPassword, albertoPassword] = await Promise.all([
+    bcrypt.hash(plainPasswords.admin, saltRounds),
+    bcrypt.hash(plainPasswords.juan, saltRounds),
+    bcrypt.hash(plainPasswords.alberto, saltRounds)
+  ]);
+
+  const credenciales = await Promise.all([
+    prisma.credenciales.upsert({
+      where: { usuario: admin.id },
+      update: { password: adminPassword },
+      create: {
         usuario: admin.id,
-        password: "12345"
-      },
-      {
-        usuario: juan.id,
-        password: "5433212"
-      },
-      {
-        usuario: alberto.id,
-        password: "dsnojiaiojs"
+        password: adminPassword
       }
-    ],
-    skipDuplicates: true
-  });
+    }),
+    prisma.credenciales.upsert({
+      where: { usuario: juan.id },
+      update: { password: juanPassword },
+      create: {
+        usuario: juan.id,
+        password: juanPassword
+      }
+    }),
+    prisma.credenciales.upsert({
+      where: { usuario: alberto.id },
+      update: { password: albertoPassword },
+      create: {
+        usuario: alberto.id,
+        password: albertoPassword
+      }
+    })
+  ]);
 
   console.log("Credentials added: ", credenciales);
 
@@ -78,6 +101,27 @@ async function main(): Promise<void> {
   });
 
   console.log("Communities added: ", comunidad);
+
+  const comunidadConPropietarios = await prisma.comunidad.update({
+    where: { id: comunidad.id },
+    data: {
+      propietarios: {
+        set: [{ id: juan.id }, { id: alberto.id }]
+      }
+    },
+    include: {
+      propietarios: {
+        select: {
+          id: true,
+          email: true,
+          nombre: true,
+          apellido: true
+        }
+      }
+    }
+  });
+
+  console.log("Community subscriptions added: ", comunidadConPropietarios.propietarios);
 
   const mensajes = await prisma.mensaje.createMany({
     data: [

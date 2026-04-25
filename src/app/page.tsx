@@ -1,9 +1,9 @@
-import Header from "@/ui/layouts/Header";
-import CTA from "@/ui/components/CTA";
-import Footer from "@/ui/layouts/Footer";
-import Card from "@/ui/components/Card";
-import Gallery from "@/ui/layouts/Gallery";
-import ContactForm from "@/ui/layouts/Forms/ContactForm";
+import Header from "@/components/layouts/Header";
+import CTA from "@/components/ui/CTA";
+import Footer from "@/components/layouts/Footer";
+import Card from "@/components/ui/Card";
+import Gallery from "@/components/layouts/Gallery";
+import ContactForm from "@/components/layouts/Forms/ContactForm";
 import Image from "next/image";
 import { NavItem } from "@/types";
 import { SocialIcon } from "@/types";

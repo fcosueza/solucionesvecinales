@@ -1,7 +1,7 @@
-import "../ui/global.css";
+import "../components/global.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import SonnerToaster from "@/ui/components/SonnerToaster";
+import SonnerToaster from "@/components/ui/SonnerToaster";
 
 const roboto = Roboto({ subsets: ["latin"] });
 

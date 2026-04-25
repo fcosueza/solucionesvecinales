@@ -3,6 +3,7 @@
 import Button from "@/components/ui/Button";
 import logOut from "@/actions/auth/logOut";
 import { useRouter } from "next/navigation";
+import style from "./style.module.css";
 
 /** Props del componente LogOutForm. */
 interface Props {
@@ -30,10 +31,12 @@ const LogOutForm = ({
 
   return (
     <>
-      <form action={logOut} id="logOutFOrm" role="form">
-        <h3>{questionText}</h3>
-        <Button text={confirmText} type="submit" />
-        <Button text={cancelText} type="button" onClick={() => enrutador.back()} />
+      <form action={logOut} id="logOutFForm" role="form" className={style.form}>
+        <h3 className={style.form__title}>{questionText}</h3>
+        <div className={style.form__buttons}>
+          <Button text={confirmText} type="submit" />
+          <Button text={cancelText} type="button" onClick={() => enrutador.back()} />
+        </div>
       </form>
     </>
   );

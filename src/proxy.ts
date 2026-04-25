@@ -3,13 +3,13 @@ import { SessionPayload, BasicError } from "@/types";
 import { descifrarSesion } from "./lib/session";
 import { cookies } from "next/headers";
 
-const rutasProtegidas = ["/dashboard"];
+const rutasProtegidas = ["/overview"];
 const rutasPublicas = ["/home", "/login", "/signup"];
 
 /**
  * Gestiona el acceso a rutas públicas y protegidas según la sesión del usuario.
  * Redirige a `login` cuando una ruta protegida no tiene sesión válida,
- * y envía al `dashboard` si un usuario autenticado intenta acceder a rutas públicas.
+ * y envía al `overview` si un usuario autenticado intenta acceder a rutas públicas.
  *
  * @param req Solicitud entrante de Next.js.
  *
@@ -28,8 +28,8 @@ async function proxy(req: NextRequest): Promise<NextResponse> {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  if (esRutaPublica && "userID" in sesion && !req.nextUrl.pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+  if (esRutaPublica && "userID" in sesion && !req.nextUrl.pathname.startsWith("/overview")) {
+    return NextResponse.redirect(new URL("/overview", req.nextUrl));
   }
 
   return NextResponse.next();

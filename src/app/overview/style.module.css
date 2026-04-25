@@ -1,0 +1,33 @@
+.main {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.overviewGallery {
+  background-color: var(--highlight-light);
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.cardLink:focus-visible {
+  outline: 0.3rem solid var(--highlight-color);
+  border-radius: 1.2rem;
+}
+
+.emptyState {
+  margin: 2rem auto 0;
+  max-width: 60rem;
+  font-size: 2.1rem;
+  text-align: center;
+  color: var(--highlight-dark);
+}
+
+.actionsSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 5rem 2rem 8rem;
+}
