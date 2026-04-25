@@ -3,7 +3,7 @@ import { SessionPayload, BasicError } from "@/types";
 import { descifrarSesion } from "./lib/session";
 import { cookies } from "next/headers";
 
-const rutasProtegidas = ["/overview"];
+const rutasProtegidas = ["/overview", "/communities/add", "/communities/search"];
 const rutasPublicas = ["/home", "/login", "/signup"];
 
 /**

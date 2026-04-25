@@ -65,7 +65,7 @@ const Overview = async (): Promise<React.ReactNode> => {
 
       <main className={style.main}>
         <section>
-          <Gallery title={tituloComunidades} className={style.overviewGallery}>
+          <Gallery title={tituloComunidades}>
             {comunidadesUnicas.length > 0 ? (
               comunidadesUnicas.map(comunidad => {
                 return (
@@ -76,14 +76,13 @@ const Overview = async (): Promise<React.ReactNode> => {
                     aria-label={`Ir al detalle de la comunidad ${comunidad.nombre}`}
                   >
                     <Card
-                      imageURL="/assets/images/devices.svg"
+                      className={style.cardComunity}
+                      imageURL="/assets/images/default-community.jpeg"
                       imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
                       imageWidth={120}
                       imageHeight={120}
                       cardTitle={comunidad.nombre}
-                      cardPara={`Dirección: ${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}.
-                  
-                          Rol: ${usuario.adminComm?.id === comunidad.id ? "Administrador" : "Inquilino"}`}
+                      cardPara={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
                     />
                   </Link>
                 );

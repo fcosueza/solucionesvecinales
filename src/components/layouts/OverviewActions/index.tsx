@@ -18,10 +18,10 @@ const OverviewActions = ({ role }: Props): React.ReactNode => {
       <h2 className={style.title}>Acciones rápidas</h2>
 
       <div className={style.buttons}>
-        <Button text="Buscar comunidad" onClick={() => enrutador.push("/comunidades/buscar")} />
+        <Button text="Buscar comunidad" onClick={() => enrutador.push("/communities/search")} />
 
         {esAdministrador ? (
-          <Button text="Añadir comunidad" onClick={() => enrutador.push("/comunidades/nueva")} />
+          <Button text="Añadir comunidad" onClick={() => enrutador.push("/communities/add")} />
         ) : null}
       </div>
     </div>

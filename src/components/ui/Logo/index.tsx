@@ -22,7 +22,7 @@ interface Props {
  * @returns El logo del proyecto como un elemento React.
  */
 const Logo = ({
-  url = "assets/images/logo.svg",
+  url = "/assets/images/logo.svg",
   altText = "Logo de la aplicación Soluciones Vecinales",
   width = 150,
   height = 120,
