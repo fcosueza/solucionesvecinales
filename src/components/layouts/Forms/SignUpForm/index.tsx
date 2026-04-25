@@ -1,0 +1,138 @@
+"use client";
+
+import signUp from "@/actions/auth/signUp";
+import { redirect } from "next/navigation";
+import { useActionState, useEffect } from "react";
+import { FormActionState, InputType, RadioBoxType, UserRole } from "@/types";
+import FormInput from "@/components/ui/FormComp/FormInput";
+import FormRadioBox from "@/components/ui/FormComp/FormRadioBox";
+import Button from "../../../ui/Button";
+import { toast } from "sonner";
+import style from "./style.module.css";
+
+const estadoInicial = {
+  state: "error" as const,
+  message: ""
+};
+
+/**
+ * Componente que renderiza el formulario de registro y gestiona la creación de usuarios.
+ *
+ * @returns El formulario de registro como un elemento React.
+ */
+const SignUpForm = (): React.ReactNode => {
+  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
+    signUp,
+    estadoInicial
+  );
+
+  useEffect(() => {
+    if (!estado.message || estado.state !== "error") return;
+    toast.error(estado.message);
+  }, [estado]);
+
+  // Si el usuario se crea correctamente, muestra un toast y redirige a login.
+  if (estado.state == "success") {
+    toast.success(estado.message || "Usuario creado correctamente");
+    redirect("/login");
+  }
+
+  return (
+    <>
+      <form action={accionFormulario} id="signupForm" role="form" className={style.form}>
+        <FormInput
+          labelText="Nombre"
+          errorMsg={estado?.errors?.name ?? ""}
+          attr={{
+            id: "name",
+            name: "name",
+            type: InputType.text,
+            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? ""),
+            placeholder: "Introduzca su nombre...",
+            required: true
+          }}
+        />
+
+        <FormInput
+          labelText="Apellidos"
+          errorMsg={estado?.errors?.surname ?? ""}
+          attr={{
+            id: "surname",
+            name: "surname",
+            type: InputType.text,
+            defaultValue: estado?.errors?.surname ? "" : ((estado.payload?.get("surname") as string) ?? ""),
+            placeholder: "Introduzca sus apellidos...",
+            required: true
+          }}
+        />
+
+        <FormRadioBox
+          legend="Selecciona el rol de tu usuario"
+          type={RadioBoxType.radio}
+          name="role"
+          elementList={[
+            {
+              labelText: "inquilino",
+              radioAttr: {
+                id: "tenant",
+                value: UserRole.tenant,
+                defaultChecked: true
+              }
+            },
+            {
+              labelText: "administrador",
+              radioAttr: {
+                id: "admin",
+                value: UserRole.admin
+              }
+            }
+          ]}
+        />
+
+        <FormInput
+          labelText="Correo"
+          errorMsg={estado?.errors?.email ?? ""}
+          attr={{
+            id: "email",
+            name: "email",
+            type: InputType.email,
+            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
+            placeholder: "Introduzca su correo...",
+            pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
+            required: true
+          }}
+        />
+
+        <FormInput
+          labelText="Contraseña (min. 15 caracteres)"
+          errorMsg={estado?.errors?.password ?? ""}
+          attr={{
+            id: "password",
+            name: "password",
+            type: InputType.password,
+            placeholder: "Introduzca su contraseña...",
+            defaultValue: "",
+            required: true
+          }}
+        />
+
+        <FormInput
+          labelText="Repita la Contraseña"
+          errorMsg={estado?.errors?.repeat ?? ""}
+          attr={{
+            id: "repeat",
+            name: "repeat",
+            type: InputType.password,
+            placeholder: "Repita la contraseña...",
+            defaultValue: "",
+            required: true
+          }}
+        />
+
+        <Button type="submit" text="Enviar" disabled={estaPendiente} />
+      </form>
+    </>
+  );
+};
+
+export default SignUpForm;
