@@ -14,6 +14,7 @@ interface Props {
   buttonText?: string;
   buttonRoute?: string;
   burgerMenu?: boolean;
+  backgroundVariant?: "default" | "highlight";
 }
 
 /**
@@ -25,10 +26,16 @@ interface Props {
  * @param props.buttonText - Texto visible del botón principal.
  * @param props.buttonRoute - Ruta de destino al pulsar el botón.
  * @param props.burgerMenu - Indicador de modo menú hamburguesa.
- *
+ * @param props.backgroundVariant - Variante visual del fondo de la cabecera.
+ * 
  * @returns La cabecera principal con logo, menú y botón como un elemento React.
  */
-const Header = ({ links, buttonText, buttonRoute = "/" }: Props): React.ReactNode => {
+const Header = ({
+  links,
+  buttonText,
+  buttonRoute = "/",
+  backgroundVariant = "default"
+}: Props): React.ReactNode => {
   const menuNavegacion = links ? <NavMenu links={links} /> : "";
   const enrutador = useRouter();
   const [cabeceraDesplazada, setCabeceraDesplazada] = useState(false);
@@ -48,7 +55,10 @@ const Header = ({ links, buttonText, buttonRoute = "/" }: Props): React.ReactNod
   }, []);
 
   return (
-    <header id="header" className={`${style.header} ${cabeceraDesplazada ? style["header--scrolled"] : ""}`}>
+    <header
+      id="header"
+      className={`${style.header} ${style[`header--${backgroundVariant}`]} ${cabeceraDesplazada ? style["header--scrolled"] : ""}`.trim()}
+    >
       <Logo altText="Logo de SolucionesVecinales" width={220} height={100} />
       <div role="toolbar" className={style.navBar}>
         {menuNavegacion}

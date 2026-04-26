@@ -9,7 +9,7 @@
   padding: 2rem;
   padding-bottom: 5rem;
   color: white;
-  background-color: var(--highlight-color);
+  background-color: var(--highlight-dark);
   overflow-x: hidden;
 }
 

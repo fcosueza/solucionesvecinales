@@ -12,6 +12,8 @@ interface Props {
  * Este componente debe montarse una sola vez, normalmente en el layout raíz,
  * para que cualquier parte de la aplicación pueda mostrar notificaciones de tipo toast.
  *
+ * @param props - Props del componente SonnerToaster.
+ * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El componente Toaster configurado para toda la app.
  */
 

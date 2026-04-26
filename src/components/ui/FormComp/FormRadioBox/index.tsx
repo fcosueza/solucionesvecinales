@@ -24,6 +24,7 @@ interface Props {
  * @param props.elementList - Lista de opciones con etiqueta y atributos del input.
  * @param props.errorMsg - Mensaje de error opcional para el grupo.
  *
+ * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El grupo de controles de radio con feedback de validación como un elemento React.
  */
 const FormRadioBox = ({

@@ -18,6 +18,7 @@ interface Props {
  * @param props.orientation - Orientación del menú: horizontal o vertical.
  * @param props.color - Variante de color disponible para el menú.
  *
+ * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El menú de navegación con los enlaces indicados como un elemento React.
  */
 const NavMenu = ({ links, orientation = "horizontal", className = "" }: Props): React.ReactNode => {

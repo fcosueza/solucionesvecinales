@@ -15,7 +15,7 @@ const parraHero = `Gestiona incidencias, recibe avisos importantes, reserva espa
 
 const enlacesCabecera: NavItem[] = [
   { text: "Inicio", href: "#" },
-  { text: "Características", href: "#about" },
+  { text: "Características", href: "#gallery" },
   { text: "Contacto", href: "#contact" }
 ];
 
@@ -99,49 +99,21 @@ const datosTarjetas = [
 export default function Home() {
   return (
     <>
-      <Header links={enlacesCabecera} buttonText="Iniciar sesión" buttonRoute="/login" />
+      <Header links={enlacesCabecera} buttonText="Iniciar sesión" buttonRoute="/login" backgroundVariant="highlight" />
 
       <main className={style.main}>
         <section className={`${style.section} ${style.hero}`}>
-          <CTA title={tituloHero} para={parraHero} buttonText="Regístrate ahora" buttonRoute={"/signup"} />
-          <Image src="/assets/images/hero.svg" alt="Imagen de la pantalla de un monitor" className={style.hero__image} width={699} height={618} loading="eager"/>
+          <div className={`${style.container} ${style.hero__content}`}>
+            <CTA title={tituloHero} para={parraHero} buttonText="Regístrate ahora" buttonRoute={"/signup"} />
+            <Image src="/assets/images/hero.svg" alt="Imagen de la pantalla de un monitor" className={style.hero__image} width={699} height={618} loading="eager"/>
+          </div>  
         </section>
 
         <section id="motivation" className={style.section}>
-          <div>
+          <div className={`${style.container} ${style.motivation}`}>
             <h2 className={style.motivation}>
-              Con <span className={style.highlight}>nuestra app</span>, la organización es sencilla y{" "}
-              <span className={style.highlight}>cada vecino cuenta</span>. Porque juntos, hacemos del lugar donde
-              vivimos un mejor hogar.
+              Todo lo que  <span className={style.highlight}>tu comunidad</span> necesita en un solo lugar
             </h2>
-          </div>
-        </section>
-
-        <section id="about" className={style.zigzag}>
-          <div className={style.section}>
-            <Image
-              src="/assets/images/devices.svg"
-              alt="Imagen de la pantalla de un monitor"
-              width={600}
-              height={500}
-            />
-            <div className={style.zigzag__text}>
-              <h3 className={style.zigzag__title}>Adaptada a cualquier dispositivo</h3>
-              <p className={style.zigzag__para}>
-                Pensada para usarse desde cualquier dispositivo, para que puedas gestionar tu comunidad desde cualquier
-                lugar.
-              </p>
-            </div>
-          </div>
-          <div className={style.section}>
-            <div className={style.zigzag__text}>
-              <h3 className={style.zigzag__title}>Centrada en la accesibilidad</h3>
-              <p className={style.zigzag__para}>
-                Con un diseño simple e intuitivo, nuestra aplicación pone especial énfasis en la accesibilidad y
-                facilidad de uso.
-              </p>
-            </div>
-            <Image src="/assets/images/ally.svg" alt="Imagen de la pantalla de un monitor" width={600} height={500} />
           </div>
         </section>
 
@@ -164,6 +136,7 @@ export default function Home() {
         </section>
 
         <section className={style.section} id="contact">
+          <div>
           <div className={style.contact__text}>
             <h3 className={style.contact__title}>Contacta con nosotros</h3>
             <p className={style.contact__para}>
@@ -173,6 +146,7 @@ export default function Home() {
             <Image src="assets/images/contact.svg" width={500} height={300} alt="Hombre mandando un correo" />
           </div>
           <ContactForm />
+          </div>
         </section>
       </main>
 

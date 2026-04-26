@@ -19,7 +19,6 @@ interface Props {
  * @param props.questionText - Pregunta mostrada al usuario.
  * @param props.confirmText - Texto del botón de confirmación.
  * @param props.cancelText - Texto del botón de cancelación.
- *
  * @returns El formulario de confirmación de cierre de sesión como un elemento React.
  */
 const LogOutForm = ({

@@ -36,7 +36,7 @@ test.describe("contenido de la cabecera", () => {
     await expect(enlaceContacto).toBeVisible();
 
     await expect(enlaceInicio).toHaveAttribute("href", "#");
-    await expect(enlaceCaracteristicas).toHaveAttribute("href", "#about");
+    await expect(enlaceCaracteristicas).toHaveAttribute("href", "#gallery");
     await expect(enlaceContacto).toHaveAttribute("href", "#contact");
   });
 });
@@ -61,23 +61,8 @@ test.describe("Contenido de las secciones", () => {
     const seccionMotivacion = page.locator("section#motivation");
 
     await expect(seccionMotivacion).toBeVisible();
-    await expect(seccionMotivacion.getByRole("heading", { level: 2 })).toContainText("nuestra app");
-    await expect(seccionMotivacion.getByRole("heading", { level: 2 })).toContainText("cada vecino cuenta");
-  });
-
-  test("La sección about contiene la información correcta", async ({ page }) => {
-    await page.goto("http://localhost:3000");
-
-    const seccionAbout = page.locator("section#about");
-
-    await expect(seccionAbout).toBeVisible();
-    await expect(
-      seccionAbout.getByRole("heading", { level: 3, name: "Adaptada a cualquier dispositivo" })
-    ).toBeVisible();
-    await expect(seccionAbout.getByRole("heading", { level: 3, name: "Centrada en la accesibilidad" })).toBeVisible();
-    await expect(seccionAbout.getByRole("img", { name: "Imagen de la pantalla de un monitor" })).toHaveCount(2);
-    await expect(seccionAbout.getByText("Pensada para usarse desde cualquier dispositivo")).toBeVisible();
-    await expect(seccionAbout.getByText("nuestra aplicación pone especial énfasis en la accesibilidad")).toBeVisible();
+    await expect(seccionMotivacion.getByRole("heading", { level: 2 })).toContainText("tu comunidad");
+    await expect(seccionMotivacion.getByRole("heading", { level: 2 })).toContainText("necesita en un solo lugar");
   });
 
   test("La sección gallery contiene las tarjetas correctas", async ({ page }) => {
@@ -119,7 +104,7 @@ test.describe("contenido del footer", () => {
 
     await expect(footer).toBeVisible();
     await expect(footer.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "#");
-    await expect(footer.getByRole("link", { name: "Mapa del Sitio" })).toHaveAttribute("href", "#about");
+    await expect(footer.getByRole("link", { name: "Mapa del Sitio" })).toHaveAttribute("href", "#gallery");
     await expect(footer.getByRole("link", { name: "Política de Privacidad" })).toHaveAttribute("href", "#contact");
   });
 

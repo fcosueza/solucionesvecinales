@@ -27,6 +27,12 @@ describe("Suite de pruebas de Header", () => {
     expect(screen.getByRole("banner")).toBeInTheDocument();
   });
 
+  it("Debe aplicar la variante de fondo indicada", () => {
+    render(<Header links={enlaces} backgroundVariant="highlight" />);
+
+    expect(screen.getByRole("banner")).toHaveClass("header--highlight");
+  });
+
   it("Debe renderizar el Logo correctamente", () => {
     render(<Header links={enlaces} buttonText="TestButton" />);
     expect(screen.getByRole("img")).toBeInTheDocument();

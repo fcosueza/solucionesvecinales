@@ -19,6 +19,7 @@ interface Props {
  * @param props.width - Ancho del logo en píxeles.
  * @param props.height - Alto del logo en píxeles.
  *
+ * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El logo del proyecto como un elemento React.
  */
 const Logo = ({

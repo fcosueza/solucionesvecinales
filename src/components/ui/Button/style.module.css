@@ -5,14 +5,14 @@
   width: fit-content;
   color: white;
   background-color: var(--highlight-color);
-  padding: 1rem;
+  padding: 1.2rem 2.4rem;
   border: none;
   border-radius: 1rem;
-  transition: transform ease-in-out 0.2s;
-  transition: box-shadow ease-in 0.2s;
+  transition: ease 0.2s;
 }
 
 .button:hover {
+  background-color: var(--highlight-dark);
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 

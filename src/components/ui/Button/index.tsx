@@ -20,6 +20,7 @@ interface Props {
  * @param props.onClick - Callback que se ejecuta al hacer click.
  * @param props.disabled - Estado habilitado o deshabilitado del botón.
  *
+ * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El botón reutilizable como un elemento React.
  */
 const Button = ({ text, type = "button", onClick, disabled = false, className = "" }: Props): React.ReactNode => {

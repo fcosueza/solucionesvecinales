@@ -1,12 +1,12 @@
 .cta {
-  width: 60%;
+  width: 100%;
   margin: 1rem;
 }
 
 .title {
   font-size: 6rem;
   font-weight: bold;
-  color: var(--highlight-color);
+  color: var(--font-color);
   margin-bottom: 1rem;
 }
 

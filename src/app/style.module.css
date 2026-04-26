@@ -13,14 +13,48 @@
 .zigzag {
   flex-direction: row;
   justify-content: space-between;
-  width: 68%;
-  max-width: 140rem;
+  width: 100%;
   min-width: 125rem;
+  margin: 0 auto;
+}
+
+.container {
+  width: 100%;
+  max-width: 125rem;
   margin: 0 auto;
 }
 
 .section {
   padding: 2rem;
+}
+
+.hero {
+  height: auto;
+  background-color: var(--highlight-light);;
+  width: 100%;
+  padding: 10rem;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero__image {
+  margin-top: 5rem;
+  height: 45rem;
+}
+
+.motivation {
+  font-size: 4.5rem;
+  text-align: center;
+  margin: 5rem auto;
+}
+
+.highlight {
+  color: var(--highlight-color);
 }
 
 .zigzag {
@@ -48,25 +82,7 @@
   width: 95%;
 }
 
-.hero {
-  margin-top: 10rem;
-  height: auto;
-}
 
-.hero__image {
-  margin-top: 5rem;
-  height: 45rem;
-}
-
-.motivation {
-  font-size: 4.5rem;
-  text-align: center;
-  margin: 15rem 0;
-}
-
-.highlight {
-  color: var(--highlight-color);
-}
 
 .contact__text {
   display: flex;

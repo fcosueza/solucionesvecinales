@@ -23,7 +23,8 @@ interface Props {
  * @param props.imageHeight - Alto de la imagen en píxeles.
  * @param props.cardTitle - Título principal de la tarjeta.
  * @param props.cardPara - Párrafo descriptivo de la tarjeta.
- *
+ * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
+ * 
  * @returns La tarjeta con imagen, título y párrafo como un elemento React.
  */
 const Card = ({
