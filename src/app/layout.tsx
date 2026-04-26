@@ -1,9 +1,9 @@
 import "../components/global.css";
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
 import SonnerToaster from "@/components/ui/SonnerToaster";
 
-const roboto = Roboto({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Soluciones Vecinales",
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={roboto.className}>
+    <html lang="es" className={inter.className}>
       <body>
         {children}
         <SonnerToaster />

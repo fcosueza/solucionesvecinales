@@ -1,11 +1,13 @@
 /* Global CSS Style */
 
 :root {
-  --font-color: black;
-  --background-color: #f9f7f7;
-  --highlight-color: #3f72af;
-  --highlight-light: #d6d6e3;
-  --highlight-dark: #112d4e;
+  --font-color: #1F2A37;
+  --font-color-secondary: #6B7280;
+
+  --background-color: #FEFEFE;
+  --highlight-color: #024BAE ;
+  --highlight-light: #F6F7FD;
+  --highlight-dark: #0B1B3A  ;
 }
 
 /* Basic CSS reset and style */

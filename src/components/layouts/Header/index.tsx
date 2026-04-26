@@ -33,7 +33,7 @@ const Header = ({ links, buttonText, buttonRoute = "/" }: Props): React.ReactNod
   const enrutador = useRouter();
   const [cabeceraDesplazada, setCabeceraDesplazada] = useState(false);
 
-  // Efecto para detectar el scroll y actualizar el estado de la cabecera
+  // Efecto para detectar el desplazamiento de la página y poder añadir la sombra.
   useEffect(() => {
     const alDesplazar = (): void => {
       setCabeceraDesplazada(window.scrollY > 0);

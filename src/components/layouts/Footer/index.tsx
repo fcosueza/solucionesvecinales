@@ -24,7 +24,7 @@ interface Props {
 const Footer = ({ links, socialIcons, withLogo = false }: Props): React.ReactNode => {
   const menuNavegacion = links ? <NavMenu links={links} orientation="vertical" /> : "";
   const iconosSociales = socialIcons ? <Social icons={socialIcons} /> : "";
-  const logoInstitucional = withLogo ? <Logo url="assets/images/logo-white.svg" width={300} height={150} /> : "";
+  const logoInstitucional = withLogo ? <Logo url="/assets/images/logo-white.svg" width={300} height={150} /> : "";
 
   return (
     <footer className={style.footer}>
