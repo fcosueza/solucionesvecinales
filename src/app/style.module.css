@@ -74,9 +74,15 @@
 }
 
 .motivation {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto;
+}
+
+.motivation__title {
   font-size: 3.5rem;
   text-align: center;
-  margin: 2rem auto;
+  margin: 0;
 }
 
 .highlight {

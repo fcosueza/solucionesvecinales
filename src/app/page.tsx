@@ -158,8 +158,8 @@ export default function Home() {
 
         <section id="gallery" className={style.section}>
           <div className={style.container}>
-            <div className={`${style.container} ${style.motivation}`}>
-              <h2 className={style.motivation}>
+            <div className={style.motivation}>
+              <h2 className={style.motivation__title}>
                 Todo lo que <span className={style.highlight}>tu comunidad</span> necesita en un solo lugar
               </h2>
             </div>
@@ -182,8 +182,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={`${style.section} ${style.container}`} id="contact">
-          <div className={style.contact__container}>
+        <section className={style.section} id="contact">
+          <div className={`${style.container} ${style.contact__container}`}>
             <div className={style.contact__text}>
               <h3 className={style.contact__title}>Contacta con nosotros</h3>
               <p className={style.contact__para}>
