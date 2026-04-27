@@ -20,6 +20,7 @@ type CamposFormularioComunidad = z.infer<typeof communitySchema>;
 const addCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
 
+  // Si el usuario no está autenticado, devolver un estado de error indicando que debe iniciar sesión
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
     return {
       state: "error",
@@ -31,7 +32,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
   const esAdministrador =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
-    // Solo los administradores pueden crear comunidades
+  // Solo los administradores pueden crear comunidades
   if (!esAdministrador) {
     return {
       state: "error",
@@ -41,8 +42,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
   }
 
   const datos: object = Object.fromEntries(formData);
-  const datosValidados: SafeParseReturnType<object, CamposFormularioComunidad> =
-    communitySchema.safeParse(datos);
+  const datosValidados: SafeParseReturnType<object, CamposFormularioComunidad> = communitySchema.safeParse(datos);
 
   if (!datosValidados.success) {
     return {

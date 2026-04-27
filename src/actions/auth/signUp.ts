@@ -23,6 +23,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposRegistro> = signUpSchema.safeParse(datos);
 
+  // Si la validación falla, devolver un estado de error con los detalles de los error.
   if (!datosValidados.success) {
     return {
       state: "error",

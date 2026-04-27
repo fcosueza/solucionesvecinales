@@ -10,8 +10,8 @@ import { SocialIcon } from "@/types";
 import style from "./style.module.css";
 
 const tituloHero = "¡Tu comunidad, más conectada y organizada que nunca!";
-const parraHero = `Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
-  consulta las novedades de tu comunidad.`;
+const parraHero = `Con nuestra app, gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
+  consulta las novedades de tu comunidad, desde cualquier lugar y en cualquier momento.`;
 
 const enlacesCabecera: NavItem[] = [
   { text: "Inicio", href: "#" },
@@ -21,7 +21,7 @@ const enlacesCabecera: NavItem[] = [
 
 const enlacesFooter: NavItem[] = [
   { text: "Inicio", href: "#" },
-  { text: "Mapa del Sitio", href: "#about" },
+  { text: "Mapa del Sitio", href: "#gallery" },
   { text: "Política de Privacidad", href: "#contact" }
 ];
 

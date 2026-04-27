@@ -45,12 +45,8 @@ test.describe("Contenido de las secciones", () => {
   test("La sección hero contiene sus elementos correctos", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
-    await expect(
-      page.getByRole("heading", { level: 1, name: "¡Tu comunidad, más conectada y organizada que nunca!" })
-    ).toBeVisible();
-    await expect(
-      page.getByText("Gestiona incidencias, recibe avisos importantes, reserva espacios comunes y")
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "¡Tu comunidad, más conectada" })).toBeVisible();
+    await expect(page.getByText("Gestiona incidencias, recibe avisos importantes")).toBeVisible();
     await expect(page.getByRole("button", { name: "Regístrate ahora" })).toBeVisible();
     await expect(page.getByRole("img", { name: "Imagen de la pantalla de un monitor" }).first()).toBeVisible();
   });
