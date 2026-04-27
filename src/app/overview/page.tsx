@@ -1,7 +1,6 @@
 import Header from "@/components/layouts/Header";
-import Footer from "@/components/layouts/Footer";
 import Gallery from "@/components/layouts/Gallery";
-import Card from "@/components/ui/Card";
+import CardFeatures from "@/components/ui/CardFeatures";
 import OverviewActions from "@/components/layouts/OverviewActions";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
@@ -13,8 +12,7 @@ import style from "./style.module.css";
 const enlacesCabecera: NavItem[] = [{ text: "Cerrar sesión", href: "/logout" }];
 
 const tituloComunidades = "Mis comunidades";
-const mensajeSinComunidades =
-  "Aún no estás suscrito a ninguna comunidad. Usa el botón de búsqueda para unirte a una.";
+const mensajeSinComunidades = "Aún no estás suscrito a ninguna comunidad. Usa el botón de búsqueda para unirte a una.";
 
 const Overview = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();
@@ -54,9 +52,7 @@ const Overview = async (): Promise<React.ReactNode> => {
     redirect("/login");
   }
 
-  const comunidadesSuscritas = [usuario.adminComm, ...usuario.inquilinoComm].filter(
-    comunidad => comunidad !== null
-  );
+  const comunidadesSuscritas = [usuario.adminComm, ...usuario.inquilinoComm].filter(comunidad => comunidad !== null);
   const comunidadesUnicas = Array.from(new Map(comunidadesSuscritas.map(c => [c.id, c])).values());
 
   return (
@@ -75,12 +71,12 @@ const Overview = async (): Promise<React.ReactNode> => {
                     className={style.cardLink}
                     aria-label={`Ir al detalle de la comunidad ${comunidad.nombre}`}
                   >
-                    <Card
+                    <CardFeatures
                       className={style.cardComunity}
-                      imageURL="/assets/images/default-community.jpeg"
-                      imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
-                      imageWidth={120}
-                      imageHeight={120}
+                      iconURL="/assets/images/default-community.jpeg"
+                      iconAltText={`Icono de la comunidad ${comunidad.nombre}`}
+                      iconWidth={56}
+                      iconHeight={56}
                       cardTitle={comunidad.nombre}
                       cardPara={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
                     />
@@ -97,8 +93,6 @@ const Overview = async (): Promise<React.ReactNode> => {
           <OverviewActions role={usuario.rol as UserRole} />
         </section>
       </main>
-
-      <Footer />
     </>
   );
 };

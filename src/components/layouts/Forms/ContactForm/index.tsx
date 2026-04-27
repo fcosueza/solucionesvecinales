@@ -78,7 +78,7 @@ const ContactForm = (): React.ReactNode => {
           }}
         />
 
-        <Button type="submit" text="Enviar" disabled={estaPendiente} />
+        <Button type="submit" text="Enviar mensaje →" disabled={estaPendiente} />
       </form>
     </>
   );

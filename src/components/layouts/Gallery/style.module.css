@@ -1,6 +1,5 @@
 .gallery {
-  padding: 8rem 0;
-  background-color: var(--highlight-light);
+  padding: 1rem 0;
 }
 
 .title {
@@ -10,10 +9,11 @@
   font-weight: bold;
   color: var(--highlight-color);
 }
+
 .container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }

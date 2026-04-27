@@ -1,4 +1,3 @@
-import Footer from "@/components/layouts/Footer";
 import CommunitySearchForm from "@/components/layouts/Forms/CommunitySearchForm";
 import Header from "@/components/layouts/Header";
 import ScrollToTopOnMount from "@/components/ui/ScrollToTopOnMount";
@@ -43,7 +42,6 @@ const SearchCommunityPage = async (): Promise<React.ReactNode> => {
         <h2 className={style.title}>Buscar comunidad</h2>
         <CommunitySearchForm communities={communities} />
       </main>
-      <Footer />
     </>
   );
 };

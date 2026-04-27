@@ -1,5 +1,4 @@
 import Header from "@/components/layouts/Header";
-import Footer from "@/components/layouts/Footer";
 import SignUpForm from "@/components/layouts/Forms/SignUpForm";
 import Link from "next/link";
 import { NavItem } from "@/types";
@@ -18,7 +17,6 @@ export default function Register() {
           Si ya estás registrado, <Link href="/login">inicia sesión</Link> en tu cuenta.
         </p>
       </main>
-      <Footer />
     </>
   );
 }

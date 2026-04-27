@@ -104,7 +104,7 @@ test.describe("contenido del footer", () => {
 
     await expect(footer).toBeVisible();
     await expect(footer.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "#");
-    await expect(footer.getByRole("link", { name: "Mapa del Sitio" })).toHaveAttribute("href", "#gallery");
+    await expect(footer.getByRole("link", { name: "Mapa del Sitio" })).toHaveAttribute("href", "#about");
     await expect(footer.getByRole("link", { name: "Política de Privacidad" })).toHaveAttribute("href", "#contact");
   });
 

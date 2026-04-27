@@ -18,7 +18,7 @@ interface Props {
 }
 
 /**
- * Componente que renderiza la cabecera principal con logo, menú y botón de acción. Cuando la 
+ * Componente que renderiza la cabecera principal con logo, menú y botón de acción. Cuando la
  * página hace scroll, se añade una sombra a la cabecera para mejorar la visibilidad.
  *
  * @param props - Props del componente Header.
@@ -27,15 +27,10 @@ interface Props {
  * @param props.buttonRoute - Ruta de destino al pulsar el botón.
  * @param props.burgerMenu - Indicador de modo menú hamburguesa.
  * @param props.backgroundVariant - Variante visual del fondo de la cabecera.
- * 
+ *
  * @returns La cabecera principal con logo, menú y botón como un elemento React.
  */
-const Header = ({
-  links,
-  buttonText,
-  buttonRoute = "/",
-  backgroundVariant = "default"
-}: Props): React.ReactNode => {
+const Header = ({ links, buttonText, buttonRoute = "/", backgroundVariant = "default" }: Props): React.ReactNode => {
   const menuNavegacion = links ? <NavMenu links={links} /> : "";
   const enrutador = useRouter();
   const [cabeceraDesplazada, setCabeceraDesplazada] = useState(false);

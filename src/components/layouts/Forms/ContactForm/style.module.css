@@ -1,11 +1,15 @@
 .form {
   display: flex;
   flex-direction: column;
-  width: fit-content;
-  min-width: 50rem;
-  border: 0.1rem solid black;
-  border-radius: 1rem;
+  width: min(100%, 64rem);
+  min-width: 0;
   padding: 2rem 4rem;
-  margin: 5rem;
-  box-shadow: 0 0.4rem 0.8rem 0.3rem rgba(0, 0, 0, 0.2);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 100%;
+    padding: 1.6rem 1.2rem;
+  }
 }

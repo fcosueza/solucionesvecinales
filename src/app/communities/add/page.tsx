@@ -1,4 +1,3 @@
-import Footer from "@/components/layouts/Footer";
 import CommunityAddForm from "@/components/layouts/Forms/CommunityAddForm";
 import Header from "@/components/layouts/Header";
 import ScrollToTopOnMount from "@/components/ui/ScrollToTopOnMount";
@@ -34,7 +33,6 @@ const NewCommunity = async (): Promise<React.ReactNode> => {
         <h2 className={style.title}>Añadir comunidad</h2>
         <CommunityAddForm />
       </main>
-      <Footer />
     </>
   );
 };

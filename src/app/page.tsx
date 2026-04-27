@@ -1,7 +1,7 @@
 import Header from "@/components/layouts/Header";
 import CTA from "@/components/ui/CTA";
 import Footer from "@/components/layouts/Footer";
-import Card from "@/components/ui/Card";
+import CardFeatures from "@/components/ui/CardFeatures";
 import Gallery from "@/components/layouts/Gallery";
 import ContactForm from "@/components/layouts/Forms/ContactForm";
 import Image from "next/image";
@@ -71,28 +71,28 @@ const iconosSociales: SocialIcon[] = [
 // Datos para las tarjetas
 const datosTarjetas = [
   {
-    imageURL: "/assets/images/notify.svg",
-    altText: "Imagen de una notificación",
+    iconURL: "/assets/images/feature-tablon-50.png",
+    iconAltText: "Icono de una notificación",
     title: "Tablón de Anuncios",
-    para: "Consulta el tablón de anuncios de tu comunidad y mantente informado de todo lo que sucede."
+    para: "Mantente informado de todo lo que sucede en tu comunidad."
   },
   {
-    imageURL: "/assets/images/alert.svg",
-    altText: "Imagen de un signo de exclamación",
+    iconURL: "/assets/images/feature-incidencia-50.png",
+    iconAltText: "Icono de un signo de exclamación",
     title: "Gestión de Incidencias",
-    para: "Crea y gestiona incidencias en tu comunidad de forma eficiente y rápida desde cualquier lugar."
+    para: "Crea y gestiona incidencias de forma rápida y eficiente."
   },
   {
-    imageURL: "/assets/images/sport.svg",
-    altText: "Imagen de una portería de futbol y un portero",
+    iconURL: "/assets/images/feature-comunes-50.png",
+    iconAltText: "Icono de una portería de futbol y un portero",
     title: "Espacios Comunes",
-    para: "Reserva los espacios comunes de tu comunidad para su disfrute el día y a la hora que quieras."
+    para: "Reserva los espacios comunes de tu comunidad fácilmente."
   },
   {
-    imageURL: "/assets/images/financial.svg",
-    altText: "Imagen de una mujer y un diagrama de barras.",
+    iconURL: "/assets/images/feature-financial-50.png",
+    iconAltText: "Icono de una mujer y un diagrama de barras.",
     title: "Consulta las finanzas",
-    para: "Consulta las finanzas de tu comunidad para estar siempre al tanto del balance anual."
+    para: "Consulta las finanzas de tu comunidad de forma clara."
   }
 ];
 
@@ -104,48 +104,101 @@ export default function Home() {
       <main className={style.main}>
         <section className={`${style.section} ${style.hero}`}>
           <div className={`${style.container} ${style.hero__content}`}>
-            <CTA title={tituloHero} para={parraHero} buttonText="Regístrate ahora" buttonRoute={"/signup"} />
-            <Image src="/assets/images/hero.svg" alt="Imagen de la pantalla de un monitor" className={style.hero__image} width={699} height={618} loading="eager"/>
-          </div>  
-        </section>
-
-        <section id="motivation" className={style.section}>
-          <div className={`${style.container} ${style.motivation}`}>
-            <h2 className={style.motivation}>
-              Todo lo que  <span className={style.highlight}>tu comunidad</span> necesita en un solo lugar
-            </h2>
+            <div className={style.hero__copy}>
+              <CTA
+                title={tituloHero}
+                highlightText="conectada y organizada"
+                para={parraHero}
+                buttonText="Regístrate ahora"
+                buttonRoute={"/signup"}
+              />
+              <ul className={style.hero__benefits} aria-label="Ventajas principales">
+                <li className={style.hero__benefitItem}>
+                  <Image
+                    src="/assets/icons/check-icon-60.png"
+                    alt="Icono de verificación"
+                    width={20}
+                    height={20}
+                    className={style.hero__benefitIcon}
+                  />
+                  <span>fácil de usar</span>
+                </li>
+                <li className={style.hero__benefitItem}>
+                  <Image
+                    src="/assets/icons/shield-icon-64.png"
+                    alt="Icono de escudo"
+                    width={20}
+                    height={20}
+                    className={style.hero__benefitIcon}
+                  />
+                  <span>seguro y privado</span>
+                </li>
+                <li className={style.hero__benefitItem}>
+                  <Image
+                    src="/assets/icons/phone-icon-64.png"
+                    alt="Icono de teléfono"
+                    width={20}
+                    height={20}
+                    className={style.hero__benefitIcon}
+                  />
+                  <span>Siempre contigo</span>
+                </li>
+              </ul>
+            </div>
+            <Image
+              src="/assets/images/hero.svg"
+              alt="Imagen de la pantalla de un monitor"
+              className={style.hero__image}
+              width={699}
+              height={618}
+              loading="eager"
+            />
           </div>
         </section>
 
-        <section id="gallery">
-          <Gallery>
-            {datosTarjetas.map(data => {
-              return (
-                <Card
-                  imageURL={data.imageURL}
-                  imageAltText={data.altText}
-                  imageWidth={150}
-                  imageHeight={150}
-                  cardTitle={data.title}
-                  cardPara={data.para}
-                  key={data.imageURL}
-                />
-              );
-            })}
-          </Gallery>
+        <section id="gallery" className={style.section}>
+          <div className={style.container}>
+            <div className={`${style.container} ${style.motivation}`}>
+              <h2 className={style.motivation}>
+                Todo lo que <span className={style.highlight}>tu comunidad</span> necesita en un solo lugar
+              </h2>
+            </div>
+
+            <Gallery>
+              {datosTarjetas.map(data => {
+                return (
+                  <CardFeatures
+                    iconURL={data.iconURL}
+                    iconAltText={data.iconAltText}
+                    iconWidth={50}
+                    iconHeight={50}
+                    cardTitle={data.title}
+                    cardPara={data.para}
+                    key={data.iconURL}
+                  />
+                );
+              })}
+            </Gallery>
+          </div>
         </section>
 
-        <section className={style.section} id="contact">
-          <div>
-          <div className={style.contact__text}>
-            <h3 className={style.contact__title}>Contacta con nosotros</h3>
-            <p className={style.contact__para}>
-              Si tienes alguna duda, sugerencia o simplemente quieres saludarnos, no dudes en ponerte en contacto con
-              nosotros.
-            </p>
-            <Image src="assets/images/contact.svg" width={500} height={300} alt="Hombre mandando un correo" />
-          </div>
-          <ContactForm />
+        <section className={`${style.section} ${style.container}`} id="contact">
+          <div className={style.contact__container}>
+            <div className={style.contact__text}>
+              <h3 className={style.contact__title}>Contacta con nosotros</h3>
+              <p className={style.contact__para}>
+                Si tienes alguna duda, sugerencia o simplemente quieres saludarnos, no dudes en ponerte en contacto con
+                nosotros.
+              </p>
+              <Image
+                src="/assets/images/contact.svg"
+                width={500}
+                height={300}
+                alt="Hombre mandando un correo"
+                className={style.contact__image}
+              />
+            </div>
+            <ContactForm />
           </div>
         </section>
       </main>

@@ -30,7 +30,6 @@ const Footer = ({ links, socialIcons, withLogo = false }: Props): React.ReactNod
       {menuNavegacion}
       {iconosSociales}
       {logoInstitucional}
-      <p className={style.copy}>Copyright &copy; 2025 Fco Sueza. Software under MIT License. </p>
     </footer>
   );
 };

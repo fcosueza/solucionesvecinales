@@ -1,5 +1,4 @@
 import Header from "@/components/layouts/Header";
-import Footer from "@/components/layouts/Footer";
 import LogInForm from "@/components/layouts/Forms/LogInForm";
 import Link from "next/link";
 import { NavItem } from "@/types";
@@ -18,7 +17,6 @@ export default function LogIn() {
           ¿Aún no tienes una cuenta? <Link href="/signup">Regístrate</Link> gratis.
         </p>
       </main>
-      <Footer />
     </>
   );
 }

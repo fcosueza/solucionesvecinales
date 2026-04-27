@@ -9,8 +9,7 @@
   overflow-x: hidden;
 }
 
-.section,
-.zigzag {
+.section {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
@@ -20,19 +19,15 @@
 
 .container {
   width: 100%;
-  max-width: 125rem;
-  margin: 0 auto;
-}
-
-.section {
-  padding: 2rem;
+  max-width: 130rem;
+  margin: 5rem auto;
 }
 
 .hero {
   height: auto;
-  background-color: var(--highlight-light);;
+  background-color: var(--highlight-light);
   width: 100%;
-  padding: 10rem;
+  padding: 8rem 0;
 }
 
 .hero__content {
@@ -42,63 +37,99 @@
   justify-content: space-between;
 }
 
+.hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding-top: 2rem;
+}
+
+.hero__benefits {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin: 1.5rem 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__benefitItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.6rem;
+  color: var(--font-color);
+  font-weight: 500;
+}
+
+.hero__benefitIcon {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
 .hero__image {
-  margin-top: 5rem;
-  height: 45rem;
+  height: 44rem;
 }
 
 .motivation {
-  font-size: 4.5rem;
+  font-size: 3.5rem;
   text-align: center;
-  margin: 5rem auto;
+  margin: 2rem auto;
 }
 
 .highlight {
   color: var(--highlight-color);
 }
 
-.zigzag {
-  margin: 0 auto;
-  flex-direction: column;
-  text-align: center;
-}
-
-.zigzag__text {
+.contact__container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin: 0 2rem;
+  justify-content: space-between;
+  gap: 3rem;
+  width: 100%;
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  padding-left: 4rem;
+  background-color: var(--highlight-light);
+  box-shadow: var(--box-shadow-standard);
 }
-
-.zigzag__title {
-  font-size: 4.5rem;
-  color: var(--highlight-color);
-  margin-bottom: 1rem;
-}
-
-.zigzag__para {
-  font-size: 3.5rem;
-  width: 95%;
-}
-
-
 
 .contact__text {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  max-width: 56rem;
 }
 
 .contact__title {
-  font-size: 5rem;
-  color: var(--highlight-color);
+  font-size: 4rem;
+  color: var(--font-color);
   margin-bottom: 1rem;
 }
 
 .contact__para {
-  font-size: 2.5rem;
-  text-align: center;
+  font-size: 2rem;
+  line-height: 1.5;
   margin-bottom: 2rem;
+}
+
+.contact__image {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1024px) {
+  .contact__container {
+    flex-direction: column;
+    padding: 2.4rem;
+  }
+
+  .contact__text {
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
 }

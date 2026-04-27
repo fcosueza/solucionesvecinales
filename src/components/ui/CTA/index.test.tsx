@@ -37,6 +37,27 @@ describe("Suite de pruebas del componente CTA", () => {
     render(<CTA title={titulo} para={parrafo} buttonText={textoBoton} />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
+
+  it("Debe resaltar el fragmento indicado del título cuando highlightText coincide", () => {
+    const tituloConResaltado = "Tu comunidad conectada y organizada";
+    const textoResaltado = "conectada";
+
+    render(
+      <CTA
+        title={tituloConResaltado}
+        highlightText={textoResaltado}
+        para={parrafo}
+        buttonText={textoBoton}
+      />
+    );
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    const highlightedText = screen.getByText(textoResaltado);
+
+    expect(heading).toHaveTextContent(tituloConResaltado);
+    expect(highlightedText.tagName).toBe("SPAN");
+  });
+
   it("No debe llamar al router si no se hace click en el botón", async () => {
     const enrutador = enrutadorMock();
 

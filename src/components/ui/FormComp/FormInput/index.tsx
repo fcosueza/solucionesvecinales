@@ -31,7 +31,14 @@ const FormInput = ({ labelText, attr, rows = 5, errorMsg = "", className = "" }:
     <div role="form-control" className={`${style.control} ${className}`.trim()}>
       <label className={style.control__label} htmlFor={attr.id}>
         {labelText}
-        {attr.required ? <span title="Requerido"> *</span> : ""}
+        {attr.required ? (
+          <span className={style.control__required} title="Requerido">
+            {" "}
+            *
+          </span>
+        ) : (
+          ""
+        )}
       </label>
       {attr.type != InputType.textarea ? (
         <input className={clasesInput} aria-label={etiquetaAria} {...attr} />
