@@ -8,6 +8,7 @@ interface Props {
   type?: "button" | "submit" | "reset";
   onClick?: (Event: React.MouseEvent<HTMLElement>) => void;
   disabled?: boolean;
+  fullWidth?: boolean;
   className?: string;
 }
 
@@ -19,13 +20,26 @@ interface Props {
  * @param props.type - Tipo del botón HTML.
  * @param props.onClick - Callback que se ejecuta al hacer click.
  * @param props.disabled - Estado habilitado o deshabilitado del botón.
- *
+ * @param props.fullWidth - Si es true, el botón ocupará todo el ancho disponible.
  * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
+ *
  * @returns El botón reutilizable como un elemento React.
  */
-const Button = ({ text, type = "button", onClick, disabled = false, className = "" }: Props): React.ReactNode => {
+const Button = ({
+  text,
+  type = "button",
+  onClick,
+  disabled = false,
+  fullWidth = false,
+  className = ""
+}: Props): React.ReactNode => {
   return (
-    <button type={type} className={`${style.button} ${className}`.trim()} disabled={disabled} onClick={onClick}>
+    <button
+      type={type}
+      className={`${style.button} ${fullWidth ? style.button__fullWidth : ""} ${className}`.trim()}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {text}
     </button>
   );

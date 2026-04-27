@@ -21,3 +21,8 @@
   box-shadow: none;
   transform: scale(0.95);
 }
+
+.button__fullWidth {
+  width: 100%;
+  margin-top: 0.5rem;
+}

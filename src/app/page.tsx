@@ -71,25 +71,25 @@ const iconosSociales: SocialIcon[] = [
 // Datos para las tarjetas
 const datosTarjetas = [
   {
-    iconURL: "/assets/images/feature-tablon-50.png",
+    iconURL: "/assets/icons/feature-tablon-50.png",
     iconAltText: "Icono de una notificación",
     title: "Tablón de Anuncios",
     para: "Mantente informado de todo lo que sucede en tu comunidad."
   },
   {
-    iconURL: "/assets/images/feature-incidencia-50.png",
+    iconURL: "/assets/icons/feature-incidencia-50.png",
     iconAltText: "Icono de un signo de exclamación",
     title: "Gestión de Incidencias",
     para: "Crea y gestiona incidencias de forma rápida y eficiente."
   },
   {
-    iconURL: "/assets/images/feature-comunes-50.png",
+    iconURL: "/assets/icons/feature-comunes-50.png",
     iconAltText: "Icono de una portería de futbol y un portero",
     title: "Espacios Comunes",
     para: "Reserva los espacios comunes de tu comunidad fácilmente."
   },
   {
-    iconURL: "/assets/images/feature-financial-50.png",
+    iconURL: "/assets/icons/feature-financial-50.png",
     iconAltText: "Icono de una mujer y un diagrama de barras.",
     title: "Consulta las finanzas",
     para: "Consulta las finanzas de tu comunidad de forma clara."

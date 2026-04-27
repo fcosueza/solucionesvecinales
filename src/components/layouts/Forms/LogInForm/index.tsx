@@ -7,6 +7,7 @@ import { FormActionState, InputType } from "@/types";
 import FormInput from "@/components/ui/FormComp/FormInput";
 import Button from "../../../ui/Button";
 import { toast } from "sonner";
+import Image from "next/image";
 import style from "./style.module.css";
 
 const estadoInicial: FormActionState = {
@@ -18,14 +19,12 @@ const estadoInicial: FormActionState = {
  * Componente que renderiza el formulario de inicio de sesión y procesa credenciales.
  *
  * @param props - Props del componente LogInForm.
+ *
  * @returns El formulario de inicio de sesión como un elemento React.
  */
 const LogInForm = (): React.ReactNode => {
   const router = useRouter();
-  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
-    logIn,
-    estadoInicial
-  );
+  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(logIn, estadoInicial);
 
   useEffect(() => {
     if (!estado.message) return;
@@ -42,6 +41,14 @@ const LogInForm = (): React.ReactNode => {
   return (
     <>
       <form action={accionFormulario} id="loginForm" className={style.form} role="form">
+        <div className={style.form__header}>
+          <div className={style.form__avatar}>
+            <Image src="/assets/icons/profile-100.png" alt="Profile icon" width={80} height={80} />
+          </div>
+          <h2 className={style.form__title}>Inicia sesión</h2>
+          <p className={style.form__subtitle}>Accede a tu cuenta para continuar</p>
+        </div>
+
         <FormInput
           labelText="Correo"
           errorMsg={estado?.errors?.email ?? ""}
@@ -69,7 +76,7 @@ const LogInForm = (): React.ReactNode => {
           }}
         />
 
-        <Button type="submit" text="Enviar" disabled={estaPendiente} />
+        <Button type="submit" text="Enviar" disabled={estaPendiente} fullWidth />
       </form>
     </>
   );

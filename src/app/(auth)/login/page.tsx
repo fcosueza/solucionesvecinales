@@ -11,7 +11,6 @@ export default function LogIn() {
     <>
       <Header links={enlacesCabecera} buttonText="Regístrate" buttonRoute="/signup" />
       <main className={style.main}>
-        <h2 className={style.title}>Iniciar sesión</h2>
         <LogInForm />
         <p className={style.para}>
           ¿Aún no tienes una cuenta? <Link href="/signup">Regístrate</Link> gratis.

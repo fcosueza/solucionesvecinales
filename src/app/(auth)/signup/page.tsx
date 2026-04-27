@@ -11,7 +11,6 @@ export default function Register() {
     <>
       <Header links={enlacesCabecera} buttonText="Iniciar sesión" buttonRoute="/login" />
       <main className={style.main}>
-        <h2 className={style.title}>Registro de usuarios</h2>
         <SignUpForm />
         <p className={style.para}>
           Si ya estás registrado, <Link href="/login">inicia sesión</Link> en tu cuenta.

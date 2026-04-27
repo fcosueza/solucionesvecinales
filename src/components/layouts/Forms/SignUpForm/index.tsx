@@ -8,6 +8,7 @@ import FormInput from "@/components/ui/FormComp/FormInput";
 import FormRadioBox from "@/components/ui/FormComp/FormRadioBox";
 import Button from "../../../ui/Button";
 import { toast } from "sonner";
+import Image from "next/image";
 import style from "./style.module.css";
 
 const estadoInicial = {
@@ -22,10 +23,7 @@ const estadoInicial = {
  * @returns El formulario de registro como un elemento React.
  */
 const SignUpForm = (): React.ReactNode => {
-  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
-    signUp,
-    estadoInicial
-  );
+  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(signUp, estadoInicial);
 
   useEffect(() => {
     if (!estado.message || estado.state !== "error") return;
@@ -41,6 +39,13 @@ const SignUpForm = (): React.ReactNode => {
   return (
     <>
       <form action={accionFormulario} id="signupForm" role="form" className={style.form}>
+        <div className={style.form__header}>
+          <div className={style.form__avatar}>
+            <Image src="/assets/icons/profile-100.png" alt="Profile icon" width={80} height={80} />
+          </div>
+          <h2 className={style.form__title}>Crea tu cuenta</h2>
+          <p className={style.form__subtitle}>Completa los datos para registrarte</p>
+        </div>
         <FormInput
           labelText="Nombre"
           errorMsg={estado?.errors?.name ?? ""}
@@ -130,7 +135,7 @@ const SignUpForm = (): React.ReactNode => {
           }}
         />
 
-        <Button type="submit" text="Enviar" disabled={estaPendiente} />
+        <Button type="submit" text="Enviar" disabled={estaPendiente} fullWidth />
       </form>
     </>
   );
