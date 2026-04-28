@@ -22,6 +22,7 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposFormContacto> = contactSchema.safeParse(datos);
 
+  // Si los datos no son válidos, devolver un estado de error con los mensajes de validación
   if (!datosValidados.success) {
     return {
       state: "error",
@@ -31,6 +32,7 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
     };
   }
 
+  // Intentamos crear el mensaje de contacto en la base de datos
   try {
     await prisma.contacto.create({
       data: {
@@ -50,6 +52,7 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
     };
   }
 
+  // Si todo fue exitoso, devolver un estado de éxito
   return {
     state: "success",
     message: "Mensaje creado exitosamente",

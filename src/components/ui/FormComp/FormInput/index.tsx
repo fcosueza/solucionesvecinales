@@ -8,7 +8,6 @@ interface Props {
   attr: FormInputAttrs;
   rows?: number;
   errorMsg?: string | string[];
-  className?: string;
 }
 
 /**
@@ -20,15 +19,14 @@ interface Props {
  * @param props.rows - Cantidad de filas cuando se renderiza un textarea.
  * @param props.errorMsg - Mensaje de error opcional para validación.
  *
- * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El campo de formulario con etiqueta y estado de error como un elemento React.
  */
-const FormInput = ({ labelText, attr, rows = 5, errorMsg = "", className = "" }: Props): React.ReactNode => {
+const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.ReactNode => {
   const clasesInput = `${style.control__input} ${errorMsg ? style.control__inputError : ""}`;
   const etiquetaAria = `${attr.id}-input`;
 
   return (
-    <div role="form-control" className={`${style.control} ${className}`.trim()}>
+    <div role="form-control" className={style.control}>
       <label className={style.control__label} htmlFor={attr.id}>
         {labelText}
         {attr.required ? (

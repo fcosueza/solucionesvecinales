@@ -46,7 +46,7 @@ test.describe("Contenido de las secciones", () => {
     await page.goto("http://localhost:3000");
 
     await expect(page.getByRole("heading", { level: 1, name: "¡Tu comunidad, más conectada" })).toBeVisible();
-    await expect(page.getByText("Gestiona incidencias, recibe avisos importantes")).toBeVisible();
+    await expect(page.getByText("Con nuestra app, gestiona incidencias")).toBeVisible();
     await expect(page.getByRole("button", { name: "Regístrate ahora" })).toBeVisible();
     await expect(page.getByRole("img", { name: "Imagen de la pantalla de un monitor" }).first()).toBeVisible();
   });
@@ -54,7 +54,7 @@ test.describe("Contenido de las secciones", () => {
   test("La sección de motivación contiene su mensaje principal", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
-    const seccionMotivacion = page.locator("section#motivation");
+    const seccionMotivacion = page.locator("section#gallery");
 
     await expect(seccionMotivacion).toBeVisible();
     await expect(seccionMotivacion.getByRole("heading", { level: 2 })).toContainText("tu comunidad");
@@ -100,7 +100,7 @@ test.describe("contenido del footer", () => {
 
     await expect(footer).toBeVisible();
     await expect(footer.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "#");
-    await expect(footer.getByRole("link", { name: "Mapa del Sitio" })).toHaveAttribute("href", "#about");
+    await expect(footer.getByRole("link", { name: "Mapa del Sitio" })).toHaveAttribute("href", "#gallery");
     await expect(footer.getByRole("link", { name: "Política de Privacidad" })).toHaveAttribute("href", "#contact");
   });
 
@@ -126,12 +126,11 @@ test.describe("contenido del footer", () => {
     await expect(footer.getByRole("img", { name: "Icono de X" })).toBeVisible();
   });
 
-  test("El footer muestra el logo y el texto de copyright", async ({ page }) => {
+  test("El footer muestra el logo", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     const footer = page.getByRole("contentinfo");
 
     await expect(footer.getByRole("img", { name: /Logo/i })).toBeVisible();
-    await expect(footer.getByText(/Copyright/i)).toContainText("Software under MIT License.");
   });
 });

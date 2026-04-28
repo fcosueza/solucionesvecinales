@@ -11,7 +11,6 @@ interface Props {
   para: string;
   buttonText: string;
   buttonRoute?: string;
-  className?: string;
 }
 
 /**
@@ -23,12 +22,11 @@ interface Props {
  * @param props.para - Texto descriptivo del bloque.
  * @param props.buttonText - Texto del botón de acción.
  * @param props.buttonRoute - Ruta a la que navega el botón.
- * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @param props.highlightText - Fragmento del título que se resaltará visualmente si se encuentra en el título.
- * 
+ *
  * @returns El bloque CTA con título, párrafo y botón como un elemento React.
  */
-const CTA = ({ title, highlightText, para, buttonText, buttonRoute = "/", className = "" }: Props): React.ReactNode => {
+const CTA = ({ title, highlightText, para, buttonText, buttonRoute = "/" }: Props): React.ReactNode => {
   const enrutador = useRouter();
   const tieneResaltado = Boolean(highlightText && title.includes(highlightText));
 
@@ -51,7 +49,7 @@ const CTA = ({ title, highlightText, para, buttonText, buttonRoute = "/", classN
   };
 
   return (
-    <div className={`${style.cta} ${className}`.trim()}>
+    <div className={style.cta}>
       <h1 className={style.title}>{renderTitle()}</h1>
       <p className={style.para}>{para}</p>
       <Button text={buttonText} type="button" onClick={() => enrutador.push(buttonRoute)} />

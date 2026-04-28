@@ -7,7 +7,6 @@ interface Props {
   altText?: string;
   width?: number;
   height?: number;
-  className?: string;
 }
 
 /**
@@ -18,27 +17,15 @@ interface Props {
  * @param props.altText - Texto alternativo para accesibilidad.
  * @param props.width - Ancho del logo en píxeles.
  * @param props.height - Alto del logo en píxeles.
- *
- * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El logo del proyecto como un elemento React.
  */
 const Logo = ({
   url = "/assets/images/logo.svg",
   altText = "Logo de la aplicación Soluciones Vecinales",
   width = 150,
-  height = 120,
-  className = ""
+  height = 120
 }: Props): React.ReactNode => {
-  return (
-    <Image
-      className={`${style.logo} ${className}`.trim()}
-      src={url}
-      width={width}
-      height={height}
-      alt={altText}
-      aria-label="Logo"
-    />
-  );
+  return <Image className={style.logo} src={url} width={width} height={height} alt={altText} aria-label="Logo" />;
 };
 
 export default Logo;

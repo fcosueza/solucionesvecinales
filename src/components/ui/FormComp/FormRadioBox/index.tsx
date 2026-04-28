@@ -9,7 +9,6 @@ interface Props {
   name: string;
   elementList: { labelText: string; radioAttr: FormRadioAttrs }[];
   errorMsg?: string | string[];
-  className?: string;
 }
 
 /** TODO: Implementar la generación de tipo checkbox. */
@@ -24,19 +23,12 @@ interface Props {
  * @param props.elementList - Lista de opciones con etiqueta y atributos del input.
  * @param props.errorMsg - Mensaje de error opcional para el grupo.
  *
- * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El grupo de controles de radio con feedback de validación como un elemento React.
  */
-const FormRadioBox = ({
-  legend,
-  type,
-  name,
-  elementList,
-  errorMsg = "",
-  className = ""
-}: Props): React.ReactNode => {
+const FormRadioBox = ({ legend, type, name, elementList, errorMsg = "" }: Props): React.ReactNode => {
   if (type == RadioBoxType.checkbox) return <h1>checkbox not implemented yet!!</h1>;
 
+  // Se mapea la lista de opciones para generar los controles de radio con sus etiquetas asociadas.
   const elementosRadio: React.ReactNode = elementList.map(elemento => (
     <div className={style.controlRadio} key={`${elemento.radioAttr.id}`}>
       <input
@@ -51,7 +43,7 @@ const FormRadioBox = ({
   ));
 
   return (
-    <div className={`${style.control} ${className}`.trim()} role="form-control">
+    <div className={style.control} role="form-control">
       <fieldset className={style.fieldset}>
         <legend className={style.legend}>{legend}</legend>
         {elementosRadio}

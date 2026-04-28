@@ -29,6 +29,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
+  // Verificar si el usuario tiene un rol de administrador
   const esAdministrador =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
@@ -44,6 +45,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposFormularioComunidad> = communitySchema.safeParse(datos);
 
+  // Si los datos no son válidos, devolver un estado de error con los mensajes de validación
   if (!datosValidados.success) {
     return {
       state: "error",

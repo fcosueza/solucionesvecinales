@@ -7,7 +7,6 @@ interface Props {
   links: NavItem[];
   orientation?: "horizontal" | "vertical";
   color?: "white" | "black";
-  className?: string;
 }
 
 /**
@@ -17,11 +16,9 @@ interface Props {
  * @param props.links - Lista de enlaces a renderizar en el menú.
  * @param props.orientation - Orientación del menú: horizontal o vertical.
  * @param props.color - Variante de color disponible para el menú.
- *
- * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
  * @returns El menú de navegación con los enlaces indicados como un elemento React.
  */
-const NavMenu = ({ links, orientation = "horizontal", className = "" }: Props): React.ReactNode => {
+const NavMenu = ({ links, orientation = "horizontal" }: Props): React.ReactNode => {
   const listaEnlaces = links.map(enlace => (
     <li className={orientation == "horizontal" ? style.horizontal : style.vertical} key={enlace.href}>
       <Link className={style.navItem} href={enlace.href}>
@@ -31,7 +28,7 @@ const NavMenu = ({ links, orientation = "horizontal", className = "" }: Props): 
   ));
 
   return (
-    <nav id="navbar" className={className}>
+    <nav id="navbar">
       <ul className={style.navList}>{listaEnlaces}</ul>
     </nav>
   );

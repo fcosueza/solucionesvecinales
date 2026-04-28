@@ -10,17 +10,17 @@
 }
 
 .notFound-header {
-  font-size: 10rem;
+  font-size: 5rem;
   color: var(--highlight-color);
 }
 
 .notFound-para {
-  font-size: 4rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 4rem;
 }
 
 .notFound-link {
-  font-size: 3rem;
+  font-size: 1.8rem;
   font-weight: bold;
 }
