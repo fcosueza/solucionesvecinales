@@ -1,0 +1,33 @@
+.main {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 5rem 2rem;
+}
+
+.card {
+  width: min(65rem, 100%);
+  background-color: #ffffff;
+  border-radius: 1.6rem;
+  box-shadow: var(--box-shadow-standard);
+  padding: 3rem;
+}
+
+.title {
+  font-size: 3.2rem;
+  color: var(--highlight-color);
+  margin-bottom: 2rem;
+}
+
+.item {
+  font-size: 1.9rem;
+  color: var(--font-color);
+  margin-bottom: 1.2rem;
+}
+
+.label {
+  color: var(--highlight-dark);
+  font-weight: 700;
+}

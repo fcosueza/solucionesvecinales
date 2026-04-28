@@ -1,0 +1,18 @@
+.layoutWrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 30rem minmax(0, 1fr);
+  background-color: var(--background-color);
+}
+
+.contentArea {
+  min-width: 0;
+  min-height: 100vh;
+}
+
+@media (max-width: 960px) {
+  .layoutWrapper {
+    grid-template-columns: 1fr;
+  }
+}
