@@ -1,19 +1,37 @@
 .main {
   width: 100%;
-  min-height: 100vh;
 }
 
-.overviewGallery {
-  background-color: var(--highlight-light);
+.communitiesSection {
+  width: 100%;
 }
 
-.cardComunity {
+.title {
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--font-color);
+  text-align: left;
+}
+
+.description {
+  margin-top: 1.6rem;
+  font-size: 2.2rem;
+  color: var(--highlight-dark);
+  text-align: left;
+}
+
+.cardsContainer {
+  margin-top: 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+.cardCommunity {
   min-width: 30rem;
-}
-
-.cardComunity:hover {
-  transform: scale(1.05);
-  box-shadow: var(--box-shadow-standard);
 }
 
 .cardLink {
@@ -27,16 +45,16 @@
 }
 
 .emptyState {
-  margin: 2rem auto 0;
+  margin-top: 2rem;
   max-width: 60rem;
   font-size: 2.1rem;
-  text-align: center;
+  text-align: left;
   color: var(--highlight-dark);
 }
 
 .actionsSection {
   width: 100%;
   display: flex;
-  justify-content: center;
-  padding: 5rem 2rem 8rem;
+  justify-content: flex-start;
+  padding: 5rem 0 8rem;
 }

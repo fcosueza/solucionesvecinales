@@ -8,7 +8,8 @@
 
 .contentArea {
   min-width: 0;
-  min-height: 100vh;
+  align-self: start;
+  padding: 10rem 10rem;
 }
 
 @media (max-width: 960px) {

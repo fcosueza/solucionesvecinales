@@ -1,6 +1,5 @@
-import Gallery from "@/components/layouts/Gallery";
 import OverviewActions from "@/components/layouts/OverviewActions";
-import CardFeatures from "@/components/ui/CardFeatures";
+import CardCommunity from "@/components/ui/CardCommunity";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types";
@@ -9,6 +8,7 @@ import { redirect } from "next/navigation";
 import style from "./style.module.css";
 
 const tituloComunidades = "Mis comunidades";
+const descripcionComunidades = "Aquí tienes todas las comunidades a las que perteneces";
 const mensajeSinComunidades = "Aún no estás suscrito a ninguna comunidad. Usa el botón de búsqueda para unirte a una.";
 
 const Overview = async (): Promise<React.ReactNode> => {
@@ -54,8 +54,11 @@ const Overview = async (): Promise<React.ReactNode> => {
 
   return (
     <main className={style.main}>
-      <section>
-        <Gallery title={tituloComunidades}>
+      <section className={style.communitiesSection}>
+        <h1 className={style.title}>{tituloComunidades}</h1>
+        <p className={style.description}>{descripcionComunidades}</p>
+
+        <div className={style.cardsContainer}>
           {comunidadesUnicas.length > 0 ? (
             comunidadesUnicas.map(comunidad => {
               return (
@@ -65,14 +68,12 @@ const Overview = async (): Promise<React.ReactNode> => {
                   className={style.cardLink}
                   aria-label={`Ir al detalle de la comunidad ${comunidad.nombre}`}
                 >
-                  <CardFeatures
-                    className={style.cardComunity}
-                    iconURL="/assets/images/default-community.jpeg"
-                    iconAltText={`Icono de la comunidad ${comunidad.nombre}`}
-                    iconWidth={56}
-                    iconHeight={56}
-                    cardTitle={comunidad.nombre}
-                    cardPara={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
+                  <CardCommunity
+                    className={style.cardCommunity}
+                    imageURL="/assets/images/default-community.jpeg"
+                    imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
+                    communityName={comunidad.nombre}
+                    communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
                   />
                 </Link>
               );
@@ -80,7 +81,7 @@ const Overview = async (): Promise<React.ReactNode> => {
           ) : (
             <p className={style.emptyState}>{mensajeSinComunidades}</p>
           )}
-        </Gallery>
+        </div>
       </section>
 
       <section className={style.actionsSection}>

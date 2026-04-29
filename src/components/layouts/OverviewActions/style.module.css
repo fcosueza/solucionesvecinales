@@ -1,19 +1,17 @@
 .container {
   width: min(100%, 110rem);
   border-radius: 1.2rem;
-  padding: 3rem;
-}
-
-.title {
-  font-size: 3.2rem;
-  color: var(--highlight-color);
-  text-align: center;
+  padding: 0;
 }
 
 .buttons {
-  margin-top: 2.5rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2rem;
+}
+
+.compactButton {
+  font-size: 1.8rem;
+  padding: 1rem 2rem;
 }
