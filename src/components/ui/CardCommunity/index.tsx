@@ -8,6 +8,8 @@ interface Props {
   communityAddress: string;
   ctaText?: string;
   className?: string;
+  ctaAsButton?: boolean;
+  ctaDisabled?: boolean;
 }
 
 const CardCommunity = ({
@@ -16,7 +18,9 @@ const CardCommunity = ({
   communityName,
   communityAddress,
   ctaText = "Ver Comunidad",
-  className = ""
+  className = "",
+  ctaAsButton = false,
+  ctaDisabled = false
 }: Props): React.ReactNode => {
   return (
     <article role="card" className={`${style.card} ${className}`.trim()}>
@@ -27,7 +31,13 @@ const CardCommunity = ({
         <p className={style.address}>{communityAddress}</p>
       </div>
 
-      <span className={style.cta}>{ctaText}</span>
+      {ctaAsButton ? (
+        <button type="button" className={style.cta} disabled={ctaDisabled}>
+          {ctaText}
+        </button>
+      ) : (
+        <span className={style.cta}>{ctaText}</span>
+      )}
     </article>
   );
 };

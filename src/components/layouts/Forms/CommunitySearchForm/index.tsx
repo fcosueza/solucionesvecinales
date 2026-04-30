@@ -1,83 +1,35 @@
 "use client";
 
-import Table, { TableRow } from "@/components/ui/Table";
-import { useMemo, useState } from "react";
+import FormInput from "@/components/ui/FormComp/FormInput";
+import { InputType } from "@/types";
 import style from "./style.module.css";
 
-interface CommunityRow {
-  id: number;
-  nombre: string;
-  calle: string;
-  numero: number;
-  ciudad: string;
-  provincia: string;
-  pais: string;
-}
-
 interface Props {
-  communities: CommunityRow[];
+  defaultValue?: string;
 }
 
-const headers = ["Nombre", "Calle", "Numero", "Ciudad", "Provincia", "Pais"];
-
-const CommunitySearchForm = ({ communities }: Props): React.ReactNode => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
-  const filteredCommunities = useMemo(() => {
-    const normalizedSearch = searchTerm.trim().toLowerCase();
-
-    if (!normalizedSearch) {
-      return communities;
-    }
-
-    return communities.filter(community => {
-      const searchableFields = [
-        community.nombre,
-        community.calle,
-        String(community.numero),
-        community.ciudad,
-        community.provincia,
-        community.pais
-      ];
-
-      return searchableFields.some(field => field.toLowerCase().includes(normalizedSearch));
-    });
-  }, [communities, searchTerm]);
-
-  const rows: TableRow[] = filteredCommunities.map(community => ({
-    key: community.id,
-    cells: [
-      community.nombre,
-      community.calle,
-      community.numero,
-      community.ciudad,
-      community.provincia,
-      community.pais
-    ]
-  }));
-
+/**
+ * Standalone search input used to filter communities.
+ *
+ * @param props - Search input props.
+ * @param props.defaultValue - Initial text used to prefill the search field from query params.
+ *
+ * @returns A GET-based search form that submits query text to the current page.
+ */
+const CommunitySearchForm = ({ defaultValue = "" }: Props): React.ReactNode => {
   return (
-    <section className={style.container}>
-      <label htmlFor="community-search" className={style.searchLabel}>
-        Search community
-      </label>
-      <input
-        id="community-search"
-        aria-label="search-community-input"
-        name="community-search"
-        type="search"
-        placeholder="Type name, street, city, province or country..."
-        value={searchTerm}
-        className={style.searchInput}
-        onChange={event => setSearchTerm(event.target.value)}
+    <form method="get" className={style.container} role="search" aria-label="community-search-form">
+      <FormInput
+        labelText=""
+        attr={{
+          id: "community-search",
+          name: "q",
+          type: InputType.text,
+          placeholder: "Escribe nombre, calle, ciudad, provincia o pais...",
+          defaultValue
+        }}
       />
-
-      <Table
-        headers={headers}
-        rows={rows}
-        emptyMessage="No communities match your search."
-      />
-    </section>
+    </form>
   );
 };
 

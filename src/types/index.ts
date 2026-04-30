@@ -1,4 +1,5 @@
 import { JWTPayload } from "jose";
+import { ChangeEventHandler } from "react";
 
 export enum UserRole {
   tenant = "inquilino",
@@ -52,9 +53,11 @@ export interface FormInputAttrs extends FormFieldAttrs {
   type: InputType;
   name?: string;
   defaultValue?: string | number | undefined;
+  value?: string | number | undefined;
   placeholder?: string;
   pattern?: string;
   title?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }
 
 export interface FormRadioAttrs extends FormFieldAttrs {

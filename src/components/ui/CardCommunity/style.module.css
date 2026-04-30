@@ -45,13 +45,21 @@
   background-color: var(--background-color);
   border: 0.2rem solid var(--highlight-color);
   border-radius: 0.8rem;
+  font-family: inherit;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
 }
 
-.cta:hover,
-.cta:focus-visible {
+.cta:not(:disabled):hover,
+.cta:not(:disabled):focus-visible {
   background-color: var(--highlight-color);
   color: #ffffff;
+}
+
+.cta:disabled {
+  cursor: not-allowed;
+  color: #6b7280;
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
 }
