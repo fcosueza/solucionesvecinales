@@ -23,9 +23,8 @@ const estadoInicial = {
  * @returns El formulario de registro como un elemento React.
  */
 const SignUpForm = (): React.ReactNode => {
-  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(signUp, estadoInicial);
-
   const router = useRouter();
+  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(signUp, estadoInicial);
 
   useEffect(() => {
     if (!estado.message) return;
@@ -56,7 +55,7 @@ const SignUpForm = (): React.ReactNode => {
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: (estado.payload?.get("name") as string) ?? "",
+            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? ""),
             placeholder: "Introduzca su nombre...",
             required: true
           }}
@@ -69,7 +68,7 @@ const SignUpForm = (): React.ReactNode => {
             id: "surname",
             name: "surname",
             type: InputType.text,
-            defaultValue: (estado.payload?.get("surname") as string) ?? "",
+            defaultValue: estado?.errors?.surname ? "" : ((estado.payload?.get("surname") as string) ?? ""),
             placeholder: "Introduzca sus apellidos...",
             required: true
           }}
@@ -105,7 +104,7 @@ const SignUpForm = (): React.ReactNode => {
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: (estado.payload?.get("email") as string) ?? "",
+            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true

@@ -4,6 +4,7 @@ import CardStat from "@/components/ui/CardStat";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
+import { UserRole } from "@/types";
 import { notFound, redirect } from "next/navigation";
 import style from "./style.module.css";
 
@@ -70,6 +71,8 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
   }
 
   const balanceTotal = null;
+  const esAdmin =
+    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
   return (
     <main className={style.main}>
@@ -93,7 +96,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
 
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Tablón de mensajes</h2>
-        <CommunityMessageBoard mensajes={comunidad.mensajes} />
+        <CommunityMessageBoard mensajes={comunidad.mensajes} comunidadId={comunidadId} isAdmin={esAdmin} />
       </section>
 
       <section className={style.section}>
