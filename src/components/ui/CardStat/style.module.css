@@ -1,0 +1,26 @@
+.card {
+  border: 0.1rem solid rgba(2, 75, 174, 0.2);
+  border-radius: 1.2rem;
+  background-color: #ffffff;
+  box-shadow: var(--box-shadow-standard);
+  padding: 1.6rem;
+}
+
+.title {
+  font-size: 1.6rem;
+  color: var(--font-color-secondary);
+}
+
+.value {
+  margin-top: 0.8rem;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--highlight-color);
+}
+
+.description {
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+  color: var(--font-color);
+  line-height: 1.4;
+}

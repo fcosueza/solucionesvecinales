@@ -10,6 +10,8 @@ interface Props {
   className?: string;
   ctaAsButton?: boolean;
   ctaDisabled?: boolean;
+  ctaButtonType?: "button" | "submit";
+  ctaFormID?: string;
 }
 
 const CardCommunity = ({
@@ -20,7 +22,9 @@ const CardCommunity = ({
   ctaText = "Ver Comunidad",
   className = "",
   ctaAsButton = false,
-  ctaDisabled = false
+  ctaDisabled = false,
+  ctaButtonType = "button",
+  ctaFormID
 }: Props): React.ReactNode => {
   return (
     <article role="card" className={`${style.card} ${className}`.trim()}>
@@ -32,7 +36,7 @@ const CardCommunity = ({
       </div>
 
       {ctaAsButton ? (
-        <button type="button" className={style.cta} disabled={ctaDisabled}>
+        <button type={ctaButtonType} form={ctaFormID} className={style.cta} disabled={ctaDisabled}>
           {ctaText}
         </button>
       ) : (

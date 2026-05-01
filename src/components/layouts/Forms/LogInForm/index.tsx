@@ -56,7 +56,7 @@ const LogInForm = (): React.ReactNode => {
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
+            defaultValue: (estado.payload?.get("email") as string) ?? "",
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true

@@ -24,22 +24,31 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
     },
     select: {
       rol: true,
-      adminComm: {
+      inscripciones: {
         select: {
-          id: true,
-          nombre: true,
-          calle: true,
-          numero: true,
-          ciudad: true
+          comunidadID: {
+            select: {
+              id: true,
+              nombre: true,
+              calle: true,
+              numero: true,
+              ciudad: true
+            }
+          }
         }
       },
-      inquilinoComm: {
+      solicitudes: {
+        where: { estado: "pendiente" },
         select: {
-          id: true,
-          nombre: true,
-          calle: true,
-          numero: true,
-          ciudad: true
+          comunidadID: {
+            select: {
+              id: true,
+              nombre: true,
+              calle: true,
+              numero: true,
+              ciudad: true
+            }
+          }
         }
       }
     }
@@ -49,8 +58,14 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
     redirect("/login");
   }
 
-  const comunidadesSuscritas = [usuario.adminComm, ...usuario.inquilinoComm].filter(comunidad => comunidad !== null);
-  const comunidadesUnicas = Array.from(new Map(comunidadesSuscritas.map(c => [c.id, c])).values());
+  const comunidadesSuscritas = usuario.inscripciones.map(inscripcion => inscripcion.comunidadID);
+  const comunidadesUnicas = Array.from(
+    new Map(comunidadesSuscritas.map(comunidad => [comunidad.id, comunidad])).values()
+  );
+
+  const comunidadesPendientes = usuario.solicitudes
+    .map(s => s.comunidadID)
+    .filter(c => !comunidadesUnicas.some(inscrita => inscrita.id === c.id));
 
   return (
     <main className={style.main}>
@@ -59,26 +74,38 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
         <p className={style.description}>{descripcionComunidades}</p>
 
         <div className={style.cardsContainer}>
-          {comunidadesUnicas.length > 0 ? (
-            comunidadesUnicas.map(comunidad => {
-              return (
-                <Link
-                  href={`/communities/${comunidad.id}`}
-                  key={comunidad.id}
-                  className={style.cardLink}
-                  aria-label={`Ir al detalle de la comunidad ${comunidad.nombre}`}
-                >
-                  <CardCommunity
-                    className={style.cardCommunity}
-                    imageURL="/assets/images/default-community.jpeg"
-                    imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
-                    communityName={comunidad.nombre}
-                    communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
-                  />
-                </Link>
-              );
-            })
-          ) : (
+          {comunidadesUnicas.map(comunidad => (
+            <Link
+              href={`/communities/${comunidad.id}`}
+              key={comunidad.id}
+              className={style.cardLink}
+              aria-label={`Ir al detalle de la comunidad ${comunidad.nombre}`}
+            >
+              <CardCommunity
+                className={style.cardCommunity}
+                imageURL="/assets/images/default-community.jpeg"
+                imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
+                communityName={comunidad.nombre}
+                communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
+              />
+            </Link>
+          ))}
+
+          {comunidadesPendientes.map(comunidad => (
+            <CardCommunity
+              key={comunidad.id}
+              className={style.cardCommunity}
+              imageURL="/assets/images/default-community.jpeg"
+              imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
+              communityName={comunidad.nombre}
+              communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
+              ctaText="Solicitud pendiente"
+              ctaAsButton
+              ctaDisabled
+            />
+          ))}
+
+          {comunidadesUnicas.length === 0 && comunidadesPendientes.length === 0 && (
             <p className={style.emptyState}>{mensajeSinComunidades}</p>
           )}
         </div>

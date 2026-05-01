@@ -1,6 +1,7 @@
 import CommunitySearchForm from "@/components/layouts/Forms/CommunitySearchForm";
 import Gallery from "@/components/layouts/Gallery";
 import CardCommunity from "@/components/ui/CardCommunity";
+import requestCommunitySubscription from "@/actions/requestCommunitySubscription";
 import ScrollToTopOnMount from "@/components/ui/ScrollToTopOnMount";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
@@ -10,6 +11,18 @@ import style from "./style.module.css";
 interface SearchPageProps {
   searchParams: Promise<{ q?: string }>;
 }
+
+const aLista = <T,>(valor: T | T[] | null | undefined): T[] => {
+  if (Array.isArray(valor)) {
+    return valor;
+  }
+
+  if (valor == null) {
+    return [];
+  }
+
+  return [valor];
+};
 
 const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<React.ReactNode> => {
   const verifiedSession = await verifySession();
@@ -40,24 +53,27 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
       id: verifiedSession.session.userID
     },
     select: {
-      adminComm: {
+      inscripciones: {
         select: {
-          id: true
+          comunidad: true
         }
       },
-      inquilinoComm: {
+      solicitudes: {
+        where: {
+          estado: "pendiente"
+        },
         select: {
-          id: true
+          comunidad: true
         }
       }
     }
   });
 
   // Combinamos las comunidades administradas y las comunidades en las que el usuario es inquilino
-  const enrolledCommunityIDs = new Set<number>([
-    ...(userWithCommunities?.adminComm ? [userWithCommunities.adminComm.id] : []),
-    ...(userWithCommunities?.inquilinoComm.map(community => community.id) ?? [])
-  ]);
+  const enrolledCommunityIDs = new Set<number>(aLista(userWithCommunities?.inscripciones).map(i => i.comunidad));
+  const pendingRequestCommunityIDs = new Set<number>(
+    aLista(userWithCommunities?.solicitudes).map(request => request.comunidad)
+  );
 
   const resolvedSearchParams = await searchParams;
   const searchTerm = (resolvedSearchParams.q ?? "").trim().toLowerCase();
@@ -92,19 +108,36 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
             <Gallery>
               {filteredCommunities.map(community => {
                 const isAlreadyEnrolled = enrolledCommunityIDs.has(community.id);
+                const hasPendingRequest = pendingRequestCommunityIDs.has(community.id);
+                const shouldDisableCTA = isAlreadyEnrolled || hasPendingRequest;
+                const ctaText = isAlreadyEnrolled
+                  ? "Ya inscrito"
+                  : hasPendingRequest
+                    ? "Solicitud pendiente"
+                    : "Suscribirse";
+                const subscriptionFormID = `subscription-request-community-${community.id}`;
 
                 return (
-                  <CardCommunity
-                    key={community.id}
-                    className={style.cardCommunity}
-                    imageURL="/assets/images/default-community.jpeg"
-                    imageAltText={`Imagen de la comunidad ${community.nombre}`}
-                    communityName={community.nombre}
-                    communityAddress={`${community.calle}, ${community.numero}. ${community.ciudad}`}
-                    ctaText={isAlreadyEnrolled ? "Ya inscrito" : "Inscribirme"}
-                    ctaAsButton
-                    ctaDisabled={isAlreadyEnrolled}
-                  />
+                  <div key={community.id}>
+                    <CardCommunity
+                      className={style.cardCommunity}
+                      imageURL="/assets/images/default-community.jpeg"
+                      imageAltText={`Imagen de la comunidad ${community.nombre}`}
+                      communityName={community.nombre}
+                      communityAddress={`${community.calle}, ${community.numero}. ${community.ciudad}`}
+                      ctaText={ctaText}
+                      ctaAsButton
+                      ctaDisabled={shouldDisableCTA}
+                      ctaButtonType="submit"
+                      ctaFormID={subscriptionFormID}
+                    />
+
+                    {!shouldDisableCTA ? (
+                      <form action={requestCommunitySubscription} id={subscriptionFormID}>
+                        <input type="hidden" name="communityID" value={community.id} />
+                      </form>
+                    ) : null}
+                  </div>
                 );
               })}
             </Gallery>

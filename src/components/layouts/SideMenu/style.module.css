@@ -88,6 +88,31 @@
   color: var(--highlight-color);
 }
 
+.comunidadMenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.3s ease,
+    opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.comunidadMenu > * {
+  min-height: 0;
+}
+
+.comunidadMenuVisible {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.menuDivider {
+  border: none;
+  border-top: 0.1rem solid rgba(255, 255, 255, 0.25);
+  margin: 1.2rem 0;
+}
+
 .menuBottom {
   display: flex;
   justify-content: center;

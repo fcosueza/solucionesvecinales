@@ -65,11 +65,18 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
         ciudad: datosValidados.data.city,
         provincia: datosValidados.data.province,
         pais: datosValidados.data.country,
-        adminID: sesionVerificada.session.userID
+        adminID: sesionVerificada.session.userID,
+        inscripciones: {
+          create: [
+            {
+              usuario: sesionVerificada.session.userID
+            }
+          ]
+        }
       }
     });
   } catch (error: unknown) {
-    // Si el error es un conflicto de clave única, significa que el administrador ya tiene una comunidad
+    // Si el error es un conflicto de clave única, devolvemos un error de duplicado
     if (
       typeof error === "object" &&
       error !== null &&
@@ -78,7 +85,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     ) {
       return {
         state: "error",
-        message: "Ya administras una comunidad",
+        message: "Ya existe una comunidad con esos datos",
         payload: formData
       };
     }

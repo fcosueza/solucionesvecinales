@@ -110,7 +110,14 @@ describe("Suite de pruebas de addCommunity", () => {
         ciudad: "Madrid",
         provincia: "Madrid",
         pais: "España",
-        adminID: "admin-1"
+        adminID: "admin-1",
+        inscripciones: {
+          create: [
+            {
+              usuario: "admin-1"
+            }
+          ]
+        }
       }
     });
   });
@@ -130,7 +137,7 @@ describe("Suite de pruebas de addCommunity", () => {
     const resultado = await addCommunity({} as FormActionState, datosFormulario);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Ya administras una comunidad");
+    expect(resultado.message).toBe("Ya existe una comunidad con esos datos");
     expect(resultado.payload).toBe(datosFormulario);
   });
 

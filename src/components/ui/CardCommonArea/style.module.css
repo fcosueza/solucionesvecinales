@@ -1,0 +1,36 @@
+.card {
+  border: 0.1rem solid rgba(2, 75, 174, 0.2);
+  border-radius: 1.2rem;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: var(--box-shadow-standard);
+}
+
+.image {
+  width: 100%;
+  height: 16rem;
+  object-fit: cover;
+}
+
+.content {
+  padding: 1.4rem;
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--font-color);
+}
+
+.description {
+  margin-top: 0.8rem;
+  font-size: 1.5rem;
+  color: var(--font-color-secondary);
+  line-height: 1.45;
+}
+
+.schedule {
+  margin-top: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--highlight-color);
+}

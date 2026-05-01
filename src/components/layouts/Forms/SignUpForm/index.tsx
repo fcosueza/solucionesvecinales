@@ -1,7 +1,7 @@
 "use client";
 
 import signUp from "@/actions/auth/signUp";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { FormActionState, InputType, RadioBoxType, UserRole } from "@/types";
 import FormInput from "@/components/ui/FormComp/FormInput";
@@ -25,16 +25,19 @@ const estadoInicial = {
 const SignUpForm = (): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(signUp, estadoInicial);
 
-  useEffect(() => {
-    if (!estado.message || estado.state !== "error") return;
-    toast.error(estado.message);
-  }, [estado]);
+  const router = useRouter();
 
-  // Si el usuario se crea correctamente, muestra un toast y redirige a login.
-  if (estado.state == "success") {
-    toast.success(estado.message || "Usuario creado correctamente");
-    redirect("/login");
-  }
+  useEffect(() => {
+    if (!estado.message) return;
+
+    if (estado.state === "success") {
+      toast.success(estado.message);
+      router.push("/login");
+      return;
+    }
+
+    toast.error(estado.message);
+  }, [estado, router]);
 
   return (
     <>
@@ -53,7 +56,7 @@ const SignUpForm = (): React.ReactNode => {
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? ""),
+            defaultValue: (estado.payload?.get("name") as string) ?? "",
             placeholder: "Introduzca su nombre...",
             required: true
           }}
@@ -66,7 +69,7 @@ const SignUpForm = (): React.ReactNode => {
             id: "surname",
             name: "surname",
             type: InputType.text,
-            defaultValue: estado?.errors?.surname ? "" : ((estado.payload?.get("surname") as string) ?? ""),
+            defaultValue: (estado.payload?.get("surname") as string) ?? "",
             placeholder: "Introduzca sus apellidos...",
             required: true
           }}
@@ -102,7 +105,7 @@ const SignUpForm = (): React.ReactNode => {
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
+            defaultValue: (estado.payload?.get("email") as string) ?? "",
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true

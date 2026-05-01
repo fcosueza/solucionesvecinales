@@ -1,0 +1,217 @@
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  padding-bottom: 5rem;
+}
+
+.headerSection {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+  border: 0.1rem solid rgba(2, 75, 174, 0.2);
+  border-radius: 1.6rem;
+  background-color: #ffffff;
+  box-shadow: var(--box-shadow-standard);
+  padding: 1.8rem;
+}
+
+.headerImage {
+  width: 24rem;
+  height: 16rem;
+  border-radius: 1.2rem;
+  object-fit: cover;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--font-color);
+  text-align: left;
+}
+
+.communityName {
+  font-size: 2.2rem;
+  color: var(--highlight-dark);
+  font-weight: 600;
+}
+
+.address {
+  font-size: 1.8rem;
+  color: var(--highlight-dark);
+  text-align: left;
+}
+
+.section {
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 2.8rem;
+  color: var(--font-color);
+  margin-bottom: 1.4rem;
+}
+
+.requestList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.requestItem {
+  border: 0.1rem solid rgba(2, 75, 174, 0.2);
+  border-radius: 1.2rem;
+  background-color: #ffffff;
+  box-shadow: var(--box-shadow-standard);
+  padding: 1.6rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(26rem, 1fr) 24rem;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.requestInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.requestStateWrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.userName {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.userEmail,
+.requestDate {
+  font-size: 1.5rem;
+  color: var(--font-color-secondary);
+}
+
+.requestStatus {
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.statusApproved {
+  color: #1f8f4f;
+}
+
+.statusPending {
+  color: #dd7a0a;
+}
+
+.statusRejected {
+  color: #bf2f45;
+}
+
+.requestActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.8rem;
+}
+
+.actionButton {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+  border: none;
+  border-radius: 0.9rem;
+  padding: 0.9rem 1.4rem;
+  cursor: pointer;
+  transition: ease 0.2s;
+}
+
+.actionButton:disabled {
+  visibility: hidden;
+  cursor: not-allowed;
+}
+
+.approveButton {
+  background-color: #1f8f4f;
+}
+
+.approveButton:hover:not(:disabled) {
+  background-color: #176a3b;
+}
+
+.rejectButton {
+  background-color: #bf2f45;
+}
+
+.rejectButton:hover:not(:disabled) {
+  background-color: #8e2233;
+}
+
+.emptyState {
+  max-width: 60rem;
+  font-size: 1.8rem;
+  color: var(--font-color-secondary);
+}
+
+@media (max-width: 960px) {
+  .headerSection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerImage {
+    width: 100%;
+    height: 19rem;
+  }
+
+  .title {
+    font-size: 3.2rem;
+  }
+
+  .sectionTitle {
+    font-size: 2.4rem;
+  }
+
+  .requestItem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .requestStateWrap {
+    position: static;
+    width: 100%;
+    justify-content: flex-start;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .requestStatus {
+    font-size: 2.1rem;
+  }
+
+  .requestActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

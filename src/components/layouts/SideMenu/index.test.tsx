@@ -73,4 +73,38 @@ describe("Suite de pruebas del componente SideMenu", () => {
 
     expect(screen.getByRole("link", { name: "Salir" })).not.toHaveClass("menuLinkActive");
   });
+
+  it("Debe mantener activa Vista General cuando la ruta es el detalle base de la comunidad", () => {
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities/12");
+
+    render(<SideMenu userName="Laura" role={UserRole.tenant} />);
+
+    expect(screen.getByRole("link", { name: "Vista General" })).toHaveClass("menuLinkActive");
+    expect(screen.getByRole("link", { name: "Mis comunidades" })).not.toHaveClass("menuLinkActive");
+  });
+
+  it("Debe mantener activo el enlace padre de comunidad cuando la ruta es una subruta", () => {
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities/12/incidencias/44");
+
+    render(<SideMenu userName="Laura" role={UserRole.tenant} />);
+
+    expect(screen.getByRole("link", { name: "Incidencias" })).toHaveClass("menuLinkActive");
+    expect(screen.getByRole("link", { name: "Vista General" })).not.toHaveClass("menuLinkActive");
+  });
+
+  it("No debe mostrar Solicitudes para un inquilino", () => {
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities/12");
+
+    render(<SideMenu userName="Laura" role={UserRole.tenant} />);
+
+    expect(screen.queryByRole("link", { name: "Solicitudes" })).not.toBeInTheDocument();
+  });
+
+  it("Debe mostrar Solicitudes para un administrador", () => {
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities/12");
+
+    render(<SideMenu userName="Laura" role={UserRole.admin} />);
+
+    expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/communities/12/solicitudes");
+  });
 });
