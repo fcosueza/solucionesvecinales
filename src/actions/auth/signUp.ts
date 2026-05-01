@@ -19,6 +19,17 @@ type CamposRegistro = z.infer<typeof signUpSchema>;
  * @returns El nuevo estado de la acción con el resultado del registro.
  */
 
+const safePayload = (formData: FormData): FormData => {
+  const safe = new FormData();
+
+  for (const [key, value] of formData.entries()) {
+    if (key === "password" || key === "repeat") continue;
+    safe.append(key, value);
+  }
+
+  return safe;
+};
+
 const signUp = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposRegistro> = signUpSchema.safeParse(datos);
@@ -28,7 +39,8 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
     return {
       state: "error",
       message: "Datos del formulario incorrectos",
-      errors: datosValidados.error.flatten().fieldErrors
+      errors: datosValidados.error.flatten().fieldErrors,
+      payload: safePayload(formData)
     };
   }
 
@@ -56,7 +68,8 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
       message: "No se pudo crear el usuario",
       errors: {
         prisma: error.message
-      }
+      },
+      payload: safePayload(formData)
     };
   }
 

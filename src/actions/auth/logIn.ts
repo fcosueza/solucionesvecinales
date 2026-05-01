@@ -19,6 +19,17 @@ type CamposLogin = z.infer<typeof logInSchema>;
  * @returns El nuevo estado de la acción con el resultado de la autenticación.
  */
 
+const safePayload = (formData: FormData): FormData => {
+  const safe = new FormData();
+
+  for (const [key, value] of formData.entries()) {
+    if (key === "password") continue;
+    safe.append(key, value);
+  }
+
+  return safe;
+};
+
 const logIn = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposLogin> = logInSchema.safeParse(datos);
@@ -27,7 +38,8 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     return {
       state: "error",
       message: "Datos del formulario incorrectos",
-      errors: datosValidados.error.flatten().fieldErrors
+      errors: datosValidados.error.flatten().fieldErrors,
+      payload: safePayload(formData)
     };
   }
 
@@ -49,7 +61,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
       errors: {
         email: "No existe ningún usuario con ese correo"
       },
-      payload: formData
+      payload: safePayload(formData)
     };
   }
 
@@ -63,7 +75,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
       errors: {
         password: "La contraseña no es válida para este usuario."
       },
-      payload: formData
+      payload: safePayload(formData)
     };
 
   // El usuario y la contraseña son correctos
