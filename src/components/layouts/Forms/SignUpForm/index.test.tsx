@@ -1,17 +1,20 @@
 import { waitFor, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import SignUpForm from ".";
+import { useRouter } from "next/navigation";
 import signUp from "@/actions/auth/signUp";
-import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
 jest.mock("@/actions/auth/signUp", () => jest.fn());
-jest.mock("next/navigation");
 jest.mock("sonner", () => ({
   toast: {
     success: jest.fn(),
     error: jest.fn()
   }
+}));
+
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn()
 }));
 
 function configurar(jsx: React.ReactNode) {
@@ -24,6 +27,7 @@ function configurar(jsx: React.ReactNode) {
 describe("Suite de pruebas del componente SignUpForm", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    (useRouter as jest.Mock).mockReturnValue({ push: jest.fn() });
   });
 
   it("Debe renderizar el formulario", () => {
@@ -90,7 +94,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
 
     accionMock.mockResolvedValue({
       state: "error",
-      messsage: "Incorrect form data",
+      message: "Incorrect form data",
       errors: { name: "error", surname: "error", email: "error", password: "error", repeat: "error" },
       payload: datosFormulario
     });
@@ -132,7 +136,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
 
     accionMock.mockResolvedValue({
       state: "error",
-      messsage: "Incorrect form data",
+      message: "Incorrect form data",
       errors: { repeat: "error" },
       payload: datosFormulario
     });
@@ -173,7 +177,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
 
     accionMock.mockResolvedValue({
       state: "error",
-      messsage: "Incorrect form data",
+      message: "Incorrect form data",
       errors: { name: "error" },
       payload: datosFormulario
     });
@@ -195,6 +199,10 @@ describe("Suite de pruebas del componente SignUpForm", () => {
   });
 
   it("Debe redirigir a la página de inicio de sesión si el usuario se creó correctamente", async () => {
+    const pushMock = jest.fn();
+
+    (useRouter as jest.Mock).mockReturnValue({ push: pushMock });
+
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUp as jest.Mock;
@@ -215,7 +223,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
 
     accionMock.mockResolvedValue({
       state: "success",
-      messsage: "User created correctly",
+      message: "User created correctly",
       payload: datosFormulario
     });
 
@@ -226,7 +234,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
     await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
     await user.click(screen.getByRole("button"));
 
-    await waitFor(() => expect(redirect).toHaveBeenCalledWith("/login"));
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/login"));
   });
 
   it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {

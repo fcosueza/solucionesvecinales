@@ -123,4 +123,39 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     });
     expect(revalidatePath).toHaveBeenCalledWith("/communities/search");
   });
+
+  it("No debe crear solicitud si la comunidad no existe", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "tenant-1"
+      }
+    });
+
+    (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({ inscripciones: [] });
+    (prisma.solicitud.findFirst as jest.Mock).mockResolvedValue(null);
+
+    await requestCommunitySubscription(formDataWithCommunity("5"));
+
+    expect(prisma.solicitud.create).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it("No debe crear solicitud si el usuario no tiene inscripciones (userWithCommunities es null)", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "tenant-1"
+      }
+    });
+
+    (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
+    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.solicitud.findFirst as jest.Mock).mockResolvedValue(null);
+
+    await requestCommunitySubscription(formDataWithCommunity("5"));
+
+    expect(prisma.solicitud.create).toHaveBeenCalled();
+  });
 });

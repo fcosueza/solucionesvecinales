@@ -134,4 +134,56 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(txMock.$executeRaw).not.toHaveBeenCalled();
     expect(txMock.inscripcion.upsert).not.toHaveBeenCalled();
   });
+
+  it("No debe hacer nada si los datos del formulario no son válidos", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1"
+      }
+    });
+
+    await reviewCommunityRequest(createFormData({ communityID: "abc", requestID: "-1" }));
+
+    expect(prisma.comunidad.findUnique).not.toHaveBeenCalled();
+    expect(prisma.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("No debe hacer nada si la decisión no es válida", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1"
+      }
+    });
+
+    const formData = new FormData();
+    formData.append("communityID", "1");
+    formData.append("requestID", "101");
+    formData.append("decision", "maybe");
+
+    await reviewCommunityRequest(formData);
+
+    expect(prisma.comunidad.findUnique).not.toHaveBeenCalled();
+    expect(prisma.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("No debe hacer nada si el campo decision es null", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1"
+      }
+    });
+
+    const formData = new FormData();
+    formData.append("communityID", "1");
+    formData.append("requestID", "101");
+    // decision not appended → formData.get("decision") returns null
+
+    await reviewCommunityRequest(formData);
+
+    expect(prisma.comunidad.findUnique).not.toHaveBeenCalled();
+    expect(prisma.$transaction).not.toHaveBeenCalled();
+  });
 });
