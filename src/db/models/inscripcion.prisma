@@ -1,0 +1,10 @@
+model Inscripcion {
+  usuario   String
+  comunidad Int
+  creadoEn  DateTime @default(now())
+
+  usuarioID   Usuario   @relation(fields: [usuario], references: [id], onDelete: Cascade)
+  comunidadID Comunidad @relation(fields: [comunidad], references: [id], onDelete: Cascade)
+
+  @@id([usuario, comunidad])
+}

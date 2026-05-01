@@ -41,7 +41,7 @@ async function main(): Promise<void> {
   const saltRounds = 10;
   const plainPasswords = {
     admin: "123451234512345",
-    juan: "5433212543321254",
+    juan: "123451234512345",
     alberto: "dsnojiaiojsdsnojiaiojs"
   };
 
@@ -107,26 +107,30 @@ async function main(): Promise<void> {
 
   console.log("Communities added: ", comunidad);
 
-  const comunidadConPropietarios = await prisma.comunidad.update({
-    where: { id: comunidad.id },
-    data: {
-      propietarios: {
-        set: [{ id: juan.id }, { id: alberto.id }]
-      }
-    },
-    include: {
-      propietarios: {
-        select: {
-          id: true,
-          email: true,
-          nombre: true,
-          apellido: true
-        }
+  await prisma.inscripcion.deleteMany({
+    where: {
+      comunidad: comunidad.id,
+      usuario: {
+        in: [admin.id, juan.id, alberto.id]
       }
     }
   });
 
-  console.log("Community subscriptions added: ", comunidadConPropietarios.propietarios);
+  const inscripciones = await prisma.inscripcion.createMany({
+    data: [
+      {
+        usuario: admin.id,
+        comunidad: comunidad.id
+      },
+      {
+        usuario: juan.id,
+        comunidad: comunidad.id
+      }
+    ],
+    skipDuplicates: true
+  });
+
+  console.log("Community subscriptions added: ", inscripciones);
 
   const baseMensajeDate = new Date("2024-01-01T10:00:00.000Z");
 

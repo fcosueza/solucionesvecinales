@@ -12,8 +12,8 @@ model Comunidad {
   zonas        Zona[]
   incidentes   Incidencia[]
   solicitudes  Solicitud[]
+  inscripciones Inscripcion[]
 
-  propietarios Usuario[] @relation(name: "inquilino")
   adminID      String
   admin        Usuario   @relation("admin", fields: [adminID], references: [id])
 }

@@ -16,7 +16,7 @@ model Usuario {
   incidencias  Incidencia[]
   reservas     Reserva[]
   solicitudes  Solicitud[]
+  inscripciones Inscripcion[]
 
   adminComm Comunidad[] @relation("admin")
-  inquilinoComm Comunidad[] @relation("inquilino")
 }
