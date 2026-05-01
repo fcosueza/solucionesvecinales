@@ -80,25 +80,30 @@ async function main(): Promise<void> {
 
   console.log("Credentials added: ", credenciales);
 
-  const comunidad = await prisma.comunidad.upsert({
+  let comunidad = await prisma.comunidad.findFirst({
     where: {
-      adminID: admin.id
-    },
-    update: {},
-    create: {
       nombre: "Arrayanes6",
-      calle: "Arrayanes",
-      numero: 6,
-      ciudad: "Granada",
-      provincia: "Granada",
-      pais: "España",
-      admin: {
-        connect: {
-          id: admin.id
-        }
-      }
+      adminID: admin.id
     }
   });
+
+  if (!comunidad) {
+    comunidad = await prisma.comunidad.create({
+      data: {
+        nombre: "Arrayanes6",
+        calle: "Arrayanes",
+        numero: 6,
+        ciudad: "Granada",
+        provincia: "Granada",
+        pais: "España",
+        admin: {
+          connect: {
+            id: admin.id
+          }
+        }
+      }
+    });
+  }
 
   console.log("Communities added: ", comunidad);
 
@@ -123,15 +128,26 @@ async function main(): Promise<void> {
 
   console.log("Community subscriptions added: ", comunidadConPropietarios.propietarios);
 
+  const baseMensajeDate = new Date("2024-01-01T10:00:00.000Z");
+
+  await prisma.mensaje.deleteMany({
+    where: {
+      comunidad: comunidad.id,
+      texto: {
+        in: ["Mensaje de Prueba 1, 2, 3", "Junta de vecinos el día 22 de Marzo"]
+      }
+    }
+  });
+
   const mensajes = await prisma.mensaje.createMany({
     data: [
       {
-        creadoEn: new Date(),
+        creadoEn: baseMensajeDate,
         comunidad: comunidad.id,
         texto: "Mensaje de Prueba 1, 2, 3"
       },
       {
-        creadoEn: new Date(),
+        creadoEn: new Date(baseMensajeDate.getTime() + 1000),
         comunidad: comunidad.id,
         texto: "Junta de vecinos el día 22 de Marzo"
       }
@@ -173,26 +189,37 @@ async function main(): Promise<void> {
 
   console.log("Areas added: ", zonas);
 
+  const baseIncidenciaDate = new Date("2024-01-02T09:00:00.000Z");
+
+  await prisma.incidencia.deleteMany({
+    where: {
+      comunidad: comunidad.id,
+      descripcion: {
+        in: ["Rotura de bombilla en planta 4", "Vecino ruidoso", "Hoyo en campo de futbol"]
+      }
+    }
+  });
+
   const incidencias = await prisma.incidencia.createMany({
     data: [
       {
         comunidad: comunidad.id,
         usuario: admin.id,
-        fecha: new Date(),
+        fecha: baseIncidenciaDate,
         descripcion: "Rotura de bombilla en planta 4",
         estado: "creado"
       },
       {
         comunidad: comunidad.id,
         usuario: admin.id,
-        fecha: new Date(),
+        fecha: new Date(baseIncidenciaDate.getTime() + 1000),
         descripcion: "Vecino ruidoso",
         estado: "en_proceso"
       },
       {
         comunidad: comunidad.id,
         usuario: alberto.id,
-        fecha: new Date(),
+        fecha: new Date(baseIncidenciaDate.getTime() + 2000),
         descripcion: "Hoyo en campo de futbol",
         estado: "resuelto"
       }
@@ -201,6 +228,18 @@ async function main(): Promise<void> {
   });
 
   console.log("Incidents added: ", incidencias);
+
+  await prisma.reserva.deleteMany({
+    where: {
+      comunidad: comunidad.id,
+      usuario: {
+        in: [admin.id, juan.id]
+      },
+      zona: {
+        in: ["SPA", "Pista de Padel"]
+      }
+    }
+  });
 
   const reservas = await prisma.reserva.createMany({
     data: [
@@ -226,6 +265,15 @@ async function main(): Promise<void> {
 
   console.log("Reservations added: ", reservas);
 
+  await prisma.solicitud.deleteMany({
+    where: {
+      comunidad: comunidad.id,
+      usuario: {
+        in: [admin.id, juan.id, alberto.id]
+      }
+    }
+  });
+
   const solicitudes = await prisma.solicitud.createMany({
     data: [
       {
@@ -249,17 +297,30 @@ async function main(): Promise<void> {
 
   console.log("Requests added: ", solicitudes);
 
+  const baseContactoDate = new Date("2024-01-03T09:00:00.000Z");
+
+  await prisma.contacto.deleteMany({
+    where: {
+      email: {
+        in: ["fran@gmail.com", "Okina@gmail.com"]
+      },
+      mensaje: "Lorem ipsum dolo sit amet"
+    }
+  });
+
   const contacto = await prisma.contacto.createMany({
     data: [
       {
         nombre: "Fran Son",
         email: "fran@gmail.com",
-        mensaje: "Lorem ipsum dolo sit amet"
+        mensaje: "Lorem ipsum dolo sit amet",
+        creadoEn: baseContactoDate
       },
       {
         nombre: "Okina",
         email: "Okina@gmail.com",
-        mensaje: "Lorem ipsum dolo sit amet"
+        mensaje: "Lorem ipsum dolo sit amet",
+        creadoEn: new Date(baseContactoDate.getTime() + 1000)
       }
     ],
     skipDuplicates: true

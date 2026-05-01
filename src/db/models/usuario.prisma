@@ -10,12 +10,13 @@ model Usuario {
   rol      Rol     @default(inquilino)
   nombre   String
   apellido String
+  imagen   String?
 
   credenciales Credenciales?
   incidencias  Incidencia[]
   reservas     Reserva[]
   solicitudes  Solicitud[]
 
-  adminComm Comunidad?  @relation("admin")
+  adminComm Comunidad[] @relation("admin")
   inquilinoComm Comunidad[] @relation("inquilino")
 }

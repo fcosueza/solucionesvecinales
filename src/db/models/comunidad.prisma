@@ -1,6 +1,7 @@
 model Comunidad {
   id        Int    @id @default(autoincrement())
   nombre    String
+  imagen    String?
   calle     String
   numero    Int
   ciudad    String
@@ -13,6 +14,6 @@ model Comunidad {
   solicitudes  Solicitud[]
 
   propietarios Usuario[] @relation(name: "inquilino")
-  adminID      String @unique
+  adminID      String
   admin        Usuario   @relation("admin", fields: [adminID], references: [id])
 }
