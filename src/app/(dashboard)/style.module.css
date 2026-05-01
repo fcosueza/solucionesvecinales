@@ -1,19 +1,31 @@
 .layoutWrapper {
   width: 100%;
   min-height: 100vh;
+  height: 100vh;
   display: grid;
   grid-template-columns: 30rem minmax(0, 1fr);
   background-color: var(--background-color);
+  overflow: hidden;
 }
 
 .contentArea {
   min-width: 0;
-  align-self: start;
+  min-height: 100vh;
+  align-self: stretch;
   padding: 10rem 10rem;
+  overflow-y: auto;
 }
 
 @media (max-width: 960px) {
   .layoutWrapper {
+    height: auto;
+    overflow: visible;
     grid-template-columns: 1fr;
+  }
+
+  .contentArea {
+    min-height: auto;
+    overflow-y: visible;
+    align-self: start;
   }
 }

@@ -3,7 +3,6 @@ import CardCommunity from "@/components/ui/CardCommunity";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import style from "./style.module.css";
 
@@ -74,22 +73,25 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
         <p className={style.description}>{descripcionComunidades}</p>
 
         <div className={style.cardsContainer}>
-          {comunidadesUnicas.map(comunidad => (
-            <Link
-              href={`/communities/${comunidad.id}`}
-              key={comunidad.id}
-              className={style.cardLink}
-              aria-label={`Ir al detalle de la comunidad ${comunidad.nombre}`}
-            >
-              <CardCommunity
-                className={style.cardCommunity}
-                imageURL="/assets/images/default-community.jpeg"
-                imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
-                communityName={comunidad.nombre}
-                communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
-              />
-            </Link>
-          ))}
+          {comunidadesUnicas.map(comunidad => {
+            const detalleComunidadFormID = `community-detail-${comunidad.id}`;
+
+            return (
+              <div key={comunidad.id}>
+                <CardCommunity
+                  className={style.cardCommunity}
+                  imageURL="/assets/images/default-community.jpeg"
+                  imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
+                  communityName={comunidad.nombre}
+                  communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
+                  ctaButtonType="submit"
+                  ctaFormID={detalleComunidadFormID}
+                />
+
+                <form action={`/communities/${comunidad.id}`} id={detalleComunidadFormID} />
+              </div>
+            );
+          })}
 
           {comunidadesPendientes.map(comunidad => (
             <CardCommunity
@@ -100,7 +102,6 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
               communityName={comunidad.nombre}
               communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
               ctaText="Solicitud pendiente"
-              ctaAsButton
               ctaDisabled
             />
           ))}

@@ -126,7 +126,6 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
                       communityName={community.nombre}
                       communityAddress={`${community.calle}, ${community.numero}. ${community.ciudad}`}
                       ctaText={ctaText}
-                      ctaAsButton
                       ctaDisabled={shouldDisableCTA}
                       ctaButtonType="submit"
                       ctaFormID={subscriptionFormID}

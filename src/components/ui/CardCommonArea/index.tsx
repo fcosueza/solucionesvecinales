@@ -1,6 +1,5 @@
 import Image from "next/image";
 import style from "./style.module.css";
-
 interface Props {
   nombre: string;
   descripcion: string;
@@ -9,6 +8,13 @@ interface Props {
   imageUrl: string;
 }
 
+/**
+ * Formatea la fecha y genera una cadena en castellano con el formato "HH:mm".
+ *
+ * @param date La fecha a formatear.
+ * @returns Una cadena con el formato "HH:mm" en castellano.
+ */
+
 const formatTime = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
     hour: "2-digit",
@@ -16,6 +22,16 @@ const formatTime = (date: Date): string => {
   }).format(date);
 };
 
+/**
+ *
+ * @param nombre El nombre de la zona común.
+ * @param descripcion Una breve descripción de la zona común.
+ * @param horaInicio La hora de inicio a la que se puede reservar la zona común.
+ * @param horaFin La hora de fin a la que se puede reservar la zona común.
+ * @param imageUrl La URL de la imagen representativa de la zona común.
+ *
+ * @returns Un componente React que muestra una tarjeta con la información de la zona común
+ */
 const CardCommonArea = ({ nombre, descripcion, horaInicio, horaFin, imageUrl }: Props): React.ReactNode => {
   return (
     <article className={style.card}>

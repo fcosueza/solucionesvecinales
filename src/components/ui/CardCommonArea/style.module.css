@@ -2,7 +2,7 @@
   border: 0.1rem solid rgba(2, 75, 174, 0.2);
   border-radius: 1.2rem;
   overflow: hidden;
-  background-color: #ffffff;
+  background-color: var(--background-color);
   box-shadow: var(--box-shadow-standard);
 }
 
