@@ -1,4 +1,4 @@
-import CommunityMessageBoard from "@/components/layouts/CommunityMessageBoard";
+import MessageBoard from "@/components/layouts/MessageBoard";
 import CardCommonArea from "@/components/ui/CardCommonArea";
 import CardStat from "@/components/ui/CardStat";
 import verifySession from "@/lib/dal";
@@ -96,7 +96,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
 
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Tablón de mensajes</h2>
-        <CommunityMessageBoard mensajes={comunidad.mensajes} comunidadId={comunidadId} isAdmin={esAdmin} />
+        <MessageBoard mensajes={comunidad.mensajes} comunidadId={comunidadId} isAdmin={esAdmin} />
       </section>
 
       <section className={style.section}>

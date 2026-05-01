@@ -4,6 +4,7 @@ import { addMensaje, deleteMensaje } from "@/actions/community/communityMessage"
 import { useRef, useState } from "react";
 import style from "./style.module.css";
 
+// Interfaz que define la estructura de un mensaje en el tablero de mensajes
 interface Message {
   texto: string;
   creadoEn: Date;
@@ -15,6 +16,12 @@ interface Props {
   isAdmin?: boolean;
 }
 
+/**
+ * Función que formatea la fecha de creación de un mensaje para mostrarla en el tablero de mensajes, utilizando el formato "dd/MM/yyyy HH:mm" en español.
+ *
+ * @param date La fecha a formatear.
+ * @returns Una cadena de texto con la fecha formateada.
+ */
 const formatMessageDate = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
     day: "2-digit",
@@ -25,7 +32,16 @@ const formatMessageDate = (date: Date): string => {
   }).format(date);
 };
 
-const CommunityMessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.ReactNode => {
+/**
+ * Componente que crea un tablero de mensajes para una comunidad, mostrando los mensajes existentes y permitiendo a los administradores agregar o eliminar mensajes.
+ *
+ * @param mensajes Un array de objetos que representan los mensajes actuales en el tablero, cada uno con su texto y fecha de creación.
+ * @param comunidadId El ID de la comunidad a la que pertenecen los mensajes, utilizado para las operaciones de agregar y eliminar mensajes.
+ * @param isAdmin Un booleano opcional que indica si el usuario actual tiene permisos de administrador, lo que habilita las funciones de agregar y eliminar mensajes.
+ *
+ * @returns Un componente React que muestra el tablero de mensajes con las funcionalidades descritas.
+ */
+const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);
   const [pending, setPending] = useState(false);
 
@@ -114,4 +130,4 @@ const CommunityMessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props
   );
 };
 
-export default CommunityMessageBoard;
+export default MessageBoard;

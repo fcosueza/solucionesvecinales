@@ -2,8 +2,6 @@
 
 import { Toaster } from "sonner";
 
-interface Props {}
-
 /**
  * Renderiza el contenedor global de notificaciones (toasts) de Sonner.
  *
@@ -13,7 +11,7 @@ interface Props {}
  * @returns El componente Toaster configurado para toda la app.
  */
 
-const SonnerToaster = ({}: Props): React.ReactNode => {
+const SonnerToaster = (): React.ReactNode => {
   return (
     <div>
       <Toaster

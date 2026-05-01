@@ -15,6 +15,7 @@ interface Props {
   email: string;
 }
 
+// Estado inicial para el formulario de perfil
 const estadoInicial: FormActionState = {
   state: "error" as const,
   message: ""
