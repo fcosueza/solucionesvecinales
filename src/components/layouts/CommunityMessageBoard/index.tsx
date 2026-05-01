@@ -1,6 +1,6 @@
 "use client";
 
-import { addMensaje, deleteMensaje } from "@/actions/mensajes";
+import { addMensaje, deleteMensaje } from "@/actions/community/communityMessage";
 import { useRef, useState } from "react";
 import style from "./style.module.css";
 
@@ -28,6 +28,7 @@ const formatMessageDate = (date: Date): string => {
 const CommunityMessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);
   const [pending, setPending] = useState(false);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleAdd = async (formData: FormData) => {

@@ -1,4 +1,4 @@
-import requestCommunitySubscription from "./requestCommunitySubscription";
+import requestCommunitySubscription from "./communityRequest";
 import prisma from "@/lib/prisma";
 import verifySession from "@/lib/dal";
 import { revalidatePath } from "next/cache";

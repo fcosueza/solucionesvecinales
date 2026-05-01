@@ -10,10 +10,12 @@ import { revalidatePath } from "next/cache";
  *
  * @param communityId - ID de la comunidad.
  * @param formData - Datos del formulario con el campo "texto".
+ *
  */
-const addMensaje = async (communityId: number, formData: FormData): Promise<void> => {
+const addMessage = async (communityId: number, formData: FormData): Promise<void> => {
   const sesionVerificada = await verifySession();
 
+  // Comprobamos que el usuario está autenticado
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
     return;
   }
@@ -21,16 +23,19 @@ const addMensaje = async (communityId: number, formData: FormData): Promise<void
   const esAdmin =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
+  // Solo los administradores pueden añadir mensajes al tablón
   if (!esAdmin) {
     return;
   }
 
   const texto = (formData.get("texto") as string)?.trim();
 
+  // No se permite añadir mensajes vacíos
   if (!texto) {
     return;
   }
 
+  // Intentamos crear el mensaje en la base de datos
   try {
     await prisma.mensaje.create({
       data: {
@@ -40,9 +45,7 @@ const addMensaje = async (communityId: number, formData: FormData): Promise<void
     });
 
     revalidatePath(`/communities/${communityId}/overview`);
-  } catch {
-    // Silently fail — no UI feedback needed for server-side errors here
-  }
+  } catch {}
 };
 
 /**
@@ -81,4 +84,4 @@ const deleteMensaje = async (communityId: number, creadoEn: Date): Promise<void>
   }
 };
 
-export { addMensaje, deleteMensaje };
+export { addMessage as addMensaje, deleteMensaje };

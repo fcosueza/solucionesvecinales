@@ -1,13 +1,13 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CommunityAddForm from ".";
-import addCommunity from "@/actions/addCommunity";
+import addCommunity from "@/actions/community/community";
 import { toast } from "sonner";
 
 const pushMock = jest.fn();
 
 // Mock de módulos y funciones
-jest.mock("@/actions/addCommunity", () => jest.fn());
+jest.mock("@/actions/community/community", () => jest.fn());
 jest.mock("sonner", () => ({
   toast: {
     success: jest.fn(),

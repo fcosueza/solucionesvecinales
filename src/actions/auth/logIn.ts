@@ -11,14 +11,13 @@ import z from "zod";
 type CamposLogin = z.infer<typeof logInSchema>;
 
 /**
- * Valida las credenciales del usuario, comprueba su contraseña y crea la sesión si el acceso es correcto.
+ * Crea un nuevo FormData con los mismos campos que el original excepto "password",
+ * para evitar que se reenvíe la contraseña al cliente en caso de error.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos enviados desde el formulario de inicio de sesión.
+ * @param formData - El FormData original enviado desde el formulario.
  *
- * @returns El nuevo estado de la acción con el resultado de la autenticación.
+ * @returns Un nuevo FormData sin el campo "password".
  */
-
 const safePayload = (formData: FormData): FormData => {
   const safe = new FormData();
 
@@ -29,6 +28,15 @@ const safePayload = (formData: FormData): FormData => {
 
   return safe;
 };
+
+/**
+ * Valida las credenciales del usuario, comprueba su contraseña y crea la sesión si el acceso es correcto.
+ *
+ * @param _prevState Estado previo de la acción del formulario.
+ * @param formData Datos enviados desde el formulario de inicio de sesión.
+ *
+ * @returns El nuevo estado de la acción con el resultado de la autenticación.
+ */
 
 const logIn = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
@@ -65,6 +73,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     };
   }
 
+  // Comparar la contraseña proporcionada con el hash almacenado
   const passwordMatch: boolean = await bcrypt.compare(datosValidados.data.password, usuario.credenciales.password);
 
   // Password incorrecto

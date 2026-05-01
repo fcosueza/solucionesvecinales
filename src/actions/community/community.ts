@@ -10,7 +10,7 @@ import z from "zod";
 type CamposFormularioComunidad = z.infer<typeof communitySchema>;
 
 /**
- * Crea una nueva comunidad para el usuario administrador autenticado.
+ * Crea una nueva comunidad, introducida por un usuario administrador, y la almacena en la base de datos.
  *
  * @param _prevState Estado previo de la acción del formulario.
  * @param formData Datos enviados desde el formulario de alta de comunidad.
@@ -20,7 +20,7 @@ type CamposFormularioComunidad = z.infer<typeof communitySchema>;
 const addCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
 
-  // Si el usuario no está autenticado, devolver un estado de error indicando que debe iniciar sesión
+  // Si el usuario no está autenticado, se devuelve un error
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
     return {
       state: "error",
@@ -29,11 +29,11 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // Verificar si el usuario tiene un rol de administrador
+  // Hay que verificar que el usuario es administrador
   const esAdministrador =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
-  // Solo los administradores pueden crear comunidades
+  // Si el usuario no es administrador, no puede crear la comunidad
   if (!esAdministrador) {
     return {
       state: "error",
@@ -42,10 +42,11 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
+  // Validamos los datos del formulario utilizando el esquema definido con Zod
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposFormularioComunidad> = communitySchema.safeParse(datos);
 
-  // Si los datos no son válidos, devolver un estado de error con los mensajes de validación
+  // Si los datos no son válidos, se devuelve un estado de error con los mensajes de validación
   if (!datosValidados.success) {
     return {
       state: "error",
@@ -101,7 +102,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // Si todo va bien, devolvemos un estado de éxito
+  // Si todo va bien, devolvemos el estado como success
   return {
     state: "success",
     message: "Comunidad creada exitosamente",

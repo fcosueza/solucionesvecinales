@@ -1,6 +1,6 @@
 "use client";
 
-import addCommunity from "@/actions/addCommunity";
+import addCommunity from "@/actions/community/community";
 import Button from "@/components/ui/Button";
 import FormInput from "@/components/ui/FormComp/FormInput";
 import { FormActionState, InputType } from "@/types";

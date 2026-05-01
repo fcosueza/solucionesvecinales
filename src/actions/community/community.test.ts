@@ -1,4 +1,4 @@
-import addCommunity from "./addCommunity";
+import addCommunity from "./community";
 import { FormActionState, UserRole } from "@/types";
 import prisma from "@/lib/prisma";
 import verifySession from "@/lib/dal";

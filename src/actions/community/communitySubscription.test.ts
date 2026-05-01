@@ -1,4 +1,4 @@
-import reviewCommunityRequest from "./reviewCommunityRequest";
+import reviewCommunityRequest from "./communitySubscription";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
@@ -9,8 +9,10 @@ jest.mock("next/cache", () => ({
 }));
 
 const txMock = {
-  $queryRaw: jest.fn(),
-  $executeRaw: jest.fn(),
+  solicitud: {
+    findFirst: jest.fn(),
+    updateMany: jest.fn()
+  },
   inscripcion: {
     upsert: jest.fn()
   }
@@ -68,7 +70,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     await reviewCommunityRequest(createFormData({}));
 
     expect(prisma.$transaction).not.toHaveBeenCalled();
-    expect(txMock.$executeRaw).not.toHaveBeenCalled();
+    expect(txMock.solicitud.updateMany).not.toHaveBeenCalled();
   });
 
   it("Debe aprobar solicitud pendiente y crear inscripción", async () => {
@@ -80,11 +82,21 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     });
 
     (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 1, adminID: "admin-1" });
-    txMock.$queryRaw.mockResolvedValue([{ estado: "pendiente", usuario: "user-1" }]);
+    txMock.solicitud.findFirst.mockResolvedValue({ usuario: "user-1" });
+    txMock.solicitud.updateMany.mockResolvedValue({ count: 1 });
 
     await reviewCommunityRequest(createFormData({ decision: "approve" }));
 
-    expect(txMock.$executeRaw).toHaveBeenCalled();
+    expect(txMock.solicitud.updateMany).toHaveBeenCalledWith({
+      where: {
+        id: 101,
+        comunidad: 1,
+        estado: "pendiente"
+      },
+      data: {
+        estado: "aprobada"
+      }
+    });
     expect(txMock.inscripcion.upsert).toHaveBeenCalledWith({
       where: {
         usuario_comunidad: {
@@ -110,11 +122,21 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     });
 
     (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 1, adminID: "admin-1" });
-    txMock.$queryRaw.mockResolvedValue([{ estado: "pendiente", usuario: "user-1" }]);
+    txMock.solicitud.findFirst.mockResolvedValue({ usuario: "user-1" });
+    txMock.solicitud.updateMany.mockResolvedValue({ count: 1 });
 
     await reviewCommunityRequest(createFormData({ decision: "reject" }));
 
-    expect(txMock.$executeRaw).toHaveBeenCalled();
+    expect(txMock.solicitud.updateMany).toHaveBeenCalledWith({
+      where: {
+        id: 101,
+        comunidad: 1,
+        estado: "pendiente"
+      },
+      data: {
+        estado: "denegada"
+      }
+    });
     expect(txMock.inscripcion.upsert).not.toHaveBeenCalled();
   });
 
@@ -127,11 +149,29 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     });
 
     (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 1, adminID: "admin-1" });
-    txMock.$queryRaw.mockResolvedValue([{ estado: "aprobada", usuario: "user-1" }]);
+    txMock.solicitud.findFirst.mockResolvedValue(null);
 
     await reviewCommunityRequest(createFormData({ decision: "approve" }));
 
-    expect(txMock.$executeRaw).not.toHaveBeenCalled();
+    expect(txMock.solicitud.updateMany).not.toHaveBeenCalled();
+    expect(txMock.inscripcion.upsert).not.toHaveBeenCalled();
+  });
+
+  it("No debe crear inscripción si updateMany no actualizó ninguna fila", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1"
+      }
+    });
+
+    (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 1, adminID: "admin-1" });
+    txMock.solicitud.findFirst.mockResolvedValue({ usuario: "user-1" });
+    txMock.solicitud.updateMany.mockResolvedValue({ count: 0 });
+
+    await reviewCommunityRequest(createFormData({ decision: "approve" }));
+
+    expect(txMock.solicitud.updateMany).toHaveBeenCalled();
     expect(txMock.inscripcion.upsert).not.toHaveBeenCalled();
   });
 

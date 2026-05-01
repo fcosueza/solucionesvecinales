@@ -1,4 +1,4 @@
-import reviewCommunityRequest from "@/actions/reviewCommunityRequest";
+import reviewCommunityRequest from "@/actions/community/communitySubscription";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import Image from "next/image";

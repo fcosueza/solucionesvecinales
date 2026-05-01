@@ -10,15 +10,11 @@ import z from "zod";
 type CamposRegistro = z.infer<typeof signUpSchema>;
 
 /**
- * Valida los datos de registro, crea el usuario y almacena sus credenciales de forma segura.
+ * Crea un payload seguro para devolver al cliente en caso de error, excluyendo campos sensibles como contraseñas.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos enviados desde el formulario de registro.
- *
- * @throws Si la validación de los datos falla o si ocurre un error al crear el usuario, se devuelve un estado de error con detalles.
- * @returns El nuevo estado de la acción con el resultado del registro.
+ * @param formData Datos originales del formulario enviados por el cliente.
+ * @returns Un objeto FormData seguro que excluye campos sensibles.
  */
-
 const safePayload = (formData: FormData): FormData => {
   const safe = new FormData();
 
@@ -29,6 +25,16 @@ const safePayload = (formData: FormData): FormData => {
 
   return safe;
 };
+
+/**
+ * Valida los datos de registro, crea el usuario y almacena sus credenciales de forma segura.
+ *
+ * @param _prevState Estado previo de la acción del formulario.
+ * @param formData Datos enviados desde el formulario de registro.
+ *
+ * @throws Si la validación de los datos falla o si ocurre un error al crear el usuario, se devuelve un estado de error con detalles.
+ * @returns El nuevo estado de la acción con el resultado del registro.
+ */
 
 const signUp = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
@@ -44,6 +50,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
     };
   }
 
+  // Se cifra la contraseña antes de almacenarla, utilizando bcrypt.
   const salCifrado: number = 10;
   const hashedPassword: string = await bcrypt.hash(datosValidados.data.password, salCifrado);
 
