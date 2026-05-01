@@ -1,3 +1,4 @@
+import Breadcrumb from "@/components/layouts/Breadcrumb";
 import SideMenu from "@/components/layouts/SideMenu";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
@@ -30,7 +31,10 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
   return (
     <div className={style.layoutWrapper}>
       <SideMenu userName={`${usuario.nombre} ${usuario.apellido}`} role={usuario.rol as UserRole} />
-      <div className={style.contentArea}>{children}</div>
+      <div className={style.contentArea}>
+        <Breadcrumb />
+        {children}
+      </div>
     </div>
   );
 }

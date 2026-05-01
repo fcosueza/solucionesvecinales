@@ -14,7 +14,7 @@ interface Props {
 }
 
 const enlacesBase = [
-  { text: "Mis comunidades", href: "/overview" },
+  { text: "Mis comunidades", href: "/communities" },
   { text: "Perfil", href: "/profile" },
   { text: "Salir", href: "/logout" }
 ] as const;

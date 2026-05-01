@@ -1,14 +1,8 @@
+import ProfileForm from "@/components/layouts/Forms/ProfileForm";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
-import { UserRole } from "@/types";
 import { redirect } from "next/navigation";
 import style from "./style.module.css";
-
-const etiquetasRol: Record<UserRole, string> = {
-  [UserRole.tenant]: "Inquilino",
-  [UserRole.admin]: "Administrador",
-  [UserRole.webAdmin]: "Administrador Web"
-};
 
 const ProfilePage = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();
@@ -22,8 +16,7 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
     select: {
       nombre: true,
       apellido: true,
-      email: true,
-      rol: true
+      email: true
     }
   });
 
@@ -33,18 +26,9 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
 
   return (
     <main className={style.main}>
-      <section className={style.card}>
-        <h1 className={style.title}>Perfil</h1>
-        <p className={style.item}>
-          <span className={style.label}>Nombre:</span> {usuario.nombre} {usuario.apellido}
-        </p>
-        <p className={style.item}>
-          <span className={style.label}>Email:</span> {usuario.email}
-        </p>
-        <p className={style.item}>
-          <span className={style.label}>Rol:</span> {etiquetasRol[usuario.rol as UserRole]}
-        </p>
-      </section>
+      <h1 className={style.title}>Mi perfil</h1>
+      <p className={style.description}>Cambiar los datos de tu perfil</p>
+      <ProfileForm nombre={usuario.nombre} apellido={usuario.apellido} email={usuario.email} />
     </main>
   );
 };

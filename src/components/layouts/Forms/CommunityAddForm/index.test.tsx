@@ -322,7 +322,7 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith(mensaje);
     });
-    
+
     expect(toast.success).not.toHaveBeenCalled();
     expect(pushMock).not.toHaveBeenCalled();
   });
@@ -348,7 +348,7 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
 
     await waitFor(() => {
       expect(toast.success).toHaveBeenCalledWith(mensaje);
-      expect(pushMock).toHaveBeenCalledWith("/overview");
+      expect(pushMock).toHaveBeenCalledWith("/communities");
     });
     expect(toast.error).not.toHaveBeenCalled();
   });

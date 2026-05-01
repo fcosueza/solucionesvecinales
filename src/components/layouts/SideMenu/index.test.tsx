@@ -10,7 +10,7 @@ jest.mock("next/navigation", () => ({
 
 describe("Suite de pruebas del componente SideMenu", () => {
   beforeEach(() => {
-    (rutaActualMock as jest.Mock).mockReturnValue("/overview");
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities");
   });
 
   it("Debe renderizar la estructura principal y los datos del usuario", () => {
@@ -24,7 +24,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
       expect.stringContaining("url=%2Fassets%2Fimages%2Favatar.jpg")
     );
     expect(screen.getByRole("navigation", { name: "Opciones del dashboard" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Mis comunidades" })).toHaveAttribute("href", "/overview");
+    expect(screen.getByRole("link", { name: "Mis comunidades" })).toHaveAttribute("href", "/communities");
     expect(screen.getByRole("link", { name: "Perfil" })).toHaveAttribute("href", "/profile");
     expect(screen.getByRole("link", { name: "Salir" })).toHaveAttribute("href", "/logout");
     expect(screen.getByAltText("Logo de Soluciones Vecinales en blanco")).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
   });
 
   it("Debe marcar como activo el enlace cuando la ruta coincide exactamente", () => {
-    (rutaActualMock as jest.Mock).mockReturnValue("/overview");
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities");
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
 

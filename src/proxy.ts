@@ -3,7 +3,7 @@ import { SessionPayload, BasicError } from "@/types";
 import { descifrarSesion } from "./lib/session";
 import { cookies } from "next/headers";
 
-const rutasProtegidas = ["/overview", "/communities/add", "/communities/search"];
+const rutasProtegidas = ["/communities", "/communities/add", "/communities/search", "/profile"];
 const rutasPublicas = ["/home", "/login", "/signup"];
 
 /**
@@ -28,8 +28,8 @@ async function proxy(req: NextRequest): Promise<NextResponse> {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  if (esRutaPublica && "userID" in sesion && !req.nextUrl.pathname.startsWith("/overview")) {
-    return NextResponse.redirect(new URL("/overview", req.nextUrl));
+  if (esRutaPublica && "userID" in sesion && !req.nextUrl.pathname.startsWith("/communities")) {
+    return NextResponse.redirect(new URL("/communities", req.nextUrl));
   }
 
   return NextResponse.next();
