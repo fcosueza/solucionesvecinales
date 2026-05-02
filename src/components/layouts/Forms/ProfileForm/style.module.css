@@ -41,6 +41,37 @@
   border: 0.1rem solid rgba(0, 0, 0, 0.15);
   border-radius: 999px;
   background: transparent;
+  position: relative;
+}
+
+.uploadBtn {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 999px;
+  border: 0.15rem solid rgba(255, 255, 255, 0.8);
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.25);
+  transition: background 0.2s;
+}
+
+.uploadBtn:hover:not(:disabled) {
+  background: #f2f2f2;
+}
+
+.uploadBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fileInput {
+  display: none;
 }
 
 .avatar {

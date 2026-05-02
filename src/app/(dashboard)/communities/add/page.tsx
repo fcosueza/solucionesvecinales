@@ -23,8 +23,13 @@ const NewCommunity = async (): Promise<React.ReactNode> => {
     <>
       <ScrollToTopOnMount />
       <main className={style.main}>
-        <h2 className={style.title}>Añadir comunidad</h2>
-        <CommunityAddForm />
+        <h1 className={style.title}>Añadir comunidad</h1>
+        <p className={style.description}>
+          Crea una nueva comunidad para que otros usuarios puedan descubrirla y unirse
+        </p>
+        <div className={style.formContainer}>
+          <CommunityAddForm />
+        </div>
       </main>
     </>
   );

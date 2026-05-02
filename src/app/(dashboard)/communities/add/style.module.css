@@ -1,16 +1,25 @@
 .main {
   width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 2rem;
-  padding: 2rem;
 }
 
 .title {
-  font-size: 3.2rem;
-  color: var(--highlight-color);
-  text-align: center;
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--font-color);
+  text-align: left;
+}
+
+.description {
+  margin: 1rem 0 1.6rem;
+  font-size: 2.2rem;
+  color: var(--highlight-dark);
+  text-align: left;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 70rem;
+  margin: 2rem auto 0;
+  display: flex;
+  justify-content: center;
 }

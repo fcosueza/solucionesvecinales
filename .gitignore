@@ -54,3 +54,9 @@ node_modules/
 
 # Editor
 .vscode/
+
+# User uploads
+/public/uploads/**
+!/public/uploads/
+!/public/uploads/profiles/
+!/public/uploads/profiles/.gitkeep

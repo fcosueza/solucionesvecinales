@@ -18,7 +18,8 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
       nombre: true,
       apellido: true,
       email: true,
-      rol: true
+      rol: true,
+      imagen: true
     }
   });
 
@@ -35,6 +36,7 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
         apellido={usuario.apellido}
         email={usuario.email}
         rol={usuario.rol as UserRole}
+        imagen={usuario.imagen ?? undefined}
       />
     </main>
   );

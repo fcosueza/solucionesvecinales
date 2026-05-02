@@ -5,7 +5,8 @@ import Button from "@/components/ui/Button";
 import FormInput from "@/components/ui/FormComp/FormInput";
 import { FormActionState, InputType, UserRole } from "@/types";
 import Image from "next/image";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef, useState, useTransition } from "react";
+import uploadProfileImage from "@/actions/uploadProfileImage";
 import { toast } from "sonner";
 import style from "./style.module.css";
 
@@ -14,6 +15,7 @@ interface Props {
   apellido: string;
   email: string;
   rol: UserRole;
+  imagen?: string;
 }
 
 // Estado inicial para el formulario de perfil
@@ -28,12 +30,15 @@ const etiquetasRol: Record<UserRole, string> = {
   [UserRole.webAdmin]: "Administrador Web"
 };
 
-const ProfileForm = ({ nombre, apellido, email, rol }: Props): React.ReactNode => {
+const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
     updateProfile,
     estadoInicial
   );
   const primerApellido = apellido.trim().split(/\s+/)[0] ?? "";
+  const [avatarSrc, setAvatarSrc] = useState(imagen ?? "/assets/icons/profile-100.png");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, startUpload] = useTransition();
 
   useEffect(() => {
     if (!estado.message) return;
@@ -50,12 +55,37 @@ const ProfileForm = ({ nombre, apellido, email, rol }: Props): React.ReactNode =
     <div className={style.profileWrapper}>
       <div className={style.avatarSection}>
         <div className={style.avatarFrame}>
-          <Image
-            src="/assets/icons/profile-100.png"
-            alt="Foto de perfil"
-            width={160}
-            height={160}
-            className={style.avatar}
+          <Image src={avatarSrc} alt="Foto de perfil" width={160} height={160} className={style.avatar} />
+          <button
+            type="button"
+            className={style.uploadBtn}
+            aria-label="Subir foto de perfil"
+            disabled={isUploading}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Image src="/assets/icons/photo-24.png" alt="" width={16} height={16} />
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            className={style.fileInput}
+            onChange={e => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const fd = new FormData();
+              fd.append("imagen", file);
+              startUpload(async () => {
+                const result = await uploadProfileImage(fd);
+                if (result.error) {
+                  toast.error(result.error);
+                } else if (result.imagen) {
+                  setAvatarSrc(result.imagen);
+                  toast.success("Foto de perfil actualizada");
+                }
+                e.target.value = "";
+              });
+            }}
           />
         </div>
         <div className={style.userSummary}>
