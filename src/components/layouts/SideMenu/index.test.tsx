@@ -105,6 +105,6 @@ describe("Suite de pruebas del componente SideMenu", () => {
 
     render(<SideMenu userName="Laura" role={UserRole.admin} />);
 
-    expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/communities/12/solicitudes");
+    expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/communities/12/requests");
   });
 });

@@ -1,5 +1,5 @@
 import CommunityAddForm from "@/components/layouts/Forms/CommunityAddForm";
-import ScrollToTopOnMount from "@/components/ui/ScrollToTopOn";
+import ScrollToTopOnMount from "@/components/ui/ScrollToTop";
 import verifySession from "@/lib/dal";
 import { UserRole } from "@/types";
 import { redirect } from "next/navigation";

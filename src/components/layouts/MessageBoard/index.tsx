@@ -1,10 +1,10 @@
 "use client";
 
-import { addMessage, deleteMessage } from "@/actions/community/communityMessage";
-import { useRef, useState } from "react";
+import { deleteMessage } from "@/actions/community/communityMessage";
+import { useState } from "react";
+import MessageAddForm from "@/components/layouts/Forms/MessageAddForm";
 import style from "./style.module.css";
 
-// Interfaz que define la estructura de un mensaje en el tablero de mensajes
 interface Message {
   texto: string;
   creadoEn: Date;
@@ -16,12 +16,6 @@ interface Props {
   isAdmin?: boolean;
 }
 
-/**
- * Función que formatea la fecha de creación de un mensaje para mostrarla en el tablero de mensajes, utilizando el formato "dd/MM/yyyy HH:mm" en español.
- *
- * @param date La fecha a formatear.
- * @returns Una cadena de texto con la fecha formateada.
- */
 const formatMessageDate = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
     day: "2-digit",
@@ -32,28 +26,8 @@ const formatMessageDate = (date: Date): string => {
   }).format(date);
 };
 
-/**
- * Componente que crea un tablero de mensajes para una comunidad, mostrando los mensajes existentes y permitiendo a los administradores agregar o eliminar mensajes.
- *
- * @param mensajes Un array de objetos que representan los mensajes actuales en el tablero, cada uno con su texto y fecha de creación.
- * @param comunidadId El ID de la comunidad a la que pertenecen los mensajes, utilizado para las operaciones de agregar y eliminar mensajes.
- * @param isAdmin Un booleano opcional que indica si el usuario actual tiene permisos de administrador, lo que habilita las funciones de agregar y eliminar mensajes.
- *
- * @returns Un componente React que muestra el tablero de mensajes con las funcionalidades descritas.
- */
 const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);
-  const [pending, setPending] = useState(false);
-
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleAdd = async (formData: FormData) => {
-    setPending(true);
-    await addMessage(comunidadId, formData);
-    setPending(false);
-    setShowForm(false);
-    if (textareaRef.current) textareaRef.current.value = "";
-  };
 
   const handleDelete = async (creadoEn: Date) => {
     await deleteMessage(comunidadId, creadoEn);
@@ -101,31 +75,7 @@ const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.
         </div>
       )}
 
-      {isAdmin && showForm && (
-        <div className={style.overlay} onClick={() => setShowForm(false)}>
-          <div className={style.popup} onClick={e => e.stopPropagation()}>
-            <h3 className={style.popupTitle}>Nuevo mensaje</h3>
-            <form action={handleAdd}>
-              <textarea
-                ref={textareaRef}
-                name="texto"
-                className={style.popupTextarea}
-                placeholder="Escribe el mensaje..."
-                rows={4}
-                required
-              />
-              <div className={style.popupActions}>
-                <button type="button" className={style.cancelBtn} onClick={() => setShowForm(false)} disabled={pending}>
-                  Cancelar
-                </button>
-                <button type="submit" className={style.submitBtn} disabled={pending}>
-                  {pending ? "Publicando..." : "Publicar"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      {isAdmin && showForm && <MessageAddForm comunidadId={comunidadId} onClose={() => setShowForm(false)} />}
     </div>
   );
 };

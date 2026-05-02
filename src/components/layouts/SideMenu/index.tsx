@@ -30,7 +30,7 @@ const enlacesComunidad = (id: string) => [
 ];
 
 // Función que genera el enlace a la sección de solicitudes, visible solo para administradores.
-const enlaceSolicitudes = (id: string) => ({ text: "Solicitudes", href: `/communities/${id}/solicitudes` });
+const enlaceSolicitudes = (id: string) => ({ text: "Solicitudes", href: `/communities/${id}/requests` });
 
 // Mapeo de roles a etiquetas legibles para mostrar en la interfaz.
 const etiquetasRol: Record<UserRole, string> = {

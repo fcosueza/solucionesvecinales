@@ -5,6 +5,10 @@ import bcrypt from "bcrypt";
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
+/**
+ * Script que puebla la base de datos con datos de prueba. Se puede ejecutar con el comando `npm run seed` o `yarn seed`.
+ */
+
 async function main(): Promise<void> {
   await prisma.usuario.createMany({
     data: [
