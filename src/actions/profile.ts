@@ -2,10 +2,12 @@
 
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
+import { eliminarSesion } from "@/lib/session";
 import profileSchema from "@/schemas/common/profile.schema";
-import { saveProfileImageFile } from "./uploadProfileImage";
-import bcrypt from "bcrypt";
 import { FormActionState } from "@/types";
+import bcrypt from "bcrypt";
+import { redirect } from "next/navigation";
+import { saveProfileImageFile } from "./uploadProfileImage";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
@@ -19,7 +21,7 @@ type CamposFormularioPerfil = z.infer<typeof profileSchema>;
  *
  * @returns El nuevo estado del formulario con el resultado de la actualización.
  */
-const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+export const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
 
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
@@ -43,7 +45,7 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
   }
 
   try {
-    const nuevaContrasena: string = datosValidados.data.password ?? "";
+    const nuevaContrasena: string = datosValidados.data.password;
     const imageFile = formData.get("imagen");
 
     let hashedPassword: string | null = null;
@@ -101,4 +103,41 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
   }
 };
 
-export default updateProfile;
+/**
+ * Elimina de forma permanente el usuario autenticado y sus datos relacionados.
+ *
+ * @returns Estado de error si no se pudo eliminar la cuenta. En éxito redirige a la home.
+ */
+export const deleteProfile = async (_prevState: FormActionState): Promise<FormActionState> => {
+  const sesionVerificada = await verifySession();
+
+  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+    return {
+      state: "error",
+      message: "Debes iniciar sesión para eliminar tu cuenta"
+    };
+  }
+
+  try {
+    const userID = String(sesionVerificada.session.userID);
+
+    await prisma.$transaction(async tx => {
+      // Si el usuario administra comunidades, primero se eliminan para evitar restricciones de FK.
+      await tx.comunidad.deleteMany({
+        where: { adminID: userID }
+      });
+
+      await tx.usuario.delete({
+        where: { id: userID }
+      });
+    });
+  } catch {
+    return {
+      state: "error",
+      message: "No se pudo eliminar la cuenta. Inténtalo de nuevo."
+    };
+  }
+
+  await eliminarSesion();
+  redirect("/");
+};

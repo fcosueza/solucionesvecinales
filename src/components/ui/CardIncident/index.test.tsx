@@ -7,6 +7,14 @@ import CardIncident from ".";
 describe("Suite de pruebas del componente CardIncident", () => {
   const fecha = new Date("2026-05-02T09:30:00.000Z");
   const actualizadaEn = new Date("2026-05-02T10:30:00.000Z");
+  const formatDateLabel = (date: Date): string =>
+    new Intl.DateTimeFormat("es-ES", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }).format(date);
 
   it("Debe renderizar nombre, email y fecha", () => {
     render(
@@ -25,7 +33,7 @@ describe("Suite de pruebas del componente CardIncident", () => {
 
     expect(screen.getByText("Maria Perez")).toBeInTheDocument();
     expect(screen.getByText("maria@test.com")).toBeInTheDocument();
-    expect(screen.getByText("02/05/2026, 09:30")).toBeInTheDocument();
+    expect(screen.getByText(formatDateLabel(fecha))).toBeInTheDocument();
     expect(screen.getByText("Bombilla fundida")).toBeInTheDocument();
     expect(screen.getByText("Actualizada")).toBeInTheDocument();
     expect(screen.getByText("La puerta principal no cierra correctamente")).toBeInTheDocument();

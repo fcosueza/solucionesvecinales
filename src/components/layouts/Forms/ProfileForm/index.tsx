@@ -1,6 +1,6 @@
 "use client";
 
-import updateProfile from "@/actions/updateProfile";
+import { deleteProfile, updateProfile } from "@/actions/profile";
 import Button from "@/components/ui/Button";
 import FormInput from "@/components/ui/FormComp/FormInput";
 import { FormActionState, InputType, UserRole } from "@/types";
@@ -36,7 +36,12 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.Rea
     updateProfile,
     estadoInicial
   );
+  const [estadoEliminar, accionEliminarPerfil, eliminandoPerfil] = useActionState<FormActionState, FormData>(
+    deleteProfile,
+    estadoInicial
+  );
   const primerApellido = apellido.trim().split(/\s+/)[0] ?? "";
+  const [popupEliminarAbierto, setPopupEliminarAbierto] = useState(false);
   const [avatarSrc, setAvatarSrc] = useState(imagen ?? "/assets/icons/profile-100.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const previewAvatarRef = useRef<string | null>(null);
@@ -52,6 +57,12 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.Rea
 
     toast.error(estado.message);
   }, [estado, router]);
+
+  useEffect(() => {
+    if (!estadoEliminar.message) return;
+
+    toast.error(estadoEliminar.message);
+  }, [estadoEliminar]);
 
   useEffect(() => {
     return () => {
@@ -168,8 +179,58 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.Rea
           }}
         />
 
-        <Button type="submit" text="Guardar" disabled={estaPendiente} className={style.submitButton} />
+        <div className={style.actionsRow}>
+          <Button
+            type="submit"
+            text="Guardar"
+            disabled={estaPendiente || eliminandoPerfil}
+            className={style.submitButton}
+          />
+          <Button
+            type="button"
+            text="Eliminar perfil"
+            disabled={estaPendiente || eliminandoPerfil}
+            className={style.deleteButton}
+            onClick={() => setPopupEliminarAbierto(true)}
+          />
+        </div>
       </form>
+
+      {popupEliminarAbierto && (
+        <div className={style.overlay} onClick={() => !eliminandoPerfil && setPopupEliminarAbierto(false)}>
+          <div
+            className={style.popup}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="confirm-delete-title"
+            onClick={event => event.stopPropagation()}
+          >
+            <h3 id="confirm-delete-title" className={style.popupTitle}>
+              Confirmar eliminacion
+            </h3>
+            <p className={style.popupDescription}>
+              Esta accion eliminara tu cuenta y todos tus datos de forma permanente.
+            </p>
+            <div className={style.popupActions}>
+              <Button
+                type="button"
+                text="Cancelar"
+                className={style.cancelDeleteBtn}
+                disabled={eliminandoPerfil}
+                onClick={() => setPopupEliminarAbierto(false)}
+              />
+              <form action={accionEliminarPerfil}>
+                <Button
+                  type="submit"
+                  text={eliminandoPerfil ? "Eliminando..." : "Eliminar"}
+                  className={style.confirmDeleteBtn}
+                  disabled={eliminandoPerfil}
+                />
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
