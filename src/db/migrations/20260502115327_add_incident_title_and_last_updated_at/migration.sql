@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Incidencia" ADD COLUMN     "actualizadaEn" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "titulo" TEXT NOT NULL DEFAULT 'Sin titulo';

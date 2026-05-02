@@ -6,7 +6,8 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
 /**
- * Script que puebla la base de datos con datos de prueba. Se puede ejecutar con el comando `npm run seed` o `yarn seed`.
+ * Script que puebla la base de datos con datos de prueba.
+ * Se puede ejecutar con `npm run db:seed` (o el alias `npm run seed`).
  */
 
 async function main(): Promise<void> {
@@ -214,20 +215,23 @@ async function main(): Promise<void> {
         comunidad: comunidad.id,
         usuario: admin.id,
         fecha: baseIncidenciaDate,
+        titulo: "Bombilla fundida",
         descripcion: "Rotura de bombilla en planta 4",
-        estado: "creado"
+        estado: "reportado"
       },
       {
         comunidad: comunidad.id,
         usuario: admin.id,
         fecha: new Date(baseIncidenciaDate.getTime() + 1000),
-        descripcion: "Vecino ruidoso",
-        estado: "en_proceso"
+        titulo: "Ruidos nocturnos",
+        descripcion: "Vecino ruidoso que no respeta horarios de silencio",
+        estado: "procesandose"
       },
       {
         comunidad: comunidad.id,
         usuario: alberto.id,
         fecha: new Date(baseIncidenciaDate.getTime() + 2000),
+        titulo: "Daño en zona deportiva",
         descripcion: "Hoyo en campo de futbol",
         estado: "resuelto"
       }

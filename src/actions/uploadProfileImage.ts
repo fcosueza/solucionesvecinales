@@ -9,15 +9,10 @@ import { join } from "path";
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
 
-const uploadProfileImage = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
-  const sesionVerificada = await verifySession();
-
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
-    return { error: "Debes iniciar sesión para subir una imagen" };
-  }
-
-  const file = formData.get("imagen");
-
+export const saveProfileImageFile = async (
+  file: File,
+  userID: number | string
+): Promise<{ error?: string; imagen?: string }> => {
   if (!(file instanceof File) || file.size === 0) {
     return { error: "No se ha proporcionado ningún archivo" };
   }
@@ -31,7 +26,7 @@ const uploadProfileImage = async (formData: FormData): Promise<{ error?: string;
   }
 
   const extension = extname(file.name) || ".jpg";
-  const filename = `${sesionVerificada.session.userID}-${Date.now()}${extension}`;
+  const filename = `${userID}-${Date.now()}${extension}`;
   const uploadDir = join(process.cwd(), "public", "uploads", "profiles");
   const filepath = join(uploadDir, filename);
 
@@ -40,12 +35,29 @@ const uploadProfileImage = async (formData: FormData): Promise<{ error?: string;
 
   const imagenUrl = `/uploads/profiles/${filename}`;
 
+  return { imagen: imagenUrl };
+};
+
+const uploadProfileImage = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
+  const sesionVerificada = await verifySession();
+
+  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+    return { error: "Debes iniciar sesión para subir una imagen" };
+  }
+
+  const file = formData.get("imagen");
+  const result = await saveProfileImageFile(file as File, sesionVerificada.session.userID);
+
+  if (result.error || !result.imagen) {
+    return { error: result.error ?? "No se pudo subir la imagen" };
+  }
+
   await prisma.usuario.update({
     where: { id: sesionVerificada.session.userID },
-    data: { imagen: imagenUrl }
+    data: { imagen: result.imagen }
   });
 
-  return { imagen: imagenUrl };
+  return { imagen: result.imagen };
 };
 
 export default uploadProfileImage;

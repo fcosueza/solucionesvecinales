@@ -1,0 +1,45 @@
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-bottom: 1.4rem;
+}
+
+.sectionTitle {
+  font-size: 2.8rem;
+  color: var(--font-color);
+}
+
+.addBtn {
+  background-color: var(--highlight-light);
+  border: 0.15rem solid var(--highlight-color);
+  border-radius: 0.9rem;
+  color: var(--highlight-color);
+  font-size: 1.6rem;
+  font-weight: 700;
+  padding: 0.8rem 1.4rem;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.addBtn:hover,
+.addBtn:focus-visible {
+  background-color: var(--highlight-dark);
+  border-color: var(--highlight-dark);
+  color: #ffffff;
+}
+
+@media (max-width: 960px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sectionTitle {
+    font-size: 2.4rem;
+  }
+}

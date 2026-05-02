@@ -19,7 +19,8 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
     select: {
       nombre: true,
       apellido: true,
-      rol: true
+      rol: true,
+      imagen: true
     }
   });
 
@@ -29,7 +30,11 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
 
   return (
     <div className={style.layoutWrapper}>
-      <SideMenu userName={`${usuario.nombre} ${usuario.apellido}`} role={usuario.rol as UserRole} />
+      <SideMenu
+        userName={`${usuario.nombre} ${usuario.apellido}`}
+        role={usuario.rol as UserRole}
+        avatarUrl={usuario.imagen ?? undefined}
+      />
       <div className={style.contentArea}>{children}</div>
     </div>
   );

@@ -1,0 +1,224 @@
+.card {
+  border: 0.1rem solid rgba(2, 75, 174, 0.2);
+  border-radius: 1.2rem;
+  background-color: #ffffff;
+  box-shadow: var(--box-shadow-standard);
+  padding: 2.4rem 1.6rem;
+  display: grid;
+  grid-template-columns: minmax(19rem, 0.8fr) minmax(34rem, 1.5fr) minmax(23rem, 1fr);
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.userSection,
+.contentSection,
+.metaSection {
+  position: relative;
+}
+
+.userSection,
+.contentSection {
+  padding-right: 1.6rem;
+}
+
+.userSection::after,
+.contentSection::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  width: 0.1rem;
+  background-color: rgba(2, 75, 174, 0.25);
+}
+
+.userSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.userName {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.userEmail {
+  font-size: 1.5rem;
+  color: var(--font-color-secondary);
+}
+
+.contentSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4rem;
+  min-width: 0;
+}
+
+.incidentContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.incidentTitle {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--font-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statusBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 13rem;
+  flex-shrink: 0;
+}
+
+.statusTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.statePill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-radius: 999px;
+  width: 14rem;
+  height: 3.2rem;
+  text-align: center;
+}
+
+.incidentDescription {
+  font-size: 1.6rem;
+  color: var(--font-color);
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
+}
+
+.stateReported {
+  color: #245ba1;
+  background-color: #e9f2ff;
+}
+
+.stateProcessing {
+  color: #ab5900;
+  background-color: #ffefd9;
+}
+
+.stateResolved {
+  color: #2c7142;
+  background-color: #e6f7eb;
+}
+
+.metaSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.updatedBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.updatedTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--font-color-secondary);
+}
+
+.updatedDate {
+  font-size: 1.5rem;
+  color: var(--font-color);
+}
+
+.actionForm {
+  margin-left: auto;
+}
+
+.actionButton {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--highlight-color);
+  border: 0.15rem solid var(--highlight-color);
+  border-radius: 1.7rem;
+  padding: 0.9rem 1.4rem;
+  background-color: var(--highlight-light);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  white-space: nowrap;
+}
+
+.actionButton:hover:not(:disabled) {
+  background-color: var(--highlight-dark);
+  border-color: var(--highlight-dark);
+  color: #ffffff;
+}
+
+.actionButton:disabled {
+  background-color: var(--highlight-light);
+  border-color: #cbd5e1;
+  color: #9aa4b2;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1120px) {
+  .card {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
+
+  .userSection,
+  .contentSection {
+    padding-right: 0;
+    padding-bottom: 1.2rem;
+  }
+
+  .userSection::after,
+  .contentSection::after {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: auto;
+    height: 0.1rem;
+  }
+
+  .metaSection {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .contentSection,
+  .metaSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actionForm {
+    margin-left: 0;
+  }
+}

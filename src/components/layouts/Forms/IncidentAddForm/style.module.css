@@ -1,0 +1,95 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.popup {
+  background: #ffffff;
+  border-radius: 1.4rem;
+  box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.18);
+  padding: 2.4rem;
+  width: 100%;
+  max-width: 46rem;
+}
+
+.popupTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--font-color);
+  margin-bottom: 1.4rem;
+}
+
+.popupInput,
+.popupTextarea {
+  width: 100%;
+  border: 0.1rem solid rgba(31, 42, 55, 0.25);
+  border-radius: 0.8rem;
+  font-size: 1.5rem;
+  padding: 1rem;
+  color: var(--font-color);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.popupInput {
+  margin-bottom: 1rem;
+}
+
+.popupTextarea {
+  resize: vertical;
+}
+
+.popupInput:focus,
+.popupTextarea:focus {
+  border-color: rgba(2, 75, 174, 0.6);
+}
+
+.popupActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.cancelBtn {
+  background: none;
+  border: 0.15rem solid rgba(31, 42, 55, 0.25);
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  padding: 0.6rem 1.4rem;
+  cursor: pointer;
+  color: var(--font-color-secondary);
+  transition: border-color 0.2s ease;
+}
+
+.cancelBtn:hover {
+  border-color: rgba(31, 42, 55, 0.5);
+}
+
+.submitBtn {
+  background-color: var(--highlight-color);
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  padding: 0.6rem 1.6rem;
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.submitBtn:disabled,
+.cancelBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submitBtn:not(:disabled):hover {
+  opacity: 0.88;
+}

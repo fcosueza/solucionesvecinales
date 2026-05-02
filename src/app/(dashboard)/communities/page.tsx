@@ -88,7 +88,7 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
                   ctaFormID={detalleComunidadFormID}
                 />
 
-                <form action={`/communities/${comunidad.id}`} id={detalleComunidadFormID} />
+                <form action={`/communities/${comunidad.id}/overview`} id={detalleComunidadFormID} />
               </div>
             );
           })}

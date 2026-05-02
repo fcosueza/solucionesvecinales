@@ -85,7 +85,9 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
     FROM "Solicitud" s
     INNER JOIN "Usuario" u ON u."id" = s."usuario"
     WHERE s."comunidad" = ${communityID}
-    ORDER BY s."creadoEn" DESC
+    ORDER BY
+      CASE s."estado" WHEN 'pendiente' THEN 0 WHEN 'aprobada' THEN 1 ELSE 2 END ASC,
+      s."creadoEn" DESC
   `;
 
   return (

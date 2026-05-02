@@ -3,6 +3,7 @@
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import profileSchema from "@/schemas/common/profile.schema";
+import { saveProfileImageFile } from "./uploadProfileImage";
 import bcrypt from "bcrypt";
 import { FormActionState } from "@/types";
 import { SafeParseReturnType } from "zod";
@@ -43,12 +44,28 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
 
   try {
     const nuevaContrasena: string = datosValidados.data.password ?? "";
+    const imageFile = formData.get("imagen");
 
     let hashedPassword: string | null = null;
+    let imageUrl: string | null = null;
 
     if (nuevaContrasena) {
       const salCifrado: number = 10;
       hashedPassword = await bcrypt.hash(nuevaContrasena, salCifrado);
+    }
+
+    if (imageFile instanceof File && imageFile.size > 0) {
+      const savedImage = await saveProfileImageFile(imageFile, sesionVerificada.session.userID);
+
+      if (savedImage.error || !savedImage.imagen) {
+        return {
+          state: "error",
+          message: savedImage.error ?? "Error al actualizar la imagen de perfil",
+          payload: formData
+        };
+      }
+
+      imageUrl = savedImage.imagen;
     }
 
     await prisma.usuario.update({
@@ -57,6 +74,7 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
         nombre: datosValidados.data.name,
         apellido: datosValidados.data.surname,
         email: datosValidados.data.email,
+        ...(imageUrl ? { imagen: imageUrl } : {}),
         ...(hashedPassword
           ? {
               credenciales: {
