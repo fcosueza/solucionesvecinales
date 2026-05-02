@@ -9,6 +9,9 @@ jest.mock("next/cache", () => ({
 }));
 
 jest.mock("@/lib/prisma", () => ({
+  inscripcion: {
+    findUnique: jest.fn()
+  },
   incidencia: {
     findFirst: jest.fn(),
     updateMany: jest.fn(),
@@ -37,6 +40,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue({ usuario: "user-1" });
   });
 
   it("No debe hacer nada si el usuario no esta autenticado", async () => {
@@ -80,6 +84,16 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     formData.append("communityID", "1");
 
     await updateIncidentStatus(formData);
+
+    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
+  });
+
+  it("No debe actualizar incidencia si el usuario no esta inscrito en la comunidad", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
+    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+
+    await updateIncidentStatus(createFormData({}));
 
     expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
     expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
@@ -184,6 +198,7 @@ describe("Suite de pruebas de addIncident", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue({ usuario: "user-1" });
   });
 
   it("No debe hacer nada si el usuario no esta autenticado", async () => {
@@ -223,6 +238,15 @@ describe("Suite de pruebas de addIncident", () => {
     const formData = new FormData();
 
     await addIncident(3, formData);
+
+    expect(prisma.incidencia.create).not.toHaveBeenCalled();
+  });
+
+  it("No debe crear incidencia si el usuario no esta inscrito en la comunidad", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
+    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+
+    await addIncident(3, createFormData({}));
 
     expect(prisma.incidencia.create).not.toHaveBeenCalled();
   });

@@ -1,6 +1,7 @@
 .wrapper {
   width: 100%;
   overflow-x: auto;
+  border-radius: 1.2rem;
 }
 
 .table {
@@ -17,9 +18,45 @@
   padding: 1.2rem;
 }
 
+.table thead tr:first-child th:first-child {
+  border-top-left-radius: 1.2rem;
+}
+
+.table thead tr:first-child th:last-child {
+  border-top-right-radius: 1.2rem;
+}
+
 .table tbody td {
   padding: 1.2rem;
   border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+}
+
+.table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 1.2rem;
+}
+
+.table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 1.2rem;
+}
+
+.sectionRow td {
+  background-color: #e8f0ff;
+  color: var(--highlight-dark);
+  font-size: 1.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.summaryRow td {
+  font-weight: 700;
+  background-color: #f1f6ff;
+}
+
+.balanceRow td {
+  font-weight: 800;
+  background-color: #dce9ff;
+  border-top: 0.2rem solid rgba(2, 75, 174, 0.18);
 }
 
 .table tbody tr:nth-child(odd) {
@@ -35,6 +72,15 @@
   color: #444;
   font-weight: 600;
   padding: 2rem;
+}
+
+.sectionRow:nth-child(odd),
+.sectionRow:nth-child(even),
+.summaryRow:nth-child(odd),
+.summaryRow:nth-child(even),
+.balanceRow:nth-child(odd),
+.balanceRow:nth-child(even) {
+  background-color: transparent;
 }
 
 @media (max-width: 768px) {

@@ -32,10 +32,7 @@ describe("Suite de pruebas del componente Table", () => {
     render(
       <Table
         headers={headers}
-        rows={[
-          { cells: ["Comunidad Sur", "Sevilla"] },
-          { cells: ["Comunidad Este", "Valencia"] }
-        ]}
+        rows={[{ cells: ["Comunidad Sur", "Sevilla"] }, { cells: ["Comunidad Este", "Valencia"] }]}
       />
     );
 
@@ -46,14 +43,32 @@ describe("Suite de pruebas del componente Table", () => {
   });
 
   it("Debe renderizar el mensaje vacío personalizado cuando no hay datos", () => {
+    render(<Table headers={headers} rows={[]} emptyMessage="No se encontraron resultados" />);
+
+    expect(screen.getByText("No se encontraron resultados")).toBeInTheDocument();
+  });
+
+  it("Debe renderizar filas especiales con colSpan para secciones y totales", () => {
     render(
       <Table
-        headers={headers}
-        rows={[]}
-        emptyMessage="No se encontraron resultados"
+        headers={["Concepto", "Fecha", "Importe"]}
+        rows={[
+          {
+            key: "section",
+            variant: "section",
+            cells: [{ content: "Pagos", colSpan: 3 }]
+          },
+          {
+            key: "total",
+            variant: "summary",
+            cells: [{ content: "TOTAL", colSpan: 2 }, { content: "100,00 €" }]
+          }
+        ]}
       />
     );
 
-    expect(screen.getByText("No se encontraron resultados")).toBeInTheDocument();
+    expect(screen.getByText("Pagos")).toBeInTheDocument();
+    expect(screen.getByText("TOTAL")).toBeInTheDocument();
+    expect(screen.getByText("100,00 €")).toBeInTheDocument();
   });
 });

@@ -229,7 +229,7 @@ async function main(): Promise<void> {
       },
       {
         comunidad: comunidad.id,
-        usuario: alberto.id,
+        usuario: juan.id,
         fecha: new Date(baseIncidenciaDate.getTime() + 2000),
         titulo: "Daño en zona deportiva",
         descripcion: "Hoyo en campo de futbol",
@@ -339,6 +339,115 @@ async function main(): Promise<void> {
   });
 
   console.log("Added Contact: ", contacto);
+
+  const registrosFinancierosDescripcion = [
+    "Cuotas comunitarias enero",
+    "Cuotas comunitarias febrero",
+    "Alquiler pista de padel",
+    "Subvencion municipal mantenimiento",
+    "Intereses cuenta comunitaria",
+    "Reparacion ascensor",
+    "Limpieza mensual",
+    "Factura luz zonas comunes",
+    "Mantenimiento piscina",
+    "Seguro comunidad",
+    "Compra material jardineria"
+  ];
+
+  await prisma.registro.deleteMany({
+    where: {
+      comunidad: comunidad.id,
+      descripcion: {
+        in: registrosFinancierosDescripcion
+      }
+    }
+  });
+
+  const baseRegistroFinancieroDate = new Date("2024-01-10T09:00:00.000Z");
+
+  const registrosFinancieros = await prisma.registro.createMany({
+    data: [
+      {
+        comunidad: comunidad.id,
+        descripcion: "Cuotas comunitarias enero",
+        importe: 1800.0,
+        tipo: "ingreso",
+        creadoEn: baseRegistroFinancieroDate
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Cuotas comunitarias febrero",
+        importe: 1825.5,
+        tipo: "ingreso",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 1000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Alquiler pista de padel",
+        importe: 240.0,
+        tipo: "ingreso",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 2000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Subvencion municipal mantenimiento",
+        importe: 650.0,
+        tipo: "ingreso",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 3000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Intereses cuenta comunitaria",
+        importe: 35.75,
+        tipo: "ingreso",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 4000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Reparacion ascensor",
+        importe: 920.45,
+        tipo: "gasto",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 5000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Limpieza mensual",
+        importe: 430.0,
+        tipo: "gasto",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 6000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Factura luz zonas comunes",
+        importe: 310.2,
+        tipo: "gasto",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 7000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Mantenimiento piscina",
+        importe: 275.0,
+        tipo: "gasto",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 8000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Seguro comunidad",
+        importe: 510.0,
+        tipo: "gasto",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 9000)
+      },
+      {
+        comunidad: comunidad.id,
+        descripcion: "Compra material jardineria",
+        importe: 145.3,
+        tipo: "gasto",
+        creadoEn: new Date(baseRegistroFinancieroDate.getTime() + 10000)
+      }
+    ]
+  });
+
+  console.log("Financial records added: ", registrosFinancieros);
 }
 
 main()

@@ -34,6 +34,22 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
     return;
   }
 
+  const inscription = await prisma.inscripcion.findUnique({
+    where: {
+      usuario_comunidad: {
+        usuario: verifiedSession.session.userID,
+        comunidad: communityID
+      }
+    },
+    select: {
+      usuario: true
+    }
+  });
+
+  if (!inscription) {
+    return;
+  }
+
   const incident = await prisma.incidencia.findFirst({
     where: {
       comunidad: communityID,
@@ -79,6 +95,22 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
   const description = String(formData.get("descripcion") ?? "").trim();
 
   if (!Number.isInteger(communityID) || communityID <= 0 || !title || !description) {
+    return;
+  }
+
+  const inscription = await prisma.inscripcion.findUnique({
+    where: {
+      usuario_comunidad: {
+        usuario: verifiedSession.session.userID,
+        comunidad: communityID
+      }
+    },
+    select: {
+      usuario: true
+    }
+  });
+
+  if (!inscription) {
     return;
   }
 

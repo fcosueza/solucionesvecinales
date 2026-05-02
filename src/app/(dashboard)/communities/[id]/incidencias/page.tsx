@@ -1,5 +1,5 @@
-import CardIncident from "@/components/ui/CardIncident";
-import IncidentSectionHeader from "@/components/layouts/IncidentSectionHeader";
+import CardIncident from "@/components/ui/Cards/CardIncident";
+import ActionButton from "@/components/ui/ActionButton";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
@@ -112,7 +112,10 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
       </section>
 
       <section className={style.section}>
-        <IncidentSectionHeader communityID={communityID} />
+        <div className={style.sectionControls}>
+          <h2 className={style.sectionTitle}>Incidencias de la comunidad</h2>
+          <ActionButton buttonText="+ añadir incidencias" modalType="incident" communityID={communityID} />
+        </div>
 
         {incidents.length > 0 ? (
           <ul className={style.incidentsList}>

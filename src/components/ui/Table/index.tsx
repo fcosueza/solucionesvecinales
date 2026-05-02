@@ -1,8 +1,16 @@
 import style from "./style.module.css";
 
+export interface TableCell {
+  content: React.ReactNode;
+  colSpan?: number;
+  className?: string;
+}
+
 export interface TableRow {
   key?: React.Key;
-  cells: React.ReactNode[];
+  cells: Array<React.ReactNode | TableCell>;
+  variant?: "default" | "section" | "summary" | "balance";
+  className?: string;
 }
 
 interface Props {
@@ -13,6 +21,14 @@ interface Props {
 }
 
 const Table = ({ headers, rows, emptyMessage = "No data available.", className = "" }: Props): React.ReactNode => {
+  const getCellData = (cell: React.ReactNode | TableCell): TableCell => {
+    if (typeof cell === "object" && cell !== null && "content" in cell) {
+      return cell;
+    }
+
+    return { content: cell };
+  };
+
   return (
     <div className={`${style.wrapper} ${className}`.trim()}>
       <table className={style.table}>
@@ -27,10 +43,26 @@ const Table = ({ headers, rows, emptyMessage = "No data available.", className =
         <tbody>
           {rows.length > 0 ? (
             rows.map((row, rowIndex) => (
-              <tr key={row.key ?? rowIndex}>
-                {row.cells.map((cell, cellIndex) => (
-                  <td key={cellIndex}>{cell}</td>
-                ))}
+              <tr
+                key={row.key ?? rowIndex}
+                className={[
+                  row.variant === "section" ? style.sectionRow : "",
+                  row.variant === "summary" ? style.summaryRow : "",
+                  row.variant === "balance" ? style.balanceRow : "",
+                  row.className ?? ""
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                {row.cells.map((cell, cellIndex) => {
+                  const cellData = getCellData(cell);
+
+                  return (
+                    <td key={cellIndex} colSpan={cellData.colSpan} className={cellData.className}>
+                      {cellData.content}
+                    </td>
+                  );
+                })}
               </tr>
             ))
           ) : (

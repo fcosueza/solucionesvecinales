@@ -1,5 +1,5 @@
 import OverviewActions from "@/components/layouts/OverviewActions";
-import CardCommunity from "@/components/ui/CardCommunity";
+import CardCommunity from "@/components/ui/Cards/CardCommunity";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types";

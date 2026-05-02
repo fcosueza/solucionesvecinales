@@ -1,5 +1,5 @@
 model Comunidad {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   nombre    String
   imagen    String?
   calle     String
@@ -8,12 +8,13 @@ model Comunidad {
   provincia String
   pais      String
 
-  mensajes     Mensaje[]
-  zonas        Zona[]
-  incidentes   Incidencia[]
-  solicitudes  Solicitud[]
-  inscripciones Inscripcion[]
+  mensajes             Mensaje[]
+  zonas                Zona[]
+  incidentes           Incidencia[]
+  solicitudes          Solicitud[]
+  inscripciones        Inscripcion[]
+  registrosFinancieros Registro[]
 
-  adminID      String
-  admin        Usuario   @relation("admin", fields: [adminID], references: [id])
+  adminID String
+  admin   Usuario @relation("admin", fields: [adminID], references: [id])
 }

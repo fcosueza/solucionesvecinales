@@ -9,6 +9,9 @@ jest.mock("next/cache", () => ({
   revalidatePath: jest.fn()
 }));
 jest.mock("@/lib/prisma", () => ({
+  inscripcion: {
+    findUnique: jest.fn()
+  },
   mensaje: {
     create: jest.fn(),
     delete: jest.fn()
@@ -33,6 +36,7 @@ describe("Suite de pruebas de communityMessage", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue({ usuario: "admin-1" });
   });
 
   it("No debe anadir mensaje si no hay sesion", async () => {
@@ -114,6 +118,22 @@ describe("Suite de pruebas de communityMessage", () => {
       }
     });
     expect(revalidatePathMock).toHaveBeenCalledWith("/communities/22/overview");
+  });
+
+  it("No debe anadir mensaje si el usuario no esta inscrito en la comunidad", async () => {
+    verifySessionMock.mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1",
+        role: UserRole.admin
+      }
+    });
+    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+
+    await addMessage(15, createFormData("Mensaje"));
+
+    expect(prismaCreateMock).not.toHaveBeenCalled();
+    expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
   it("No debe propagar error ni revalidar si falla create", async () => {
@@ -200,6 +220,22 @@ describe("Suite de pruebas de communityMessage", () => {
       }
     });
     expect(revalidatePathMock).toHaveBeenCalledWith("/communities/11/overview");
+  });
+
+  it("No debe eliminar mensaje si el usuario no esta inscrito en la comunidad", async () => {
+    verifySessionMock.mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1",
+        role: UserRole.admin
+      }
+    });
+    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+
+    await deleteMessage(7, new Date("2026-05-02T09:30:00.000Z"));
+
+    expect(prismaDeleteMock).not.toHaveBeenCalled();
+    expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
   it("No debe propagar error ni revalidar si falla delete", async () => {

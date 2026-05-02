@@ -28,6 +28,22 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
     return;
   }
 
+  const inscripcion = await prisma.inscripcion.findUnique({
+    where: {
+      usuario_comunidad: {
+        usuario: sesionVerificada.session.userID,
+        comunidad: communityId
+      }
+    },
+    select: {
+      usuario: true
+    }
+  });
+
+  if (!inscripcion) {
+    return;
+  }
+
   const texto = (formData.get("texto") as string)?.trim();
 
   // No se permite añadir mensajes vacíos
@@ -65,6 +81,22 @@ const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void>
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
   if (!esAdmin) {
+    return;
+  }
+
+  const inscripcion = await prisma.inscripcion.findUnique({
+    where: {
+      usuario_comunidad: {
+        usuario: sesionVerificada.session.userID,
+        comunidad: communityId
+      }
+    },
+    select: {
+      usuario: true
+    }
+  });
+
+  if (!inscripcion) {
     return;
   }
 

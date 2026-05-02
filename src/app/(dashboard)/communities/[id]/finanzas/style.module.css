@@ -53,6 +53,18 @@
   width: 100%;
 }
 
+.sectionTitle {
+  font-size: 2.8rem;
+  color: var(--font-color);
+  margin-bottom: 1rem;
+}
+
+.sectionDescription {
+  font-size: 1.7rem;
+  color: var(--font-color-secondary);
+  max-width: 82rem;
+}
+
 .sectionControls {
   display: flex;
   align-items: center;
@@ -61,22 +73,12 @@
   margin-bottom: 1rem;
 }
 
-.sectionTitle {
-  font-size: 2.8rem;
-  color: var(--font-color);
-}
-
-.incidentsList {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-}
-
-.emptyState {
-  max-width: 60rem;
-  font-size: 1.8rem;
-  color: var(--font-color-secondary);
+.tableCard {
+  border: 0.1rem solid rgba(2, 75, 174, 0.2);
+  border-radius: 1.6rem;
+  background-color: #ffffff;
+  box-shadow: var(--box-shadow-standard);
+  padding: 1.2rem;
 }
 
 @media (max-width: 960px) {
@@ -94,12 +96,12 @@
     font-size: 3.2rem;
   }
 
+  .sectionTitle {
+    font-size: 2.4rem;
+  }
+
   .sectionControls {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .sectionTitle {
-    font-size: 2.4rem;
   }
 }

@@ -1,7 +1,8 @@
 import MessageBoard from "@/components/layouts/MessageBoard";
-import CardCommonArea from "@/components/ui/CardCommonArea";
-import CardStat from "@/components/ui/CardStat";
+import CardCommonArea from "@/components/ui/Cards/CardCommonArea";
+import CardStat from "@/components/ui/Cards/CardStat";
 import verifySession from "@/lib/dal";
+import { calculateFinancialSummary, formatCurrencyAmount } from "@/lib/finance";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import { UserRole } from "@/types";
@@ -62,6 +63,12 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
         select: {
           incidentes: true
         }
+      },
+      registrosFinancieros: {
+        select: {
+          tipo: true,
+          importe: true
+        }
       }
     }
   });
@@ -70,7 +77,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
     notFound();
   }
 
-  const balanceTotal = null;
+  const { balanceFinal } = calculateFinancialSummary(comunidad.registrosFinancieros);
   const esAdmin =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
@@ -128,8 +135,8 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
         />
         <CardStat
           title="Balance total"
-          value={balanceTotal === null ? "Pendiente" : `${balanceTotal} EUR`}
-          description="Aun no hay un modulo financiero integrado para calcular este valor"
+          value={formatCurrencyAmount(balanceFinal)}
+          description="Balance total calculado como ingresos menos pagos registrados"
         />
       </section>
     </main>
