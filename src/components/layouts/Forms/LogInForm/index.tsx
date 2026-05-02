@@ -31,7 +31,7 @@ const LogInForm = (): React.ReactNode => {
 
     if (estado.state === "success") {
       toast.success(estado.message);
-      router.push("/overview");
+      router.push("/communities");
       return;
     }
 

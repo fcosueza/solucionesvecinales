@@ -1,6 +1,6 @@
 "use client";
 
-import { addMensaje, deleteMensaje } from "@/actions/community/communityMessage";
+import { addMessage, deleteMessage } from "@/actions/community/communityMessage";
 import { useRef, useState } from "react";
 import style from "./style.module.css";
 
@@ -49,14 +49,14 @@ const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.
 
   const handleAdd = async (formData: FormData) => {
     setPending(true);
-    await addMensaje(comunidadId, formData);
+    await addMessage(comunidadId, formData);
     setPending(false);
     setShowForm(false);
     if (textareaRef.current) textareaRef.current.value = "";
   };
 
   const handleDelete = async (creadoEn: Date) => {
-    await deleteMensaje(comunidadId, creadoEn);
+    await deleteMessage(comunidadId, creadoEn);
   };
 
   return (

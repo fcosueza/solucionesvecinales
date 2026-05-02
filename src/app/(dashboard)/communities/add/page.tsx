@@ -1,5 +1,5 @@
 import CommunityAddForm from "@/components/layouts/Forms/CommunityAddForm";
-import ScrollToTopOnMount from "@/components/ui/ScrollToTopOnMount";
+import ScrollToTopOnMount from "@/components/ui/ScrollToTopOn";
 import verifySession from "@/lib/dal";
 import { UserRole } from "@/types";
 import { redirect } from "next/navigation";
@@ -16,7 +16,7 @@ const NewCommunity = async (): Promise<React.ReactNode> => {
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
   if (!esAdministrador) {
-    redirect("/overview");
+    redirect("/communities");
   }
 
   return (

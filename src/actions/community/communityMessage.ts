@@ -54,7 +54,7 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
  * @param communityId - ID de la comunidad.
  * @param creadoEn - Fecha de creación del mensaje (parte del PK compuesto).
  */
-const deleteMensaje = async (communityId: number, creadoEn: Date): Promise<void> => {
+const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void> => {
   const sesionVerificada = await verifySession();
 
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
@@ -84,4 +84,4 @@ const deleteMensaje = async (communityId: number, creadoEn: Date): Promise<void>
   }
 };
 
-export { addMessage as addMensaje, deleteMensaje };
+export { addMessage, deleteMessage };

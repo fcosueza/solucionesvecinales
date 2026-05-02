@@ -2,7 +2,7 @@ import CommunitySearchForm from "@/components/layouts/Forms/CommunitySearchForm"
 import Gallery from "@/components/layouts/Gallery";
 import CardCommunity from "@/components/ui/CardCommunity";
 import requestCommunitySubscription from "@/actions/community/communityRequest";
-import ScrollToTopOnMount from "@/components/ui/ScrollToTopOnMount";
+import ScrollToTopOnMount from "@/components/ui/ScrollToTopOn";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
