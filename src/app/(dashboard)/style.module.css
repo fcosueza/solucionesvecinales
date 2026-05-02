@@ -1,7 +1,7 @@
 .layoutWrapper {
   width: 100%;
   min-height: 100vh;
-  height: 100vh;
+  height: 100dvh;
   display: grid;
   grid-template-columns: 30rem minmax(0, 1fr);
   background-color: var(--background-color);
@@ -10,7 +10,8 @@
 
 .contentArea {
   min-width: 0;
-  min-height: 100vh;
+  min-height: 0;
+  height: 100%;
   align-self: stretch;
   padding: 10rem 10rem;
   overflow-y: auto;

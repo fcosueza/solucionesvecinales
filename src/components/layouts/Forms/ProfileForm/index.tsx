@@ -3,7 +3,7 @@
 import updateProfile from "@/actions/updateProfile";
 import Button from "@/components/ui/Button";
 import FormInput from "@/components/ui/FormComp/FormInput";
-import { FormActionState, InputType } from "@/types";
+import { FormActionState, InputType, UserRole } from "@/types";
 import Image from "next/image";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
@@ -13,6 +13,7 @@ interface Props {
   nombre: string;
   apellido: string;
   email: string;
+  rol: UserRole;
 }
 
 // Estado inicial para el formulario de perfil
@@ -21,11 +22,18 @@ const estadoInicial: FormActionState = {
   message: ""
 };
 
-const ProfileForm = ({ nombre, apellido, email }: Props): React.ReactNode => {
+const etiquetasRol: Record<UserRole, string> = {
+  [UserRole.tenant]: "Inquilino",
+  [UserRole.admin]: "Administrador",
+  [UserRole.webAdmin]: "Administrador Web"
+};
+
+const ProfileForm = ({ nombre, apellido, email, rol }: Props): React.ReactNode => {
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
     updateProfile,
     estadoInicial
   );
+  const primerApellido = apellido.trim().split(/\s+/)[0] ?? "";
 
   useEffect(() => {
     if (!estado.message) return;
@@ -41,13 +49,19 @@ const ProfileForm = ({ nombre, apellido, email }: Props): React.ReactNode => {
   return (
     <div className={style.profileWrapper}>
       <div className={style.avatarSection}>
-        <Image
-          src="/assets/icons/profile-100.png"
-          alt="Foto de perfil"
-          width={100}
-          height={100}
-          className={style.avatar}
-        />
+        <div className={style.avatarFrame}>
+          <Image
+            src="/assets/icons/profile-100.png"
+            alt="Foto de perfil"
+            width={160}
+            height={160}
+            className={style.avatar}
+          />
+        </div>
+        <div className={style.userSummary}>
+          <p className={style.userName}>{`${nombre} ${primerApellido}`.trim()}</p>
+          <p className={style.userRole}>{etiquetasRol[rol]}</p>
+        </div>
       </div>
 
       <form action={accionFormulario} id="profileForm" role="form" className={style.form}>
@@ -116,7 +130,7 @@ const ProfileForm = ({ nombre, apellido, email }: Props): React.ReactNode => {
           }}
         />
 
-        <Button type="submit" text="Guardar" disabled={estaPendiente} fullWidth />
+        <Button type="submit" text="Guardar" disabled={estaPendiente} className={style.submitButton} />
       </form>
     </div>
   );
