@@ -49,6 +49,11 @@
   color: var(--font-color-secondary);
 }
 
+.createdDate {
+  font-size: 1.4rem;
+  color: var(--font-color-secondary);
+}
+
 .contentSection {
   display: flex;
   align-items: center;

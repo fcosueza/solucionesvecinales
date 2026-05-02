@@ -62,6 +62,7 @@ const CardIncident = ({
       <div className={style.userSection}>
         <p className={style.userName}>{userName}</p>
         <p className={style.userEmail}>{userEmail}</p>
+        <p className={style.createdDate}>{toDateLabel(incidentDate)}</p>
       </div>
 
       <div className={style.contentSection}>
