@@ -1,0 +1,140 @@
+.card {
+  border-radius: 1.4rem;
+  padding: 1.8rem;
+  background: linear-gradient(135deg, rgba(2, 75, 174, 0.1), rgba(2, 75, 174, 0.02));
+  border: 0.1rem solid rgba(2, 75, 174, 0.24);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.zone {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.text {
+  font-size: 1.5rem;
+  color: var(--highlight-dark);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+
+.footer .text {
+  margin-top: 0;
+}
+
+.deleteBtn {
+  border: none;
+  border-radius: 1rem;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #c62828;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.deleteBtn:hover {
+  background: #8e0000;
+}
+
+/* Confirm modal */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 40;
+}
+
+.popup {
+  width: min(100%, 44rem);
+  background: #ffffff;
+  border-radius: 1.6rem;
+  padding: 2.4rem;
+  box-shadow: 0 2rem 5rem rgba(15, 23, 42, 0.22);
+}
+
+.popupTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.popupDescription {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: var(--font-color-secondary);
+}
+
+.popupActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancelBtn,
+.confirmBtn {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 1.6rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  background: #edf1f7;
+  color: var(--font-color);
+}
+
+.confirmBtn {
+  background: #c62828;
+  color: #ffffff;
+}
+
+.cancelBtn:hover {
+  background: #e0e5ed;
+}
+
+.confirmBtn:hover {
+  background: #8e0000;
+}
+
+.cancelBtn:disabled,
+.confirmBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .popupActions {
+    flex-direction: column;
+  }
+
+  .cancelBtn,
+  .confirmBtn {
+    width: 100%;
+  }
+}

@@ -27,42 +27,67 @@
 .headerInfo {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
 .title {
   font-size: 4rem;
   font-weight: bold;
   color: var(--font-color);
-  text-align: left;
+}
+
+.communityName {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--highlight-dark);
 }
 
 .address {
-  font-size: 1.9rem;
-  color: var(--highlight-dark);
-  text-align: left;
+  font-size: 1.8rem;
+  color: var(--font-color-secondary);
+}
+
+.infoPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.6rem;
+  align-items: stretch;
+}
+
+.infoTitle,
+.sectionTitle {
+  font-size: 2.8rem;
+  color: var(--font-color);
+  margin-bottom: 1.2rem;
+}
+
+.infoText {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: var(--font-color-secondary);
 }
 
 .section {
   width: 100%;
 }
 
-.sectionTitle {
-  font-size: 2.8rem;
-  color: var(--font-color);
-  margin-bottom: 1.4rem;
+.sectionControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .zonesGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.6rem;
 }
 
-.statsSection {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
-  gap: 1.6rem;
+.zonesGrid > * {
+  flex: 0 0 calc((100% - 3.2rem) / 3);
+  min-width: 28rem;
 }
 
 .emptyState {
@@ -71,25 +96,16 @@
   color: var(--font-color-secondary);
 }
 
-.zoneLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 1rem;
-  padding: 1rem 1.4rem;
-  background: var(--highlight-color);
-  color: #ffffff;
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.zoneLink:hover {
-  background: var(--highlight-dark);
+.myReservationsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 1.6rem;
 }
 
 @media (max-width: 960px) {
-  .headerSection {
+  .headerSection,
+  .infoPanel {
+    grid-template-columns: 1fr;
     flex-direction: column;
     align-items: flex-start;
   }
@@ -103,11 +119,8 @@
     font-size: 3.2rem;
   }
 
-  .address {
-    font-size: 1.7rem;
-  }
-
-  .sectionTitle {
+  .sectionTitle,
+  .infoTitle {
     font-size: 2.4rem;
   }
 }

@@ -1,3 +1,4 @@
+import { UserRole } from "@/types";
 import CardIncident from "@/components/ui/Cards/CardIncident";
 import ActionButton from "@/components/ui/ActionButton";
 import verifySession from "@/lib/dal";
@@ -40,6 +41,8 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
+
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
   const community = await prisma.comunidad.findUnique({
     where: {
@@ -131,6 +134,7 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
                 userEmail={incident.usuarioID.email}
                 description={incident.descripcion}
                 state={incident.estado}
+                isAdmin={isAdmin}
               />
             ))}
           </ul>

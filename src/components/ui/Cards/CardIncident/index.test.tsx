@@ -51,6 +51,7 @@ describe("Suite de pruebas del componente CardIncident", () => {
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
         state="reportado"
+        isAdmin
       />
     );
 
@@ -72,6 +73,7 @@ describe("Suite de pruebas del componente CardIncident", () => {
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
         state="procesandose"
+        isAdmin
       />
     );
 
@@ -93,6 +95,7 @@ describe("Suite de pruebas del componente CardIncident", () => {
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
         state="resuelto"
+        isAdmin
       />
     );
 
@@ -100,6 +103,24 @@ describe("Suite de pruebas del componente CardIncident", () => {
     expect(screen.getByText("resuelta")).toHaveClass("stateResolved");
     expect(screen.getByRole("button")).toHaveTextContent("Resuelta");
     expect(screen.getByRole("button")).toBeDisabled();
+  });
+
+  it("No debe mostrar el boton de cambio de estado si el usuario no es admin", () => {
+    render(
+      <CardIncident
+        communityID={5}
+        userID="user-1"
+        incidentDate={fecha}
+        title="Bombilla fundida"
+        updatedAt={actualizadaEn}
+        userName="Maria Perez"
+        userEmail="maria@test.com"
+        description="La puerta principal no cierra correctamente"
+        state="reportado"
+      />
+    );
+
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 
   it("Debe incluir los campos ocultos para ejecutar la server action", () => {

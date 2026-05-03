@@ -1,0 +1,109 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 40;
+}
+
+.popup {
+  width: min(100%, 48rem);
+  background: #ffffff;
+  border-radius: 1.6rem;
+  padding: 2.4rem;
+  box-shadow: 0 2rem 5rem rgba(15, 23, 42, 0.22);
+}
+
+.popupTitle {
+  font-size: 2.4rem;
+  color: var(--font-color);
+}
+
+.popupDescription {
+  margin-top: 0.8rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: var(--font-color-secondary);
+}
+
+.fields {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  color: var(--font-color);
+}
+
+.popupSelect {
+  width: 100%;
+  border: 0.1rem solid rgba(2, 75, 174, 0.24);
+  border-radius: 1rem;
+  padding: 1rem 1.2rem;
+  font-size: 1.5rem;
+  color: var(--font-color);
+  background: #ffffff;
+}
+
+.availabilityMessage {
+  margin-top: 1.4rem;
+  font-size: 1.4rem;
+  color: var(--highlight-dark);
+}
+
+.popupActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancelBtn,
+.submitBtn {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 1.6rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  background: #edf1f7;
+  color: var(--font-color);
+}
+
+.submitBtn {
+  background: var(--highlight-color);
+  color: #ffffff;
+}
+
+.cancelBtn:disabled,
+.submitBtn:disabled,
+.popupSelect:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .popup {
+    padding: 2rem;
+  }
+
+  .popupActions {
+    flex-direction: column;
+  }
+
+  .cancelBtn,
+  .submitBtn {
+    width: 100%;
+  }
+}

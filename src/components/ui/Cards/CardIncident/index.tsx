@@ -13,6 +13,7 @@ interface Props {
   userEmail: string;
   description: string;
   state: IncidentState;
+  isAdmin?: boolean;
 }
 
 const toDateLabel = (date: Date): string => {
@@ -46,7 +47,8 @@ const CardIncident = ({
   userName,
   userEmail,
   description,
-  state
+  state,
+  isAdmin = false
 }: Props): React.ReactNode => {
   const stateClassName =
     state === "reportado"
@@ -87,9 +89,11 @@ const CardIncident = ({
           <input type="hidden" name="communityID" value={communityID} />
           <input type="hidden" name="userID" value={userID} />
           <input type="hidden" name="incidentDate" value={incidentDate.toISOString()} />
-          <button type="submit" className={style.actionButton} disabled={isResolved}>
-            {toButtonLabel(state)}
-          </button>
+          {isAdmin && (
+            <button type="submit" className={style.actionButton} disabled={isResolved}>
+              {toButtonLabel(state)}
+            </button>
+          )}
         </form>
       </div>
     </li>

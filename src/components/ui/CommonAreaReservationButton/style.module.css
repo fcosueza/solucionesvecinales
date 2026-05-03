@@ -1,0 +1,26 @@
+.button {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 1.4rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--highlight-color);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.button:hover {
+  background: var(--highlight-dark);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

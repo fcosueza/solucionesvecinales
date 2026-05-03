@@ -3,6 +3,7 @@ import CardCommonArea from "@/components/ui/Cards/CardCommonArea";
 import CardStat from "@/components/ui/Cards/CardStat";
 import verifySession from "@/lib/dal";
 import { calculateFinancialSummary, formatCurrencyAmount } from "@/lib/finance";
+import Link from "next/link";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import { UserRole } from "@/types";
@@ -119,6 +120,12 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
                 horaInicio={zona.hora_inicio}
                 horaFin={zona.hora_fin}
                 imageUrl={zona.imagen ?? "/assets/images/default-community.jpeg"}
+                reservationSummary="Reserva turnos de 1 o 2 horas en los próximos 7 días. Solo una reserva activa por usuario."
+                action={
+                  <Link className={style.zoneLink} href={`/communities/${comunidadId}/zonas-comunes`}>
+                    Ir a reservas
+                  </Link>
+                }
               />
             ))}
           </div>

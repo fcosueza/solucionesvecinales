@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { formatTimeLabel } from "@/lib/reservations";
 import CardCommonArea from ".";
 
 describe("Suite de pruebas del componente CardCommonArea", () => {
@@ -76,15 +77,9 @@ describe("Suite de pruebas del componente CardCommonArea", () => {
       />
     );
 
-    const horaInicioFormateada = new Intl.DateTimeFormat("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit"
-    }).format(horaInicio);
+    const horaInicioFormateada = formatTimeLabel(horaInicio);
 
-    const horaFinFormateada = new Intl.DateTimeFormat("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit"
-    }).format(horaFin);
+    const horaFinFormateada = formatTimeLabel(horaFin);
 
     expect(screen.getByText(`Horario: ${horaInicioFormateada} - ${horaFinFormateada}`)).toBeInTheDocument();
   });
@@ -103,16 +98,25 @@ describe("Suite de pruebas del componente CardCommonArea", () => {
       />
     );
 
-    const horaInicioFormateada = new Intl.DateTimeFormat("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit"
-    }).format(horaInicioConMinutos);
+    const horaInicioFormateada = formatTimeLabel(horaInicioConMinutos);
 
-    const horaFinFormateada = new Intl.DateTimeFormat("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit"
-    }).format(horaFinConMinutos);
+    const horaFinFormateada = formatTimeLabel(horaFinConMinutos);
 
     expect(screen.getByText(`Horario: ${horaInicioFormateada} - ${horaFinFormateada}`)).toBeInTheDocument();
+  });
+
+  it("Debe renderizar un resumen de reservas si se proporciona", () => {
+    render(
+      <CardCommonArea
+        nombre={nombre}
+        descripcion={descripcion}
+        horaInicio={horaInicio}
+        horaFin={horaFin}
+        imageUrl={imageUrl}
+        reservationSummary="Sin reservas previstas en la próxima semana."
+      />
+    );
+
+    expect(screen.getByText("Sin reservas previstas en la próxima semana.")).toBeInTheDocument();
   });
 });

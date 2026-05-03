@@ -5,7 +5,7 @@
   box-shadow: var(--box-shadow-standard);
   padding: 2.4rem 1.6rem;
   display: grid;
-  grid-template-columns: minmax(19rem, 0.8fr) minmax(34rem, 1.5fr) minmax(23rem, 1fr);
+  grid-template-columns: minmax(19rem, 0.8fr) minmax(34rem, 1.5fr) auto;
   align-items: center;
   gap: 1.6rem;
 }
@@ -157,7 +157,7 @@
 }
 
 .actionForm {
-  margin-left: auto;
+  margin-left: 2rem;
 }
 
 .actionButton {

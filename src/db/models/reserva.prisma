@@ -1,13 +1,17 @@
 model Reserva {
+  id          Int      @id @default(autoincrement())
   usuario     String
   comunidad   Int
   zona        String
   fecha       DateTime
   hora_inicio DateTime @db.Time()
   hora_fin    DateTime @db.Time()
+  creadaEn    DateTime @default(now())
 
-  usuarioID Usuario @relation(fields: [usuario], references: [id], onDelete: Cascade)
-  zonaID Zona @relation(fields: [zona, comunidad], references: [nombre, comunidad], onDelete: Cascade)
+  usuarioID Usuario         @relation(fields: [usuario], references: [id], onDelete: Cascade)
+  zonaID    Zona            @relation(fields: [zona, comunidad], references: [nombre, comunidad], onDelete: Cascade)
+  franjas   ReservaFranja[]
 
-  @@id([usuario, comunidad, zona])
+  @@index([usuario, fecha])
+  @@index([comunidad, zona, fecha])
 }

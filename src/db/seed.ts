@@ -261,7 +261,8 @@ async function main(): Promise<void> {
         zona: "SPA",
         fecha: new Date("2024-01-05"),
         hora_inicio: new Date("2019-01-01 20:00:00"),
-        hora_fin: new Date("2019-01-01 21:00:00")
+        hora_fin: new Date("2019-01-01 21:00:00"),
+        creadaEn: new Date("2024-01-01T10:00:00Z")
       },
       {
         usuario: juan.id,
@@ -269,13 +270,59 @@ async function main(): Promise<void> {
         zona: "Pista de Padel",
         fecha: new Date("2024-02-09"),
         hora_inicio: new Date("2019-01-01 10:00:00"),
-        hora_fin: new Date("2019-01-01 14:00:00")
+        hora_fin: new Date("2019-01-01 12:00:00"),
+        creadaEn: new Date("2024-01-01T12:00:00Z")
       }
     ],
     skipDuplicates: true
   });
 
   console.log("Reservations added: ", reservas);
+
+  await prisma.reservaFranja.deleteMany({
+    where: {
+      comunidad: comunidad.id,
+      zona: {
+        in: ["SPA", "Pista de Padel"]
+      }
+    }
+  });
+
+  const reservasCreadas = await prisma.reserva.findMany({
+    where: {
+      comunidad: comunidad.id,
+      usuario: {
+        in: [admin.id, juan.id]
+      },
+      zona: {
+        in: ["SPA", "Pista de Padel"]
+      }
+    },
+    select: {
+      id: true,
+      comunidad: true,
+      zona: true,
+      fecha: true,
+      hora_inicio: true,
+      hora_fin: true
+    }
+  });
+
+  await prisma.reservaFranja.createMany({
+    data: reservasCreadas.flatMap(reserva => {
+      const inicio = reserva.hora_inicio.getUTCHours();
+      const fin = reserva.hora_fin.getUTCHours();
+
+      return Array.from({ length: fin - inicio }, (_, index) => ({
+        reservaId: reserva.id,
+        comunidad: reserva.comunidad,
+        zona: reserva.zona,
+        fecha: reserva.fecha,
+        hora: new Date(Date.UTC(1970, 0, 1, inicio + index, 0, 0, 0))
+      }));
+    }),
+    skipDuplicates: true
+  });
 
   await prisma.solicitud.deleteMany({
     where: {

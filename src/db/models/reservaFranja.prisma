@@ -1,0 +1,14 @@
+model ReservaFranja {
+    id        Int      @id @default(autoincrement())
+    reservaId Int
+    comunidad Int
+    zona      String
+    fecha     DateTime
+    hora      DateTime @db.Time()
+
+    reserva Reserva @relation(fields: [reservaId], references: [id], onDelete: Cascade)
+    zonaID  Zona    @relation(fields: [zona, comunidad], references: [nombre, comunidad], onDelete: Cascade)
+
+    @@unique([comunidad, zona, fecha, hora])
+    @@index([reservaId])
+}
