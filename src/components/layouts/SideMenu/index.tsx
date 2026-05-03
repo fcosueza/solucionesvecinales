@@ -32,6 +32,9 @@ const enlacesComunidad = (id: string) => [
 // Función que genera el enlace a la sección de solicitudes, visible solo para administradores.
 const enlaceSolicitudes = (id: string) => ({ text: "Solicitudes", href: `/communities/${id}/requests` });
 
+// Función que genera el enlace a la sección de configuración, visible solo para administradores.
+const enlaceConfiguracion = (id: string) => ({ text: "Configuracion", href: `/communities/${id}/settings` });
+
 // Mapeo de roles a etiquetas legibles para mostrar en la interfaz.
 const etiquetasRol: Record<UserRole, string> = {
   [UserRole.tenant]: "Inquilino",
@@ -111,7 +114,10 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
 
   // Se generan los enlaces activos para la comunidad actual, incluyendo opciones adicionales para administradores si corresponde.
   const enlacesActivosComunidad = comunidadId
-    ? [...enlacesComunidad(comunidadId), ...(isAdmin(role) ? [enlaceSolicitudes(comunidadId)] : [])]
+    ? [
+        ...enlacesComunidad(comunidadId),
+        ...(isAdmin(role) ? [enlaceSolicitudes(comunidadId), enlaceConfiguracion(comunidadId)] : [])
+      ]
     : [];
 
   return (

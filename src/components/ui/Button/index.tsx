@@ -9,6 +9,7 @@ interface Props {
   onClick?: (Event: React.MouseEvent<HTMLElement>) => void;
   disabled?: boolean;
   fullWidth?: boolean;
+  variant?: "primary" | "danger" | "secondary";
   className?: string;
 }
 
@@ -31,12 +32,13 @@ const Button = ({
   onClick,
   disabled = false,
   fullWidth = false,
+  variant = "primary",
   className = ""
 }: Props): React.ReactNode => {
   return (
     <button
       type={type}
-      className={`${style.button} ${fullWidth ? style.button__fullWidth : ""} ${className}`.trim()}
+      className={`${style.button} ${fullWidth ? style.button__fullWidth : ""} ${style[variant]} ${className}`.trim()}
       disabled={disabled}
       onClick={onClick}
     >

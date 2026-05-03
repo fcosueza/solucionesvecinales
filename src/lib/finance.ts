@@ -43,10 +43,11 @@ const calculateFinancialSummary = (registros: RegistroCalculable[]): FinancialSu
 };
 
 const formatCurrencyAmount = (amount: number): string => {
-  return new Intl.NumberFormat("es-ES", {
-    style: "currency",
-    currency: "EUR"
-  }).format(amount);
+  const fixed = amount.toFixed(2);
+  const [intPart, decPart] = fixed.split(".");
+  const intFormatted = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  return `${intFormatted},${decPart} €`;
 };
 
 export { calculateFinancialSummary, formatCurrencyAmount };

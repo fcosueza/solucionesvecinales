@@ -4,7 +4,7 @@ import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { eliminarSesion } from "@/lib/session";
 import profileSchema from "@/schemas/common/profile.schema";
-import { FormActionState } from "@/types";
+import { FormActionState, UserRole } from "@/types";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { saveProfileImageFile } from "./uploadProfileImage";
@@ -118,18 +118,11 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
     };
   }
 
+  const userID = String(sesionVerificada.session.userID);
   try {
-    const userID = String(sesionVerificada.session.userID);
-
     await prisma.$transaction(async tx => {
-      // Si el usuario administra comunidades, primero se eliminan para evitar restricciones de FK.
-      await tx.comunidad.deleteMany({
-        where: { adminID: userID }
-      });
-
-      await tx.usuario.delete({
-        where: { id: userID }
-      });
+      await tx.comunidad.deleteMany({ where: { adminID: userID } });
+      await tx.usuario.delete({ where: { id: userID } });
     });
   } catch {
     return {

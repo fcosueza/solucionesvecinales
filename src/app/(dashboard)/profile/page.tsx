@@ -12,8 +12,10 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
     redirect("/login");
   }
 
+  const userID = sesionVerificada.session.userID;
+
   const usuario = await prisma.usuario.findUnique({
-    where: { id: sesionVerificada.session.userID },
+    where: { id: userID },
     select: {
       nombre: true,
       apellido: true,
@@ -27,6 +29,9 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
     redirect("/login");
   }
 
+  const esAdministrador = usuario.rol === UserRole.admin || usuario.rol === UserRole.webAdmin;
+  const tieneComunidades = esAdministrador ? (await prisma.comunidad.count({ where: { adminID: userID } })) > 0 : false;
+
   return (
     <main className={style.main}>
       <h1 className={style.title}>Mi perfil</h1>
@@ -37,6 +42,7 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
         email={usuario.email}
         rol={usuario.rol as UserRole}
         imagen={usuario.imagen ?? undefined}
+        tieneComunidades={tieneComunidades}
       />
     </main>
   );

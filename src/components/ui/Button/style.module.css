@@ -26,3 +26,32 @@
   width: 100%;
   margin-top: 0.5rem;
 }
+
+.primary {
+  background-color: var(--highlight-color);
+}
+
+.primary:hover,
+.primary:active {
+  background-color: var(--highlight-dark);
+}
+
+.danger {
+  background-color: #c62828;
+}
+
+.danger:hover,
+.danger:active {
+  background-color: #8e0000;
+}
+
+.secondary {
+  background-color: #f4f4f4;
+  color: #303030;
+  border: 0.1rem solid #d2d2d2;
+}
+
+.secondary:hover,
+.secondary:active {
+  background-color: #e7e7e7;
+}

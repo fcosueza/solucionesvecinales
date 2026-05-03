@@ -4,12 +4,22 @@ import ActionButton from ".";
 
 jest.mock("@/components/layouts/Forms/FinanceAddForm", () => ({
   __esModule: true,
-  default: ({ communityID }: { communityID: number }) => <div>FinanceAddForm {communityID}</div>
+  default: ({ communityID, onClose }: { communityID: number; onClose: () => void }) => (
+    <div>
+      FinanceAddForm {communityID}
+      <button onClick={onClose}>Cerrar Finance</button>
+    </div>
+  )
 }));
 
 jest.mock("@/components/layouts/Forms/IncidentAddForm", () => ({
   __esModule: true,
-  default: ({ communityID }: { communityID: number }) => <div>IncidentAddForm {communityID}</div>
+  default: ({ communityID, onClose }: { communityID: number; onClose: () => void }) => (
+    <div>
+      IncidentAddForm {communityID}
+      <button onClick={onClose}>Cerrar Incident</button>
+    </div>
+  )
 }));
 
 describe("Suite de pruebas del componente ActionButton", () => {
@@ -43,5 +53,25 @@ describe("Suite de pruebas del componente ActionButton", () => {
 
     expect(screen.getByText("IncidentAddForm 12")).toBeInTheDocument();
     expect(screen.queryByText("FinanceAddForm 12")).not.toBeInTheDocument();
+  });
+
+  it("Debe cerrar FinanceAddForm al llamar onClose", async () => {
+    render(<ActionButton buttonText="+ añadir registro" modalType="finance" communityID={7} />);
+
+    await userEvent.click(screen.getByRole("button", { name: "+ añadir registro" }));
+    expect(screen.getByText("FinanceAddForm 7")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "Cerrar Finance" }));
+    expect(screen.queryByText("FinanceAddForm 7")).not.toBeInTheDocument();
+  });
+
+  it("Debe cerrar IncidentAddForm al llamar onClose", async () => {
+    render(<ActionButton buttonText="+ añadir incidencias" modalType="incident" communityID={12} />);
+
+    await userEvent.click(screen.getByRole("button", { name: "+ añadir incidencias" }));
+    expect(screen.getByText("IncidentAddForm 12")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "Cerrar Incident" }));
+    expect(screen.queryByText("IncidentAddForm 12")).not.toBeInTheDocument();
   });
 });

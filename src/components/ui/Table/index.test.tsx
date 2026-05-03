@@ -48,6 +48,18 @@ describe("Suite de pruebas del componente Table", () => {
     expect(screen.getByText("No se encontraron resultados")).toBeInTheDocument();
   });
 
+  it("Debe aplicar la clase balanceRow a filas con variant balance", () => {
+    render(
+      <Table
+        headers={["Concepto", "Importe"]}
+        rows={[{ key: "balance", variant: "balance", cells: ["Balance final", "500,00 €"] }]}
+      />
+    );
+
+    expect(screen.getByText("Balance final")).toBeInTheDocument();
+    expect(screen.getByText("500,00 €")).toBeInTheDocument();
+  });
+
   it("Debe renderizar filas especiales con colSpan para secciones y totales", () => {
     render(
       <Table

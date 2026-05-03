@@ -16,6 +16,7 @@ interface Props {
   email: string;
   rol: UserRole;
   imagen?: string;
+  tieneComunidades?: boolean;
 }
 
 // Estado inicial para el formulario de perfil
@@ -30,7 +31,7 @@ const etiquetasRol: Record<UserRole, string> = {
   [UserRole.webAdmin]: "Administrador Web"
 };
 
-const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.ReactNode => {
+const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = false }: Props): React.ReactNode => {
   const router = useRouter();
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
     updateProfile,
@@ -41,7 +42,9 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.Rea
     estadoInicial
   );
   const primerApellido = apellido.trim().split(/\s+/)[0] ?? "";
+  const esAdmin = rol === UserRole.admin || rol === UserRole.webAdmin;
   const [popupEliminarAbierto, setPopupEliminarAbierto] = useState(false);
+  const [popupBloqueadoAbierto, setPopupBloqueadoAbierto] = useState(false);
   const [avatarSrc, setAvatarSrc] = useState(imagen ?? "/assets/icons/profile-100.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const previewAvatarRef = useRef<string | null>(null);
@@ -180,21 +183,49 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.Rea
         />
 
         <div className={style.actionsRow}>
-          <Button
-            type="submit"
-            text="Guardar"
-            disabled={estaPendiente || eliminandoPerfil}
-            className={style.submitButton}
-          />
+          <Button type="submit" text="Guardar" disabled={estaPendiente || eliminandoPerfil} />
           <Button
             type="button"
             text="Eliminar perfil"
-            disabled={estaPendiente || eliminandoPerfil}
-            className={style.deleteButton}
-            onClick={() => setPopupEliminarAbierto(true)}
+            variant="danger"
+            onClick={() => {
+              if (esAdmin && tieneComunidades) {
+                setPopupBloqueadoAbierto(true);
+              } else {
+                setPopupEliminarAbierto(true);
+              }
+            }}
           />
         </div>
       </form>
+
+      {popupBloqueadoAbierto && (
+        <div className={style.overlay} onClick={() => setPopupBloqueadoAbierto(false)}>
+          <div
+            className={style.popup}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="blocked-delete-title"
+            onClick={event => event.stopPropagation()}
+          >
+            <h3 id="blocked-delete-title" className={style.popupTitle}>
+              No puedes eliminar tu cuenta
+            </h3>
+            <p className={style.popupDescription}>
+              Eres administrador de una o mas comunidades. Debes eliminar todas tus comunidades desde la seccion de
+              Configuracion de cada una antes de poder eliminar tu cuenta.
+            </p>
+            <div className={style.popupActions}>
+              <Button
+                type="button"
+                text="Entendido"
+                variant="secondary"
+                onClick={() => setPopupBloqueadoAbierto(false)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {popupEliminarAbierto && (
         <div className={style.overlay} onClick={() => !eliminandoPerfil && setPopupEliminarAbierto(false)}>
@@ -215,7 +246,7 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.Rea
               <Button
                 type="button"
                 text="Cancelar"
-                className={style.cancelDeleteBtn}
+                variant="secondary"
                 disabled={eliminandoPerfil}
                 onClick={() => setPopupEliminarAbierto(false)}
               />
@@ -223,7 +254,7 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen }: Props): React.Rea
                 <Button
                   type="submit"
                   text={eliminandoPerfil ? "Eliminando..." : "Eliminar"}
-                  className={style.confirmDeleteBtn}
+                  variant="danger"
                   disabled={eliminandoPerfil}
                 />
               </form>
