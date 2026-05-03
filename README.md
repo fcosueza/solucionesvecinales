@@ -11,13 +11,14 @@ Para evitar errores de Prisma en build/deploy:
    - SESSION_SECRET
 2. Usa como Build Command: npm run vercel-build
 3. Verifica que Install Command sea npm ci (o npm install)
-4. Prisma Client se genera durante install/build y las migraciones se aplican con prisma migrate deploy
+4. Prisma Client se genera durante install/build, las migraciones se aplican con prisma migrate deploy y el seed se ejecuta en cada build
 
 Scripts relevantes en este repositorio:
 
 - npm run build -> prisma generate && next build
-- npm run vercel-build -> prisma generate && prisma migrate deploy && next build
+- npm run vercel-build -> prisma generate && prisma migrate deploy && prisma db seed && next build
 - npm run db:migrate:deploy -> prisma migrate deploy
+- npm run db:seed -> prisma db seed
 
 ## Nomenclatura e Idioma
 
