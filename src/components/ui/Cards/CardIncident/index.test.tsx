@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react";
 
-jest.mock("@/actions/community/communityIncident", () => jest.fn());
+jest.mock("@/actions/community/communityIncident", () => ({
+  __esModule: true,
+  default: jest.fn(),
+  deleteIncident: jest.fn()
+}));
 
 import CardIncident from ".";
 
@@ -101,8 +105,8 @@ describe("Suite de pruebas del componente CardIncident", () => {
 
     expect(screen.getByText("Estado")).toBeInTheDocument();
     expect(screen.getByText("resuelta")).toHaveClass("stateResolved");
-    expect(screen.getByRole("button")).toHaveTextContent("Resuelta");
-    expect(screen.getByRole("button")).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Resuelta" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Eliminar incidencia" })).toBeInTheDocument();
   });
 
   it("No debe mostrar el boton de cambio de estado si el usuario no es admin", () => {
@@ -121,6 +125,25 @@ describe("Suite de pruebas del componente CardIncident", () => {
     );
 
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
+
+  it("No debe mostrar boton de eliminar si la incidencia no esta resuelta", () => {
+    render(
+      <CardIncident
+        communityID={5}
+        userID="user-1"
+        incidentDate={fecha}
+        title="Bombilla fundida"
+        updatedAt={actualizadaEn}
+        userName="Maria Perez"
+        userEmail="maria@test.com"
+        description="La puerta principal no cierra correctamente"
+        state="procesandose"
+        isAdmin
+      />
+    );
+
+    expect(screen.queryByRole("button", { name: "Eliminar incidencia" })).not.toBeInTheDocument();
   });
 
   it("Debe incluir los campos ocultos para ejecutar la server action", () => {

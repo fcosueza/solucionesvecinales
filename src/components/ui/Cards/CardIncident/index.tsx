@@ -1,4 +1,4 @@
-import updateIncidentStatus from "@/actions/community/communityIncident";
+import updateIncidentStatus, { deleteIncident } from "@/actions/community/communityIncident";
 import style from "./style.module.css";
 
 type IncidentState = "reportado" | "procesandose" | "resuelto";
@@ -61,6 +61,17 @@ const CardIncident = ({
 
   return (
     <li className={style.card}>
+      {isAdmin && isResolved && (
+        <form action={deleteIncident} className={style.deleteForm}>
+          <input type="hidden" name="communityID" value={communityID} />
+          <input type="hidden" name="userID" value={userID} />
+          <input type="hidden" name="incidentDate" value={incidentDate.toISOString()} />
+          <button type="submit" className={style.deleteBtn} aria-label="Eliminar incidencia">
+            ✕
+          </button>
+        </form>
+      )}
+
       <div className={style.userSection}>
         <p className={style.userName}>{userName}</p>
         <p className={style.userEmail}>{userEmail}</p>

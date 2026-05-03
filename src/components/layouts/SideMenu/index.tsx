@@ -109,7 +109,10 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
     // Si se encuentra un ID de comunidad en la ruta, se actualiza el estado para reflejar la comunidad activa
     if (comunidadIdEnRuta) {
       setComunidadId(comunidadIdEnRuta);
+      return;
     }
+
+    setComunidadId(null);
   }, [rutaActual, comunidadIdEnRuta]);
 
   // Se generan los enlaces activos para la comunidad actual, incluyendo opciones adicionales para administradores si corresponde.

@@ -107,4 +107,20 @@ describe("Suite de pruebas del componente SideMenu", () => {
 
     expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/communities/12/requests");
   });
+
+  it("Debe ocultar enlaces de comunidad al salir a Mis comunidades", () => {
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities/12/overview");
+
+    const { rerender } = render(<SideMenu userName="Laura" role={UserRole.admin} />);
+
+    expect(screen.getByRole("link", { name: "Vista General" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Solicitudes" })).toBeInTheDocument();
+
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities");
+    rerender(<SideMenu userName="Laura" role={UserRole.admin} />);
+
+    expect(screen.queryByRole("link", { name: "Vista General" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Solicitudes" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Mis comunidades" })).toHaveClass("menuLinkActive");
+  });
 });

@@ -3,6 +3,7 @@
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { UserRole } from "@/types";
 
 type IncidentState = "reportado" | "procesandose" | "resuelto";
 
@@ -84,6 +85,75 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
   revalidatePath(`/communities/${communityID}/overview`);
 };
 
+const deleteIncident = async (formData: FormData): Promise<void> => {
+  const verifiedSession = await verifySession();
+
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
+    return;
+  }
+
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
+
+  if (!isAdmin) {
+    return;
+  }
+
+  const communityID = Number(formData.get("communityID"));
+  const userID = String(formData.get("userID") ?? "").trim();
+  const incidentDateInput = String(formData.get("incidentDate") ?? "").trim();
+  const incidentDate = new Date(incidentDateInput);
+
+  if (!Number.isInteger(communityID) || communityID <= 0 || !userID || Number.isNaN(incidentDate.getTime())) {
+    return;
+  }
+
+  const inscription = await prisma.inscripcion.findUnique({
+    where: {
+      usuario_comunidad: {
+        usuario: verifiedSession.session.userID,
+        comunidad: communityID
+      }
+    },
+    select: {
+      usuario: true
+    }
+  });
+
+  if (!inscription) {
+    return;
+  }
+
+  const incident = await prisma.incidencia.findFirst({
+    where: {
+      comunidad: communityID,
+      usuario: userID,
+      fecha: incidentDate
+    },
+    select: {
+      estado: true
+    }
+  });
+
+  if (!incident || incident.estado !== "resuelto") {
+    return;
+  }
+
+  try {
+    await prisma.incidencia.delete({
+      where: {
+        comunidad_usuario_fecha: {
+          comunidad: communityID,
+          usuario: userID,
+          fecha: incidentDate
+        }
+      }
+    });
+
+    revalidatePath(`/communities/${communityID}/incidencias`);
+    revalidatePath(`/communities/${communityID}/overview`);
+  } catch {}
+};
+
 const addIncident = async (communityID: number, formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
 
@@ -130,5 +200,5 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
   } catch {}
 };
 
-export { addIncident };
+export { addIncident, deleteIncident };
 export default updateIncidentStatus;

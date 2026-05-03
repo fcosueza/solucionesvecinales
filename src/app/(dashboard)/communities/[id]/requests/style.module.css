@@ -59,11 +59,20 @@
   margin-bottom: 1.4rem;
 }
 
+.listViewport {
+  max-height: 82rem;
+  overflow-y: auto;
+  padding-right: 0.8rem;
+  scrollbar-gutter: stable;
+}
+
 .requestList {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
+  margin: 0;
+  padding: 0;
 }
 
 .requestItem {
@@ -190,6 +199,11 @@
 
   .sectionTitle {
     font-size: 2.4rem;
+  }
+
+  .listViewport {
+    max-height: 148rem;
+    padding-right: 0.4rem;
   }
 
   .requestItem {

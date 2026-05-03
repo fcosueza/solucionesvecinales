@@ -115,63 +115,65 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
         <h2 className={style.sectionTitle}>Solicitudes de suscripcion</h2>
 
         {requests.length > 0 ? (
-          <ul className={style.requestList}>
-            {requests.map(request => {
-              const isPending = request.estado === "pendiente";
-              const statusClassName =
-                request.estado === "aprobada"
-                  ? style.statusApproved
-                  : request.estado === "denegada"
-                    ? style.statusRejected
-                    : style.statusPending;
+          <div className={style.listViewport}>
+            <ul className={style.requestList}>
+              {requests.map(request => {
+                const isPending = request.estado === "pendiente";
+                const statusClassName =
+                  request.estado === "aprobada"
+                    ? style.statusApproved
+                    : request.estado === "denegada"
+                      ? style.statusRejected
+                      : style.statusPending;
 
-              return (
-                <li key={request.id} className={style.requestItem}>
-                  <div className={style.requestInfo}>
-                    <p className={style.userName}>
-                      {request.nombre} {request.apellido}
-                    </p>
-                    <p className={style.userEmail}>{request.email}</p>
-                    <p className={style.requestDate}>Fecha: {toDateLabel(request.creadoEn)}</p>
-                  </div>
+                return (
+                  <li key={request.id} className={style.requestItem}>
+                    <div className={style.requestInfo}>
+                      <p className={style.userName}>
+                        {request.nombre} {request.apellido}
+                      </p>
+                      <p className={style.userEmail}>{request.email}</p>
+                      <p className={style.requestDate}>Fecha: {toDateLabel(request.creadoEn)}</p>
+                    </div>
 
-                  <div className={style.requestStateWrap}>
-                    <p className={`${style.requestStatus} ${statusClassName}`.trim()}>
-                      {toStatusLabel(request.estado)}
-                    </p>
-                  </div>
+                    <div className={style.requestStateWrap}>
+                      <p className={`${style.requestStatus} ${statusClassName}`.trim()}>
+                        {toStatusLabel(request.estado)}
+                      </p>
+                    </div>
 
-                  <div className={style.requestActions}>
-                    <form action={reviewCommunityRequest}>
-                      <input type="hidden" name="communityID" value={communityID} />
-                      <input type="hidden" name="requestID" value={request.id} />
-                      <input type="hidden" name="decision" value="approve" />
-                      <button
-                        type="submit"
-                        className={`${style.actionButton} ${style.approveButton}`.trim()}
-                        disabled={!isPending}
-                      >
-                        Aprobar
-                      </button>
-                    </form>
+                    <div className={style.requestActions}>
+                      <form action={reviewCommunityRequest}>
+                        <input type="hidden" name="communityID" value={communityID} />
+                        <input type="hidden" name="requestID" value={request.id} />
+                        <input type="hidden" name="decision" value="approve" />
+                        <button
+                          type="submit"
+                          className={`${style.actionButton} ${style.approveButton}`.trim()}
+                          disabled={!isPending}
+                        >
+                          Aprobar
+                        </button>
+                      </form>
 
-                    <form action={reviewCommunityRequest}>
-                      <input type="hidden" name="communityID" value={communityID} />
-                      <input type="hidden" name="requestID" value={request.id} />
-                      <input type="hidden" name="decision" value="reject" />
-                      <button
-                        type="submit"
-                        className={`${style.actionButton} ${style.rejectButton}`.trim()}
-                        disabled={!isPending}
-                      >
-                        Rechazar
-                      </button>
-                    </form>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                      <form action={reviewCommunityRequest}>
+                        <input type="hidden" name="communityID" value={communityID} />
+                        <input type="hidden" name="requestID" value={request.id} />
+                        <input type="hidden" name="decision" value="reject" />
+                        <button
+                          type="submit"
+                          className={`${style.actionButton} ${style.rejectButton}`.trim()}
+                          disabled={!isPending}
+                        >
+                          Rechazar
+                        </button>
+                      </form>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         ) : (
           <p className={style.emptyState}>No hay solicitudes registradas para esta comunidad.</p>
         )}

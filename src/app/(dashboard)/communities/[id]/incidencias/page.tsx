@@ -121,23 +121,25 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
         </div>
 
         {incidents.length > 0 ? (
-          <ul className={style.incidentsList}>
-            {incidents.map((incident: IncidentItem) => (
-              <CardIncident
-                key={`${incident.comunidad}-${incident.usuario}-${incident.fecha.toISOString()}`}
-                communityID={incident.comunidad}
-                userID={incident.usuario}
-                incidentDate={incident.fecha}
-                title={incident.titulo}
-                updatedAt={incident.actualizadaEn}
-                userName={`${incident.usuarioID.nombre} ${incident.usuarioID.apellido}`}
-                userEmail={incident.usuarioID.email}
-                description={incident.descripcion}
-                state={incident.estado}
-                isAdmin={isAdmin}
-              />
-            ))}
-          </ul>
+          <div className={style.listViewport}>
+            <ul className={style.incidentsList}>
+              {incidents.map((incident: IncidentItem) => (
+                <CardIncident
+                  key={`${incident.comunidad}-${incident.usuario}-${incident.fecha.toISOString()}`}
+                  communityID={incident.comunidad}
+                  userID={incident.usuario}
+                  incidentDate={incident.fecha}
+                  title={incident.titulo}
+                  updatedAt={incident.actualizadaEn}
+                  userName={`${incident.usuarioID.nombre} ${incident.usuarioID.apellido}`}
+                  userEmail={incident.usuarioID.email}
+                  description={incident.descripcion}
+                  state={incident.estado}
+                  isAdmin={isAdmin}
+                />
+              ))}
+            </ul>
+          </div>
         ) : (
           <p className={style.emptyState}>No hay incidencias registradas para esta comunidad.</p>
         )}
