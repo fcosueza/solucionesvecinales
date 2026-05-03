@@ -17,27 +17,49 @@ en Inglés, por lo que prácticamente todas las variables y todos los comentario
 ### Pasos
 
 1. **Instalar dependencias**
+
    ```bash
    npm install
    ```
 
 2. **Configurar variables de entorno**
 
-   Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
-   ```
-   DATABASE_URL="postgresql://usuario:contraseña@host:puerto/nombre_bd"
-   SESSION_SECRET="una-cadena-secreta-larga-y-aleatoria"
+   Crea un archivo `.env` en la raíz del proyecto. Puedes usar el siguiente formato como referencia:
+
+   ```env
+   # Parámetros individuales de conexión (usados para componer DATABASE_URL)
+   DATABASE_HOST=localhost
+   DATABASE_PORT=5432
+   DATABASE_NAME=nombre_de_tu_base_de_datos
+   DATABASE_USER=tu_usuario
+   DATABASE_PASSWORD=tu_contraseña
+
+   # URL de conexión a la base de datos (puede usar las variables anteriores)
+   DATABASE_URL=postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
+
+   # Clave secreta para firmar y verificar los tokens de sesión JWT.
+   # Debe ser una cadena larga y aleatoria. Puedes generarla con:
+   #   openssl rand -base64 32
+   SESSION_SECRET=tu-clave-secreta-larga-y-aleatoria
    ```
 
+   > **Importante:** el archivo `.env` está incluido en `.gitignore` y nunca debe subirse al repositorio.
+   > En producción (Vercel), estas variables se configuran desde el panel de Vercel y la
+   > `DATABASE_URL` debe ser una URL literal con `?sslmode=require` al final, ya que Vercel
+   > no expande la sintaxis `${VAR}`.
+
 3. **Aplicar las migraciones de la base de datos**
+
    ```bash
    npm run db:migrate:dev
    ```
 
-4. **Poblar la base de datos con datos de prueba** *(opcional)*
+4. **Poblar la base de datos con datos de prueba** _(opcional)_
+
    ```bash
    npm run db:seed
    ```
+
    Los usuarios creados son:
    | Email | Contraseña | Rol |
    |---|---|---|
@@ -46,6 +68,7 @@ en Inglés, por lo que prácticamente todas las variables y todos los comentario
    | alberto@gmail.com | dsnojiaiojsdsnojiaiojs | inquilino |
 
 5. **Iniciar el servidor de desarrollo**
+
    ```bash
    npm run dev
    ```
