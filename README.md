@@ -146,11 +146,98 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
 
 5. **Iniciar el servidor de desarrollo**
 
+   Levanta la aplicación en modo desarrollo con recarga en caliente para que puedas probar cambios al instante mientras programas.
+
    ```bash
    npm run dev
    ```
 
    La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+
+6. **Generar build de producción**
+
+   Compila la aplicación en modo producción y valida que todo el proyecto puede construirse correctamente antes de desplegar.
+
+   ```bash
+   npm run build
+   ```
+
+7. **Iniciar el servidor en producción**
+
+   Arranca la build de producción generada en el paso anterior, simulando el comportamiento real del entorno de despliegue.
+
+   ```bash
+   npm run start
+   ```
+
+## Docker Compose (sin Dockerfile)
+
+Se incluye un archivo [docker-compose.yml](docker-compose.yml) con perfiles para desarrollo y producción,
+además de PostgreSQL. Playwright queda integrado en el perfil de desarrollo (`app-dev`).
+
+- La app queda accesible desde tu navegador fuera de Docker en: [http://localhost:3000](http://localhost:3000)
+- Se aplican migraciones y seed automáticamente al arrancar la app
+- Los datos de PostgreSQL y uploads quedan persistidos en volúmenes Docker
+
+### Variables opcionales
+
+Puedes personalizar credenciales y puertos exportando variables en tu shell antes de levantar los servicios:
+
+```bash
+export POSTGRES_DB=solucionesvecinales
+export POSTGRES_USER=postgres
+export POSTGRES_PASSWORD=postgres
+export POSTGRES_PORT=5432
+export SESSION_SECRET=tu_clave_de_sesion
+```
+
+### Levantar entorno de desarrollo
+
+```bash
+docker compose --profile dev up
+```
+
+Este perfil monta el código del proyecto dentro del contenedor y ejecuta:
+
+- `npm install`
+- `npx playwright install --with-deps`
+- `npm run db:migrate:deploy`
+- `npm run db:seed`
+- `npm run dev -- -H 0.0.0.0 -p 3000`
+
+### Levantar entorno de producción
+
+```bash
+docker compose --profile prod up
+```
+
+Este perfil ejecuta dentro del contenedor:
+
+- `npm ci`
+- `npm run db:migrate:deploy`
+- `npm run db:seed`
+- `npm run build`
+- `npm run start -- -H 0.0.0.0 -p 3000`
+
+### Ejecutar tests E2E con Playwright (opcional)
+
+Con el entorno `dev` levantado, ejecuta los tests dentro de `app-dev`:
+
+```bash
+docker compose --profile dev exec app-dev npm run test:e2e
+```
+
+### Parar y limpiar
+
+```bash
+docker compose down
+```
+
+Para eliminar también los volúmenes (base de datos y cachés):
+
+```bash
+docker compose down -v
+```
 
 ---
 

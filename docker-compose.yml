@@ -1,0 +1,99 @@
+name: solucionesvecinales
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: solucionesvecinales-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-solucionesvecinales}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-solucionesvecinales}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app-dev:
+    image: node:24-bookworm
+    container_name: solucionesvecinales-app-dev
+    profiles: ["dev"]
+    working_dir: /app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: "1"
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB:-solucionesvecinales}
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-solucionesvecinales}
+      SESSION_SECRET: ${SESSION_SECRET:-change-this-session-secret}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+      - node_modules_dev:/app/node_modules
+      - next_cache_dev:/app/.next
+      - uploads_data:/app/uploads
+      - playwright_cache:/ms-playwright
+    command: >
+      bash -lc "set -e;
+      npm install;
+      npx playwright install --with-deps;
+      npm run db:migrate:deploy;
+      npm run db:seed;
+      npm run dev -- -H 0.0.0.0 -p 3000"
+
+  app-prod:
+    image: node:24-bookworm
+    container_name: solucionesvecinales-app-prod
+    profiles: ["prod"]
+    working_dir: /app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB:-solucionesvecinales}
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-solucionesvecinales}
+      SESSION_SECRET: ${SESSION_SECRET:-change-this-session-secret}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app:ro
+      - node_modules_prod:/app/node_modules
+      - next_cache_prod:/app/.next
+      - uploads_data:/app/uploads
+    command: >
+      bash -lc "set -e;
+      npm ci;
+      npm run db:migrate:deploy;
+      npm run db:seed;
+      npm run build;
+      npm run start -- -H 0.0.0.0 -p 3000"
+
+volumes:
+  postgres_data:
+  uploads_data:
+  node_modules_dev:
+  node_modules_prod:
+  next_cache_dev:
+  next_cache_prod:
+  playwright_cache:
