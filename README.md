@@ -7,6 +7,83 @@ SolucionesVecinales es una aplicación que ayuda a gestionar comunidades de veci
 El código de la aplicación esta en inglés y español. El motivo de esto es que por un lado se han intentado facilitar su lectura para gente que entienda
 en Inglés, por lo que prácticamente todas las variables y todos los comentarios se han traducido al español. Por otro lado, los componentes, sus argumentos y la mayoría de los tipos de han matentido en inglés, para que las llamadas a componentes o funciones sean más homogéneas, ya que hay muchas que se tienen que realizar en inglés porque vienen de librerías de JS o React.
 
+## Install
+
+En esta sección se explica cómo instalar el software necesario para ejecutar la aplicación en local.
+
+### Linux (Ubuntu/Debian)
+
+1. **Actualizar paquetes del sistema**
+
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   ```
+
+2. **Instalar Git, Node.js y npm**
+
+   ```bash
+   sudo apt install -y git nodejs npm
+   ```
+
+   Verifica la instalación:
+
+   ```bash
+   node -v
+   npm -v
+   git --version
+   ```
+
+3. **Instalar PostgreSQL**
+
+   ```bash
+   sudo apt install -y postgresql postgresql-contrib
+   sudo systemctl enable postgresql
+   sudo systemctl start postgresql
+   ```
+
+4. **Clonar el repositorio e instalar dependencias del proyecto**
+
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd solucionesvecinales
+   npm install
+   ```
+
+### Windows
+
+1. **Instalar Git**
+
+   Descarga e instala Git desde: https://git-scm.com/download/win
+
+2. **Instalar Node.js (incluye npm)**
+
+   Descarga e instala Node.js LTS desde: https://nodejs.org/
+
+   Verifica en PowerShell o CMD:
+
+   ```powershell
+   node -v
+   npm -v
+   git --version
+   ```
+
+3. **Instalar PostgreSQL**
+
+   Descarga e instala PostgreSQL desde: https://www.postgresql.org/download/windows/
+
+   Durante la instalación, guarda estos datos:
+   - usuario
+   - contraseña
+   - puerto (por defecto 5432)
+
+4. **Clonar el repositorio e instalar dependencias del proyecto**
+
+   ```powershell
+   git clone <URL_DEL_REPOSITORIO>
+   cd solucionesvecinales
+   npm install
+   ```
+
 ## Ejecución en local
 
 ### Requisitos previos
