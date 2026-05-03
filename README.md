@@ -2,6 +2,58 @@
 
 SolucionesVecinales es una aplicación que ayuda a gestionar comunidades de vecinos de forma eficiente y sencilla.
 
+## Nomenclatura e Idioma
+
+El código de la aplicación esta en inglés y español. El motivo de esto es que por un lado se han intentado facilitar su lectura para gente que entienda
+en Inglés, por lo que prácticamente todas las variables y todos los comentarios se han traducido al español. Por otro lado, los componentes, sus argumentos y la mayoría de los tipos de han matentido en inglés, para que las llamadas a componentes o funciones sean más homogéneas, ya que hay muchas que se tienen que realizar en inglés porque vienen de librerías de JS o React.
+
+## Ejecución en local
+
+### Requisitos previos
+
+- Node.js >= 24
+- Una base de datos PostgreSQL accesible
+
+### Pasos
+
+1. **Instalar dependencias**
+   ```bash
+   npm install
+   ```
+
+2. **Configurar variables de entorno**
+
+   Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+   ```
+   DATABASE_URL="postgresql://usuario:contraseña@host:puerto/nombre_bd"
+   SESSION_SECRET="una-cadena-secreta-larga-y-aleatoria"
+   ```
+
+3. **Aplicar las migraciones de la base de datos**
+   ```bash
+   npm run db:migrate:dev
+   ```
+
+4. **Poblar la base de datos con datos de prueba** *(opcional)*
+   ```bash
+   npm run db:seed
+   ```
+   Los usuarios creados son:
+   | Email | Contraseña | Rol |
+   |---|---|---|
+   | fran@gmail.com | 123451234512345 | admin |
+   | juan@gmail.com | 123451234512345 | inquilino |
+   | alberto@gmail.com | dsnojiaiojsdsnojiaiojs | inquilino |
+
+5. **Iniciar el servidor de desarrollo**
+   ```bash
+   npm run dev
+   ```
+
+   La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+
+---
+
 ## Deploy en Vercel (Next.js + Prisma)
 
 Para evitar errores de Prisma en build/deploy:
@@ -19,12 +71,3 @@ Scripts relevantes en este repositorio:
 - npm run vercel-build -> prisma generate && prisma migrate deploy && prisma db seed && next build
 - npm run db:migrate:deploy -> prisma migrate deploy
 - npm run db:seed -> prisma db seed
-
-## Nomenclatura e Idioma
-
-Se ha intentado poner en Castellano el mayor número de elementos posibles, aunque hay ciertos elementos que se han mantenido en inglés para evitar incompatibilidades
-y para que sean más homogéneo.
-
-Así, se han mantenido los tipos definidos en inglés, para que concuerden con el resto de tipos empleados en al aplicación y que están en ingles ya que provienen de Typescript.
-Además, se han mantenido en inglés también los componentes y los parámetros (props) que usan, para mantener la homogeneidad con las etiquetas de HTML que están en ingles, así como los atributos
-de estas etiquetas, los cuales algunos se mapean directamente desde los props. Si se ponen en Castellano, habrá que realizar cambios que solo añadirían complejidad y ruido al código.
