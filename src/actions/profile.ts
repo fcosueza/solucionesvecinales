@@ -4,10 +4,11 @@ import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { eliminarSesion } from "@/lib/session";
 import profileSchema from "@/schemas/common/profile.schema";
-import { FormActionState, UserRole } from "@/types";
+import { FormActionState } from "@/types";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
-import { saveProfileImageFile } from "./uploadProfileImage";
+import { writeFile } from "fs/promises";
+import { extname, join } from "path";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
@@ -24,6 +25,7 @@ type CamposFormularioPerfil = z.infer<typeof profileSchema>;
 export const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
 
+  // Si no hay sesión autenticada, se devuelve un estado de error
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
     return {
       state: "error",
@@ -32,9 +34,11 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
     };
   }
 
+  // Se validan los datos del formulario usando el esquema definido con Zod
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposFormularioPerfil> = profileSchema.safeParse(datos);
 
+  // Si la validación falla, se devuelve un estado de error
   if (!datosValidados.success) {
     return {
       state: "error",
@@ -44,45 +48,48 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
     };
   }
 
+  // Si la validación es exitosa, se procede a actualizar el perfil del usuario
   try {
     const nuevaContrasena: string = datosValidados.data.password;
-    const imageFile = formData.get("imagen");
+    const ficheroImagen = formData.get("imagen");
 
-    let hashedPassword: string | null = null;
-    let imageUrl: string | null = null;
+    let passwordCifrado: string | null = null;
+    let urlImagen: string | null = null;
 
     if (nuevaContrasena) {
       const salCifrado: number = 10;
-      hashedPassword = await bcrypt.hash(nuevaContrasena, salCifrado);
+      passwordCifrado = await bcrypt.hash(nuevaContrasena, salCifrado);
     }
 
-    if (imageFile instanceof File && imageFile.size > 0) {
-      const savedImage = await saveProfileImageFile(imageFile, sesionVerificada.session.userID);
+    // Si existe el fichero de imagen se guarda, si no se puede guardar se devuelve un estado de error
+    if (ficheroImagen instanceof File && ficheroImagen.size > 0) {
+      const imagenGuardada = await saveProfileImageFile(ficheroImagen, sesionVerificada.session.userID);
 
-      if (savedImage.error || !savedImage.imagen) {
+      if (imagenGuardada.error || !imagenGuardada.imagen) {
         return {
           state: "error",
-          message: savedImage.error ?? "Error al actualizar la imagen de perfil",
+          message: imagenGuardada.error ?? "Error al actualizar la imagen de perfil",
           payload: formData
         };
       }
 
-      imageUrl = savedImage.imagen;
+      urlImagen = imagenGuardada.imagen;
     }
 
+    // Se actualizan los datos del usuario en la base de datos, incluyendo la nueva imagen y contraseña si se proporcionaron
     await prisma.usuario.update({
       where: { id: sesionVerificada.session.userID },
       data: {
         nombre: datosValidados.data.name,
         apellido: datosValidados.data.surname,
         email: datosValidados.data.email,
-        ...(imageUrl ? { imagen: imageUrl } : {}),
-        ...(hashedPassword
+        ...(urlImagen ? { imagen: urlImagen } : {}),
+        ...(passwordCifrado
           ? {
               credenciales: {
                 upsert: {
-                  create: { password: hashedPassword },
-                  update: { password: hashedPassword }
+                  create: { password: passwordCifrado },
+                  update: { password: passwordCifrado }
                 }
               }
             }
@@ -133,4 +140,58 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
 
   await eliminarSesion();
   redirect("/");
+};
+
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+
+export const saveProfileImageFile = async (
+  file: File,
+  userID: number | string
+): Promise<{ error?: string; imagen?: string }> => {
+  if (!(file instanceof File) || file.size === 0) {
+    return { error: "No se ha proporcionado ningún archivo" };
+  }
+
+  if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+    return { error: "Formato de imagen no permitido. Usa JPG, PNG, WebP o GIF." };
+  }
+
+  if (file.size > MAX_SIZE_BYTES) {
+    return { error: "La imagen no puede superar los 5 MB." };
+  }
+
+  const extension = extname(file.name) || ".jpg";
+  const filename = `${userID}-${Date.now()}${extension}`;
+  const uploadDir = join(process.cwd(), "public", "uploads", "profiles");
+  const filepath = join(uploadDir, filename);
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+  await writeFile(filepath, buffer);
+
+  const imagenUrl = `/uploads/profiles/${filename}`;
+
+  return { imagen: imagenUrl };
+};
+
+export const uploadProfile = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
+  const sesionVerificada = await verifySession();
+
+  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+    return { error: "Debes iniciar sesión para subir una imagen" };
+  }
+
+  const file = formData.get("imagen");
+  const result = await saveProfileImageFile(file as File, sesionVerificada.session.userID);
+
+  if (result.error || !result.imagen) {
+    return { error: result.error ?? "No se pudo subir la imagen" };
+  }
+
+  await prisma.usuario.update({
+    where: { id: sesionVerificada.session.userID },
+    data: { imagen: result.imagen }
+  });
+
+  return { imagen: result.imagen };
 };

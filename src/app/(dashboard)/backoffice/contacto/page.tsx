@@ -1,5 +1,5 @@
 import CardStat from "@/components/ui/Cards/CardStat";
-import { deleteContacto } from "@/actions/backoffice/delete";
+import { deleteContact } from "@/actions/contactMsg";
 import prisma from "@/lib/prisma";
 import style from "../style.module.css";
 
@@ -83,7 +83,7 @@ export default async function BackOfficeContactoPage({
                   <div className={style.pillRow}>
                     <span className={style.pill}>{contacto.creadoEn.toLocaleDateString("es-ES")}</span>
                   </div>
-                  <form action={deleteContacto}>
+                  <form action={deleteContact}>
                     <input type="hidden" name="nombre" value={contacto.nombre} />
                     <input type="hidden" name="email" value={contacto.email} />
                     <input type="hidden" name="creadoEn" value={contacto.creadoEn.toISOString()} />

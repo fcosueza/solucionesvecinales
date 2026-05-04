@@ -1,5 +1,5 @@
 import CardStat from "@/components/ui/Cards/CardStat";
-import { deleteIncidencia } from "@/actions/backoffice/delete";
+import { deleteIncidentAdmin } from "@/actions/community/communityIncident";
 import prisma from "@/lib/prisma";
 import style from "../style.module.css";
 
@@ -69,7 +69,8 @@ export default async function BackOfficeIncidentsPage({
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Incidencias</h2>
         <p className={style.sectionDescription}>
-          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}{q ? ` para "${q}"` : ""}.
+          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}
+          {q ? ` para "${q}"` : ""}.
         </p>
 
         <form method="GET" className={style.searchRow}>
@@ -102,7 +103,7 @@ export default async function BackOfficeIncidentsPage({
                     <span className={style.pill}>{incidencia.estado}</span>
                     <span className={style.pill}>{incidencia.actualizadaEn.toLocaleDateString("es-ES")}</span>
                   </div>
-                  <form action={deleteIncidencia}>
+                  <form action={deleteIncidentAdmin}>
                     <input type="hidden" name="comunidad" value={incidencia.comunidad} />
                     <input type="hidden" name="usuario" value={incidencia.usuario} />
                     <input type="hidden" name="fecha" value={incidencia.fecha.toISOString()} />

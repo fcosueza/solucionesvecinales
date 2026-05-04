@@ -64,4 +64,19 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
   } catch {}
 };
 
-export { communityFinance };
+const deleteRecord = async (formData: FormData): Promise<void> => {
+  const session = await verifySession();
+
+  if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
+
+  const id = Number(formData.get("id"));
+  if (!id || isNaN(id)) return;
+
+  try {
+    await prisma.registro.delete({ where: { id } });
+    revalidatePath("/backoffice/finanzas");
+    revalidatePath("/backoffice/overview");
+  } catch {}
+};
+
+export { communityFinance, deleteRecord };

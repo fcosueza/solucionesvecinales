@@ -1,5 +1,5 @@
 import CardStat from "@/components/ui/Cards/CardStat";
-import { deleteUsuario } from "@/actions/backoffice/delete";
+import { deleteUser } from "@/actions/user";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types";
 import style from "../style.module.css";
@@ -78,7 +78,8 @@ export default async function BackOfficeUsersPage({
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Usuarios</h2>
         <p className={style.sectionDescription}>
-          {totalFiltrados} resultado{totalFiltrados !== 1 ? "s" : ""}{q ? ` para "${q}"` : ""}.
+          {totalFiltrados} resultado{totalFiltrados !== 1 ? "s" : ""}
+          {q ? ` para "${q}"` : ""}.
         </p>
 
         <form method="GET" className={style.searchRow}>
@@ -108,7 +109,7 @@ export default async function BackOfficeUsersPage({
                     <span className={style.pill}>{usuario._count.inscripciones} inscripciones</span>
                     <span className={style.pill}>{usuario._count.solicitudes} solicitudes</span>
                   </div>
-                  <form action={deleteUsuario}>
+                  <form action={deleteUser}>
                     <input type="hidden" name="id" value={usuario.id} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar

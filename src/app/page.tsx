@@ -4,7 +4,6 @@ import Footer from "@/components/layouts/Footer";
 import CardFeatures from "@/components/ui/Cards/CardFeatures";
 import Gallery from "@/components/layouts/Gallery";
 import ContactForm from "@/components/layouts/Forms/ContactForm";
-import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import Image from "next/image";
 import { NavItem } from "@/types";
 import { SocialIcon } from "@/types";
@@ -69,18 +68,6 @@ const iconosSociales: SocialIcon[] = [
   }
 ];
 
-const helpContent: HelpContent = {
-  title: "Ayuda: Inicio",
-  summary: "Esta página presenta la plataforma y te permite ir a registro, login o contacto.",
-  steps: [
-    "Revisa las secciones de beneficios y funcionalidades.",
-    "Pulsa Regístrate ahora para crear una cuenta.",
-    "Si ya tienes cuenta, ve a Iniciar sesión.",
-    "Usa el formulario de contacto para dudas o sugerencias."
-  ],
-  constraints: ["No gestiona datos de comunidad directamente.", "Algunas acciones requieren autenticación previa."]
-};
-
 // Datos para las tarjetas
 const datosTarjetas = [
   {
@@ -112,7 +99,6 @@ const datosTarjetas = [
 export default function Home() {
   return (
     <>
-      <PageHelpWidget content={helpContent} />
       <Header links={enlacesCabecera} buttonText="Iniciar sesión" buttonRoute="/login" backgroundVariant="highlight" />
 
       <main className={style.main}>

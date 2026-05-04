@@ -25,7 +25,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     );
     expect(screen.getByRole("navigation", { name: "Opciones del dashboard" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Mis comunidades" })).toHaveAttribute("href", "/communities");
-    expect(screen.getByRole("link", { name: "Perfil" })).toHaveAttribute("href", "/profile");
+    expect(screen.getByRole("link", { name: "Perfil de Usuario" })).toHaveAttribute("href", "/profile");
     expect(screen.getByRole("link", { name: "Salir" })).toHaveAttribute("href", "/logout");
     expect(screen.getByAltText("Logo de Soluciones Vecinales en blanco")).toBeInTheDocument();
   });
@@ -53,7 +53,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
 
     expect(screen.getByRole("link", { name: "Mis comunidades" })).toHaveClass("menuLinkActive");
-    expect(screen.getByRole("link", { name: "Perfil" })).not.toHaveClass("menuLinkActive");
+    expect(screen.getByRole("link", { name: "Perfil de Usuario" })).not.toHaveClass("menuLinkActive");
     expect(screen.getByRole("link", { name: "Salir" })).not.toHaveClass("menuLinkActive");
   });
 
@@ -62,7 +62,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
 
-    expect(screen.getByRole("link", { name: "Perfil" })).toHaveClass("menuLinkActive");
+    expect(screen.getByRole("link", { name: "Perfil de Usuario" })).toHaveClass("menuLinkActive");
     expect(screen.getByRole("link", { name: "Mis comunidades" })).not.toHaveClass("menuLinkActive");
   });
 
@@ -121,11 +121,20 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Finanzas" })).toHaveAttribute("href", "/backoffice/finanzas");
     expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/backoffice/solicitudes");
     expect(screen.queryByRole("link", { name: "Mis comunidades" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Perfil" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Perfil de Usuario" })).not.toBeInTheDocument();
   });
 
   it("Debe mantener activa Vista General en la raiz del back office", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/backoffice");
+
+    render(<SideMenu userName="Laura" role={UserRole.webAdmin} />);
+
+    expect(screen.getByRole("link", { name: "Vista General" })).toHaveClass("menuLinkActive");
+    expect(screen.getByRole("link", { name: "Comunidades" })).not.toHaveClass("menuLinkActive");
+  });
+
+  it("Debe mantener activa Vista General en una subruta del overview de back office", () => {
+    (rutaActualMock as jest.Mock).mockReturnValue("/backoffice/overview/metricas");
 
     render(<SideMenu userName="Laura" role={UserRole.webAdmin} />);
 

@@ -200,5 +200,25 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
   } catch {}
 };
 
-export { addIncident, deleteIncident };
+const deleteIncidentAdmin = async (formData: FormData): Promise<void> => {
+  const session = await verifySession();
+
+  if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
+
+  const comunidad = Number(formData.get("comunidad"));
+  const usuario = String(formData.get("usuario") ?? "").trim();
+  const fecha = new Date(String(formData.get("fecha") ?? ""));
+
+  if (!comunidad || isNaN(comunidad) || !usuario || isNaN(fecha.getTime())) return;
+
+  try {
+    await prisma.incidencia.delete({
+      where: { comunidad_usuario_fecha: { comunidad, usuario, fecha } }
+    });
+    revalidatePath("/backoffice/incidencias");
+    revalidatePath("/backoffice/overview");
+  } catch {}
+};
+
+export { addIncident, deleteIncident, deleteIncidentAdmin };
 export default updateIncidentStatus;

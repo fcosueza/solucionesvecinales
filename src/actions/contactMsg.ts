@@ -1,8 +1,10 @@
 "use server";
 
+import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import contactSchema from "@/schemas/common/contact.schema";
-import { FormActionState } from "@/types";
+import { FormActionState, UserRole } from "@/types";
+import { revalidatePath } from "next/cache";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
@@ -60,4 +62,22 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
   };
 };
 
+const deleteContact = async (formData: FormData): Promise<void> => {
+  const session = await verifySession();
+
+  if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
+
+  const nombre = String(formData.get("nombre") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
+  const creadoEn = new Date(String(formData.get("creadoEn") ?? ""));
+
+  if (!nombre || !email || isNaN(creadoEn.getTime())) return;
+
+  try {
+    await prisma.contacto.delete({ where: { nombre_email_creadoEn: { nombre, email, creadoEn } } });
+    revalidatePath("/backoffice/contacto");
+  } catch {}
+};
+
+export { deleteContact };
 export default contactMsg;

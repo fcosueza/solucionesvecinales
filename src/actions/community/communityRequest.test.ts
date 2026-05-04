@@ -1,7 +1,8 @@
-import requestCommunitySubscription from "./communityRequest";
+import requestCommunitySubscription, { deleteRequest } from "./communityRequest";
 import prisma from "@/lib/prisma";
 import verifySession from "@/lib/dal";
 import { revalidatePath } from "next/cache";
+import { UserRole } from "@/types";
 
 jest.mock("@/lib/dal", () => jest.fn());
 jest.mock("next/cache", () => ({
@@ -16,7 +17,8 @@ jest.mock("@/lib/prisma", () => ({
   },
   solicitud: {
     findFirst: jest.fn(),
-    create: jest.fn()
+    create: jest.fn(),
+    delete: jest.fn()
   }
 }));
 
@@ -175,5 +177,84 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     await requestCommunitySubscription(formDataWithCommunity("5"));
 
     expect(prisma.solicitud.create).toHaveBeenCalled();
+  });
+});
+
+describe("Suite de pruebas de deleteRequest", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("No debe hacer nada si no hay sesion autenticada", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
+
+    const formData = new FormData();
+    formData.append("id", "10");
+
+    await deleteRequest(formData);
+
+    expect(prisma.solicitud.delete).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it("No debe hacer nada si el rol no es webAdmin", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "admin-1", role: UserRole.admin }
+    });
+
+    const formData = new FormData();
+    formData.append("id", "10");
+
+    await deleteRequest(formData);
+
+    expect(prisma.solicitud.delete).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it("No debe hacer nada si el id es invalido", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "webadmin-1", role: UserRole.webAdmin }
+    });
+
+    const formData = new FormData();
+    formData.append("id", "abc");
+
+    await deleteRequest(formData);
+
+    expect(prisma.solicitud.delete).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it("Debe eliminar solicitud y revalidar rutas", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "webadmin-1", role: UserRole.webAdmin }
+    });
+    (prisma.solicitud.delete as jest.Mock).mockResolvedValue({});
+
+    const formData = new FormData();
+    formData.append("id", "24");
+
+    await deleteRequest(formData);
+
+    expect(prisma.solicitud.delete).toHaveBeenCalledWith({ where: { id: 24 } });
+    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/solicitudes");
+    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
+  });
+
+  it("No debe lanzar error si prisma.delete falla", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "webadmin-1", role: UserRole.webAdmin }
+    });
+    (prisma.solicitud.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+
+    const formData = new FormData();
+    formData.append("id", "24");
+
+    await expect(deleteRequest(formData)).resolves.toBeUndefined();
+    expect(revalidatePath).not.toHaveBeenCalled();
   });
 });

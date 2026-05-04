@@ -189,4 +189,23 @@ const deleteZone = async (communityID: number, zoneName: string): Promise<FormAc
   };
 };
 
-export { createZone, deleteZone };
+const deleteZoneAdmin = async (formData: FormData): Promise<void> => {
+  const session = await verifySession();
+
+  if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
+
+  const nombre = String(formData.get("nombre") ?? "").trim();
+  const comunidad = Number(formData.get("comunidad"));
+
+  if (!nombre || !comunidad || isNaN(comunidad)) return;
+
+  try {
+    await prisma.zona.delete({
+      where: { nombre_comunidad: { nombre, comunidad } }
+    });
+    revalidatePath("/backoffice/zonas-comunes");
+    revalidatePath("/backoffice/overview");
+  } catch {}
+};
+
+export { createZone, deleteZone, deleteZoneAdmin };

@@ -1,5 +1,5 @@
 import CardStat from "@/components/ui/Cards/CardStat";
-import { deleteComunidad } from "@/actions/backoffice/delete";
+import { deleteCommunityAdmin } from "@/actions/community/communitySettings";
 import prisma from "@/lib/prisma";
 import style from "../style.module.css";
 
@@ -112,7 +112,7 @@ export default async function BackOfficeCommunitiesPage({
                     <span className={style.pill}>{comunidad._count.incidentes} incidencias</span>
                     <span className={style.pill}>{comunidad._count.solicitudes} solicitudes</span>
                   </div>
-                  <form action={deleteComunidad}>
+                  <form action={deleteCommunityAdmin}>
                     <input type="hidden" name="id" value={comunidad.id} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar

@@ -9,7 +9,7 @@ const rutasPublicas = ["/home", "/login", "/signup"];
 /**
  * Gestiona el acceso a rutas públicas y protegidas según la sesión del usuario.
  * Redirige a `login` cuando una ruta protegida no tiene sesión válida,
- * y envía al `overview` si un usuario autenticado intenta acceder a rutas públicas.
+ * y envía a `communities` si un usuario autenticado intenta acceder a rutas públicas.
  *
  * @param req Solicitud entrante de Next.js.
  *

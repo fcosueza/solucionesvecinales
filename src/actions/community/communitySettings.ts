@@ -4,6 +4,7 @@ import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import communitySchema from "@/schemas/common/community.schema";
 import { FormActionState, UserRole } from "@/types";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
@@ -163,4 +164,19 @@ export const deleteCommunity = async (_prevState: FormActionState, formData: For
   }
 
   redirect("/communities");
+};
+
+export const deleteCommunityAdmin = async (formData: FormData): Promise<void> => {
+  const session = await verifySession();
+
+  if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
+
+  const id = Number(formData.get("id"));
+  if (!id || isNaN(id)) return;
+
+  try {
+    await prisma.comunidad.delete({ where: { id } });
+    revalidatePath("/backoffice/comunidades");
+    revalidatePath("/backoffice/overview");
+  } catch {}
 };

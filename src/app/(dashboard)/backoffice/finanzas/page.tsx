@@ -1,5 +1,5 @@
 import CardStat from "@/components/ui/Cards/CardStat";
-import { deleteRegistro } from "@/actions/backoffice/delete";
+import { deleteRecord } from "@/actions/community/communityFinance";
 import { calculateFinancialSummary, formatCurrencyAmount } from "@/lib/finance";
 import prisma from "@/lib/prisma";
 import style from "../style.module.css";
@@ -71,7 +71,8 @@ export default async function BackOfficeFinancePage({
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Movimientos</h2>
         <p className={style.sectionDescription}>
-          {totalFiltrados} resultado{totalFiltrados !== 1 ? "s" : ""}{q ? ` para "${q}"` : ""}.
+          {totalFiltrados} resultado{totalFiltrados !== 1 ? "s" : ""}
+          {q ? ` para "${q}"` : ""}.
         </p>
 
         <form method="GET" className={style.searchRow}>
@@ -99,7 +100,7 @@ export default async function BackOfficeFinancePage({
                     <span className={style.pill}>{formatCurrencyAmount(Number(registro.importe.toString()))}</span>
                     <span className={style.pill}>{registro.creadoEn.toLocaleDateString("es-ES")}</span>
                   </div>
-                  <form action={deleteRegistro}>
+                  <form action={deleteRecord}>
                     <input type="hidden" name="id" value={registro.id} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar

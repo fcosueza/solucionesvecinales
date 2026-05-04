@@ -1,5 +1,5 @@
 import CardStat from "@/components/ui/Cards/CardStat";
-import { deleteSolicitud } from "@/actions/backoffice/delete";
+import { deleteRequest } from "@/actions/community/communityRequest";
 import prisma from "@/lib/prisma";
 import style from "../style.module.css";
 
@@ -73,7 +73,8 @@ export default async function BackOfficeRequestsPage({
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Solicitudes</h2>
         <p className={style.sectionDescription}>
-          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}{q ? ` para "${q}"` : ""}.
+          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}
+          {q ? ` para "${q}"` : ""}.
         </p>
 
         <form method="GET" className={style.searchRow}>
@@ -102,7 +103,7 @@ export default async function BackOfficeRequestsPage({
                     <span className={style.pill}>{solicitud.estado}</span>
                     <span className={style.pill}>{solicitud.creadoEn.toLocaleDateString("es-ES")}</span>
                   </div>
-                  <form action={deleteSolicitud}>
+                  <form action={deleteRequest}>
                     <input type="hidden" name="id" value={solicitud.id} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar

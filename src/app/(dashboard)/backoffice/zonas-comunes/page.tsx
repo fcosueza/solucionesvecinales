@@ -1,5 +1,5 @@
 import CardStat from "@/components/ui/Cards/CardStat";
-import { deleteZona } from "@/actions/backoffice/delete";
+import { deleteZoneAdmin } from "@/actions/community/communityZone";
 import prisma from "@/lib/prisma";
 import style from "../style.module.css";
 
@@ -76,7 +76,8 @@ export default async function BackOfficeZonesPage({
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Zonas Comunes</h2>
         <p className={style.sectionDescription}>
-          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}{q ? ` para "${q}"` : ""}.
+          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}
+          {q ? ` para "${q}"` : ""}.
         </p>
 
         <form method="GET" className={style.searchRow}>
@@ -106,7 +107,7 @@ export default async function BackOfficeZonesPage({
                     </span>
                     <span className={style.pill}>{zona._count.reservas} reservas</span>
                   </div>
-                  <form action={deleteZona}>
+                  <form action={deleteZoneAdmin}>
                     <input type="hidden" name="nombre" value={zona.nombre} />
                     <input type="hidden" name="comunidad" value={zona.comunidad} />
                     <button type="submit" className={style.deleteBtn}>

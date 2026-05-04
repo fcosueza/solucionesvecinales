@@ -103,4 +103,20 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
   revalidatePath("/communities/search");
 };
 
+const deleteRequest = async (formData: FormData): Promise<void> => {
+  const session = await verifySession();
+
+  if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
+
+  const id = Number(formData.get("id"));
+  if (!id || isNaN(id)) return;
+
+  try {
+    await prisma.solicitud.delete({ where: { id } });
+    revalidatePath("/backoffice/solicitudes");
+    revalidatePath("/backoffice/overview");
+  } catch {}
+};
+
+export { deleteRequest };
 export default requestCommunitySubscription;

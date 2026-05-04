@@ -1,4 +1,4 @@
-import updateIncidentStatus, { addIncident, deleteIncident } from "./communityIncident";
+import updateIncidentStatus, { addIncident, deleteIncident, deleteIncidentAdmin } from "./communityIncident";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
@@ -463,6 +463,111 @@ describe("Suite de pruebas de addIncident", () => {
     (prisma.incidencia.create as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     await expect(addIncident(3, createFormData({}))).resolves.toBeUndefined();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+});
+
+describe("Suite de pruebas de deleteIncidentAdmin", () => {
+  const createFormData = ({
+    comunidad = "3",
+    usuario = "user-1",
+    fecha = "2026-05-02T09:30:00.000Z"
+  }: {
+    comunidad?: string;
+    usuario?: string;
+    fecha?: string;
+  }) => {
+    const formData = new FormData();
+
+    formData.append("comunidad", comunidad);
+    formData.append("usuario", usuario);
+    formData.append("fecha", fecha);
+
+    return formData;
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("No debe hacer nada si no hay sesion autenticada", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
+
+    await deleteIncidentAdmin(createFormData({}));
+
+    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it("No debe hacer nada si el rol no es webAdmin", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "admin-1", role: UserRole.admin }
+    });
+
+    await deleteIncidentAdmin(createFormData({}));
+
+    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it("No debe hacer nada si los datos son invalidos", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "webadmin-1", role: UserRole.webAdmin }
+    });
+
+    await deleteIncidentAdmin(createFormData({ comunidad: "abc", fecha: "fecha-invalida" }));
+
+    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it("No debe hacer nada si faltan usuario y fecha en el FormData", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "webadmin-1", role: UserRole.webAdmin }
+    });
+
+    const formData = new FormData();
+    formData.append("comunidad", "7");
+
+    await deleteIncidentAdmin(formData);
+
+    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
+  it("Debe eliminar incidencia y revalidar rutas", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "webadmin-1", role: UserRole.webAdmin }
+    });
+    (prisma.incidencia.delete as jest.Mock).mockResolvedValue({});
+
+    await deleteIncidentAdmin(createFormData({ comunidad: "7", usuario: "u-9" }));
+
+    expect(prisma.incidencia.delete).toHaveBeenCalledWith({
+      where: {
+        comunidad_usuario_fecha: {
+          comunidad: 7,
+          usuario: "u-9",
+          fecha: new Date("2026-05-02T09:30:00.000Z")
+        }
+      }
+    });
+    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/incidencias");
+    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
+  });
+
+  it("No debe lanzar error si prisma.delete falla", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: { userID: "webadmin-1", role: UserRole.webAdmin }
+    });
+    (prisma.incidencia.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+
+    await expect(deleteIncidentAdmin(createFormData({}))).resolves.toBeUndefined();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 });
