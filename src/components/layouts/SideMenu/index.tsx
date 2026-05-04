@@ -22,12 +22,14 @@ type MenuLink = {
 /// Enlaces base que siempre se muestran en el menú lateral, independientemente de la comunidad activa o el rol del usuario.
 const enlacesBase = [
   { text: "Mis comunidades", href: "/communities" },
-  { text: "Perfil", href: "/profile" },
+  { text: "Perfil de Usuario", href: "/profile" },
+  { text: "Contacto", href: "/contacto" },
   { text: "Salir", href: "/logout" }
 ] as const;
 
 const enlacesBackOffice = [
   { text: "Vista General", href: "/backoffice/overview" },
+  { text: "Contacto", href: "/backoffice/contacto" },
   { text: "Comunidades", href: "/backoffice/comunidades" },
   { text: "Usuarios", href: "/backoffice/usuarios" },
   { text: "Incidencias", href: "/backoffice/incidencias" },

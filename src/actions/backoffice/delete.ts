@@ -96,3 +96,18 @@ export async function deleteSolicitud(formData: FormData): Promise<void> {
     revalidatePath("/backoffice/overview");
   } catch {}
 }
+
+export async function deleteContacto(formData: FormData): Promise<void> {
+  if (!(await verifyWebAdmin())) return;
+
+  const nombre = String(formData.get("nombre") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
+  const creadoEn = new Date(String(formData.get("creadoEn") ?? ""));
+
+  if (!nombre || !email || isNaN(creadoEn.getTime())) return;
+
+  try {
+    await prisma.contacto.delete({ where: { nombre_email_creadoEn: { nombre, email, creadoEn } } });
+    revalidatePath("/backoffice/contacto");
+  } catch {}
+}

@@ -100,8 +100,14 @@ test.describe("contenido del footer", () => {
 
     await expect(footer).toBeVisible();
     await expect(footer.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "#");
-    await expect(footer.getByRole("link", { name: "Mapa del Sitio" })).toHaveAttribute("href", "#gallery");
-    await expect(footer.getByRole("link", { name: "Política de Privacidad" })).toHaveAttribute("href", "#contact");
+    await expect(footer.getByRole("link", { name: "Política de Cookies" })).toHaveAttribute(
+      "href",
+      "/politica-cookies"
+    );
+    await expect(footer.getByRole("link", { name: "Política de Privacidad" })).toHaveAttribute(
+      "href",
+      "/politica-privacidad"
+    );
   });
 
   test("El footer muestra los iconos sociales esperados con enlaces externos", async ({ page }) => {

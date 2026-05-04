@@ -10,7 +10,8 @@ const accesosDirectos = [
   { text: "Incidencias", href: "/backoffice/incidencias" },
   { text: "Zonas Comunes", href: "/backoffice/zonas-comunes" },
   { text: "Finanzas", href: "/backoffice/finanzas" },
-  { text: "Solicitudes", href: "/backoffice/solicitudes" }
+  { text: "Solicitudes", href: "/backoffice/solicitudes" },
+  { text: "Contacto", href: "/backoffice/contacto" }
 ] as const;
 
 export default async function BackOfficeOverviewPage(): Promise<React.ReactNode> {
