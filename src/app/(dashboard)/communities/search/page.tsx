@@ -5,6 +5,7 @@ import requestCommunitySubscription from "@/actions/community/communityRequest";
 import ScrollToTopOnMount from "@/components/ui/ScrollToTop";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
+import { UserRole } from "@/types";
 import { redirect } from "next/navigation";
 import style from "./style.module.css";
 
@@ -30,6 +31,9 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
+
+  const isAdminUser =
+    verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
   // Realizamos una consulta para obtener todas las comunidades disponibles, ordenadas alfabéticamente por nombre
   const communities = await prisma.comunidad.findMany({
@@ -99,7 +103,7 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
       <ScrollToTopOnMount />
       <main className={style.main}>
         <h1 className={style.title}>Buscar comunidad</h1>
-        <p className={style.description}>Busca comunidades para inscribirte en ellas</p>
+        <p className={style.description}>Aquí aparecen todas las comunidades disponibles</p>
 
         <section className={style.searchSection}>
           <CommunitySearchForm defaultValue={resolvedSearchParams.q ?? ""} />
@@ -109,12 +113,14 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
               {filteredCommunities.map(community => {
                 const isAlreadyEnrolled = enrolledCommunityIDs.has(community.id);
                 const hasPendingRequest = pendingRequestCommunityIDs.has(community.id);
-                const shouldDisableCTA = isAlreadyEnrolled || hasPendingRequest;
+                const shouldDisableCTA = isAdminUser || isAlreadyEnrolled || hasPendingRequest;
                 const ctaText = isAlreadyEnrolled
                   ? "Ya inscrito"
-                  : hasPendingRequest
-                    ? "Solicitud pendiente"
-                    : "Suscribirse";
+                  : isAdminUser
+                    ? "No disponible para administradores"
+                    : hasPendingRequest
+                      ? "Solicitud pendiente"
+                      : "Suscribirse";
                 const subscriptionFormID = `subscription-request-community-${community.id}`;
 
                 return (

@@ -245,6 +245,41 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incidencia.delete).not.toHaveBeenCalled();
   });
 
+  it("No debe eliminar si userID esta vacio", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1",
+        role: UserRole.admin
+      }
+    });
+
+    await deleteIncident(createFormData({ userID: "   " }));
+
+    expect(prisma.inscripcion.findUnique).not.toHaveBeenCalled();
+    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+  });
+
+  it("No debe eliminar si faltan userID e incidentDate en el FormData", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1",
+        role: UserRole.admin
+      }
+    });
+
+    const formData = new FormData();
+    formData.append("communityID", "1");
+
+    await deleteIncident(formData);
+
+    expect(prisma.inscripcion.findUnique).not.toHaveBeenCalled();
+    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+  });
+
   it("No debe eliminar si el admin no esta inscrito en la comunidad", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,

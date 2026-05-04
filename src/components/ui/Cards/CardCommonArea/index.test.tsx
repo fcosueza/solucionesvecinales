@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { formatTimeLabel } from "@/lib/reservations";
 import CardCommonArea from ".";
 
@@ -118,5 +118,57 @@ describe("Suite de pruebas del componente CardCommonArea", () => {
     );
 
     expect(screen.getByText("Sin reservas previstas en la próxima semana.")).toBeInTheDocument();
+  });
+
+  it("Debe renderizar la accion opcional cuando se proporciona", () => {
+    render(
+      <CardCommonArea
+        nombre={nombre}
+        descripcion={descripcion}
+        horaInicio={horaInicio}
+        horaFin={horaFin}
+        imageUrl={imageUrl}
+        action={<button type="button">Reservar ahora</button>}
+      />
+    );
+
+    expect(screen.getByRole("button", { name: "Reservar ahora" })).toBeInTheDocument();
+  });
+
+  it("Debe mostrar y ejecutar eliminar cuando es admin y existe callback", () => {
+    const onDeleteRequest = jest.fn();
+
+    render(
+      <CardCommonArea
+        nombre={nombre}
+        descripcion={descripcion}
+        horaInicio={horaInicio}
+        horaFin={horaFin}
+        imageUrl={imageUrl}
+        isAdmin
+        onDeleteRequest={onDeleteRequest}
+      />
+    );
+
+    const deleteButton = screen.getByRole("button", { name: "Eliminar" });
+
+    fireEvent.click(deleteButton);
+
+    expect(onDeleteRequest).toHaveBeenCalledTimes(1);
+  });
+
+  it("No debe mostrar eliminar si no hay callback", () => {
+    render(
+      <CardCommonArea
+        nombre={nombre}
+        descripcion={descripcion}
+        horaInicio={horaInicio}
+        horaFin={horaFin}
+        imageUrl={imageUrl}
+        isAdmin
+      />
+    );
+
+    expect(screen.queryByRole("button", { name: "Eliminar" })).not.toBeInTheDocument();
   });
 });

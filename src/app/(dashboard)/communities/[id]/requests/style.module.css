@@ -62,7 +62,7 @@
 .listViewport {
   max-height: 82rem;
   overflow-y: auto;
-  padding-right: 0.8rem;
+  padding: 0.2rem 0.8rem 1.2rem;
   scrollbar-gutter: stable;
 }
 
@@ -203,7 +203,7 @@
 
   .listViewport {
     max-height: 148rem;
-    padding-right: 0.4rem;
+    padding: 0.2rem 0.4rem 1.2rem;
   }
 
   .requestItem {

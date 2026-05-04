@@ -2,6 +2,7 @@
 
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
+import { UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
@@ -15,6 +16,14 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
 
   // Comprobamos que el usuario está autenticado
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+    return;
+  }
+
+  const esAdministrador =
+    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+
+  // Los administradores no pueden enviar solicitudes desde el flujo de búsqueda
+  if (esAdministrador) {
     return;
   }
 

@@ -58,6 +58,24 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
+  it("No debe crear solicitud si el usuario es administrador", async () => {
+    (verifySession as jest.Mock).mockResolvedValue({
+      isAuth: true,
+      session: {
+        userID: "admin-1",
+        role: "admin"
+      }
+    });
+
+    await requestCommunitySubscription(formDataWithCommunity("5"));
+
+    expect(prisma.comunidad.findUnique).not.toHaveBeenCalled();
+    expect(prisma.usuario.findUnique).not.toHaveBeenCalled();
+    expect(prisma.solicitud.findFirst).not.toHaveBeenCalled();
+    expect(prisma.solicitud.create).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
+  });
+
   it("No debe crear solicitud si el usuario ya está suscrito", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
