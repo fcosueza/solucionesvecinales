@@ -28,6 +28,18 @@ interface Props {
   onClose: () => void;
 }
 
+/**
+ * Formulario modal para reservar una zona común.
+ * Permite seleccionar fecha, duración (1 o 2 horas) y hora de inicio disponible,
+ * teniendo en cuenta las reservas existentes y el horario de apertura de la zona.
+ *
+ * @param communityID ID de la comunidad a la que pertenece la zona
+ * @param zoneName Nombre de la zona común a reservar
+ * @param openingHour Hora de apertura de la zona (en formato entero, ej: 9)
+ * @param closingHour Hora de cierre de la zona (en formato entero, ej: 22)
+ * @param existingReservations Lista de reservas existentes para gestionar disponibilidad
+ * @param onClose Función de cierre del modal
+ */
 const CommonAreaReservationForm = ({
   communityID,
   zoneName,

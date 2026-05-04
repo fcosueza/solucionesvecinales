@@ -14,17 +14,43 @@ import {
 import { FormActionState } from "@/types";
 import { revalidatePath } from "next/cache";
 
+/**
+ * Construye el filtro para obtener las reservas futuras de un usuario.
+ * Incluye reservas con fecha posterior a hoy o reservas de hoy que aún no han finalizado.
+ *
+ * @param userID ID del usuario
+ * @param currentDate La fecha actual
+ * @param currentTime La hora actual
+ * @returns Objeto de filtro para Prisma
+ */
 const getUpcomingReservationFilter = (userID: string, currentDate: Date, currentTime: Date) => ({
   usuario: userID,
   OR: [{ fecha: { gt: currentDate } }, { fecha: currentDate, hora_fin: { gt: currentTime } }]
 });
 
+/**
+ * Crea un estado de error estandarizado para las respuestas de reserva.
+ *
+ * @param message Mensaje de error a mostrar al usuario
+ * @param formData Datos del formulario opcional para devolver al cliente
+ * @returns Objeto FormActionState con estado de error
+ */
 const createReservationError = (message: string, formData?: FormData): FormActionState => ({
   state: "error",
   message,
   payload: formData
 });
 
+/**
+ * Server action que crea una nueva reserva en una zona común de una comunidad.
+ * Valida que la fecha y horario estén disponibles, que respeten los límites de reserva,
+ * y que el usuario esté inscrito en la comunidad.
+ *
+ * @param communityID ID de la comunidad
+ * @param zoneName Nombre de la zona común a reservar
+ * @param formData FormData que debe contener: fecha, horaInicio y duracion
+ * @returns FormActionState con el resultado de la operación
+ */
 const reserveCommonArea = async (
   communityID: number,
   zoneName: string,

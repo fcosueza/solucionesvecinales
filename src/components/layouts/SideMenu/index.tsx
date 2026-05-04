@@ -39,7 +39,12 @@ const enlacesBackOffice = [
   { text: "Salir", href: "/logout" }
 ] as const;
 
-// Función que genera los enlaces específicos de una comunidad, incluyendo opciones adicionales para administradores.
+/**
+ * Genera los enlaces de navegación específicos de una comunidad.
+ *
+ * @param id ID de la comunidad
+ * @returns Array de objetos con texto y href de cada enlace de la comunidad
+ */
 const enlacesComunidad = (id: string) => [
   { text: "Vista General", href: `/communities/${id}/overview` },
   { text: "Incidencias", href: `/communities/${id}/incidencias` },
@@ -47,21 +52,43 @@ const enlacesComunidad = (id: string) => [
   { text: "Finanzas", href: `/communities/${id}/finanzas` }
 ];
 
-// Función que genera el enlace a la sección de solicitudes, visible solo para administradores.
+/**
+ * Genera el enlace a la sección de solicitudes de una comunidad. Solo visible para administradores.
+ *
+ * @param id ID de la comunidad
+ * @returns Objeto con texto y href del enlace de solicitudes
+ */
 const enlaceSolicitudes = (id: string) => ({ text: "Solicitudes", href: `/communities/${id}/requests` });
 
-// Función que genera el enlace a la sección de configuración, visible solo para administradores.
+/**
+ * Genera el enlace a la sección de configuración de una comunidad. Solo visible para administradores.
+ *
+ * @param id ID de la comunidad
+ * @returns Objeto con texto y href del enlace de configuración
+ */
 const enlaceConfiguracion = (id: string) => ({ text: "Configuracion", href: `/communities/${id}/settings` });
 
-// Mapeo de roles a etiquetas legibles para mostrar en la interfaz.
+/** Mapeo de roles de usuario a etiquetas legibles en español para mostrar en la interfaz. */
 const etiquetasRol: Record<UserRole, string> = {
   [UserRole.tenant]: "Inquilino",
   [UserRole.admin]: "Administrador",
   [UserRole.webAdmin]: "Administrador Web"
 };
 
-// Función que determina si un usuario tiene rol de administrador (admin o webAdmin).
+/**
+ * Determina si un usuario tiene rol de administrador (admin o webAdmin).
+ *
+ * @param role El rol del usuario
+ * @returns true si el usuario es admin o webAdmin
+ */
 const isAdmin = (role: UserRole) => role === UserRole.admin || role === UserRole.webAdmin;
+
+/**
+ * Determina si la ruta actual pertenece al backoffice.
+ *
+ * @param rutaActual La ruta actual del navegador
+ * @returns true si la ruta es "/backoffice" o comienza por "/backoffice/"
+ */
 const isBackOfficeRoute = (rutaActual: string) => rutaActual === "/backoffice" || rutaActual.startsWith("/backoffice/");
 
 /**

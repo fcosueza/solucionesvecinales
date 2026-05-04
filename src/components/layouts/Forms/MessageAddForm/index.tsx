@@ -9,6 +9,13 @@ interface Props {
   onClose: () => void;
 }
 
+/**
+ * Formulario modal para publicar un nuevo mensaje en el tablón de una comunidad.
+ * Solo accesible para administradores de la comunidad.
+ *
+ * @param comunidadId ID de la comunidad a la que pertenece el tablón
+ * @param onClose Función de cierre del modal
+ */
 const MessageAddForm = ({ comunidadId, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);

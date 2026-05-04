@@ -16,6 +16,12 @@ interface Props {
   isAdmin?: boolean;
 }
 
+/**
+ * Formatea un objeto Date como etiqueta de fecha y hora en español (dd/mm/yyyy hh:mm).
+ *
+ * @param date El objeto Date a formatear
+ * @returns String con la fecha en formato español
+ */
 const toDateLabel = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
     day: "2-digit",
@@ -26,18 +32,46 @@ const toDateLabel = (date: Date): string => {
   }).format(date);
 };
 
+/**
+ * Convierte el estado interno de la incidencia en una etiqueta legible en español.
+ *
+ * @param state El estado de la incidencia
+ * @returns Etiqueta del estado en español
+ */
 const toStateLabel = (state: IncidentState): string => {
   if (state === "procesandose") return "procesandose";
   if (state === "resuelto") return "resuelta";
   return "reportada";
 };
 
+/**
+ * Devuelve la etiqueta del botón de acción según el estado actual de la incidencia.
+ *
+ * @param state El estado actual de la incidencia
+ * @returns Texto a mostrar en el botón de cambio de estado
+ */
 const toButtonLabel = (state: IncidentState): string => {
   if (state === "reportado") return "Procesar";
   if (state === "procesandose") return "Resolver";
   return "Resuelta";
 };
 
+/**
+ * Tarjeta que muestra los detalles de una incidencia en la comunidad.
+ * Muestra información del reportero, descripción y estado actual.
+ * Los administradores pueden cambiar el estado y eliminar incidencias resueltas.
+ *
+ * @param communityID ID de la comunidad a la que pertenece la incidencia
+ * @param userID ID del usuario que reportó la incidencia
+ * @param incidentDate Fecha en la que se reportó la incidencia
+ * @param title Título de la incidencia
+ * @param updatedAt Fecha de la última actualización del estado
+ * @param userName Nombre del usuario que reportó la incidencia
+ * @param userEmail Email del usuario que reportó la incidencia
+ * @param description Descripción detallada de la incidencia
+ * @param state Estado actual de la incidencia (reportado, procesandose, resuelto)
+ * @param isAdmin Indica si el usuario actual es administrador (por defecto false)
+ */
 const CardIncident = ({
   communityID,
   userID,

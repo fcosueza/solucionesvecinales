@@ -15,6 +15,14 @@ const helpContent: HelpContent = {
   constraints: ["El mensaje debe tener al menos 20 caracteres.", "El correo debe tener un formato válido."]
 };
 
+/**
+ * Página de contacto del dashboard.
+ * Proporciona un formulario de contacto para que los usuarios envíen consultas,
+ * sugerencias o incidencias directamente al equipo de la plataforma.
+ *
+ * @component
+ * @returns La página de contacto renderizada
+ */
 const ContactoPage = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();
 

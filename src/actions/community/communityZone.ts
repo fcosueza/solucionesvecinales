@@ -5,6 +5,15 @@ import prisma from "@/lib/prisma";
 import { UserRole, FormActionState } from "@/types";
 import { revalidatePath } from "next/cache";
 
+/**
+ * Server action que crea una nueva zona común en una comunidad.
+ * Solo puede ser ejecutada por el administrador de la comunidad.
+ * Valida que la hora de inicio sea anterior a la de fin y que el nombre sea único.
+ *
+ * @param communityID - ID de la comunidad donde se crea la zona
+ * @param formData - FormData que debe contener: nombre, descripcion, horaInicio y horaFin
+ * @returns FormActionState con el resultado de la operación
+ */
 const createZone = async (communityID: number, formData: FormData): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
 
@@ -126,6 +135,15 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
   };
 };
 
+/**
+ * Server action que elimina una zona común de una comunidad.
+ * Solo puede ser ejecutada por el administrador de la comunidad.
+ * Valida que el usuario tenga permisos para gestionar la comunidad.
+ *
+ * @param communityID - ID de la comunidad de la que se elimina la zona
+ * @param zoneName - Nombre de la zona a eliminar
+ * @returns FormActionState con el resultado de la operación
+ */
 const deleteZone = async (communityID: number, zoneName: string): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
 
@@ -189,6 +207,13 @@ const deleteZone = async (communityID: number, zoneName: string): Promise<FormAc
   };
 };
 
+/**
+ * Server action que elimina una zona común desde el backoffice.
+ * Solo puede ser ejecutada por webAdmin.
+ * Revalida las rutas del backoffice después de eliminar la zona.
+ *
+ * @param formData - FormData que debe contener: nombre y comunidad
+ */
 const deleteZoneAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 

@@ -7,6 +7,13 @@ import { UserRole } from "@/types";
 
 type IncidentState = "reportado" | "procesandose" | "resuelto";
 
+/**
+ * Obtiene el siguiente estado en la progresión de una incidencia.
+ * La progresión es: reportado -> procesandose -> resuelto
+ *
+ * @param currentState El estado actual de la incidencia
+ * @returns El siguiente estado en la secuencia
+ */
 const getNextState = (currentState: IncidentState): IncidentState => {
   if (currentState === "reportado") {
     return "procesandose";
@@ -19,6 +26,13 @@ const getNextState = (currentState: IncidentState): IncidentState => {
   return "resuelto";
 };
 
+/**
+ * Actualiza el estado de una incidencia al siguiente estado en la progresión.
+ * Solo puede ser ejecutada por miembros inscritos en la comunidad.
+ * Valida los permisos antes de actualizar.
+ *
+ * @param formData FormData que debe contener: communityID, userID e incidentDate
+ */
 const updateIncidentStatus = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
 
@@ -85,6 +99,12 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
   revalidatePath(`/communities/${communityID}/overview`);
 };
 
+/**
+ * Elimina una incidencia de la base de datos. Solo puede ser ejecutada por administradores.
+ * Revalida las rutas del backoffice de incidencias después de eliminar.
+ *
+ * @param formData FormData que debe contener el ID de la incidencia a eliminar
+ */
 const deleteIncident = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
 

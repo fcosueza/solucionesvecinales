@@ -14,6 +14,14 @@ const accesosDirectos = [
   { text: "Contacto", href: "/backoffice/contacto" }
 ] as const;
 
+/**
+ * Página de vista general del backoffice.
+ * Muestra un resumen operativo global de la plataforma con estadísticas de comunidades,
+ * usuarios, incidencias, zonas comunes, solicitudes y balance financiero.
+ *
+ * @component
+ * @returns La página de overview del backoffice renderizada
+ */
 export default async function BackOfficeOverviewPage(): Promise<React.ReactNode> {
   const [
     totalComunidades,

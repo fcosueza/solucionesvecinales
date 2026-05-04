@@ -16,6 +16,12 @@ interface Props {
   isAdmin?: boolean;
 }
 
+/**
+ * Formatea un objeto Date como etiqueta de fecha y hora en español (dd/mm/yyyy hh:mm).
+ *
+ * @param date El objeto Date a formatear
+ * @returns String con la fecha en formato español
+ */
 const formatMessageDate = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
     day: "2-digit",
@@ -26,6 +32,15 @@ const formatMessageDate = (date: Date): string => {
   }).format(date);
 };
 
+/**
+ * Tablón de mensajes de una comunidad.
+ * Muestra la lista de mensajes publicados por el administrador.
+ * Si el usuario es administrador, puede añadir y eliminar mensajes.
+ *
+ * @param mensajes Lista de mensajes del tablón
+ * @param comunidadId ID de la comunidad a la que pertenece el tablón
+ * @param isAdmin Indica si el usuario actual es administrador (por defecto false)
+ */
 const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);
 

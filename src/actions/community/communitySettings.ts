@@ -166,6 +166,13 @@ export const deleteCommunity = async (_prevState: FormActionState, formData: For
   redirect("/communities");
 };
 
+/**
+ * Server action que elimina una comunidad desde el backoffice.
+ * Solo puede ser ejecutada por webAdmin.
+ * Revalida las rutas del backoffice después de eliminar.
+ *
+ * @param formData FormData que debe contener el campo "id" de la comunidad a eliminar
+ */
 export const deleteCommunityAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 

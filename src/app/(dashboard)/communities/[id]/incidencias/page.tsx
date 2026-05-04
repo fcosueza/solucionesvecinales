@@ -44,6 +44,15 @@ const helpContent: HelpContent = {
   ]
 };
 
+/**
+ * Página de incidencias de una comunidad.
+ * Lista todas las incidencias reportadas en la comunidad con su estado actual.
+ * Permite reportar nuevas incidencias y hacer seguimiento del flujo de resolución.
+ *
+ * @component
+ * @param params Parámetros de la ruta que incluyen el ID de la comunidad
+ * @returns La página de incidencias de la comunidad renderizada
+ */
 const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
   const communityID = Number(id);

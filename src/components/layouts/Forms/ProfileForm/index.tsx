@@ -31,6 +31,19 @@ const etiquetasRol: Record<UserRole, string> = {
   [UserRole.webAdmin]: "Administrador Web"
 };
 
+/**
+ * Formulario para actualizar el perfil del usuario autenticado.
+ * Permite modificar nombre, apellido, email y avatar.
+ * También incluye la opción de eliminar la cuenta permanentemente.
+ * Los administradores con comunidades activas no pueden eliminar su cuenta directamente.
+ *
+ * @param nombre Nombre actual del usuario
+ * @param apellido Apellido(s) actuales del usuario
+ * @param email Email actual del usuario
+ * @param rol Rol del usuario (tenant, admin, webAdmin)
+ * @param imagen URL del avatar actual del usuario (opcional)
+ * @param tieneComunidades Indica si el administrador tiene comunidades activas (por defecto false)
+ */
 const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = false }: Props): React.ReactNode => {
   const router = useRouter();
   const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(

@@ -167,10 +167,24 @@ const INCIDENT_TEMPLATES = [
 const INCIDENT_STATUSES = ["reportado", "procesandose", "resuelto"] as const;
 const REQUEST_STATUSES = ["aprobada", "aprobada", "pendiente", "pendiente", "pendiente"] as const;
 
+/**
+ * Crea un objeto Date en UTC con la hora especificada.
+ * Se utiliza para inicializar horarios de zonas comunes durante la siembra de datos.
+ *
+ * @param hour La hora en formato 24h (0-23)
+ * @returns Un objeto Date con la hora especificada
+ */
 function timeAt(hour: number): Date {
   return new Date(Date.UTC(1970, 0, 1, hour, 0, 0, 0));
 }
 
+/**
+ * Función principal de siembra de datos que popula la base de datos con datos de prueba.
+ * Limpia datos existentes y crea comunidades, usuarios, zonas comunes, reservas,
+ * incidencias, mensajes, solicitudes y registros financieros.
+ *
+ * @returns Promesa sin valor devuelto
+ */
 async function main(): Promise<void> {
   const communityNames = COMMUNITY_SEED_DATA.map(community => community.nombre);
 

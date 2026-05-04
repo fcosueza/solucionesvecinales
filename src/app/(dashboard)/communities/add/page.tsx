@@ -18,6 +18,14 @@ const helpContent: HelpContent = {
   constraints: ["Disponible solo para roles autorizados.", "Los datos obligatorios deben estar completos."]
 };
 
+/**
+ * Página para crear una nueva comunidad.
+ * Permite a los usuarios con rol de administrador crear una nueva comunidad en la plataforma.
+ * Redirige a communities si el usuario no tiene los permisos necesarios.
+ *
+ * @component
+ * @returns La página de creación de comunidad renderizada
+ */
 const NewCommunity = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();
 

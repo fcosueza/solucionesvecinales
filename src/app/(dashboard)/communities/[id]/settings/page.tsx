@@ -25,6 +25,14 @@ const helpContent: HelpContent = {
   ]
 };
 
+/**
+ * Página de configuración de una comunidad.
+ * Permite a los administradores editar los datos de la comunidad como nombre, dirección y descripción.
+ *
+ * @component
+ * @param params Parámetros de la ruta que incluyen el ID de la comunidad
+ * @returns La página de configuración de la comunidad renderizada
+ */
 const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
   const communityID = Number(id);

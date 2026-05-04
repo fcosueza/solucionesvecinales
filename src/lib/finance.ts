@@ -11,6 +11,13 @@ interface FinancialSummary {
   balanceFinal: number;
 }
 
+/**
+ * Convierte un importe en cualquier formato a un número.
+ * Acepta números, strings y objetos con método toString.
+ *
+ * @param importe El importe a convertir (número, string u objeto con toString)
+ * @returns El importe convertido a número
+ */
 const toAmountNumber = (importe: RegistroCalculable["importe"]): number => {
   if (typeof importe === "number") {
     return importe;
@@ -19,6 +26,13 @@ const toAmountNumber = (importe: RegistroCalculable["importe"]): number => {
   return Number(importe.toString());
 };
 
+/**
+ * Calcula el resumen financiero (ingresos, gastos y saldo) de una lista de registros.
+ * Suma todos los ingresos, gastos y calcula el balance final.
+ *
+ * @param registros Array de registros financieros a procesar
+ * @returns Objeto con totalIngresos, totalPagos y balanceFinal
+ */
 const calculateFinancialSummary = (registros: RegistroCalculable[]): FinancialSummary => {
   return registros.reduce<FinancialSummary>(
     (summary, registro) => {
@@ -42,6 +56,13 @@ const calculateFinancialSummary = (registros: RegistroCalculable[]): FinancialSu
   );
 };
 
+/**
+ * Formatea un cantidad numérica como moneda en euros con separadores de miles.
+ * Ejemplo: 1234.56 -> "1.234,56 €"
+ *
+ * @param amount La cantidad a formatear
+ * @returns String con el formato de moneda (euros)
+ */
 const formatCurrencyAmount = (amount: number): string => {
   const fixed = amount.toFixed(2);
   const [intPart, decPart] = fixed.split(".");

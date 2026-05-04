@@ -12,6 +12,15 @@ const formatoHora = new Intl.DateTimeFormat("es-ES", {
   timeZone: "UTC"
 });
 
+/**
+ * Página de gestión de zonas comunes del backoffice.
+ * Lista todas las zonas comunes de todas las comunidades con soporte de búsqueda y paginación.
+ * Muestra información de horarios, reservas y la comunidad a la que pertenece cada zona.
+ *
+ * @component
+ * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda) y page (página actual)
+ * @returns La página de zonas comunes del backoffice renderizada
+ */
 export default async function BackOfficeZonesPage({
   searchParams
 }: {

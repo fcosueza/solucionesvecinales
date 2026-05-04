@@ -14,6 +14,17 @@ interface Props {
   horario: string;
 }
 
+/**
+ * Tarjeta que muestra los detalles de una reserva de zona común.
+ * Muestra la zona, la fecha y el horario reservado.
+ * Permite cancelar la reserva con un diálogo de confirmación.
+ *
+ * @param reservationID ID de la reserva
+ * @param communityID ID de la comunidad a la que pertenece la zona
+ * @param zona Nombre de la zona común reservada
+ * @param fecha Fecha de la reserva en formato legible
+ * @param horario Franja horaria de la reserva en formato legible
+ */
 const ReservationCard = ({ reservationID, communityID, zona, fecha, horario }: Props): React.ReactNode => {
   const router = useRouter();
   const [showConfirm, setShowConfirm] = useState(false);

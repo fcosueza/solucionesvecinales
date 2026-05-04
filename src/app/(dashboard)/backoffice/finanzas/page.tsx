@@ -6,6 +6,15 @@ import style from "../style.module.css";
 
 const PAGE_SIZE = 10;
 
+/**
+ * Página de gestión financiera del backoffice.
+ * Muestra un resumen aggregado de los movimientos económicos de todas las comunidades,
+ * incluyendo ingresos, gastos y balance total. Permite búsqueda y paginación de registros.
+ *
+ * @component
+ * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda) y page (página actual)
+ * @returns La página de finanzas del backoffice renderizada
+ */
 export default async function BackOfficeFinancePage({
   searchParams
 }: {

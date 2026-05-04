@@ -19,6 +19,14 @@ const helpContent: HelpContent = {
   constraints: ["El correo debe ser único.", "Si faltan campos obligatorios, no se completará el registro."]
 };
 
+/**
+ * Página de registro de nuevos usuarios.
+ * Permite crear una nueva cuenta en la plataforma proporcionando datos personales y credenciales.
+ * Incluye un formulario de registro y enlaces para usuarios que ya tienen cuenta.
+ *
+ * @component
+ * @returns La página de registro renderizada
+ */
 export default function Register() {
   return (
     <>

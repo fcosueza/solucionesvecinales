@@ -6,10 +6,11 @@ import { UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
- * Server function que elimina un usuario dado su id. Solo puede ser ejecutada por un usuario con rol webAdmin.
- * Si la eliminación es exitosa, se revalidan las rutas de usuarios y overview del backoffice.
+ * Server action que elimina un usuario de la base de datos.
+ * Solo puede ser ejecutada por un usuario con rol webAdmin.
+ * Valida los permisos y revalida las rutas de usuarios y overview del backoffice después de eliminar.
  *
- * @param formData - FormData que debe contener el campo "id" con el id del usuario a eliminar
+ * @param formData - FormData que debe contener el campo "id" con el ID del usuario a eliminar
  */
 
 export const deleteUser = async (formData: FormData): Promise<void> => {

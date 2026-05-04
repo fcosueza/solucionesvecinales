@@ -6,14 +6,23 @@ import { revalidatePath } from "next/cache";
 
 type Decision = "approve" | "reject";
 
+/**
+ * Valida si un string es una decisión válida (approve o reject).
+ *
+ * @param value El valor a validar
+ * @returns true si el valor es "approve" o "reject"
+ */
 const isValidDecision = (value: string): value is Decision => {
   return value === "approve" || value === "reject";
 };
 
 /**
- * Revisa una solicitud de comunidad. Si se aprueba, crea la inscripcion.
+ * Revisa una solicitud de suscripción a una comunidad.
+ * Si se aprueba, crea la inscripción del usuario en la comunidad.
+ * Si se rechaza, actualiza el estado de la solicitud.
+ * Solo pueden hacerlo los administradores de la comunidad.
  *
- * @param
+ * @param formData FormData que debe contener: communityID, requestID y decision (approve/reject)
  */
 const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();

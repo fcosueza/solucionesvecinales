@@ -96,6 +96,14 @@ const datosTarjetas = [
   }
 ];
 
+/**
+ * Página de inicio pública de la plataforma.
+ * Presenta la propuesta de valor, características principales y botones de llamada a la acción
+ * para el registro de nuevos usuarios y vista de comunidades.
+ *
+ * @component
+ * @returns La página de inicio renderizada
+ */
 export default function Home() {
   return (
     <>

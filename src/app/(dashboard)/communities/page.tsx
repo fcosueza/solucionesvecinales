@@ -23,6 +23,14 @@ const helpContent: HelpContent = {
   constraints: ["Algunas acciones dependen de tu rol.", "Las solicitudes pendientes se muestran sin acceso completo."]
 };
 
+/**
+ * Página de mis comunidades del dashboard.
+ * Lista todas las comunidades a las que el usuario está suscrito.
+ * Proporciona accesos directos para buscar, crear o unirse a nuevas comunidades.
+ *
+ * @component
+ * @returns La página de comunidades del usuario renderizada
+ */
 const CommunitiesPage = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();
 

@@ -5,6 +5,14 @@ import prisma from "@/lib/prisma";
 import { UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
+/**
+ * Server action que crea un registro financiero (ingreso o gasto) en una comunidad.
+ * Solo puede ser ejecutada por administradores de la comunidad o webAdmin.
+ * Valida los permisos y revalida las rutas de finanzas después de crear el registro.
+ *
+ * @param communityID - ID de la comunidad donde se registra el movimiento
+ * @param formData - FormData que debe contener: descripcion, importe y tipo (ingreso/gasto)
+ */
 const communityFinance = async (communityID: number, formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
 
@@ -64,6 +72,12 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
   } catch {}
 };
 
+/**
+ * Server action que elimina un registro financiero. Solo puede ser ejecutada por webAdmin.
+ * Revalida las rutas del backoffice de finanzas después de eliminar el registro.
+ *
+ * @param formData - FormData que debe contener el campo "id" del registro a eliminar
+ */
 const deleteRecord = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 

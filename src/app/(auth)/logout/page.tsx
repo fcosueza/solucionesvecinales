@@ -14,6 +14,14 @@ const helpContent: HelpContent = {
   constraints: ["No puedes usar opciones del dashboard tras cerrar sesión."]
 };
 
+/**
+ * Página de cierre de sesión.
+ * Permite a usuarios autenticados cerrar su sesión actual de forma segura.
+ * Solicita confirmación antes de proceder con el cierre de sesión.
+ *
+ * @component
+ * @returns La página de logout renderizada
+ */
 export default function LogOut() {
   return (
     <>

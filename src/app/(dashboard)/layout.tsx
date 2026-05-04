@@ -5,6 +5,16 @@ import { UserRole } from "@/types";
 import { redirect } from "next/navigation";
 import style from "./style.module.css";
 
+/**
+ * Diseño del dashboard de usuario.
+ * Proporciona la estructura común a todas las páginas del dashboard autenticado.
+ * Verifica la sesión del usuario y muestra un menú lateral con opciones de navegación.
+ * Redirige a login si el usuario no está autenticado.
+ *
+ * @component
+ * @param children Contenido de las páginas anidadas del dashboard
+ * @returns El layout del dashboard renderizado
+ */
 export default async function DashboardLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const sesionVerificada = await verifySession();
 

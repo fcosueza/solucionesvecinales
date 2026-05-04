@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   description: "Información sobre el uso de cookies en Soluciones Vecinales"
 };
 
+/**
+ * Página de política de cookies.
+ * Explica a los usuarios qué son las cookies, cuáles se utilizan en la plataforma,
+ * su finalidad y cómo pueden gestionar sus preferencias de cookies.
+ *
+ * @component
+ * @returns La página de política de cookies renderizada
+ */
 export default function PoliticaCookiesPage(): React.ReactNode {
   return (
     <main className={style.main}>

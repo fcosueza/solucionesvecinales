@@ -41,6 +41,15 @@ const helpContent: HelpContent = {
   ]
 };
 
+/**
+ * Página de búsqueda de comunidades.
+ * Permite a los usuarios buscar comunidades disponibles en la plataforma
+ * y enviar solicitudes de suscripción a las que deseen unirse.
+ *
+ * @component
+ * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda)
+ * @returns La página de búsqueda de comunidades renderizada
+ */
 const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<React.ReactNode> => {
   const verifiedSession = await verifySession();
 

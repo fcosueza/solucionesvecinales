@@ -9,6 +9,13 @@ interface Props {
   onClose: () => void;
 }
 
+/**
+ * Formulario modal para añadir un registro financiero (ingreso o gasto) a una comunidad.
+ * Permite introducir descripción, importe y tipo (ingreso/gasto).
+ *
+ * @param communityID ID de la comunidad a la que se añade el registro financiero
+ * @param onClose Función de cierre del modal
+ */
 const FinanceAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);
   const descriptionRef = useRef<HTMLInputElement>(null);

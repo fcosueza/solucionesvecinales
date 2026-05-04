@@ -81,7 +81,6 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
    ```powershell
    git clone <URL_DEL_REPOSITORIO>
    cd solucionesvecinales
-   npm install
    ```
 
 ## Ejecución en local
@@ -93,13 +92,7 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
 
 ### Pasos
 
-1. **Instalar dependencias**
-
-   ```bash
-   npm install
-   ```
-
-2. **Configurar variables de entorno**
+1. **Configurar variables de entorno**
 
    Crea un archivo `.env` en la raíz del proyecto. Puedes usar el siguiente formato como referencia:
 
@@ -125,6 +118,12 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
    > En producción (Vercel), estas variables se configuran desde el panel de Vercel y la
    > `DATABASE_URL` debe ser una URL literal con `?sslmode=require` al final, ya que Vercel
    > no expande la sintaxis `${VAR}`.
+
+2. **Instalar dependencias**
+
+   ```bash
+   npm install
+   ```
 
 3. **Aplicar las migraciones de la base de datos**
 

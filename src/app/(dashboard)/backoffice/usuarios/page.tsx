@@ -12,6 +12,15 @@ const etiquetasRol: Record<UserRole, string> = {
   [UserRole.webAdmin]: "Administrador Web"
 };
 
+/**
+ * Página de gestión de usuarios del backoffice.
+ * Lista todos los usuarios registrados en la plataforma con soporte de búsqueda y paginación.
+ * Permite a los webAdmin ver información de usuarios y eliminar cuentas.
+ *
+ * @component
+ * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda) y page (página actual)
+ * @returns La página de usuarios del backoffice renderizada
+ */
 export default async function BackOfficeUsersPage({
   searchParams
 }: {

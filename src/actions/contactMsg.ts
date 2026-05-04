@@ -62,6 +62,12 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
   };
 };
 
+/**
+ * Server action que elimina un mensaje de contacto. Solo puede ser ejecutada por webAdmin.
+ * Revalida la ruta del backoffice de contacto después de eliminar.
+ *
+ * @param formData FormData que debe contener: nombre, email y creadoEn del mensaje a eliminar
+ */
 const deleteContact = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 

@@ -14,6 +14,15 @@ export const metadata: Metadata = {
   }
 };
 
+/**
+ * Diseño raíz de la aplicación.
+ * Envuelve todas las páginas y proporciona la estructura HTML base, fuentes y componentes globales.
+ * Incluye el proveedor de notificaciones Sonner para mostrar toasts en toda la app.
+ *
+ * @component
+ * @param children Contenido de las páginas anidadas
+ * @returns El layout raíz renderizado
+ */
 export default function RootLayout({
   children
 }: Readonly<{

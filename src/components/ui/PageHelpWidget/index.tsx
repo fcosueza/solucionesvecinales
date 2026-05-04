@@ -13,6 +13,14 @@ export interface HelpContent {
 interface Props {
   content: HelpContent;
 }
+
+/**
+ * Widget de ayuda contextual para una página.
+ * Muestra un botón "?" que abre un modal con título, resumen,
+ * pasos de uso y restricciones de la página actual.
+ *
+ * @param content Objeto con la información de ayuda: título, resumen, pasos y restricciones
+ */
 const PageHelpWidget = ({ content }: Props): React.ReactNode => {
   const [isOpen, setIsOpen] = useState(false);
 

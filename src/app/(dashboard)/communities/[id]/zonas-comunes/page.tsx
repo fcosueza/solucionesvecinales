@@ -29,6 +29,15 @@ const helpContent: HelpContent = {
   ]
 };
 
+/**
+ * Página de zonas comunes de una comunidad.
+ * Muestra las zonas comunes disponibles para reserva y las reservas actuales del usuario.
+ * Los administradores pueden crear nuevas zonas comunes.
+ *
+ * @component
+ * @param params Parámetros de la ruta que incluyen el ID de la comunidad
+ * @returns La página de zonas comunes de la comunidad renderizada
+ */
 const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
   const communityID = Number(id);

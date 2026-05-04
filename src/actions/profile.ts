@@ -145,6 +145,15 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
 
+/**
+ * Guarda el archivo de imagen de perfil en el servidor.
+ * Valida el formato y tamaño del archivo antes de guardarlo.
+ * El archivo se guarda con el ID del usuario y la fecha actual para evitar colisiones.
+ *
+ * @param file El archivo de imagen a guardar
+ * @param userID El ID del usuario al que pertenece la imagen
+ * @returns Un objeto con la URL de la imagen guardada, o un mensaje de error
+ */
 export const saveProfileImageFile = async (
   file: File,
   userID: number | string
@@ -174,6 +183,13 @@ export const saveProfileImageFile = async (
   return { imagen: imagenUrl };
 };
 
+/**
+ * Server action que sube una imagen de perfil para el usuario autenticado.
+ * Valida la sesión, procesa el archivo de imagen y actualiza la URL en la base de datos.
+ *
+ * @param formData FormData que debe contener el campo "imagen" con el archivo a subir
+ * @returns Un objeto con la URL de la imagen subida, o un mensaje de error
+ */
 export const uploadProfile = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
   const sesionVerificada = await verifySession();
 

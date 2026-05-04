@@ -36,6 +36,12 @@ const helpContent: HelpContent = {
   ]
 };
 
+/**
+ * Formatea un objeto Date como etiqueta de fecha en español (dd/mm/yyyy).
+ *
+ * @param date El objeto Date a formatear
+ * @returns String con la fecha en formato dd/mm/yyyy
+ */
 const toDateLabel = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
     day: "2-digit",
@@ -44,6 +50,16 @@ const toDateLabel = (date: Date): string => {
   }).format(date);
 };
 
+/**
+ * Construye un array de filas de tabla para una sección financiera (ingresos o gastos).
+ * Incluye un encabezado de sección, filas de registros y una fila de total.
+ *
+ * @param title El título de la sección (ej: "Ingresos", "Gastos")
+ * @param registros Array de registros financieros de la sección
+ * @param emptyMessage Mensaje a mostrar cuando no hay registros
+ * @param total El total acumulado de la sección
+ * @returns Array de filas (TableRow[]) para renderizar en la tabla
+ */
 const buildSectionRows = ({
   title,
   registros,
@@ -90,6 +106,15 @@ const buildSectionRows = ({
   return rows;
 };
 
+/**
+ * Página de finanzas de una comunidad.
+ * Muestra los ingresos, gastos y balance financiero de la comunidad.
+ * Permite a los administradores añadir nuevos registros financieros.
+ *
+ * @component
+ * @param params Parámetros de la ruta que incluyen el ID de la comunidad
+ * @returns La página de finanzas de la comunidad renderizada
+ */
 const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
   const communityID = Number(id);
