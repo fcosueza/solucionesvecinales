@@ -54,7 +54,7 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
     const ficheroImagen = formData.get("imagen");
 
     let passwordCifrado: string | null = null;
-    let urlImagen: string | null = null;
+    let urlImagen: string | undefined = undefined;
 
     if (nuevaContrasena) {
       const salCifrado: number = 10;
@@ -65,10 +65,10 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
     if (ficheroImagen instanceof File && ficheroImagen.size > 0) {
       const imagenGuardada = await saveProfileImageFile(ficheroImagen, sesionVerificada.session.userID);
 
-      if (imagenGuardada.error || !imagenGuardada.imagen) {
+      if (imagenGuardada.error) {
         return {
           state: "error",
-          message: imagenGuardada.error ?? "Error al actualizar la imagen de perfil",
+          message: imagenGuardada.error,
           payload: formData
         };
       }
@@ -200,8 +200,8 @@ export const uploadProfile = async (formData: FormData): Promise<{ error?: strin
   const file = formData.get("imagen");
   const result = await saveProfileImageFile(file as File, sesionVerificada.session.userID);
 
-  if (result.error || !result.imagen) {
-    return { error: result.error ?? "No se pudo subir la imagen" };
+  if (result.error) {
+    return { error: result.error };
   }
 
   await prisma.usuario.update({

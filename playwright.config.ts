@@ -34,20 +34,29 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    /* Auth setup project — runs once before browser projects */
+    {
+      name: "setup",
+      testMatch: "**/auth/setup.ts"
+    },
+
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] }
-    },
-
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] }
-    },
-
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] }
+      use: { ...devices["Desktop Chrome"] },
+      dependencies: ["setup"]
     }
+
+    // {
+    //   name: "firefox",
+    //   use: { ...devices["Desktop Firefox"] },
+    //   dependencies: ["setup"]
+    // },
+
+    // {
+    //   name: "webkit",
+    //   use: { ...devices["Desktop Safari"] },
+    //   dependencies: ["setup"]
+    // }
 
     /* Test against mobile viewports. */
     // {

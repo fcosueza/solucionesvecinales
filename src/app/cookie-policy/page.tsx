@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import style from "../politicas/style.module.css";
+import style from "./style.module.css";
 
 export const metadata: Metadata = {
   title: "Política de Cookies | Soluciones Vecinales",

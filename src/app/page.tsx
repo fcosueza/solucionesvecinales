@@ -21,8 +21,8 @@ const enlacesCabecera: NavItem[] = [
 
 const enlacesFooter: NavItem[] = [
   { text: "Inicio", href: "#" },
-  { text: "Política de Cookies", href: "/politica-cookies" },
-  { text: "Política de Privacidad", href: "/politica-privacidad" }
+  { text: "Política de Cookies", href: "/cookie-policy" },
+  { text: "Política de Privacidad", href: "/privacy-policy" }
 ];
 
 const iconosSociales: SocialIcon[] = [

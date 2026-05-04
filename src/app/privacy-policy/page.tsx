@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import style from "../politicas/style.module.css";
+import style from "./style.module.css";
 
 export const metadata: Metadata = {
   title: "Política de Privacidad | Soluciones Vecinales",
@@ -12,7 +12,6 @@ export const metadata: Metadata = {
  * Informa a los usuarios sobre cómo se recopilan, tratan y protegen sus datos personales
  * en la plataforma Soluciones Vecinales, de conformidad con la normativa de protección de datos.
  *
- * @component
  * @returns La página de política de privacidad renderizada
  */
 export default function PoliticaPrivacidadPage(): React.ReactNode {
