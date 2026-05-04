@@ -7,9 +7,9 @@ SolucionesVecinales es una aplicación que ayuda a gestionar comunidades de veci
 El código de la aplicación esta en inglés y español. El motivo de esto es que por un lado se han intentado facilitar su lectura para gente que entienda
 en Inglés, por lo que prácticamente todas las variables y todos los comentarios se han traducido al español. Por otro lado, los componentes, sus argumentos y la mayoría de los tipos de han matentido en inglés, para que las llamadas a componentes o funciones sean más homogéneas, ya que hay muchas que se tienen que realizar en inglés porque vienen de librerías de JS o React.
 
-## Install
+## Instalación
 
-En esta sección se explica cómo instalar el software necesario para ejecutar la aplicación en local.
+En esta sección se explica cómo instalar el software necesario para ejecutar la aplicación en local tanto para sistemas Microsoft Windows como para distribuciones Linux basadas en Debian.
 
 ### Linux (Ubuntu/Debian)
 
@@ -116,7 +116,8 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
 
    # Clave secreta para firmar y verificar los tokens de sesión JWT.
    # Debe ser una cadena larga y aleatoria. Puedes generarla con:
-   #   openssl rand -base64 32
+   #   Linux/macOS/Git Bash:  openssl rand -base64 32
+   #   Windows (PowerShell):  [System.Convert]::ToBase64String([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
    SESSION_SECRET=tu-clave-secreta-larga-y-aleatoria
    ```
 
@@ -174,6 +175,58 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
 
 ## Docker Compose (sin Dockerfile)
 
+### Instalación de Docker
+
+#### Linux (Ubuntu/Debian)
+
+1. **Instalar Docker Engine**
+
+   ```bash
+   sudo apt update
+   sudo apt install -y ca-certificates curl gnupg
+   sudo install -m 0755 -d /etc/apt/keyrings
+   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+   sudo chmod a+r /etc/apt/keyrings/docker.gpg
+   echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   sudo apt update
+   sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+   ```
+
+2. **Añadir tu usuario al grupo docker** _(para no necesitar `sudo` en cada comando)_
+
+   ```bash
+   sudo usermod -aG docker $USER
+   newgrp docker
+   ```
+
+3. **Verificar la instalación**
+
+   ```bash
+   docker --version
+   docker compose version
+   ```
+
+#### Windows
+
+1. **Instalar Docker Desktop**
+
+   Descarga e instala Docker Desktop desde: https://www.docker.com/products/docker-desktop/
+
+   Durante la instalación asegúrate de habilitar la integración con WSL 2 (recomendado) o Hyper-V.
+
+2. **Verificar en PowerShell o CMD**
+
+   ```powershell
+   docker --version
+   docker compose version
+   ```
+
+   > **Nota:** En Windows, Docker Desktop incluye Docker Compose. No es necesario instalarlo por separado.
+
+---
+
+### Ejecución con Docker Compose
+
 Se incluye un archivo [docker-compose.yml](docker-compose.yml) con perfiles para desarrollo y producción,
 además de PostgreSQL. Playwright queda integrado en el perfil de desarrollo (`app-dev`).
 
@@ -185,12 +238,34 @@ además de PostgreSQL. Playwright queda integrado en el perfil de desarrollo (`a
 
 Puedes personalizar credenciales y puertos exportando variables en tu shell antes de levantar los servicios:
 
+**Linux/macOS/Git Bash:**
+
 ```bash
 export POSTGRES_DB=solucionesvecinales
 export POSTGRES_USER=postgres
 export POSTGRES_PASSWORD=postgres
 export POSTGRES_PORT=5432
 export SESSION_SECRET=tu_clave_de_sesion
+```
+
+**Windows (PowerShell):**
+
+```powershell
+$env:POSTGRES_DB="solucionesvecinales"
+$env:POSTGRES_USER="postgres"
+$env:POSTGRES_PASSWORD="postgres"
+$env:POSTGRES_PORT="5432"
+$env:SESSION_SECRET="tu_clave_de_sesion"
+```
+
+**Windows (CMD):**
+
+```cmd
+set POSTGRES_DB=solucionesvecinales
+set POSTGRES_USER=postgres
+set POSTGRES_PASSWORD=postgres
+set POSTGRES_PORT=5432
+set SESSION_SECRET=tu_clave_de_sesion
 ```
 
 ### Levantar entorno de desarrollo
