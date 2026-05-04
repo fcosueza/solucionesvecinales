@@ -1,5 +1,6 @@
 import ReservationCard from "@/components/ui/ReservationCard";
 import AddZoneFormButton from "@/components/ui/AddZoneFormButton";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import ZoneCardWrapper from "@/components/ui/ZoneCardWrapper";
 import verifySession from "@/lib/dal";
 import { buildAllowedReservationDates, formatReservationDateLabel, formatTimeLabel } from "@/lib/reservations";
@@ -12,6 +13,21 @@ import style from "./style.module.css";
 interface Props {
   params: Promise<{ id: string }>;
 }
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Zonas comunes",
+  summary: "Reserva espacios de la comunidad y consulta tus reservas.",
+  steps: [
+    "Revisa las zonas disponibles y sus horarios.",
+    "Selecciona una zona y crea una reserva válida.",
+    "Consulta tus reservas en la sección correspondiente.",
+    "Cancela o ajusta reservas si la interfaz lo permite."
+  ],
+  constraints: [
+    "Las reservas están limitadas por ventana temporal y disponibilidad.",
+    "Solo administradores pueden añadir nuevas zonas."
+  ]
+};
 
 const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
@@ -100,6 +116,7 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
 
   return (
     <main className={style.main}>
+      <PageHelpWidget content={helpContent} />
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"

@@ -1,0 +1,125 @@
+.trigger {
+  position: fixed;
+  top: 1.6rem;
+  right: 1.6rem;
+  width: 4.4rem;
+  height: 4.4rem;
+  border: 0.2rem solid var(--highlight-color);
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: var(--highlight-color);
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--box-shadow-standard);
+  z-index: 2000;
+}
+
+.trigger:hover,
+.trigger:focus-visible {
+  background-color: var(--highlight-color);
+  color: #ffffff;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 2100;
+}
+
+.modal {
+  width: min(72rem, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 1.2rem;
+  border: 0.1rem solid rgba(2, 75, 174, 0.22);
+  box-shadow: var(--box-shadow-standard);
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2.4rem;
+  color: var(--font-color);
+}
+
+.closeButton {
+  border: 0.1rem solid var(--highlight-color);
+  border-radius: 0.8rem;
+  background-color: #ffffff;
+  color: var(--highlight-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+}
+
+.closeButton:hover,
+.closeButton:focus-visible {
+  background-color: var(--highlight-color);
+  color: #ffffff;
+}
+
+.summary {
+  font-size: 1.7rem;
+  color: var(--font-color-secondary);
+  margin-bottom: 1.6rem;
+}
+
+.section {
+  margin-bottom: 1.6rem;
+}
+
+.sectionTitle {
+  font-size: 1.9rem;
+  color: var(--font-color);
+  margin-bottom: 0.8rem;
+}
+
+.list {
+  margin-left: 2rem;
+}
+
+.listItem {
+  font-size: 1.6rem;
+  line-height: 1.45;
+  color: var(--font-color);
+  margin-bottom: 0.6rem;
+}
+
+@media (max-width: 960px) {
+  .trigger {
+    top: 1.2rem;
+    right: 1.2rem;
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+  }
+
+  .modal {
+    padding: 1.6rem;
+  }
+
+  .title {
+    font-size: 2.1rem;
+  }
+
+  .summary,
+  .listItem {
+    font-size: 1.5rem;
+  }
+}

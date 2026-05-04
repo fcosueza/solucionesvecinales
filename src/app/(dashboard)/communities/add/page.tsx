@@ -1,9 +1,22 @@
 import CommunityAddForm from "@/components/layouts/Forms/CommunityAddForm";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import ScrollToTopOnMount from "@/components/ui/ScrollToTop";
 import verifySession from "@/lib/dal";
 import { UserRole } from "@/types";
 import { redirect } from "next/navigation";
 import style from "./style.module.css";
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Crear comunidad",
+  summary: "Permite registrar una comunidad nueva en la plataforma.",
+  steps: [
+    "Completa los datos básicos de la comunidad.",
+    "Revisa dirección y nombre antes de guardar.",
+    "Envía el formulario para crearla.",
+    "Al finalizar, podrás gestionarla desde el dashboard."
+  ],
+  constraints: ["Disponible solo para roles autorizados.", "Los datos obligatorios deben estar completos."]
+};
 
 const NewCommunity = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();
@@ -21,6 +34,7 @@ const NewCommunity = async (): Promise<React.ReactNode> => {
 
   return (
     <>
+      <PageHelpWidget content={helpContent} />
       <ScrollToTopOnMount />
       <main className={style.main}>
         <h1 className={style.title}>Añadir comunidad</h1>

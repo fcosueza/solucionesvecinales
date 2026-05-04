@@ -1,6 +1,7 @@
 import CommunitySearchForm from "@/components/layouts/Forms/CommunitySearchForm";
 import Gallery from "@/components/layouts/Gallery";
 import CardCommunity from "@/components/ui/Cards/CardCommunity";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import requestCommunitySubscription from "@/actions/community/communityRequest";
 import ScrollToTopOnMount from "@/components/ui/ScrollToTop";
 import verifySession from "@/lib/dal";
@@ -23,6 +24,21 @@ const aLista = <T,>(valor: T | T[] | null | undefined): T[] => {
   }
 
   return [valor];
+};
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Buscar comunidades",
+  summary: "Encuentra comunidades y solicita suscripción.",
+  steps: [
+    "Escribe texto en el buscador para filtrar resultados.",
+    "Revisa las tarjetas coincidentes.",
+    "Pulsa Suscribirse en la comunidad deseada.",
+    "Espera la aprobación del administrador si aplica."
+  ],
+  constraints: [
+    "Si ya estás inscrito o tienes solicitud pendiente, el botón se desactiva.",
+    "Usuarios administradores no pueden suscribirse como inquilinos."
+  ]
 };
 
 const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<React.ReactNode> => {
@@ -100,6 +116,7 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
 
   return (
     <>
+      <PageHelpWidget content={helpContent} />
       <ScrollToTopOnMount />
       <main className={style.main}>
         <h1 className={style.title}>Buscar comunidad</h1>

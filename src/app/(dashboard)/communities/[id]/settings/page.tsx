@@ -1,4 +1,5 @@
 import CommunitySettingsForm from "@/components/layouts/Forms/CommunitySettingsForm";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types";
@@ -8,6 +9,21 @@ import style from "./style.module.css";
 interface Props {
   params: Promise<{ id: string }>;
 }
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Configuración",
+  summary: "Actualiza datos y ajustes de la comunidad.",
+  steps: [
+    "Edita los campos de configuración necesarios.",
+    "Revisa dirección y datos generales.",
+    "Guarda los cambios desde el formulario.",
+    "Confirma que la información se actualizó correctamente."
+  ],
+  constraints: [
+    "Solo administradores autorizados pueden modificar esta página.",
+    "Los datos deben cumplir las validaciones del formulario."
+  ]
+};
 
 const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
@@ -54,6 +70,7 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
 
   return (
     <main className={style.main}>
+      <PageHelpWidget content={helpContent} />
       <h1 className={style.title}>Configuracion</h1>
       <p className={style.description}>Gestiona los datos y ajustes de la comunidad</p>
       <CommunitySettingsForm

@@ -1,4 +1,5 @@
 import ActionButton from "@/components/ui/ActionButton";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import Table, { TableRow } from "@/components/ui/Table";
 import { calculateFinancialSummary, formatCurrencyAmount, RegistroCalculable } from "@/lib/finance";
 import verifySession from "@/lib/dal";
@@ -19,6 +20,21 @@ interface RegistroItem {
   tipo: "ingreso" | "gasto";
   creadoEn: Date;
 }
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Finanzas",
+  summary: "Consulta ingresos, gastos y balance de la comunidad.",
+  steps: [
+    "Revisa las secciones de pagos e ingresos.",
+    "Valida importes y fechas en la tabla.",
+    "Consulta el balance final para estado financiero.",
+    "Si tienes permisos, añade un nuevo registro."
+  ],
+  constraints: [
+    "No todos los roles pueden crear registros financieros.",
+    "Los importes deben cumplir el formato establecido."
+  ]
+};
 
 const toDateLabel = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
@@ -146,6 +162,7 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
 
   return (
     <main className={style.main}>
+      <PageHelpWidget content={helpContent} />
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"

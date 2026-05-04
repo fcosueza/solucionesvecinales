@@ -1,6 +1,7 @@
 import MessageBoard from "@/components/layouts/MessageBoard";
 import CardCommonArea from "@/components/ui/Cards/CardCommonArea";
 import CardStat from "@/components/ui/Cards/CardStat";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import verifySession from "@/lib/dal";
 import { calculateFinancialSummary, formatCurrencyAmount } from "@/lib/finance";
 import Link from "next/link";
@@ -13,6 +14,21 @@ import style from "./style.module.css";
 interface Props {
   params: Promise<{ id: string }>;
 }
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Vista general",
+  summary: "Resumen principal de la comunidad y acceso a módulos.",
+  steps: [
+    "Consulta los datos destacados de la comunidad.",
+    "Usa los accesos para navegar a incidencias, finanzas o zonas.",
+    "Revisa notificaciones y estado general.",
+    "Continúa en el módulo que necesites gestionar."
+  ],
+  constraints: [
+    "Debes estar inscrito en la comunidad para entrar.",
+    "Algunas opciones dependen de permisos de administrador."
+  ]
+};
 
 const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
@@ -84,6 +100,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
 
   return (
     <main className={style.main}>
+      <PageHelpWidget content={helpContent} />
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"

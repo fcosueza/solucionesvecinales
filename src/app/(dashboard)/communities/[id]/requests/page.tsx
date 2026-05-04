@@ -1,4 +1,5 @@
 import reviewCommunityRequest from "@/actions/community/communitySubscription";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
@@ -28,6 +29,21 @@ interface CommunityRequestItem {
   apellido: string;
   email: string;
 }
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Solicitudes",
+  summary: "Gestiona altas pendientes de usuarios en la comunidad.",
+  steps: [
+    "Revisa la lista ordenada de solicitudes.",
+    "Consulta datos del solicitante y fecha.",
+    "Aprueba o rechaza cada solicitud pendiente.",
+    "Verifica el estado final tras la acción."
+  ],
+  constraints: [
+    "Solo el administrador de la comunidad puede acceder.",
+    "Las solicitudes no pendientes no se pueden volver a decidir."
+  ]
+};
 
 const toStatusLabel = (status: CommunityRequestItem["estado"]): string => {
   if (status === "aprobada") return "APROBADA";
@@ -92,6 +108,7 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
 
   return (
     <main className={style.main}>
+      <PageHelpWidget content={helpContent} />
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"

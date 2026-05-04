@@ -1,5 +1,6 @@
 import OverviewActions from "@/components/layouts/OverviewActions";
 import CardCommunity from "@/components/ui/Cards/CardCommunity";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types";
@@ -9,6 +10,18 @@ import style from "./style.module.css";
 const tituloComunidades = "Mis comunidades";
 const descripcionComunidades = "Aquí tienes todas las comunidades a las que perteneces";
 const mensajeSinComunidades = "Aún no estás suscrito a ninguna comunidad. Usa el botón de búsqueda para unirte a una.";
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Mis comunidades",
+  summary: "Muestra tus comunidades actuales y accesos rápidos.",
+  steps: [
+    "Revisa las tarjetas de comunidades suscritas.",
+    "Pulsa el botón de cada tarjeta para abrir su detalle.",
+    "Usa las acciones laterales para buscar o crear comunidades.",
+    "Si no tienes comunidades, usa la búsqueda para unirte."
+  ],
+  constraints: ["Algunas acciones dependen de tu rol.", "Las solicitudes pendientes se muestran sin acceso completo."]
+};
 
 const CommunitiesPage = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();
@@ -68,6 +81,7 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
 
   return (
     <main className={style.main}>
+      <PageHelpWidget content={helpContent} />
       <section className={style.communitiesSection}>
         <h1 className={style.title}>{tituloComunidades}</h1>
         <p className={style.description}>{descripcionComunidades}</p>

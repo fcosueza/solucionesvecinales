@@ -1,6 +1,7 @@
 import { UserRole } from "@/types";
 import CardIncident from "@/components/ui/Cards/CardIncident";
 import ActionButton from "@/components/ui/ActionButton";
+import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
@@ -27,6 +28,21 @@ interface IncidentItem {
     email: string;
   };
 }
+
+const helpContent: HelpContent = {
+  title: "Ayuda: Incidencias",
+  summary: "Gestiona incidencias reportadas por la comunidad.",
+  steps: [
+    "Revisa la lista de incidencias existentes.",
+    "Pulsa añadir incidencias para crear una nueva.",
+    "Completa título y descripción del problema.",
+    "Haz seguimiento del estado hasta su resolución."
+  ],
+  constraints: [
+    "El alta de incidencias puede variar según permisos.",
+    "Los estados se actualizan según el flujo definido por la comunidad."
+  ]
+};
 
 const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
@@ -95,6 +111,7 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
 
   return (
     <main className={style.main}>
+      <PageHelpWidget content={helpContent} />
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"
