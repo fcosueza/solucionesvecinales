@@ -108,6 +108,31 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/communities/12/requests");
   });
 
+  it("Debe mostrar el menu de back office para un administrador web", () => {
+    (rutaActualMock as jest.Mock).mockReturnValue("/backoffice/overview");
+
+    render(<SideMenu userName="Laura" role={UserRole.webAdmin} />);
+
+    expect(screen.getByRole("link", { name: "Vista General" })).toHaveAttribute("href", "/backoffice/overview");
+    expect(screen.getByRole("link", { name: "Comunidades" })).toHaveAttribute("href", "/backoffice/comunidades");
+    expect(screen.getByRole("link", { name: "Usuarios" })).toHaveAttribute("href", "/backoffice/usuarios");
+    expect(screen.getByRole("link", { name: "Incidencias" })).toHaveAttribute("href", "/backoffice/incidencias");
+    expect(screen.getByRole("link", { name: "Zonas Comunes" })).toHaveAttribute("href", "/backoffice/zonas-comunes");
+    expect(screen.getByRole("link", { name: "Finanzas" })).toHaveAttribute("href", "/backoffice/finanzas");
+    expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/backoffice/solicitudes");
+    expect(screen.queryByRole("link", { name: "Mis comunidades" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Perfil" })).not.toBeInTheDocument();
+  });
+
+  it("Debe mantener activa Vista General en la raiz del back office", () => {
+    (rutaActualMock as jest.Mock).mockReturnValue("/backoffice");
+
+    render(<SideMenu userName="Laura" role={UserRole.webAdmin} />);
+
+    expect(screen.getByRole("link", { name: "Vista General" })).toHaveClass("menuLinkActive");
+    expect(screen.getByRole("link", { name: "Comunidades" })).not.toHaveClass("menuLinkActive");
+  });
+
   it("Debe ocultar enlaces de comunidad al salir a Mis comunidades", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/communities/12/overview");
 

@@ -4,6 +4,8 @@ import LogInForm from ".";
 import logIn from "@/actions/auth/logIn";
 import { toast } from "sonner";
 
+const pushMock = jest.fn();
+
 // Simula la Server Action logInAction
 jest.mock("@/actions/auth/logIn", () => jest.fn());
 jest.mock("sonner", () => ({
@@ -15,7 +17,7 @@ jest.mock("sonner", () => ({
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
-    push: jest.fn()
+    push: pushMock
   })
 }));
 
@@ -29,6 +31,7 @@ function configurar(jsx: React.ReactNode) {
 describe("Suite de pruebas del componente LogInForm", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    pushMock.mockReset();
   });
 
   it("Debe renderizar el formulario correctamente", () => {
@@ -166,6 +169,26 @@ describe("Suite de pruebas del componente LogInForm", () => {
 
     await waitFor(() => {
       expect(toast.success).toHaveBeenCalledWith(mensaje);
+    });
+  });
+
+  it("Debe redirigir al back office cuando la accion devuelve redirectTo de webAdmin", async () => {
+    const { user } = configurar(<LogInForm />);
+
+    const actionMock = logIn as jest.Mock;
+
+    actionMock.mockResolvedValue({
+      state: "success",
+      message: "Sesión iniciada correctamente",
+      redirectTo: "/backoffice/overview"
+    });
+
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), "webadmin@vecinos.local");
+    await user.type(screen.getByLabelText("password-input"), "password123");
+    await user.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(pushMock).toHaveBeenCalledWith("/backoffice/overview");
     });
   });
 });

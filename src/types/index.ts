@@ -42,6 +42,7 @@ export interface FormActionState {
   message: string;
   errors?: Record<string, string | string[]>;
   payload?: FormData;
+  redirectTo?: string;
 }
 
 export interface FormFieldAttrs {

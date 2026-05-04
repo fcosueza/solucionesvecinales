@@ -1,4 +1,4 @@
-import { FormActionState } from "@/types";
+import { FormActionState, UserRole } from "@/types";
 import { crearSesion } from "@/lib/session";
 import { waitFor } from "@testing-library/dom";
 import logIn from "./logIn";
@@ -82,7 +82,7 @@ describe("Suite de pruebas de logInAction", () => {
 
     (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
       id: "1",
-      role: "admin",
+      rol: "admin",
       credenciales: { password: hashedPassword }
     });
 
@@ -95,6 +95,27 @@ describe("Suite de pruebas de logInAction", () => {
 
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("El usuario y la contraseña son correctos");
+    expect(resultado.redirectTo).toBe("/communities");
     await waitFor(() => expect(crearSesion).toHaveBeenCalledTimes(1));
+  });
+
+  it("Debe devolver redirectTo a backoffice cuando el usuario es webAdmin", async () => {
+    const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
+
+    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
+      id: "1",
+      rol: UserRole.webAdmin,
+      credenciales: { password: hashedPassword }
+    });
+
+    const datosForm = crearFormData({
+      email: "webadmin@vecinos.local",
+      password: "aaaaaaaaaaaaaaaaaaaa"
+    });
+
+    const resultado = await logIn({} as FormActionState, datosForm);
+
+    expect(resultado.state).toBe("success");
+    expect(resultado.redirectTo).toBe("/backoffice/overview");
   });
 });

@@ -15,6 +15,12 @@ const MESSAGES_PER_COMMUNITY = 4;
 const INCIDENTS_PER_COMMUNITY = 7;
 const RESERVATIONS_PER_COMMUNITY = 3;
 const SEED_SHARED_PASSWORD = "VecinosSeguro2026!";
+const WEB_ADMIN_SEED_USER = {
+  nombre: "Admin",
+  apellido: "Plataforma",
+  email: "webadmin@vecinos.local",
+  rol: "adminWeb"
+} as const;
 
 const COMMUNITY_SEED_DATA = [
   {
@@ -94,7 +100,10 @@ const COMMUNITY_SEED_DATA = [
   }
 ] as const;
 
-const SEEDED_USER_EMAILS = COMMUNITY_SEED_DATA.flatMap(community => community.users.map(user => user.email));
+const SEEDED_USER_EMAILS = [
+  WEB_ADMIN_SEED_USER.email,
+  ...COMMUNITY_SEED_DATA.flatMap(community => community.users.map(user => user.email))
+];
 
 const ZONE_TEMPLATES = [
   {
@@ -206,7 +215,12 @@ async function main(): Promise<void> {
     }
   });
 
-  const userSeed = COMMUNITY_SEED_DATA.flatMap(community =>
+  const userSeed: Array<{
+    email: string;
+    rol: "admin" | "inquilino" | "adminWeb";
+    nombre: string;
+    apellido: string;
+  }> = COMMUNITY_SEED_DATA.flatMap(community =>
     community.users.map(user => ({
       email: user.email,
       rol: user.rol,
@@ -214,6 +228,13 @@ async function main(): Promise<void> {
       apellido: user.apellido
     }))
   );
+
+  userSeed.push({
+    email: WEB_ADMIN_SEED_USER.email,
+    rol: WEB_ADMIN_SEED_USER.rol,
+    nombre: WEB_ADMIN_SEED_USER.nombre,
+    apellido: WEB_ADMIN_SEED_USER.apellido
+  });
 
   await prisma.usuario.createMany({
     data: userSeed,

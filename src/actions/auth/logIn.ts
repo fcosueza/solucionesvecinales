@@ -90,9 +90,12 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
   // El usuario y la contraseña son correctos
   await crearSesion(usuario.id, usuario.rol as UserRole);
 
+  const redirectTo = usuario.rol === UserRole.webAdmin ? "/backoffice/overview" : "/communities";
+
   return {
     state: "success",
-    message: "El usuario y la contraseña son correctos"
+    message: "El usuario y la contraseña son correctos",
+    redirectTo
   };
 };
 

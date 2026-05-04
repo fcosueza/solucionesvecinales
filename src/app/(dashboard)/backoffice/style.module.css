@@ -1,0 +1,253 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 3.2rem;
+  border-radius: 2.4rem;
+  background: linear-gradient(135deg, var(--highlight-dark) 0%, var(--highlight-color) 60%, #1e8fd1 100%);
+  color: #f8fafc;
+  box-shadow: 0 2rem 5rem rgba(2, 75, 174, 0.22);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(3rem, 3.6vw, 4.8rem);
+  line-height: 1.05;
+}
+
+.description {
+  margin: 0;
+  max-width: 72rem;
+  font-size: 1.8rem;
+  line-height: 1.5;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.8rem;
+}
+
+.sectionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+  gap: 2rem;
+}
+
+.sectionCard {
+  padding: 2.4rem;
+  border-radius: 2rem;
+  background: #ffffff;
+  box-shadow: 0 1.4rem 4rem rgba(15, 23, 42, 0.08);
+}
+
+.sectionTitle {
+  margin: 0 0 0.8rem;
+  font-size: 2.2rem;
+  color: #12343b;
+}
+
+.sectionDescription {
+  margin: 0 0 1.8rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: #52616b;
+}
+
+.linkGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.2rem;
+}
+
+.linkCard {
+  display: flex;
+  min-height: 10.4rem;
+  align-items: flex-end;
+  padding: 1.8rem;
+  border-radius: 1.6rem;
+  background: linear-gradient(135deg, var(--highlight-color) 0%, var(--highlight-dark) 100%);
+  color: #ffffff;
+  font-size: 1.7rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.linkCard:hover,
+.linkCard:focus-visible {
+  transform: translateY(-0.2rem);
+  box-shadow: 0 1rem 2.4rem rgba(2, 75, 174, 0.32);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 0.1rem solid rgba(18, 52, 59, 0.1);
+}
+
+.listItem:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.itemTitle {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #12343b;
+}
+
+.itemMeta {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.45;
+  color: #52616b;
+}
+
+.emptyState {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: #52616b;
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: rgba(18, 52, 59, 0.08);
+  color: #12343b;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+@media (max-width: 960px) {
+  .header,
+  .sectionCard {
+    padding: 2rem;
+  }
+}
+
+.deleteBtn {
+  align-self: flex-start;
+  margin-top: 0.6rem;
+  padding: 0.5rem 1.4rem;
+  border: none;
+  border-radius: 0.8rem;
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.deleteBtn:hover,
+.deleteBtn:focus-visible {
+  background: #b91c1c;
+}
+
+.searchRow {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.8rem 1.4rem;
+  border: 0.15rem solid rgba(18, 52, 59, 0.2);
+  border-radius: 0.8rem;
+  font-size: 1.5rem;
+  color: #12343b;
+  background: #f8fafc;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.searchInput:focus {
+  border-color: var(--highlight-color);
+}
+
+.searchBtn {
+  padding: 0.8rem 1.8rem;
+  border: none;
+  border-radius: 0.8rem;
+  background: var(--highlight-color);
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.searchBtn:hover,
+.searchBtn:focus-visible {
+  background: var(--highlight-dark);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.pageLink {
+  padding: 0.6rem 1.6rem;
+  border-radius: 0.8rem;
+  background: var(--highlight-color);
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.pageLink:hover,
+.pageLink:focus-visible {
+  background: var(--highlight-dark);
+}
+
+.pageInfo {
+  font-size: 1.5rem;
+  color: #52616b;
+}

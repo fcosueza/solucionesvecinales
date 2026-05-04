@@ -137,12 +137,14 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
    npm run db:seed
    ```
 
-   Los usuarios creados son:
+   Usuarios de ejemplo creados por seed (todos con la misma contraseña):
    | Email | Contraseña | Rol |
    |---|---|---|
-   | fran@gmail.com | 123451234512345 | admin |
-   | juan@gmail.com | 123451234512345 | inquilino |
-   | alberto@gmail.com | dsnojiaiojsdsnojiaiojs | inquilino |
+   | webadmin@vecinos.local | VecinosSeguro2026! | adminWeb |
+   | lucia.martinez@vecinos.local | VecinosSeguro2026! | admin |
+   | alvaro.santos@vecinos.local | VecinosSeguro2026! | inquilino |
+
+   > El seed crea mas usuarios para varias comunidades; los anteriores son cuentas de referencia para acceso rapido.
 
 5. **Iniciar el servidor de desarrollo**
 

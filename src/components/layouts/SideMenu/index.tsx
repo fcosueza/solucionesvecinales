@@ -14,10 +14,26 @@ interface Props {
   avatarUrl?: string;
 }
 
+type MenuLink = {
+  text: string;
+  href: string;
+};
+
 /// Enlaces base que siempre se muestran en el menú lateral, independientemente de la comunidad activa o el rol del usuario.
 const enlacesBase = [
   { text: "Mis comunidades", href: "/communities" },
   { text: "Perfil", href: "/profile" },
+  { text: "Salir", href: "/logout" }
+] as const;
+
+const enlacesBackOffice = [
+  { text: "Vista General", href: "/backoffice/overview" },
+  { text: "Comunidades", href: "/backoffice/comunidades" },
+  { text: "Usuarios", href: "/backoffice/usuarios" },
+  { text: "Incidencias", href: "/backoffice/incidencias" },
+  { text: "Zonas Comunes", href: "/backoffice/zonas-comunes" },
+  { text: "Finanzas", href: "/backoffice/finanzas" },
+  { text: "Solicitudes", href: "/backoffice/solicitudes" },
   { text: "Salir", href: "/logout" }
 ] as const;
 
@@ -44,6 +60,7 @@ const etiquetasRol: Record<UserRole, string> = {
 
 // Función que determina si un usuario tiene rol de administrador (admin o webAdmin).
 const isAdmin = (role: UserRole) => role === UserRole.admin || role === UserRole.webAdmin;
+const isBackOfficeRoute = (rutaActual: string) => rutaActual === "/backoffice" || rutaActual.startsWith("/backoffice/");
 
 /**
  * Función que determina la ruta activa para resaltar la opción adecuada en el menu lateral
@@ -80,6 +97,10 @@ const esRutaActiva = ({
     return rutaActual === `/communities/${comunidadId}` || rutaActual.startsWith(`${href}/`);
   }
 
+  if (href === "/backoffice/overview") {
+    return rutaActual === "/backoffice" || rutaActual.startsWith(`${href}/`);
+  }
+
   return rutaActual.startsWith(`${href}/`);
 };
 
@@ -96,10 +117,16 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
   const rutaActual = usePathname();
   const matchComunidad = rutaActual.match(/^\/communities\/(\d+)/);
   const comunidadIdEnRuta = matchComunidad ? matchComunidad[1] : null;
+  const mostrarBackOffice = role === UserRole.webAdmin && isBackOfficeRoute(rutaActual);
 
   const [comunidadId, setComunidadId] = useState<string | null>(null);
 
   useEffect(() => {
+    if (mostrarBackOffice) {
+      setComunidadId(null);
+      return;
+    }
+
     // Si la ruta actual es "/logout", se limpia el estado de comunidadId
     if (rutaActual.startsWith("/logout")) {
       setComunidadId(null);
@@ -113,7 +140,7 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
     }
 
     setComunidadId(null);
-  }, [rutaActual, comunidadIdEnRuta]);
+  }, [mostrarBackOffice, rutaActual, comunidadIdEnRuta]);
 
   // Se generan los enlaces activos para la comunidad actual, incluyendo opciones adicionales para administradores si corresponde.
   const enlacesActivosComunidad = comunidadId
@@ -122,6 +149,7 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
         ...(isAdmin(role) ? [enlaceSolicitudes(comunidadId), enlaceConfiguracion(comunidadId)] : [])
       ]
     : [];
+  const enlacesPrincipal: readonly MenuLink[] = mostrarBackOffice ? enlacesBackOffice : enlacesBase;
 
   return (
     <aside className={style.sidebar} aria-label="Menú lateral principal">
@@ -143,7 +171,9 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
         </section>
 
         <nav aria-label="Opciones del dashboard">
-          <div className={`${style.comunidadMenu} ${comunidadId ? style.comunidadMenuVisible : ""}`.trim()}>
+          <div
+            className={`${style.comunidadMenu} ${comunidadId && !mostrarBackOffice ? style.comunidadMenuVisible : ""}`.trim()}
+          >
             <ul className={style.menuList} aria-label="Opciones de la comunidad">
               {enlacesActivosComunidad.map(enlace => {
                 const enlaceActivo = esRutaActiva({
@@ -167,12 +197,15 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
             <hr className={style.menuDivider} aria-hidden="true" />
           </div>
           <ul className={style.menuList}>
-            {enlacesBase.map(enlace => {
+            {enlacesPrincipal.map(enlace => {
               const enlaceActivo = esRutaActiva({
                 rutaActual,
                 href: enlace.href,
                 comunidadId,
-                bloquearDescendientes: Boolean(comunidadId && enlace.href === "/communities")
+                bloquearDescendientes:
+                  mostrarBackOffice && enlace.href === "/logout"
+                    ? true
+                    : Boolean(comunidadId && enlace.href === "/communities")
               });
 
               return (
