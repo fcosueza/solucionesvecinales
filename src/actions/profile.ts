@@ -126,6 +126,7 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
   }
 
   const userID = String(sesionVerificada.session.userID);
+
   try {
     await prisma.$transaction(async tx => {
       await tx.comunidad.deleteMany({ where: { adminID: userID } });
@@ -142,8 +143,9 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
   redirect("/");
 };
 
-const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+// Formatos permitidos y tamaño máximo para las imágenes de perfil
+const TIPOS_MIME_PERMITIDOS = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const TAMANO_MAX_EN_BYTES = 5 * 1024 * 1024; // 5 MB
 
 /**
  * Guarda el archivo de imagen de perfil en el servidor.
@@ -162,23 +164,23 @@ export const saveProfileImageFile = async (
     return { error: "No se ha proporcionado ningún archivo" };
   }
 
-  if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+  if (!TIPOS_MIME_PERMITIDOS.includes(file.type)) {
     return { error: "Formato de imagen no permitido. Usa JPG, PNG, WebP o GIF." };
   }
 
-  if (file.size > MAX_SIZE_BYTES) {
+  if (file.size > TAMANO_MAX_EN_BYTES) {
     return { error: "La imagen no puede superar los 5 MB." };
   }
 
   const extension = extname(file.name) || ".jpg";
-  const filename = `${userID}-${Date.now()}${extension}`;
-  const uploadDir = join(process.cwd(), "public", "uploads", "profiles");
-  const filepath = join(uploadDir, filename);
+  const nombreFichero = `${userID}-${Date.now()}${extension}`;
+  const directorioSubida = join(process.cwd(), "public", "uploads", "profiles");
+  const rutaFichero = join(directorioSubida, nombreFichero);
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  await writeFile(filepath, buffer);
+  await writeFile(rutaFichero, buffer);
 
-  const imagenUrl = `/uploads/profiles/${filename}`;
+  const imagenUrl = `/uploads/profiles/${nombreFichero}`;
 
   return { imagen: imagenUrl };
 };

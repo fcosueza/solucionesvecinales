@@ -7,13 +7,14 @@ import { mkdirSync } from "fs";
 import { join } from "path";
 import { deleteProfile, saveProfileImageFile, updateProfile, uploadProfile } from "./profile";
 
-// Polyfill File.prototype.arrayBuffer for jsdom test environment
+// Polyfill File.prototype.arrayBuffer para entorno de pruebas de jsdom
 if (!File.prototype.arrayBuffer) {
   File.prototype.arrayBuffer = function () {
     return Promise.resolve(new ArrayBuffer(this.size));
   };
 }
 
+// Mocks
 jest.mock("@/lib/dal", () => jest.fn());
 jest.mock("@/lib/session", () => ({
   eliminarSesion: jest.fn()
@@ -66,7 +67,7 @@ describe("Suite de pruebas de profile actions", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver error en updateProfile si no hay sesion", async () => {
+  it("Debe devolver error en updateProfile si no hay sesión", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
     const formData = formValido();
 
@@ -78,7 +79,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error en updateProfile si la validacion falla", async () => {
+  it("Debe devolver error en updateProfile si la validación falla", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -101,7 +102,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe actualizar perfil sin imagen ni contrasena", async () => {
+  it("Debe actualizar perfil sin imagen ni contraseña", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -124,7 +125,7 @@ describe("Suite de pruebas de profile actions", () => {
     });
   });
 
-  it("Debe actualizar perfil con contrasena cifrada", async () => {
+  it("Debe actualizar perfil con una contraseña cifrada", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -161,7 +162,7 @@ describe("Suite de pruebas de profile actions", () => {
     });
   });
 
-  it("Debe devolver error en updateProfile si falla guardado de imagen", async () => {
+  it("Debe devolver error en updateProfile si falla el guardado de imagen", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }

@@ -19,7 +19,7 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de las funciones de servidor user", () => {
+describe("Suite de pruebas de las server function de user", () => {
   const verifySessionMock = verifySession as jest.Mock;
   const prismaUsuarioDeleteMock = (prisma as any).usuario.delete as jest.Mock;
   const revalidatePathMock = revalidatePath as jest.Mock;
@@ -28,7 +28,7 @@ describe("Suite de pruebas de las funciones de servidor user", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe salir sin hacer nada si no hay sesion autenticada", async () => {
+  it("Debe salir sin hacer nada si no hay sesión autenticada", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
 
     const formData = new FormData();
@@ -55,7 +55,7 @@ describe("Suite de pruebas de las funciones de servidor user", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin hacer nada si el id es vacio", async () => {
+  it("Debe salir sin hacer nada si el id es vacío", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -70,7 +70,7 @@ describe("Suite de pruebas de las funciones de servidor user", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin hacer nada si no se envia id", async () => {
+  it("Debe salir sin hacer nada si no se envía id", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -84,7 +84,7 @@ describe("Suite de pruebas de las funciones de servidor user", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar usuario y revalidar rutas cuando todo es valido", async () => {
+  it("Debe eliminar usuario y revalidar rutas cuando todo es válido", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -104,11 +104,12 @@ describe("Suite de pruebas de las funciones de servidor user", () => {
     expect(revalidatePathMock).toHaveBeenNthCalledWith(2, "/backoffice/overview");
   });
 
-  it("Debe ignorar error de prisma en deleteUser", async () => {
+  it("Debe ignorar el error de prisma en deleteUser", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
     });
+
     prismaUsuarioDeleteMock.mockRejectedValue(new Error("DB delete failed"));
 
     const formData = new FormData();

@@ -5,7 +5,6 @@ import Link from "next/link";
  * Página de error 404 - Página no encontrada.
  * Se muestra cuando el usuario intenta acceder a una ruta que no existe en la plataforma.
  *
- * @component
  * @returns La página de error 404 renderizada
  */
 export default function NotFound() {

@@ -4,6 +4,7 @@ import prisma from "../lib/prisma";
 import verifySession from "@/lib/dal";
 import { revalidatePath } from "next/cache";
 
+// Mocks
 jest.mock("../lib/prisma", () => ({
   contacto: {
     create: jest.fn(),
@@ -16,8 +17,6 @@ jest.mock("next/cache", () => ({
 jest.mock("@/lib/dal", () => jest.fn());
 
 describe("Suite de pruebas de contactMsgAction", () => {
-  const verifySessionMock = verifySession as jest.Mock;
-
   const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
@@ -94,7 +93,7 @@ describe("Suite de pruebas de deleteContact", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe salir sin actuar si no hay sesion autenticada", async () => {
+  it("Debe salir sin actuar si no hay sesión autenticada", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false, session: null });
 
     await deleteContact(new FormData());
@@ -110,7 +109,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin actuar si la sesion es valida pero sin datos de usuario", async () => {
+  it("Debe salir sin actuar si la sesión es válida pero sin datos de usuario", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: null });
 
     await deleteContact(new FormData());
@@ -138,7 +137,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin actuar si la fecha proporcionada es invalida", async () => {
+  it("Debe salir sin actuar si la fecha proporcionada es inválida", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
 
     const fd = new FormData();
@@ -151,7 +150,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar el contacto y revalidar la ruta si los datos son validos", async () => {
+  it("Debe eliminar el contacto y revalidar la ruta si los datos son válidos", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
     (prisma.contacto.delete as jest.Mock).mockResolvedValue({});
 

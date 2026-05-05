@@ -3,6 +3,7 @@ import { FormActionState, UserRole } from "@/types";
 import prisma from "@/lib/prisma";
 import verifySession from "@/lib/dal";
 
+// Mocks
 jest.mock("@/lib/dal", () => jest.fn());
 jest.mock("@/lib/prisma", () => ({
   comunidad: {

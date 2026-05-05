@@ -71,6 +71,7 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
 const deleteContact = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 
+  // Verificar que el usuario esté autenticado y tenga rol webAdmin
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
 
   const nombre = String(formData.get("nombre") ?? "").trim();
