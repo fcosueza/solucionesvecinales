@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ContactForm from ".";
-import contactMsg from "@/actions/contactMsg";
+import { contactMsg } from "@/actions/contactMsg";
 import { toast } from "sonner";
 
 jest.mock("@/actions/contactMsg", () => jest.fn());

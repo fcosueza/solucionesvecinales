@@ -1,5 +1,5 @@
 import { FormActionState } from "@/types";
-import contactMsg, { deleteContact } from "./contactMsg";
+import { contactMsg, deleteContact } from "./contactMsg";
 import prisma from "../lib/prisma";
 import verifySession from "@/lib/dal";
 import { revalidatePath } from "next/cache";

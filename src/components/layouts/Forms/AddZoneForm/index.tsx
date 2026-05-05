@@ -30,7 +30,7 @@ const AddZoneForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const router = useRouter();
   const [descripcionLen, setDescripcionLen] = useState(0);
   const [estado, accionFormulario, estaPendiente] = useActionState(
-    (prevState: FormActionState, formData: FormData) => createZone(communityID, formData),
+    (_prevState: FormActionState, formData: FormData) => createZone(communityID, formData),
     initialState
   );
   const nombreRef = useRef<HTMLInputElement>(null);

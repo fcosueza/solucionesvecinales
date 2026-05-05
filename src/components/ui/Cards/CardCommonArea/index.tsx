@@ -14,12 +14,6 @@ interface Props {
 }
 
 /**
- * Formatea la fecha y genera una cadena en castellano con el formato "HH:mm".
- *
- * @param date La fecha a formatear.
- * @returns Una cadena con el formato "HH:mm" en castellano.
- */
-/**
  *
  * @param nombre El nombre de la zona común.
  * @param descripcion Una breve descripción de la zona común.

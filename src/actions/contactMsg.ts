@@ -86,5 +86,4 @@ const deleteContact = async (formData: FormData): Promise<void> => {
   } catch {}
 };
 
-export { deleteContact };
-export default contactMsg;
+export { contactMsg, deleteContact };

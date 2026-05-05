@@ -6,7 +6,8 @@ import {
   buildAllowedReservationDates,
   formatReservationDateLabel,
   formatTimeLabel,
-  getAvailableStartHours
+  getAvailableStartHours,
+  toReservationDateValue
 } from "@/lib/reservations";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -50,15 +51,13 @@ const CommonAreaReservationForm = ({
 }: Props): React.ReactNode => {
   const router = useRouter();
   const [pending, setPending] = useState(false);
-  const allowedDates = buildAllowedReservationDates().map(date => ({
-    value: `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`,
-    label: formatReservationDateLabel(date)
-  }));
-  const [selectedDate, setSelectedDate] = useState(allowedDates[0]?.value ?? "");
+  const allowedDates = buildAllowedReservationDates();
+  const [selectedDate, setSelectedDate] = useState<Date | null>(allowedDates[0] ?? null);
   const [duration, setDuration] = useState(1);
+  const selectedDateValue = selectedDate ? toReservationDateValue(selectedDate) : "";
 
   const occupiedHours = existingReservations
-    .filter(reservation => reservation.date === selectedDate)
+    .filter(reservation => reservation.date === selectedDateValue)
     .flatMap(reservation => {
       return Array.from(
         { length: reservation.endHour - reservation.startHour },
@@ -95,7 +94,7 @@ const CommonAreaReservationForm = ({
     setPending(true);
 
     const formData = new FormData();
-    formData.set("fecha", selectedDate);
+    formData.set("fecha", selectedDateValue);
     formData.set("horaInicio", selectedStartHour);
     formData.set("duracion", String(duration));
 
@@ -127,13 +126,17 @@ const CommonAreaReservationForm = ({
             <select
               id={`reservation-date-${zoneName}`}
               className={style.popupSelect}
-              value={selectedDate}
-              onChange={event => setSelectedDate(event.target.value)}
+              value={selectedDateValue}
+              onChange={event => {
+                const nextDate = allowedDates.find(date => toReservationDateValue(date) === event.target.value);
+
+                setSelectedDate(nextDate ?? null);
+              }}
               disabled={pending}
             >
-              {allowedDates.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
+              {allowedDates.map(date => (
+                <option key={toReservationDateValue(date)} value={toReservationDateValue(date)}>
+                  {formatReservationDateLabel(date)}
                 </option>
               ))}
             </select>

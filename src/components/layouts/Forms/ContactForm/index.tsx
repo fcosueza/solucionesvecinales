@@ -1,6 +1,6 @@
 "use client";
 
-import contactMsg from "@/actions/contactMsg";
+import { contactMsg } from "@/actions/contactMsg";
 import { useActionState, useEffect } from "react";
 import { FormActionState, InputType } from "@/types";
 import FormInput from "@/components/ui/FormComp/FormInput";
