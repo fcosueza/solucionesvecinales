@@ -1,26 +1,20 @@
 import {
   buildAllowedReservationDates,
   buildReservedHours,
-  createTimeDate,
-  formatReservationDateLabel,
-  formatTimeLabel,
   getAvailableStartHours,
-  getHourFromTime,
-  getHourlyRange,
   isAllowedReservationDate,
-  isWholeHourTime,
-  parseReservationDate,
-  startOfUTCDate,
-  toReservationDateValue
+  isReservationSlotInPast,
+  parseReservationDate
 } from "./reservations";
+import { formatHourLabel, formatReservationDateLabel, formatTimeLabel } from "./dateFormatting";
 
 describe("Reservation helpers", () => {
   it("builds the next 7 allowed reservation dates starting tomorrow", () => {
     const dates = buildAllowedReservationDates(new Date(Date.UTC(2026, 4, 3, 12, 0, 0)));
 
     expect(dates).toHaveLength(7);
-    expect(toReservationDateValue(dates[0])).toBe("2026-05-04");
-    expect(toReservationDateValue(dates[6])).toBe("2026-05-10");
+    expect(dates[0]).toBe("2026-05-04");
+    expect(dates[6]).toBe("2026-05-10");
   });
 
   it("returns the reserved hourly slots for a reservation", () => {
@@ -39,32 +33,22 @@ describe("Reservation helpers", () => {
   });
 
   it("formats times using UTC-safe hours", () => {
-    expect(formatTimeLabel(createTimeDate(9, 0))).toBe("09:00");
-    expect(getHourFromTime(createTimeDate(21, 0))).toBe(21);
+    expect(formatTimeLabel(new Date(Date.UTC(1970, 0, 1, 9, 0, 0, 0)))).toBe("09:00");
+    expect(formatHourLabel(21)).toBe("21:00");
   });
 
-  it("parses reservation date values into UTC dates", () => {
+  it("parses reservation date values", () => {
     const parsedDate = parseReservationDate("2026-05-09");
 
-    expect(parsedDate).not.toBeNull();
-    expect(toReservationDateValue(parsedDate!)).toBe("2026-05-09");
+    expect(parsedDate).toBe("2026-05-09");
   });
 
   it("returns null when reservation date format is invalid", () => {
     expect(parseReservationDate("09-05-2026")).toBeNull();
   });
 
-  it("returns null when Date.UTC produces an invalid timestamp", () => {
-    const utcSpy = jest.spyOn(Date, "UTC").mockReturnValueOnce(Number.NaN);
-
-    expect(parseReservationDate("2026-05-09")).toBeNull();
-
-    utcSpy.mockRestore();
-  });
-
-  it("builds hourly range and supports empty range", () => {
-    expect(getHourlyRange(9, 12)).toEqual([9, 10, 11]);
-    expect(getHourlyRange(12, 12)).toEqual([]);
+  it("returns null when reservation date value is calendar-invalid", () => {
+    expect(parseReservationDate("2026-02-31")).toBeNull();
   });
 
   it("returns empty available hours for invalid duration", () => {
@@ -90,19 +74,19 @@ describe("Reservation helpers", () => {
   it("validates reservation date inside and outside allowed window", () => {
     const baseDate = new Date(Date.UTC(2026, 4, 3, 12, 0, 0));
 
-    expect(isAllowedReservationDate(new Date(Date.UTC(2026, 4, 4)), baseDate)).toBe(true);
-    expect(isAllowedReservationDate(new Date(Date.UTC(2026, 4, 12)), baseDate)).toBe(false);
+    expect(isAllowedReservationDate("2026-05-04", baseDate)).toBe(true);
+    expect(isAllowedReservationDate("2026-05-12", baseDate)).toBe(false);
   });
 
-  it("detects whole-hour times", () => {
-    expect(isWholeHourTime(createTimeDate(10, 0))).toBe(true);
-    expect(isWholeHourTime(createTimeDate(10, 30))).toBe(false);
+  it("detects when a reservation slot is already in the past", () => {
+    const now = new Date(Date.UTC(2026, 4, 4, 11, 30, 0));
+
+    expect(isReservationSlotInPast("2026-05-04", 11, now)).toBe(true);
+    expect(isReservationSlotInPast("2026-05-04", 12, now)).toBe(false);
+    expect(isReservationSlotInPast("2026-05-05", 10, now)).toBe(false);
   });
 
-  it("normalizes to start of UTC date and formats reservation label", () => {
-    const normalizedDate = startOfUTCDate(new Date(Date.UTC(2026, 4, 3, 18, 45, 22)));
-
-    expect(toReservationDateValue(normalizedDate)).toBe("2026-05-03");
-    expect(formatReservationDateLabel(new Date(Date.UTC(2026, 4, 9)))).toMatch(/\d{2}\/\d{2}/);
+  it("formats reservation labels from date strings", () => {
+    expect(formatReservationDateLabel("2026-05-09")).toMatch(/\d{2}\/\d{2}/);
   });
 });

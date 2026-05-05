@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { formatTimeLabel } from "@/lib/reservations";
+import { formatTimeLabel } from "@/lib/dateFormatting";
 import CardCommonArea from ".";
 
 describe("Suite de pruebas del componente CardCommonArea", () => {

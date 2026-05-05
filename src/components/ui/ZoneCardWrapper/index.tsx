@@ -3,7 +3,7 @@
 import { deleteZone } from "@/actions/community/communityZone";
 import CardCommonArea from "@/components/ui/Cards/CardCommonArea";
 import CommonAreaReservationButton from "@/components/ui/CommonAreaReservationButton";
-import { getHourFromTime, toReservationDateValue } from "@/lib/reservations";
+import { toReservationDateValue } from "@/lib/reservations";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -81,12 +81,12 @@ const ZoneCardWrapper = ({
           <CommonAreaReservationButton
             communityID={communityID}
             zoneName={zone.nombre}
-            openingHour={getHourFromTime(zone.hora_inicio)}
-            closingHour={getHourFromTime(zone.hora_fin)}
+            openingHour={zone.hora_inicio.getUTCHours()}
+            closingHour={zone.hora_fin.getUTCHours()}
             existingReservations={zone.reservas.map(reservation => ({
               date: toReservationDateValue(reservation.fecha),
-              startHour: getHourFromTime(reservation.hora_inicio),
-              endHour: getHourFromTime(reservation.hora_fin)
+              startHour: reservation.hora_inicio.getUTCHours(),
+              endHour: reservation.hora_fin.getUTCHours()
             }))}
             disabled={hasActiveReservation}
           />

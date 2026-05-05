@@ -5,11 +5,10 @@ import prisma from "@/lib/prisma";
 import {
   MAX_RESERVATION_DURATION_HOURS,
   buildReservedHours,
-  createTimeDate,
-  getHourFromTime,
   isAllowedReservationDate,
+  isReservationSlotInPast,
   parseReservationDate,
-  startOfUTCDate
+  toReservationDateValue
 } from "@/lib/reservations";
 import { FormActionState } from "@/types";
 import { revalidatePath } from "next/cache";
@@ -65,13 +64,13 @@ const reserveCommonArea = async (
   const reservationDateInput = String(formData.get("fecha") ?? "").trim();
   const startHour = Number(formData.get("horaInicio"));
   const duration = Number(formData.get("duracion"));
-  const reservationDate = parseReservationDate(reservationDateInput);
+  const reservationDateValue = parseReservationDate(reservationDateInput);
 
   if (
     !Number.isInteger(communityID) ||
     communityID <= 0 ||
     !zoneName.trim() ||
-    !reservationDate ||
+    !reservationDateValue ||
     !Number.isInteger(startHour) ||
     !Number.isInteger(duration) ||
     duration < 1 ||
@@ -80,7 +79,7 @@ const reserveCommonArea = async (
     return createReservationError("Los datos de la reserva no son válidos", formData);
   }
 
-  if (!isAllowedReservationDate(reservationDate)) {
+  if (!isAllowedReservationDate(reservationDateValue)) {
     return createReservationError("Solo puedes reservar dentro de los próximos 7 días", formData);
   }
 
@@ -119,8 +118,8 @@ const reserveCommonArea = async (
     return createReservationError("La zona común no existe", formData);
   }
 
-  const openingHour = getHourFromTime(zone.hora_inicio);
-  const closingHour = getHourFromTime(zone.hora_fin);
+  const openingHour = zone.hora_inicio.getUTCHours();
+  const closingHour = zone.hora_fin.getUTCHours();
   const endHour = startHour + duration;
 
   if (startHour < openingHour || endHour > closingHour) {
@@ -128,10 +127,12 @@ const reserveCommonArea = async (
   }
 
   const now = new Date();
-  const today = startOfUTCDate(now);
-  const currentTime = createTimeDate(now.getUTCHours(), now.getUTCMinutes());
+  const todayValue = toReservationDateValue(now);
+  const today = new Date(`${todayValue}T00:00:00.000Z`);
+  const currentTime = new Date(Date.UTC(1970, 0, 1, now.getUTCHours(), now.getUTCMinutes(), 0, 0));
+  const reservationDate = new Date(`${reservationDateValue}T00:00:00.000Z`);
 
-  if (reservationDate.getTime() === today.getTime() && createTimeDate(endHour) <= currentTime) {
+  if (isReservationSlotInPast(reservationDateValue, endHour, now)) {
     return createReservationError("No puedes reservar una franja que ya ha pasado", formData);
   }
 
@@ -149,7 +150,7 @@ const reserveCommonArea = async (
       }
 
       const reservedHours = buildReservedHours(startHour, duration);
-      const reservedTimeDates = reservedHours.map(hour => createTimeDate(hour));
+      const reservedTimeDates = reservedHours.map(hour => new Date(Date.UTC(1970, 0, 1, hour, 0, 0, 0)));
 
       const overlappingSlots = await tx.reservaFranja.findMany({
         where: {
@@ -175,8 +176,8 @@ const reserveCommonArea = async (
           comunidad: communityID,
           zona: zoneName,
           fecha: reservationDate,
-          hora_inicio: createTimeDate(startHour),
-          hora_fin: createTimeDate(endHour),
+          hora_inicio: new Date(Date.UTC(1970, 0, 1, startHour, 0, 0, 0)),
+          hora_fin: new Date(Date.UTC(1970, 0, 1, endHour, 0, 0, 0)),
           franjas: {
             create: reservedTimeDates.map(timeDate => ({
               comunidad: communityID,

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { formatTimeLabel } from "@/lib/reservations";
+import { formatTimeLabel } from "@/lib/dateFormatting";
 import style from "./style.module.css";
 interface Props {
   nombre: string;
@@ -14,6 +14,7 @@ interface Props {
 }
 
 /**
+ * Componente que muestra una tarheta con la información de una zona común.
  *
  * @param nombre El nombre de la zona común.
  * @param descripcion Una breve descripción de la zona común.

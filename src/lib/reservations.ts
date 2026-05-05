@@ -11,45 +11,25 @@ const RESERVATION_WINDOW_DAYS = 7;
 const padTimePart = (value: number): string => value.toString().padStart(2, "0");
 
 /**
- * Crea un objeto Date en UTC con la fecha especificada, sin hora.
- *
- * @param year El año (ejemplo: 2024)
- * @param month El mes en índice 0-11 (enero = 0, diciembre = 11)
- * @param day El día del mes (1-31)
- * @returns Un objeto Date con la fecha en UTC al inicio del día
- */
-const createUTCDate = (year: number, month: number, day: number): Date => {
-  return new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
-};
-
-/**
- * Obtiene el inicio del día (a las 00:00) de una fecha dada.
- *
- * @param date La fecha a procesar
- * @returns Un objeto Date correspondiente al inicio del día UTC
- */
-const startOfUTCDate = (date: Date): Date => {
-  return createUTCDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-};
-
-/**
- * Parsea un string de fecha en formato ISO (YYYY-MM-DD) a un objeto Date.
- * Valida que el formato sea correcto.
+ * Valida y normaliza un string de fecha en formato ISO (YYYY-MM-DD).
  *
  * @param value String con la fecha en formato YYYY-MM-DD
- * @returns Objeto Date si es válido, o null si el formato es incorrecto
+ * @returns El mismo valor si es válido, o null si el formato es incorrecto
  */
-const parseReservationDate = (value: string): Date | null => {
+const parseReservationDate = (value: string): string | null => {
   const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
 
   if (!match) {
     return null;
   }
 
-  const [, year, month, day] = match;
-  const parsedDate = createUTCDate(Number(year), Number(month) - 1, Number(day));
+  const parsedDate = new Date(`${value}T00:00:00.000Z`);
 
-  return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
+  if (Number.isNaN(parsedDate.getTime())) {
+    return null;
+  }
+
+  return toReservationDateValue(parsedDate) === value ? value : null;
 };
 
 /**
@@ -63,80 +43,24 @@ const toReservationDateValue = (date: Date): string => {
 };
 
 /**
- * Crea un objeto Date que representa una hora específica del día (sin fecha).
- * Utilizado para comparaciones de horarios de reserva.
- *
- * @param hour La hora en formato 24h (0-23)
- * @param minute El minuto (0-59), por defecto 0
- * @returns Un objeto Date con la hora especificada
- */
-const createTimeDate = (hour: number, minute = 0): Date => {
-  return new Date(Date.UTC(1970, 0, 1, hour, minute, 0, 0));
-};
-
-/**
- * Extrae la hora (0-23) de un objeto Date.
- *
- * @param date El objeto Date
- * @returns La hora en formato 24h
- */
-const getHourFromTime = (date: Date): number => date.getUTCHours();
-
-/**
- * Formatea un objeto Date como etiqueta de tiempo en formato HH:MM.
- *
- * @param date El objeto Date con la hora
- * @returns String con el formato HH:MM
- */
-const formatTimeLabel = (date: Date): string => {
-  return `${padTimePart(date.getUTCHours())}:${padTimePart(date.getUTCMinutes())}`;
-};
-
-/**
- * Formatea un objeto Date como etiqueta de fecha en español.
- * Ejemplo: "viernes, 15/05"
- *
- * @param date El objeto Date con la fecha
- * @returns String con la fecha formateada en español
- */
-const formatReservationDateLabel = (date: Date): string => {
-  return new Intl.DateTimeFormat("es-ES", {
-    weekday: "long",
-    day: "2-digit",
-    month: "2-digit",
-    timeZone: "UTC"
-  }).format(date);
-};
-
-/**
  * Construye un array de fechas permitidas para hacer reservas.
  * Las fechas permitidas son los próximos RESERVATION_WINDOW_DAYS días a partir de la fecha base.
  *
  * @param baseDate La fecha base (por defecto la fecha actual)
- * @returns Array de objetos Date con las fechas permitidas
+ * @returns Array de strings con las fechas permitidas en formato YYYY-MM-DD
  */
-const buildAllowedReservationDates = (baseDate = new Date()): Date[] => {
-  const firstAllowedDay = startOfUTCDate(baseDate);
+const buildAllowedReservationDates = (baseDate = new Date()): string[] => {
+  const firstAllowedDay = new Date(
+    Date.UTC(baseDate.getUTCFullYear(), baseDate.getUTCMonth(), baseDate.getUTCDate() + 1, 0, 0, 0, 0)
+  );
 
   return Array.from({ length: RESERVATION_WINDOW_DAYS }, (_, index) => {
     const nextDay = new Date(firstAllowedDay);
 
-    nextDay.setUTCDate(firstAllowedDay.getUTCDate() + index + 1);
+    nextDay.setUTCDate(firstAllowedDay.getUTCDate() + index);
 
-    return nextDay;
+    return toReservationDateValue(nextDay);
   });
-};
-
-/**
- * Construye un array de horas consecutivas desde la hora inicial hasta la final.
- * Utilizado para mostrar opciones de horario disponibles.
- *
- * @param startHour La hora inicial (0-23)
- * @param endHour La hora final (0-23)
- * @returns Array de números de hora
- */
-const getHourlyRange = (startHour: number, endHour: number): number[] => {
-  return Array.from({ length: Math.max(endHour - startHour, 0) }, (_, index) => startHour + index);
 };
 
 /**
@@ -198,32 +122,33 @@ const getAvailableStartHours = ({
  * @param baseDate La fecha base para calcular la ventana permitida
  * @returns true si la fecha está permitida, false en caso contrario
  */
-const isAllowedReservationDate = (date: Date, baseDate = new Date()): boolean => {
-  return buildAllowedReservationDates(baseDate).map(toReservationDateValue).includes(toReservationDateValue(date));
+const isAllowedReservationDate = (date: string, baseDate = new Date()): boolean => {
+  return buildAllowedReservationDates(baseDate).includes(date);
 };
 
 /**
- * Verifica si una hora está en un horario exacto (minutos y segundos en cero).
+ * Verifica si una reserva para hoy ya ha terminado o está completamente en el pasado.
  *
- * @param date El objeto Date a verificar
- * @returns true si la hora está completa, false en caso contrario
+ * @param reservationDateValue Fecha de la reserva en formato YYYY-MM-DD
+ * @param endHour Hora de fin de la reserva
+ * @param now Fecha actual para la comparación
+ * @returns true si la franja ya ha pasado, false en caso contrario
  */
-const isWholeHourTime = (date: Date): boolean => date.getUTCMinutes() === 0 && date.getUTCSeconds() === 0;
+const isReservationSlotInPast = (reservationDateValue: string, endHour: number, now = new Date()): boolean => {
+  const currentDateValue = toReservationDateValue(now);
+  const currentMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+
+  return reservationDateValue === currentDateValue && endHour * 60 <= currentMinutes;
+};
 
 export {
   MAX_RESERVATION_DURATION_HOURS,
   RESERVATION_WINDOW_DAYS,
   buildAllowedReservationDates,
   buildReservedHours,
-  createTimeDate,
-  formatReservationDateLabel,
-  formatTimeLabel,
   getAvailableStartHours,
-  getHourFromTime,
-  getHourlyRange,
   isAllowedReservationDate,
-  isWholeHourTime,
+  isReservationSlotInPast,
   parseReservationDate,
-  startOfUTCDate,
   toReservationDateValue
 };

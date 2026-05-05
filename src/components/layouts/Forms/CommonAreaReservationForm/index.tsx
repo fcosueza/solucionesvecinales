@@ -1,13 +1,11 @@
 "use client";
 
 import reserveCommonArea from "@/actions/community/communityReservation";
+import { formatHourLabel, formatReservationDateLabel } from "@/lib/dateFormatting";
 import {
   MAX_RESERVATION_DURATION_HOURS,
   buildAllowedReservationDates,
-  formatReservationDateLabel,
-  formatTimeLabel,
-  getAvailableStartHours,
-  toReservationDateValue
+  getAvailableStartHours
 } from "@/lib/reservations";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -52,12 +50,11 @@ const CommonAreaReservationForm = ({
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const allowedDates = buildAllowedReservationDates();
-  const [selectedDate, setSelectedDate] = useState<Date | null>(allowedDates[0] ?? null);
+  const [selectedDate, setSelectedDate] = useState(allowedDates[0] ?? "");
   const [duration, setDuration] = useState(1);
-  const selectedDateValue = selectedDate ? toReservationDateValue(selectedDate) : "";
 
   const occupiedHours = existingReservations
-    .filter(reservation => reservation.date === selectedDateValue)
+    .filter(reservation => reservation.date === selectedDate)
     .flatMap(reservation => {
       return Array.from(
         { length: reservation.endHour - reservation.startHour },
@@ -94,7 +91,7 @@ const CommonAreaReservationForm = ({
     setPending(true);
 
     const formData = new FormData();
-    formData.set("fecha", selectedDateValue);
+    formData.set("fecha", selectedDate);
     formData.set("horaInicio", selectedStartHour);
     formData.set("duracion", String(duration));
 
@@ -126,16 +123,12 @@ const CommonAreaReservationForm = ({
             <select
               id={`reservation-date-${zoneName}`}
               className={style.popupSelect}
-              value={selectedDateValue}
-              onChange={event => {
-                const nextDate = allowedDates.find(date => toReservationDateValue(date) === event.target.value);
-
-                setSelectedDate(nextDate ?? null);
-              }}
+              value={selectedDate}
+              onChange={event => setSelectedDate(event.target.value)}
               disabled={pending}
             >
               {allowedDates.map(date => (
-                <option key={toReservationDateValue(date)} value={toReservationDateValue(date)}>
+                <option key={date} value={date}>
                   {formatReservationDateLabel(date)}
                 </option>
               ))}
@@ -168,7 +161,7 @@ const CommonAreaReservationForm = ({
               {availableStartHours.length > 0 ? (
                 availableStartHours.map(hour => (
                   <option key={hour} value={hour}>
-                    {formatTimeLabel(new Date(Date.UTC(1970, 0, 1, hour, 0, 0)))}
+                    {formatHourLabel(hour)}
                   </option>
                 ))
               ) : (

@@ -2,8 +2,9 @@ import ReservationCard from "@/components/ui/ReservationCard";
 import AddZoneFormButton from "@/components/ui/AddZoneFormButton";
 import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import ZoneCardWrapper from "@/components/ui/ZoneCardWrapper";
+import { formatReservationDateLabel, formatTimeLabel } from "@/lib/dateFormatting";
 import verifySession from "@/lib/dal";
-import { buildAllowedReservationDates, formatReservationDateLabel, formatTimeLabel } from "@/lib/reservations";
+import { buildAllowedReservationDates, toReservationDateValue } from "@/lib/reservations";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import { UserRole } from "@/types";
@@ -53,10 +54,10 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
   }
 
   const allowedDates = buildAllowedReservationDates();
-  const reservationWindowStart = allowedDates[0];
-  const reservationWindowEnd = allowedDates[allowedDates.length - 1];
+  const reservationWindowStart = new Date(`${allowedDates[0]}T00:00:00.000Z`);
+  const reservationWindowEnd = new Date(`${allowedDates[allowedDates.length - 1]}T00:00:00.000Z`);
   const now = new Date();
-  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
+  const today = new Date(`${toReservationDateValue(now)}T00:00:00.000Z`);
   const currentTime = new Date(Date.UTC(1970, 0, 1, now.getUTCHours(), now.getUTCMinutes(), 0, 0));
 
   const [community, userReservations] = await Promise.all([
