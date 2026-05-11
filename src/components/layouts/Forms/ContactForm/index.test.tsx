@@ -4,7 +4,9 @@ import ContactForm from ".";
 import { contactMsg } from "@/actions/contactMsg";
 import { toast } from "sonner";
 
-jest.mock("@/actions/contactMsg", () => jest.fn());
+jest.mock("@/actions/contactMsg", () => ({
+  contactMsg: jest.fn()
+}));
 jest.mock("sonner", () => ({
   toast: {
     success: jest.fn(),

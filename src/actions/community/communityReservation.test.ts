@@ -1,12 +1,22 @@
 import reserveCommonArea, { deleteReservation } from "./communityReservation";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
+import * as reservations from "@/lib/reservations";
 import { revalidatePath } from "next/cache";
 
 jest.mock("@/lib/dal", () => jest.fn());
 jest.mock("next/cache", () => ({
   revalidatePath: jest.fn()
 }));
+jest.mock("@/lib/reservations", () => {
+  const actual = jest.requireActual("@/lib/reservations");
+
+  return {
+    ...actual,
+    isAllowedReservationDate: jest.fn(actual.isAllowedReservationDate),
+    isReservationSlotInPast: jest.fn(actual.isReservationSlotInPast)
+  };
+});
 jest.mock("@/lib/prisma", () => ({
   __esModule: true,
   default: {
@@ -25,8 +35,11 @@ jest.mock("@/lib/prisma", () => ({
 }));
 
 describe("Suite de pruebas de communityReservation", () => {
+  const reservationsActual = jest.requireActual("@/lib/reservations") as typeof import("@/lib/reservations");
   const verifySessionMock = verifySession as jest.Mock;
   const revalidatePathMock = revalidatePath as jest.Mock;
+  const isAllowedReservationDateMock = reservations.isAllowedReservationDate as jest.Mock;
+  const isReservationSlotInPastMock = reservations.isReservationSlotInPast as jest.Mock;
   const prismaMock = prisma as unknown as {
     inscripcion: { findUnique: jest.Mock };
     zona: { findUnique: jest.Mock };
@@ -57,6 +70,12 @@ describe("Suite de pruebas de communityReservation", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers().setSystemTime(new Date(Date.UTC(2026, 4, 4, 9, 30, 0)));
+    isAllowedReservationDateMock.mockImplementation((date: string, baseDate?: Date) =>
+      reservationsActual.isAllowedReservationDate(date, baseDate)
+    );
+    isReservationSlotInPastMock.mockImplementation((reservationDateValue: string, endHour: number, now?: Date) =>
+      reservationsActual.isReservationSlotInPast(reservationDateValue, endHour, now)
+    );
 
     verifySessionMock.mockResolvedValue({
       isAuth: true,
@@ -101,6 +120,66 @@ describe("Suite de pruebas de communityReservation", () => {
     expect(result.state).toBe("error");
     expect(result.message).toBe("Solo puedes reservar dentro de los próximos 7 días");
     expect(prismaMock.inscripcion.findUnique).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error si falta la fecha en el formulario", async () => {
+    const formData = new FormData();
+
+    formData.set("horaInicio", "10");
+    formData.set("duracion", "2");
+
+    const result = await reserveCommonArea(1, "Piscina", formData);
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Los datos de la reserva no son válidos");
+    expect(prismaMock.inscripcion.findUnique).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error si el payload de reserva es invalido", async () => {
+    const result = await reserveCommonArea(1, "Piscina", buildFormData({ horaInicio: "abc" }));
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Los datos de la reserva no son válidos");
+    expect(prismaMock.inscripcion.findUnique).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error si el usuario no pertenece a la comunidad", async () => {
+    prismaMock.inscripcion.findUnique.mockResolvedValue(null);
+
+    const result = await reserveCommonArea(1, "Piscina", buildFormData());
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("No perteneces a esta comunidad");
+    expect(prismaMock.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error si la zona comun no existe", async () => {
+    prismaMock.zona.findUnique.mockResolvedValue(null);
+
+    const result = await reserveCommonArea(1, "Piscina", buildFormData());
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("La zona común no existe");
+    expect(prismaMock.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error si la franja queda fuera del horario de la zona", async () => {
+    const result = await reserveCommonArea(1, "Piscina", buildFormData({ horaInicio: "21", duracion: "2" }));
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("La reserva debe quedar dentro del horario disponible de la zona");
+    expect(prismaMock.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error si la franja ya paso", async () => {
+    isAllowedReservationDateMock.mockReturnValue(true);
+    isReservationSlotInPastMock.mockReturnValue(true);
+
+    const result = await reserveCommonArea(1, "Piscina", buildFormData());
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("No puedes reservar una franja que ya ha pasado");
+    expect(prismaMock.$transaction).not.toHaveBeenCalled();
   });
 
   it("Debe devolver error si el usuario ya tiene una reserva activa", async () => {
@@ -148,6 +227,53 @@ describe("Suite de pruebas de communityReservation", () => {
 
     expect(result.state).toBe("error");
     expect(result.message).toBe("La franja seleccionada acaba de ocuparse. Elige otra distinta");
+  });
+
+  it("Debe devolver un error generico cuando falla la transaccion por un motivo distinto a P2002", async () => {
+    prismaMock.$transaction.mockRejectedValue(new Error("unexpected"));
+
+    const result = await reserveCommonArea(1, "Piscina", buildFormData());
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("No se pudo completar la reserva. Inténtalo de nuevo");
+  });
+
+  it("Debe devolver error al cancelar si el usuario no esta autenticado", async () => {
+    verifySessionMock.mockResolvedValue({ isAuth: false, session: null });
+
+    const result = await deleteReservation(3, 1);
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Debes iniciar sesión para cancelar una reserva");
+    expect(prismaMock.reserva.findFirst).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error al cancelar si los IDs son invalidos", async () => {
+    const result = await deleteReservation(0, 1);
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Datos de la reserva no válidos");
+    expect(prismaMock.reserva.findFirst).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error al cancelar si no encuentra la reserva", async () => {
+    prismaMock.reserva.findFirst.mockResolvedValue(null);
+
+    const result = await deleteReservation(3, 1);
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("No se encontró la reserva o no tienes permiso para eliminarla");
+    expect(prismaMock.reserva.delete).not.toHaveBeenCalled();
+  });
+
+  it("Debe devolver error al cancelar si falla el borrado", async () => {
+    prismaMock.reserva.findFirst.mockResolvedValue({ id: 3 });
+    prismaMock.reserva.delete.mockRejectedValue(new Error("db error"));
+
+    const result = await deleteReservation(3, 1);
+
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("No se pudo cancelar la reserva. Inténtalo de nuevo");
   });
 
   it("Debe eliminar una reserva propia y revalidar rutas", async () => {

@@ -51,6 +51,10 @@ describe("Reservation helpers", () => {
     expect(parseReservationDate("2026-02-31")).toBeNull();
   });
 
+  it("returns null when reservation date cannot be parsed as a valid Date", () => {
+    expect(parseReservationDate("2026-13-01")).toBeNull();
+  });
+
   it("returns empty available hours for invalid duration", () => {
     expect(
       getAvailableStartHours({
@@ -88,5 +92,9 @@ describe("Reservation helpers", () => {
 
   it("formats reservation labels from date strings", () => {
     expect(formatReservationDateLabel("2026-05-09")).toMatch(/\d{2}\/\d{2}/);
+  });
+
+  it("formats reservation labels from Date objects", () => {
+    expect(formatReservationDateLabel(new Date(Date.UTC(2026, 4, 9, 0, 0, 0)))).toMatch(/\d{2}\/\d{2}/);
   });
 });
