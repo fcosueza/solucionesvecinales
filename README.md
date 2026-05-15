@@ -334,3 +334,13 @@ Scripts relevantes en este repositorio:
 - npm run vercel-build -> prisma generate && prisma migrate deploy && prisma db seed && next build
 - npm run db:migrate:deploy -> prisma migrate deploy
 - npm run db:seed -> prisma db seed
+
+## TODO
+
+- Translate all code to English (for fuck sake)
+- Refactor resevation system allowing up to 3 reservations for user
+- Redesing some form's UI
+- WebAdmin need to be able to add elements
+- Add missing e2e tests
+- Refactor inline help to make it more helpfull
+- Review and refactor (if needed) all code
