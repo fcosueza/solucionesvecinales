@@ -13,6 +13,9 @@ jest.mock("next/cache", () => ({
 jest.mock("@/lib/prisma", () => ({
   __esModule: true,
   default: {
+    comunidad: {
+      findFirst: jest.fn()
+    },
     usuario: {
       delete: jest.fn()
     }
@@ -21,11 +24,13 @@ jest.mock("@/lib/prisma", () => ({
 
 describe("Suite de pruebas de las server function de user", () => {
   const verifySessionMock = verifySession as jest.Mock;
+  const prismaComunidadFindFirstMock = (prisma as any).comunidad.findFirst as jest.Mock;
   const prismaUsuarioDeleteMock = (prisma as any).usuario.delete as jest.Mock;
   const revalidatePathMock = revalidatePath as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    prismaComunidadFindFirstMock.mockResolvedValue(null);
   });
 
   it("Debe salir sin hacer nada si no hay sesión autenticada", async () => {
@@ -36,6 +41,7 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
+    expect(prismaComunidadFindFirstMock).not.toHaveBeenCalled();
     expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
@@ -51,6 +57,7 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
+    expect(prismaComunidadFindFirstMock).not.toHaveBeenCalled();
     expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
@@ -66,6 +73,7 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
+    expect(prismaComunidadFindFirstMock).not.toHaveBeenCalled();
     expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
@@ -80,6 +88,28 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
+    expect(prismaComunidadFindFirstMock).not.toHaveBeenCalled();
+    expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
+    expect(revalidatePathMock).not.toHaveBeenCalled();
+  });
+
+  it("No debe eliminar el usuario si administra alguna comunidad", async () => {
+    verifySessionMock.mockResolvedValue({
+      isAuth: true,
+      session: { userID: "web-admin-1", role: UserRole.webAdmin }
+    });
+
+    prismaComunidadFindFirstMock.mockResolvedValue({ id: 10 });
+
+    const formData = new FormData();
+    formData.set("id", "user-25");
+
+    await expect(deleteUser(formData)).resolves.toBeUndefined();
+
+    expect(prismaComunidadFindFirstMock).toHaveBeenCalledWith({
+      where: { adminID: "user-25" },
+      select: { id: true }
+    });
     expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
@@ -96,6 +126,10 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
+    expect(prismaComunidadFindFirstMock).toHaveBeenCalledWith({
+      where: { adminID: "user-25" },
+      select: { id: true }
+    });
     expect(prismaUsuarioDeleteMock).toHaveBeenCalledWith({
       where: { id: "user-25" }
     });
@@ -117,6 +151,7 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
+    expect(prismaComunidadFindFirstMock).toHaveBeenCalledWith({ where: { adminID: "user-25" }, select: { id: true } });
     expect(prismaUsuarioDeleteMock).toHaveBeenCalledWith({
       where: { id: "user-25" }
     });

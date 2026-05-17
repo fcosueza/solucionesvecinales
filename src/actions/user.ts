@@ -22,6 +22,14 @@ export const deleteUser = async (formData: FormData): Promise<void> => {
   const id = String(formData.get("id") ?? "").trim();
   if (!id) return;
 
+  // No permitir eliminar un usuario que sigue administrando comunidades.
+  const hasAdminCommunities = await prisma.comunidad.findFirst({
+    where: { adminID: id },
+    select: { id: true }
+  });
+
+  if (hasAdminCommunities) return;
+
   // Intentar eliminar el usuario y revalidar rutas.
   try {
     await prisma.usuario.delete({ where: { id } });
