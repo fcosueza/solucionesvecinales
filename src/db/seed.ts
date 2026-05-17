@@ -204,23 +204,6 @@ async function main(): Promise<void> {
     }
   });
 
-  await prisma.usuario.deleteMany({
-    where: {
-      OR: [
-        {
-          email: {
-            startsWith: "seed+"
-          }
-        },
-        {
-          email: {
-            in: SEEDED_USER_EMAILS
-          }
-        }
-      ]
-    }
-  });
-
   await prisma.contacto.deleteMany({
     where: {
       email: {
@@ -250,10 +233,17 @@ async function main(): Promise<void> {
     apellido: WEB_ADMIN_SEED_USER.apellido
   });
 
-  await prisma.usuario.createMany({
-    data: userSeed,
-    skipDuplicates: true
-  });
+  for (const user of userSeed) {
+    await prisma.usuario.upsert({
+      where: { email: user.email },
+      update: {
+        rol: user.rol,
+        nombre: user.nombre,
+        apellido: user.apellido
+      },
+      create: user
+    });
+  }
 
   const allUsers = await prisma.usuario.findMany({
     where: {
@@ -270,13 +260,16 @@ async function main(): Promise<void> {
   const userIdByEmail = new Map(allUsers.map(user => [user.email, user.id]));
   const sharedPasswordHash = await bcrypt.hash(SEED_SHARED_PASSWORD, 10);
 
-  await prisma.credenciales.createMany({
-    data: allUsers.map(user => ({
-      usuario: user.id,
-      password: sharedPasswordHash
-    })),
-    skipDuplicates: true
-  });
+  for (const user of allUsers) {
+    await prisma.credenciales.upsert({
+      where: { usuario: user.id },
+      update: { password: sharedPasswordHash },
+      create: {
+        usuario: user.id,
+        password: sharedPasswordHash
+      }
+    });
+  }
 
   for (let communityIndex = 0; communityIndex < COMMUNITY_SEED_DATA.length; communityIndex += 1) {
     const communityNumber = communityIndex + 1;
