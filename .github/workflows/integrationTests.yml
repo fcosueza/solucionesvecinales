@@ -25,6 +25,7 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/soluciones-vecinales
+      SESSION_SECRET: ZQPFhSisLj80aijERtM1gddymkPfQuNsAYEeRhOBPQE=
 
     steps:
       - uses: actions/checkout@v4
@@ -43,6 +44,9 @@ jobs:
 
       - name: Create Database
         run: npx prisma migrate deploy
+
+      - name: Seed Database
+        run: npm run db:seed
 
       - name: Run Unit Tests
         run: npm run test:unit
