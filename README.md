@@ -339,6 +339,7 @@ Scripts relevantes en este repositorio:
 
 - Translate all code to English (for fuck sake)
 - Refactor resevation system allowing up to 3 reservations for user
+- Refactor server functions (if needed)
 - Redesing some form's UI
 - WebAdmin need to be able to add elements
 - Add missing e2e tests
