@@ -25,7 +25,17 @@ const Logo = ({
   width = 150,
   height = 120
 }: Props): React.ReactNode => {
-  return <Image className={style.logo} src={url} width={width} height={height} alt={altText} aria-label="Logo" />;
+  return (
+    <Image
+      className={style.logo}
+      src={url}
+      width={width}
+      height={height}
+      alt={altText}
+      aria-label="Logo"
+      loading="eager"
+    />
+  );
 };
 
 export default Logo;
