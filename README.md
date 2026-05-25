@@ -1,5 +1,4 @@
 # Soluciones Vecinales
-
 SolucionesVecinales es una aplicación que ayuda a gestionar comunidades de vecinos de forma eficiente y sencilla.
 
 ## Nomenclatura e Idioma
@@ -344,4 +343,4 @@ Scripts relevantes en este repositorio:
 - WebAdmin need to be able to add elements
 - Add missing e2e tests
 - Refactor inline help to make it more helpfull
-- Review and refactor (if needed) all code
+- Increase a11y 
