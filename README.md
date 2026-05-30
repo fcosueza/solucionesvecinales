@@ -2,10 +2,6 @@
 
 Soluciones Vecinales is an application that helps manage residential communities in an efficient and simple way.
 
-## Naming and Language
-
-The application code is in both English and Spanish. The reason is that, on one hand, readability was improved for people who understand English, so most variables and comments were translated into Spanish. On the other hand, components, their arguments, and most types were kept in English so component/function calls stay more consistent, since many of them must be in English because they come from JS or React libraries.
-
 ## Installation
 
 This section explains how to install the software required to run the application locally on both Microsoft Windows and Debian-based Linux distributions.
