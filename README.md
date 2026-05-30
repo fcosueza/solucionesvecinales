@@ -169,6 +169,8 @@ This section explains how to install the software required to run the applicatio
 
 ## Docker Compose (without Dockerfile)
 
+This section explains how to install Docker and run the full project stack with Docker Compose, including PostgreSQL, migrations, seed data, and the app service profiles.
+
 ### Install Docker
 
 #### Linux (Ubuntu/Debian)
@@ -264,6 +266,8 @@ set SESSION_SECRET=your_session_secret
 
 ### Start development environment
 
+Use this step when you want fast local iteration with hot reload and Playwright support inside the containerized environment.
+
 ```bash
 docker compose --profile dev up
 ```
@@ -333,7 +337,7 @@ Relevant scripts in this repository:
 ## TODO
 
 - Translate all code to English
-- Make the app reponsive for small devices (high priority)
+- Make the app responsive for small devices (high priority)
 - Refactor reservation system allowing up to 3 reservations per user
 - Refactor server functions (if needed)
 - Redesign some forms UI
