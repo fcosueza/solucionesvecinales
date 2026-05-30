@@ -1,30 +1,30 @@
 # Soluciones Vecinales
-SolucionesVecinales es una aplicación que ayuda a gestionar comunidades de vecinos de forma eficiente y sencilla.
 
-## Nomenclatura e Idioma
+Soluciones Vecinales is an application that helps manage residential communities in an efficient and simple way.
 
-El código de la aplicación esta en inglés y español. El motivo de esto es que por un lado se han intentado facilitar su lectura para gente que entienda
-en Inglés, por lo que prácticamente todas las variables y todos los comentarios se han traducido al español. Por otro lado, los componentes, sus argumentos y la mayoría de los tipos de han matentido en inglés, para que las llamadas a componentes o funciones sean más homogéneas, ya que hay muchas que se tienen que realizar en inglés porque vienen de librerías de JS o React.
+## Naming and Language
 
-## Instalación
+The application code is in both English and Spanish. The reason is that, on one hand, readability was improved for people who understand English, so most variables and comments were translated into Spanish. On the other hand, components, their arguments, and most types were kept in English so component/function calls stay more consistent, since many of them must be in English because they come from JS or React libraries.
 
-En esta sección se explica cómo instalar el software necesario para ejecutar la aplicación en local tanto para sistemas Microsoft Windows como para distribuciones Linux basadas en Debian.
+## Installation
+
+This section explains how to install the software required to run the application locally on both Microsoft Windows and Debian-based Linux distributions.
 
 ### Linux (Ubuntu/Debian)
 
-1. **Actualizar paquetes del sistema**
+1. **Update system packages**
 
    ```bash
    sudo apt update && sudo apt upgrade -y
    ```
 
-2. **Instalar Git, Node.js y npm**
+2. **Install Git, Node.js, and npm**
 
    ```bash
    sudo apt install -y git nodejs npm
    ```
 
-   Verifica la instalación:
+   Verify the installation:
 
    ```bash
    node -v
@@ -32,7 +32,7 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
    git --version
    ```
 
-3. **Instalar PostgreSQL**
+3. **Install PostgreSQL**
 
    ```bash
    sudo apt install -y postgresql postgresql-contrib
@@ -40,25 +40,25 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
    sudo systemctl start postgresql
    ```
 
-4. **Clonar el repositorio e instalar dependencias del proyecto**
+4. **Clone the repository and install project dependencies**
 
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone <REPOSITORY_URL>
    cd solucionesvecinales
    npm install
    ```
 
 ### Windows
 
-1. **Instalar Git**
+1. **Install Git**
 
-   Descarga e instala Git desde: https://git-scm.com/download/win
+   Download and install Git from: https://git-scm.com/download/win
 
-2. **Instalar Node.js (incluye npm)**
+2. **Install Node.js (includes npm)**
 
-   Descarga e instala Node.js LTS desde: https://nodejs.org/
+   Download and install Node.js LTS from: https://nodejs.org/
 
-   Verifica en PowerShell o CMD:
+   Verify in PowerShell or CMD:
 
    ```powershell
    node -v
@@ -66,118 +66,118 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
    git --version
    ```
 
-3. **Instalar PostgreSQL**
+3. **Install PostgreSQL**
 
-   Descarga e instala PostgreSQL desde: https://www.postgresql.org/download/windows/
+   Download and install PostgreSQL from: https://www.postgresql.org/download/windows/
 
-   Durante la instalación, guarda estos datos:
-   - usuario
-   - contraseña
-   - puerto (por defecto 5432)
+   During installation, keep these details:
+   - user
+   - password
+   - port (default 5432)
 
-4. **Clonar el repositorio e instalar dependencias del proyecto**
+4. **Clone the repository and install project dependencies**
 
    ```powershell
-   git clone <URL_DEL_REPOSITORIO>
+   git clone <REPOSITORY_URL>
    cd solucionesvecinales
    ```
 
-## Ejecución en local
+## Run Locally
 
-### Requisitos previos
+### Prerequisites
 
 - Node.js >= 24
-- Una base de datos PostgreSQL accesible
+- An accessible PostgreSQL database
 
-### Pasos
+### Steps
 
-1. **Configurar variables de entorno**
+1. **Set up environment variables**
 
-   Crea un archivo `.env` en la raíz del proyecto. Puedes usar el siguiente formato como referencia:
+   Create a `.env` file in the project root. You can use the following format as reference:
 
    ```env
-   # Parámetros individuales de conexión (usados para componer DATABASE_URL)
+   # Individual connection parameters (used to compose DATABASE_URL)
    DATABASE_HOST=localhost
    DATABASE_PORT=5432
-   DATABASE_NAME=nombre_de_tu_base_de_datos
-   DATABASE_USER=tu_usuario
-   DATABASE_PASSWORD=tu_contraseña
+   DATABASE_NAME=your_database_name
+   DATABASE_USER=your_user
+   DATABASE_PASSWORD=your_password
 
-   # URL de conexión a la base de datos (puede usar las variables anteriores)
+   # Database connection URL (can use the variables above)
    DATABASE_URL=postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
 
-   # Clave secreta para firmar y verificar los tokens de sesión JWT.
-   # Debe ser una cadena larga y aleatoria. Puedes generarla con:
+   # Secret key used to sign and verify JWT session tokens.
+   # It must be a long random string. You can generate it with:
    #   Linux/macOS/Git Bash:  openssl rand -base64 32
    #   Windows (PowerShell):  [System.Convert]::ToBase64String([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
-   SESSION_SECRET=tu-clave-secreta-larga-y-aleatoria
+   SESSION_SECRET=your-long-random-secret-key
    ```
 
-   > **Importante:** el archivo `.env` está incluido en `.gitignore` y nunca debe subirse al repositorio.
-   > En producción (Vercel), estas variables se configuran desde el panel de Vercel y la
-   > `DATABASE_URL` debe ser una URL literal con `?sslmode=require` al final, ya que Vercel
-   > no expande la sintaxis `${VAR}`.
+   > **Important:** the `.env` file is included in `.gitignore` and must never be pushed to the repository.
+   > In production (Vercel), these variables are configured in the Vercel panel, and
+   > `DATABASE_URL` must be a literal URL ending with `?sslmode=require`, because Vercel
+   > does not expand `${VAR}` syntax.
 
-2. **Instalar dependencias**
+2. **Install dependencies**
 
    ```bash
    npm install
    ```
 
-3. **Aplicar las migraciones de la base de datos**
+3. **Apply database migrations**
 
    ```bash
    npm run db:migrate:dev
    ```
 
-4. **Poblar la base de datos con datos de prueba** _(opcional)_
+4. **Seed the database with test data** _(optional)_
 
    ```bash
    npm run db:seed
    ```
 
-   Usuarios de ejemplo creados por seed (todos con la misma contraseña):
-   | Email | Contraseña | Rol |
+   Sample users created by seed (all with the same password):
+   | Email | Password | Role |
    |---|---|---|
    | webadmin@vecinos.local | VecinosSeguro2026! | adminWeb |
    | lucia.martinez@vecinos.local | VecinosSeguro2026! | admin |
-   | alvaro.santos@vecinos.local | VecinosSeguro2026! | inquilino |
+   | alvaro.santos@vecinos.local | VecinosSeguro2026! | tenant |
 
-   > El seed crea mas usuarios para varias comunidades; los anteriores son cuentas de referencia para acceso rapido.
+   > The seed creates more users for multiple communities; the ones above are quick-access reference accounts.
 
-5. **Iniciar el servidor de desarrollo**
+5. **Start the development server**
 
-   Levanta la aplicación en modo desarrollo con recarga en caliente para que puedas probar cambios al instante mientras programas.
+   Start the application in development mode with hot reload so you can test changes instantly while coding.
 
    ```bash
    npm run dev
    ```
 
-   La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+   The application will be available at [http://localhost:3000](http://localhost:3000).
 
-6. **Generar build de producción**
+6. **Generate a production build**
 
-   Compila la aplicación en modo producción y valida que todo el proyecto puede construirse correctamente antes de desplegar.
+   Compile the application in production mode and validate that the whole project can be built correctly before deployment.
 
    ```bash
    npm run build
    ```
 
-7. **Iniciar el servidor en producción**
+7. **Start the production server**
 
-   Arranca la build de producción generada en el paso anterior, simulando el comportamiento real del entorno de despliegue.
+   Start the production build generated in the previous step, simulating real deployment behavior.
 
    ```bash
    npm run start
    ```
 
-## Docker Compose (sin Dockerfile)
+## Docker Compose (without Dockerfile)
 
-### Instalación de Docker
+### Install Docker
 
 #### Linux (Ubuntu/Debian)
 
-1. **Instalar Docker Engine**
+1. **Install Docker Engine**
 
    ```bash
    sudo apt update
@@ -185,19 +185,19 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
    sudo install -m 0755 -d /etc/apt/keyrings
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
    sudo chmod a+r /etc/apt/keyrings/docker.gpg
-   echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
    sudo apt update
    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
    ```
 
-2. **Añadir tu usuario al grupo docker** _(para no necesitar `sudo` en cada comando)_
+2. **Add your user to the docker group** _(so `sudo` is not needed for every command)_
 
    ```bash
    sudo usermod -aG docker $USER
    newgrp docker
    ```
 
-3. **Verificar la instalación**
+3. **Verify the installation**
 
    ```bash
    docker --version
@@ -206,35 +206,35 @@ En esta sección se explica cómo instalar el software necesario para ejecutar l
 
 #### Windows
 
-1. **Instalar Docker Desktop**
+1. **Install Docker Desktop**
 
-   Descarga e instala Docker Desktop desde: https://www.docker.com/products/docker-desktop/
+   Download and install Docker Desktop from: https://www.docker.com/products/docker-desktop/
 
-   Durante la instalación asegúrate de habilitar la integración con WSL 2 (recomendado) o Hyper-V.
+   During installation, make sure to enable integration with WSL 2 (recommended) or Hyper-V.
 
-2. **Verificar en PowerShell o CMD**
+2. **Verify in PowerShell or CMD**
 
    ```powershell
    docker --version
    docker compose version
    ```
 
-   > **Nota:** En Windows, Docker Desktop incluye Docker Compose. No es necesario instalarlo por separado.
+   > **Note:** On Windows, Docker Desktop includes Docker Compose. No separate installation is needed.
 
 ---
 
-### Ejecución con Docker Compose
+### Run with Docker Compose
 
-Se incluye un archivo [docker-compose.yml](docker-compose.yml) con perfiles para desarrollo y producción,
-además de PostgreSQL. Playwright queda integrado en el perfil de desarrollo (`app-dev`).
+The project includes a [docker-compose.yml](docker-compose.yml) file with profiles for development and production,
+plus PostgreSQL. Playwright is integrated in the development profile (`app-dev`).
 
-- La app queda accesible desde tu navegador fuera de Docker en: [http://localhost:3000](http://localhost:3000)
-- Se aplican migraciones y seed automáticamente al arrancar la app
-- Los datos de PostgreSQL y uploads quedan persistidos en volúmenes Docker
+- The app is reachable from your browser outside Docker at: [http://localhost:3000](http://localhost:3000)
+- Migrations and seed run automatically when the app starts
+- PostgreSQL data and uploads are persisted in Docker volumes
 
-### Variables opcionales
+### Optional variables
 
-Puedes personalizar credenciales y puertos exportando variables en tu shell antes de levantar los servicios:
+You can customize credentials and ports by exporting variables in your shell before starting services:
 
 **Linux/macOS/Git Bash:**
 
@@ -243,7 +243,7 @@ export POSTGRES_DB=solucionesvecinales
 export POSTGRES_USER=postgres
 export POSTGRES_PASSWORD=postgres
 export POSTGRES_PORT=5432
-export SESSION_SECRET=tu_clave_de_sesion
+export SESSION_SECRET=your_session_secret
 ```
 
 **Windows (PowerShell):**
@@ -253,7 +253,7 @@ $env:POSTGRES_DB="solucionesvecinales"
 $env:POSTGRES_USER="postgres"
 $env:POSTGRES_PASSWORD="postgres"
 $env:POSTGRES_PORT="5432"
-$env:SESSION_SECRET="tu_clave_de_sesion"
+$env:SESSION_SECRET="your_session_secret"
 ```
 
 **Windows (CMD):**
@@ -263,16 +263,16 @@ set POSTGRES_DB=solucionesvecinales
 set POSTGRES_USER=postgres
 set POSTGRES_PASSWORD=postgres
 set POSTGRES_PORT=5432
-set SESSION_SECRET=tu_clave_de_sesion
+set SESSION_SECRET=your_session_secret
 ```
 
-### Levantar entorno de desarrollo
+### Start development environment
 
 ```bash
 docker compose --profile dev up
 ```
 
-Este perfil monta el código del proyecto dentro del contenedor y ejecuta:
+This profile mounts the project code inside the container and runs:
 
 - `npm install`
 - `npx playwright install --with-deps`
@@ -280,13 +280,13 @@ Este perfil monta el código del proyecto dentro del contenedor y ejecuta:
 - `npm run db:seed`
 - `npm run dev -- -H 0.0.0.0 -p 3000`
 
-### Levantar entorno de producción
+### Start production environment
 
 ```bash
 docker compose --profile prod up
 ```
 
-Este perfil ejecuta dentro del contenedor:
+This profile runs inside the container:
 
 - `npm ci`
 - `npm run db:migrate:deploy`
@@ -294,21 +294,21 @@ Este perfil ejecuta dentro del contenedor:
 - `npm run build`
 - `npm run start -- -H 0.0.0.0 -p 3000`
 
-### Ejecutar tests E2E con Playwright (opcional)
+### Run Playwright E2E tests (optional)
 
-Con el entorno `dev` levantado, ejecuta los tests dentro de `app-dev`:
+With the `dev` environment up, run tests inside `app-dev`:
 
 ```bash
 docker compose --profile dev exec app-dev npm run test:e2e
 ```
 
-### Parar y limpiar
+### Stop and clean up
 
 ```bash
 docker compose down
 ```
 
-Para eliminar también los volúmenes (base de datos y cachés):
+To also remove volumes (database and caches):
 
 ```bash
 docker compose down -v
@@ -316,18 +316,18 @@ docker compose down -v
 
 ---
 
-## Deploy en Vercel (Next.js + Prisma)
+## Deploy on Vercel (Next.js + Prisma)
 
-Para evitar errores de Prisma en build/deploy:
+To avoid Prisma errors during build/deploy:
 
-1. Define estas variables en Vercel (Project Settings -> Environment Variables):
+1. Define these variables in Vercel (Project Settings -> Environment Variables):
    - DATABASE_URL
    - SESSION_SECRET
-2. Usa como Build Command: npm run vercel-build
-3. Verifica que Install Command sea npm ci (o npm install)
-4. Prisma Client se genera durante install/build, las migraciones se aplican con prisma migrate deploy y el seed se ejecuta en cada build
+2. Use this Build Command: npm run vercel-build
+3. Verify Install Command is npm ci (or npm install)
+4. Prisma Client is generated during install/build, migrations are applied with prisma migrate deploy, and seed runs on every build
 
-Scripts relevantes en este repositorio:
+Relevant scripts in this repository:
 
 - npm run build -> prisma generate && next build
 - npm run vercel-build -> prisma generate && prisma migrate deploy && prisma db seed && next build
@@ -336,11 +336,12 @@ Scripts relevantes en este repositorio:
 
 ## TODO
 
-- Translate all code to English (for fuck sake)
-- Refactor resevation system allowing up to 3 reservations for user
+- Translate all code to English
+- Make the app reponsive for small devices (high priority)
+- Refactor reservation system allowing up to 3 reservations per user
 - Refactor server functions (if needed)
-- Redesing some form's UI
-- WebAdmin need to be able to add elements
+- Redesign some forms UI
+- WebAdmin needs to be able to add elements
 - Add missing e2e tests
-- Refactor inline help to make it more helpfull
-- Increase a11y 
+- Refactor inline help to make it more helpful
+- Increase a11y
