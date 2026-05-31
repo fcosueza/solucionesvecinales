@@ -10,10 +10,10 @@ import z from "zod";
 type CamposRegistro = z.infer<typeof signUpSchema>;
 
 /**
- * Crea un payload seguro para devolver al cliente en caso de error, excluyendo campos sensibles como contraseñas.
+ * Create a secure payload to return to the client in case of error, excluding sensitive fields such as passwords.
  *
- * @param formData Datos originales del formulario enviados por el cliente.
- * @returns Un objeto FormData seguro que excluye campos sensibles.
+ * @param formData Original data from the form sent by the client.
+ * @returns Un Secure FormData object that excludes sensitive fields.
  */
 const safePayload = (formData: FormData): FormData => {
   const safe = new FormData();
@@ -27,20 +27,20 @@ const safePayload = (formData: FormData): FormData => {
 };
 
 /**
- * Valida los datos de registro, crea el usuario y almacena sus credenciales de forma segura.
+ * Validates registration data, creates the user and stores their credentials securely.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos enviados desde el formulario de registro.
+ * @param _prevState Previous state of the form action.
+ * @param formData Data sent from the registration form.
  *
- * @throws Si la validación de los datos falla o si ocurre un error al crear el usuario, se devuelve un estado de error con detalles.
- * @returns El nuevo estado de la acción con el resultado del registro.
+ * @throws If data validation fails or an error occurs while creating the user, an error status with details is returned.
+ * @returns El new state of the action with the result of the registration.
  */
 
 const signUp = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposRegistro> = signUpSchema.safeParse(datos);
 
-  // Si la validación falla, devolver un estado de error con los detalles de los error.
+  // If validation fails, return an error status with details of the errors.
   if (!datosValidados.success) {
     return {
       state: "error",
@@ -50,11 +50,11 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
     };
   }
 
-  // Se cifra la contraseña antes de almacenarla, utilizando bcrypt.
+  // The password is encrypted before being stored, using bcrypt.
   const salCifrado: number = 10;
   const hashedPassword: string = await bcrypt.hash(datosValidados.data.password, salCifrado);
 
-  // Intentar crear el usuario y sus credenciales
+  // Try to create the user and their credentials
   try {
     await prisma.usuario.create({
       data: {
@@ -80,7 +80,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
     };
   }
 
-  // Usuario creado correctamente
+  // Successfully created user
   return {
     state: "success",
     message: "Usuario creado correctamente"

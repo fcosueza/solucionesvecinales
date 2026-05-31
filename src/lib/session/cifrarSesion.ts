@@ -4,11 +4,11 @@ import { SignJWT } from "jose";
 import { SessionPayload } from "@/types";
 
 /**
- * Cifra un objeto de sesión en un token JWT con firma criptográfica.
- * El token incluye información del usuario y una fecha de expiración.
+ * Encrypts a session object into a cryptographically signed JWT token.
+ * The token includes user information and an expiration date.
  *
- * @param payload Objeto con los datos de sesión del usuario
- * @param expiraEn Fecha en la que el token deberá expirar
+ * @param payload Object with user session data
+ * @param expiraEn Date on which the token should expire
  *
  * @returns Token JWT cifrado y firmado
  */

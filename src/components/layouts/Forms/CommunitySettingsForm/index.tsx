@@ -26,17 +26,17 @@ const estadoInicial: FormActionState = {
 };
 
 /**
- * Formulario para actualizar la configuración de una comunidad.
- * Permite modificar nombre, dirección (calle, número, ciudad, provincia, país).
- * También incluye la opción de eliminar la comunidad permanentemente.
+ * Form to update a community configuration.
+ * Allows you to modify name, address (street, number, city, province, country).
+ * It also includes the option to delete the community permanently.
  *
- * @param communityID ID de la comunidad a editar
- * @param nombre Nombre actual de la comunidad
- * @param calle Calle actual de la comunidad
- * @param numero Número del edificio actual
+ * @param communityID Community ID to edit
+ * @param nombre Current name of the community
+ * @param calle Current community street
+ * @param numero Current building number
  * @param ciudad Ciudad actual
  * @param provincia Provincia actual
- * @param pais País actual
+ * @param pais Current country
  */
 const CommunitySettingsForm = ({
   communityID,

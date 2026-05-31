@@ -7,12 +7,12 @@ interface Props {
 }
 
 /**
- * Componente que renderiza una galería de imágenes con contenido y título opcional.
+ * Component that renders an image gallery with optional content and title.
  *
  * @param props - Props del componente Gallery.
- * @param props.title - Título opcional de la galería.
- * @param props.children - Elementos hijos que se muestran en la galería.
- * @returns La galería de contenido como un elemento React.
+ * @param props.title - Optional gallery title.
+ * @param props.children - Child elements displayed in the gallery.
+ * @returns La content gallery as a React element.
  */
 const Gallery = ({ title = "", children }: Props): React.ReactNode => {
   return (

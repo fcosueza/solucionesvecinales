@@ -7,7 +7,7 @@ import { mkdirSync } from "fs";
 import { join } from "path";
 import { deleteProfile, saveProfileImageFile, updateProfile, uploadProfile } from "./profile";
 
-// Polyfill File.prototype.arrayBuffer para entorno de pruebas de jsdom
+// Polyfill File.prototype.arrayBuffer for jsdom sandbox
 if (!File.prototype.arrayBuffer) {
   File.prototype.arrayBuffer = function () {
     return Promise.resolve(new ArrayBuffer(this.size));

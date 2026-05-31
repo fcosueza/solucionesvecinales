@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 type Decision = "approve" | "reject";
 
 /**
- * Valida si un string es una decisión válida (approve o reject).
+ * Validates whether a string is a valid decision (approve or reject).
  *
  * @param value El valor a validar
  * @returns true si el valor es "approve" o "reject"
@@ -17,17 +17,17 @@ const isValidDecision = (value: string): value is Decision => {
 };
 
 /**
- * Revisa una solicitud de suscripción a una comunidad.
- * Si se aprueba, crea la inscripción del usuario en la comunidad.
- * Si se rechaza, actualiza el estado de la solicitud.
- * Solo pueden hacerlo los administradores de la comunidad.
+ * Review a community subscription request.
+ * If approved, creates the user's enrollment in the community.
+ * If rejected, updates the request status.
+ * Only community administrators can do this.
  *
- * @param formData FormData que debe contener: communityID, requestID y decision (approve/reject)
+ * @param formData FormData that must contain: communityID, requestID and decision (approve/reject)
  */
 const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
 
-  // Verifica que el usuario esté autenticado
+  // Verify that the user is authenticated
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     return;
   }
@@ -36,7 +36,7 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
   const requestID = Number(formData.get("requestID"));
   const decisionValue = String(formData.get("decision") ?? "").trim();
 
-  // Valida los datos de entrada
+  // Validate input data
   if (
     !Number.isInteger(communityID) ||
     communityID <= 0 ||
@@ -47,7 +47,7 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
     return;
   }
 
-  // Verifica que la comunidad exista
+  // Verify that the community exists
   const community = await prisma.comunidad.findUnique({
     where: {
       id: communityID
@@ -58,23 +58,23 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
     }
   });
 
-  // Verifica que el usuario sea el admin de la comunidad
+  // Verify that the user is the community admin
   if (!community || community.adminID !== verifiedSession.session.userID) {
     return;
   }
 
-  // Determina el nuevo estado de la solicitud
+  // Determine the new status of the request
   const nextStatus = decisionValue === "approve" ? "aprobada" : "denegada";
 
   /*
-   * En este caso, a diferencia de otras server actions, realizamos la operación con la base de datos
-   * dentro de una transacción. Esto se debe a que necesitamos asegurarnos de que la actualización del estado
-   * de la solicitud y la posible creación de la inscripción se realicen de manera individual.
+   * In this case, unlike other server actions, we perform the operation with the database
+   * within a transaction. This is because we need to ensure that the status update
+   * of the application and the possible creation of the registration are carried out individually.
    *
-   * Si se aprueba la solicitud, primero actualizamos su estado a "aprobada" y luego creamos la inscripción correspondiente.
-   * Si se deniega, solo actualizamos el estado a "denegada".
+   * If the request is approved, we first update its status to "approved" and then create the corresponding enrollment.
+   * If it is rejected, we only update the status to "denied".
    *
-   * Al usar una transacción, garantizamos que ambas operaciones se complete correctamente o que ninguna de ellas se aplique en caso de error.
+   * By using a transaction, we guarantee that both operations complete correctly or that neither is applied in case of error.
    */
   await prisma.$transaction(async tx => {
     const solicitud = await tx.solicitud.findFirst({
@@ -88,12 +88,12 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
       }
     });
 
-    // Si no se encuentra la solicitud o no está en estado pendiente, no hacemos nada
+    // If the request is not found or is not in pending status, we do nothing
     if (!solicitud) {
       return;
     }
 
-    // Actualiza el estado de la solicitud
+    // Update request status
     const updatedRequests = await tx.solicitud.updateMany({
       where: {
         id: requestID,
@@ -105,12 +105,12 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
       }
     });
 
-    // Si no se actualizó ninguna solicitud, no hacemos nada más
+    // If no request was updated, we do nothing further
     if (updatedRequests.count === 0) {
       return;
     }
 
-    // Si la solicitud fue aprobada, crea la inscripción
+    // If the request was approved, create the registration
     if (nextStatus === "aprobada") {
       await tx.inscripcion.upsert({
         where: {

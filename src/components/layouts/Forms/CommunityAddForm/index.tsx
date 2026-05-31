@@ -15,10 +15,10 @@ const estadoInicial: FormActionState = {
 };
 
 /**
- * Componente que renderiza el formulario para añadir una nueva comunidad.
+ * Component that renders the form to add a new community.
  *
  * @param props - Props del componente CommunityAddForm.
- * @returns El formulario de alta de comunidad como un elemento React.
+ * @returns El community registration form as a React element.
  */
 const CommunityAddForm = (): React.ReactNode => {
   const router = useRouter();

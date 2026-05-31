@@ -6,15 +6,15 @@ import { UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
- * Crea una nueva solicitud de suscripción a una comunidad para el usuario autenticado,
- * siempre que no exista ya una solicitud pendiente o el usuario no esté ya suscrito a la comunidad.
+ * Create a new community subscription request for the authenticated user,
+ * as long as there is no pending request or the user is not already subscribed to the community.
  *
- * @param formData Datos del formulario con el campo "communityID" que indica a qué comunidad se quiere suscribir el usuario.
+ * @param formData Form data with the "communityID" field that indicates which community the user wants to subscribe to.
  */
 const requestCommunitySubscription = async (formData: FormData): Promise<void> => {
   const sesionVerificada = await verifySession();
 
-  // Comprobamos que el usuario está autenticado
+  // We check that the user is authenticated
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
     return;
   }
@@ -22,7 +22,7 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
   const esAdministrador =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
-  // Los administradores no pueden enviar solicitudes desde el flujo de búsqueda
+  // Administrators cannot submit requests from the search flow
   if (esAdministrador) {
     return;
   }
@@ -30,14 +30,14 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
   const idComunidadTemp = formData.get("communityID");
   const idComunidad = Number(idComunidadTemp);
 
-  // Validamos que el communityID es un número entero positivo
+  // We validate that the communityID is a positive integer
   if (!Number.isInteger(idComunidad) || idComunidad <= 0) {
     return;
   }
 
   const idUsuario = sesionVerificada.session.userID;
 
-  // Realizamos las consultas necesarias en paralelo para optimizar el rendimiento
+  // We perform the necessary queries in parallel to optimize performance
   const [comunidad, comunidadesUsuario, solicitudesPendientes] = await Promise.all([
     prisma.comunidad.findUnique({
       where: {
@@ -74,24 +74,24 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
     })
   ]);
 
-  // Si la comunidad no existe, no hacemos nada
+  // If the community does not exist, we do nothing
   if (!comunidad) {
     return;
   }
 
   const yaSubscrito = (comunidadesUsuario?.inscripciones.length ?? 0) > 0;
 
-  // Si el usuario ya está suscrito a la comunidad, no hacemos nada
+  // If the user is already subscribed to the community, we do nothing
   if (yaSubscrito) {
     return;
   }
 
-  // Si ya existe una solicitud pendiente, no hacemos nada
+  // If a pending request already exists, do nothing
   if (solicitudesPendientes) {
     return;
   }
 
-  // Si todo es correcto, creamos la solicitud en estado "pendiente"
+  // If everything is valid, create the request in "pending" status
   await prisma.solicitud.create({
     data: {
       usuario: idUsuario,

@@ -30,15 +30,15 @@ interface Props {
 }
 
 /**
- * Componente contenedor de tarjeta de zona común.
- * Renderiza la tarjeta con el botón de reserva integrado y,
- * si el usuario es administrador, la opción de eliminar la zona con confirmación.
+ * Common zone card container component.
+ * Render the card with the integrated reservation button and,
+ * if the user is an administrator, the option to delete the zone with confirmation.
  *
- * @param communityID ID de la comunidad a la que pertenece la zona
- * @param zone Objeto con los datos de la zona (nombre, descripción, horario, reservas)
+ * @param communityID ID of the community to which the zone belongs
+ * @param zone Object with area data (name, description, schedule, reservations)
  * @param reservationSummary Texto resumen de la disponibilidad de la zona
- * @param hasActiveReservation Indica si el usuario ya tiene una reserva activa en esta zona
- * @param isAdmin Indica si el usuario actual es administrador de la comunidad
+ * @param hasActiveReservation Indicates if the user already has an active reservation in this area
+ * @param isAdmin Indicates if the current user is a community administrator
  */
 const ZoneCardWrapper = ({
   communityID,

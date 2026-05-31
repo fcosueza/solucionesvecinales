@@ -14,20 +14,20 @@ interface Props {
 }
 
 /**
- * Componente que representa una tarjeta de comunidad, mostrando su imagen, nombre,
- * dirección y una llamada a la acción (CTA) como botón HTML.
+ * Component that represents a community card, showing its image, name,
+ * address and a call to action (CTA) as an HTML button.
  *
- * @param imageURL La URL de la imagen que representa a la comunidad.
- * @param imageAltText El texto alternativo para la imagen, utilizado para accesibilidad.
- * @param communityName El nombre de la comunidad que se mostrará en la tarjeta.
- * @param communityAddress La dirección de la comunidad que se mostrará en la tarjeta.
- * @param ctaText El texto que se mostrará en el botón de llamada a la acción (CTA). Por defecto es "Ver Comunidad".
- * @param className Clases CSS adicionales que se pueden aplicar al componente para personalización.
- * @param ctaDisabled Un booleano que indica si el botón de CTA debe estar deshabilitado. Por defecto es false.
- * @param ctaButtonType El tipo del botón de CTA, puede ser "button" o "submit". Por defecto es "button".
- * @param ctaFormID El ID del formulario al que el botón de CTA debe estar asociado.
+ * @param imageURL The URL of the image that represents the community.
+ * @param imageAltText The alt text for the image, used for accessibility.
+ * @param communityName The name of the community to display on the card.
+ * @param communityAddress The community address that will be displayed on the card.
+ * @param ctaText The text to display on the call to action (CTA) button. By default it is "View Community".
+ * @param className Additional CSS classes that can be applied to the component for customization.
+ * @param ctaDisabled A boolean indicating whether the CTA button should be disabled. By default it is false.
+ * @param ctaButtonType The type of the CTA button can be "button" or "submit". By default it is "button".
+ * @param ctaFormID The ID of the form that the CTA button should be associated with.
  *
- * @returns Un componente React que muestra una tarjeta con la información de la comunidad.
+ * @returns Un React component that displays a card with community information.
  */
 const CardCommunity = ({
   imageURL,

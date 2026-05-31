@@ -6,10 +6,10 @@ import { descifrarSesion } from "@/lib/session";
 import { BasicError, SessionPayload, SessionVerification } from "@/types";
 
 /**
- * Función para verificar la sesión del usuario en el servidor. Se ejecuta cuando se accede a rutas protegidas
- * y comprueba que el usuario tenga una sesión válida. Devuelve un objeto con el estado de autenticación y los datos de la sesión si es válida.
+ * Function to verify the user's session on the server. Runs when accessing protected routes
+ * and checks that the user has a valid session. Returns an object with the authentication status and session data if valid.
  *
- * @returns Un objeto con la propiedad isAuth indicando si el usuario está autenticado, y opcionalmente los datos de la sesión.
+ * @returns Un object with the isAuth property indicating whether the user is authenticated, and optionally the session data.
  */
 
 const verifySession = cache(async (): Promise<SessionVerification> => {

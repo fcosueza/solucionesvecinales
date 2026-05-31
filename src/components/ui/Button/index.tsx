@@ -14,17 +14,17 @@ interface Props {
 }
 
 /**
- * Componente que crea un botón reutilizable para acciones de usuario.
+ * Component that creates a reusable button for user actions.
  *
  * @param props - Props del componente Button.
- * @param props.text - Texto visible dentro del botón.
- * @param props.type - Tipo del botón HTML.
- * @param props.onClick - Callback que se ejecuta al hacer click.
- * @param props.disabled - Estado habilitado o deshabilitado del botón.
- * @param props.fullWidth - Si es true, el botón ocupará todo el ancho disponible.
- * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
+ * @param props.text - Text visible inside the button.
+ * @param props.type - HTML button type.
+ * @param props.onClick - Callback that is executed when clicking.
+ * @param props.disabled - Enabled or disabled status of the button.
+ * @param props.fullWidth - If true, the button will occupy the entire available width.
+ * @param props.className - Optional CSS class to modify the appearance of the component.
  *
- * @returns El botón reutilizable como un elemento React.
+ * @returns El Reusable button as a React element.
  */
 const Button = ({
   text,

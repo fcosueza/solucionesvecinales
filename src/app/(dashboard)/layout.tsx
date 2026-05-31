@@ -6,13 +6,13 @@ import { redirect } from "next/navigation";
 import style from "./style.module.css";
 
 /**
- * Diseño del dashboard de usuario.
- * Proporciona la estructura común a todas las páginas del dashboard autenticado.
- * Verifica la sesión del usuario y muestra un menú lateral con opciones de navegación.
- * Redirige a login si el usuario no está autenticado.
+ * User dashboard design.
+ * Provides the common structure for all authenticated dashboard pages.
+ * Verifies the user's session and displays a side menu with navigation options.
+ * Redirect to login if the user is not authenticated.
  *
  * @component
- * @param children Contenido de las páginas anidadas del dashboard
+ * @param children Content of nested dashboard pages
  * @returns El layout del dashboard renderizado
  */
 export default async function DashboardLayout({ children }: Readonly<{ children: React.ReactNode }>) {

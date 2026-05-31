@@ -18,24 +18,24 @@ interface Props {
 }
 
 /**
- * Componente que renderiza la cabecera principal con logo, menú y botón de acción. Cuando la
- * página hace scroll, se añade una sombra a la cabecera para mejorar la visibilidad.
+ * Component that renders the main header with logo, menu and action button. When the
+ * page scrolls, a shadow is added to the header to improve visibility.
  *
  * @param props - Props del componente Header.
- * @param props.links - Lista opcional de enlaces para el menú de navegación.
- * @param props.buttonText - Texto visible del botón principal.
- * @param props.buttonRoute - Ruta de destino al pulsar el botón.
- * @param props.burgerMenu - Indicador de modo menú hamburguesa.
- * @param props.backgroundVariant - Variante visual del fondo de la cabecera.
+ * @param props.links - Optional list of links for the navigation menu.
+ * @param props.buttonText - Visible text of the main button.
+ * @param props.buttonRoute - Destination route by pressing the button.
+ * @param props.burgerMenu - Hamburger menu mode indicator.
+ * @param props.backgroundVariant - Visual variant of the header background.
  *
- * @returns La cabecera principal con logo, menú y botón como un elemento React.
+ * @returns La main header with logo, menu and button as a React element.
  */
 const Header = ({ links, buttonText, buttonRoute = "/", backgroundVariant = "default" }: Props): React.ReactNode => {
   const menuNavegacion = links ? <NavMenu links={links} /> : "";
   const enrutador = useRouter();
   const [cabeceraDesplazada, setCabeceraDesplazada] = useState(false);
 
-  // Efecto para detectar el desplazamiento de la página y poder añadir la sombra.
+  // Effect to detect the scrolling of the page and be able to add the shadow.
   useEffect(() => {
     const alDesplazar = (): void => {
       setCabeceraDesplazada(window.scrollY > 0);

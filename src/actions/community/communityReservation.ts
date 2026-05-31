@@ -14,13 +14,13 @@ import { FormActionState } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
- * Construye el filtro para obtener las reservas futuras de un usuario.
- * Incluye reservas con fecha posterior a hoy o reservas de hoy que aún no han finalizado.
+ * Build the filter to get a user's future bookings.
+ * Includes reservations dated after today or reservations from today that have not yet been finalized.
  *
- * @param userID ID del usuario
- * @param currentDate La fecha actual
- * @param currentTime La hora actual
- * @returns Objeto de filtro para Prisma
+ * @param userID User ID
+ * @param currentDate The current date
+ * @param currentTime The current time
+ * @returns Objeto filter for Prism
  */
 const getUpcomingReservationFilter = (userID: string, currentDate: Date, currentTime: Date) => ({
   usuario: userID,
@@ -28,11 +28,11 @@ const getUpcomingReservationFilter = (userID: string, currentDate: Date, current
 });
 
 /**
- * Crea un estado de error estandarizado para las respuestas de reserva.
+ * Creates a standardized error status for fallback responses.
  *
- * @param message Mensaje de error a mostrar al usuario
- * @param formData Datos del formulario opcional para devolver al cliente
- * @returns Objeto FormActionState con estado de error
+ * @param message Error message to show to the user
+ * @param formData Optional form data to return to customer
+ * @returns FormActionState object with error status
  */
 const createReservationError = (message: string, formData?: FormData): FormActionState => ({
   state: "error",
@@ -41,14 +41,14 @@ const createReservationError = (message: string, formData?: FormData): FormActio
 });
 
 /**
- * Server action que crea una nueva reserva en una zona común de una comunidad.
- * Valida que la fecha y horario estén disponibles, que respeten los límites de reserva,
- * y que el usuario esté inscrito en la comunidad.
+ * Server action that creates a new reservation in a common area of ​​a community.
+ * Validate that the date and time are available, that they respect the reservation limits,
+ * and that the user is registered in the community.
  *
- * @param communityID ID de la comunidad
- * @param zoneName Nombre de la zona común a reservar
- * @param formData FormData que debe contener: fecha, horaInicio y duracion
- * @returns FormActionState con el resultado de la operación
+ * @param communityID Community ID
+ * @param zoneName Name of the common area to reserve
+ * @param formData FormData that must contain: date, start time and duration
+ * @returns FormActionState with the result of the operation
  */
 const reserveCommonArea = async (
   communityID: number,

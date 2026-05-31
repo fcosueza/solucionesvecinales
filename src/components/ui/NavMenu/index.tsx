@@ -10,13 +10,13 @@ interface Props {
 }
 
 /**
- * Componente que renderiza un menú de navegación con orientación configurable y con elementos indicados.
+ * Component that renders a navigation menu with configurable orientation and with indicated elements.
  *
  * @param props - Props del componente NavMenu.
- * @param props.links - Lista de enlaces a renderizar en el menú.
- * @param props.orientation - Orientación del menú: horizontal o vertical.
- * @param props.color - Variante de color disponible para el menú.
- * @returns El menú de navegación con los enlaces indicados como un elemento React.
+ * @param props.links - List of links to render in the menu.
+ * @param props.orientation - Menu orientation: horizontal or vertical.
+ * @param props.color - Color variant available for menu.
+ * @returns El Navigation menu with links indicated as a React element.
  */
 const NavMenu = ({ links, orientation = "horizontal" }: Props): React.ReactNode => {
   const listaEnlaces = links.map(enlace => (

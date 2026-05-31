@@ -8,11 +8,11 @@ import { UserRole } from "@/types";
 type IncidentState = "reportado" | "procesandose" | "resuelto";
 
 /**
- * Obtiene el siguiente estado en la progresión de una incidencia.
- * La progresión es: reportado -> procesandose -> resuelto
+ * Gets the next status in the progression of an issue.
+ * The progression is: reported -> processing -> resolved
  *
- * @param currentState El estado actual de la incidencia
- * @returns El siguiente estado en la secuencia
+ * @param currentState Current incident status
+ * @returns Next status in the sequence
  */
 const getNextState = (currentState: IncidentState): IncidentState => {
   if (currentState === "reportado") {
@@ -27,11 +27,11 @@ const getNextState = (currentState: IncidentState): IncidentState => {
 };
 
 /**
- * Actualiza el estado de una incidencia al siguiente estado en la progresión.
- * Solo puede ser ejecutada por miembros inscritos en la comunidad.
- * Valida los permisos antes de actualizar.
+ * Updates the status of an issue to the next status in the progression.
+ * It can only be executed by registered members of the community.
+ * Validate permissions before updating.
  *
- * @param formData FormData que debe contener: communityID, userID e incidentDate
+ * @param formData FormData that must contain: communityID, userID and incidentDate
  */
 const updateIncidentStatus = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
@@ -100,10 +100,10 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
 };
 
 /**
- * Elimina una incidencia de la base de datos. Solo puede ser ejecutada por administradores.
- * Revalida las rutas del backoffice de incidencias después de eliminar.
+ * Delete an incident from the database. It can only be executed by administrators.
+ * Revalidates issues backoffice routes after deleting.
  *
- * @param formData FormData que debe contener el ID de la incidencia a eliminar
+ * @param formData FormData that must contain the ID of the incident to be deleted
  */
 const deleteIncident = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();

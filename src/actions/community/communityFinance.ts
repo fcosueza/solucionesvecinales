@@ -6,12 +6,12 @@ import { UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
- * Server action que crea un registro financiero (ingreso o gasto) en una comunidad.
- * Solo puede ser ejecutada por administradores de la comunidad o webAdmin.
- * Valida los permisos y revalida las rutas de finanzas después de crear el registro.
+ * Server action that creates a financial record (income or expense) in a community.
+ * It can only be run by community administrators or webAdmin.
+ * Validates permissions and revalidates finance routes after creating the record.
  *
- * @param communityID - ID de la comunidad donde se registra el movimiento
- * @param formData - FormData que debe contener: descripcion, importe y tipo (ingreso/gasto)
+ * @param communityID - ID of the community where the movement is registered
+ * @param formData - FormData that must contain: description, amount and type (income/expense)
  */
 const communityFinance = async (communityID: number, formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
@@ -73,10 +73,10 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
 };
 
 /**
- * Server action que elimina un registro financiero. Solo puede ser ejecutada por webAdmin.
- * Revalida las rutas del backoffice de finanzas después de eliminar el registro.
+ * Server action that deletes a financial record. It can only be run by webAdmin.
+ * Revalidate finance backoffice routes after deleting the record.
  *
- * @param formData - FormData que debe contener el campo "id" del registro a eliminar
+ * @param formData - FormData that must contain the "id" field of the record to be deleted
  */
 const deleteRecord = async (formData: FormData): Promise<void> => {
   const session = await verifySession();

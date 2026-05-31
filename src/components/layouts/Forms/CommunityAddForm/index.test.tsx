@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 const pushMock = jest.fn();
 
-// Mock de módulos y funciones
+// Mock of modules and functions
 jest.mock("@/actions/community/community", () => jest.fn());
 jest.mock("sonner", () => ({
   toast: {

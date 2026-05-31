@@ -12,12 +12,12 @@ import z from "zod";
 type CamposFormularioComunidad = z.infer<typeof communitySchema>;
 
 /**
- * Actualiza los datos de una comunidad existente. Solo el administrador de la comunidad puede realizarlo.
+ * Update data for an existing community. Only the community administrator can do this.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos enviados desde el formulario de configuración de la comunidad.
+ * @param _prevState Previous state of the form action.
+ * @param formData Data sent from the community setup form.
  *
- * @returns El nuevo estado del formulario con el resultado de la actualización.
+ * @returns El new state of the form with the result of the update.
  */
 export const updateCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
@@ -103,13 +103,13 @@ export const updateCommunity = async (_prevState: FormActionState, formData: For
 };
 
 /**
- * Elimina de forma permanente una comunidad y todos sus datos relacionados.
- * Solo el administrador de la comunidad puede realizarlo.
+ * Permanently delete a community and all its related data.
+ * Only the community administrator can do this.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos del formulario con el ID de la comunidad a eliminar.
+ * @param _prevState Previous state of the form action.
+ * @param formData Form data with the ID of the community to delete.
  *
- * @returns Estado de error si no se pudo eliminar. En éxito redirige a /communities.
+ * @returns Error state if it could not be deleted. On success, it redirects to /communities.
  */
 export const deleteCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
@@ -167,11 +167,11 @@ export const deleteCommunity = async (_prevState: FormActionState, formData: For
 };
 
 /**
- * Server action que elimina una comunidad desde el backoffice.
+ * Server action that deletes a community from the backoffice.
  * Solo puede ser ejecutada por webAdmin.
- * Revalida las rutas del backoffice después de eliminar.
+ * Revalidate backoffice routes after deleting.
  *
- * @param formData FormData que debe contener el campo "id" de la comunidad a eliminar
+ * @param formData FormData that must contain the "id" field of the community to be deleted
  */
 export const deleteCommunityAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();

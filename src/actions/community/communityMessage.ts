@@ -6,16 +6,16 @@ import { UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
- * Añade un nuevo mensaje al tablón de una comunidad.
+ * Add a new message to a community board.
  *
- * @param communityId - ID de la comunidad.
- * @param formData - Datos del formulario con el campo "texto".
+ * @param communityId - Community ID.
+ * @param formData - Form data with the "text" field.
  *
  */
 const addMessage = async (communityId: number, formData: FormData): Promise<void> => {
   const sesionVerificada = await verifySession();
 
-  // Comprobamos que el usuario está autenticado
+  // We check that the user is authenticated
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
     return;
   }
@@ -23,7 +23,7 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
   const esAdmin =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
-  // Solo los administradores pueden añadir mensajes al tablón
+  // Only administrators can add messages to the board
   if (!esAdmin) {
     return;
   }
@@ -46,12 +46,12 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
 
   const texto = (formData.get("texto") as string)?.trim();
 
-  // No se permite añadir mensajes vacíos
+  // Adding empty messages is not allowed
   if (!texto) {
     return;
   }
 
-  // Intentamos crear el mensaje en la base de datos
+  // We try to create the message in the database
   try {
     await prisma.mensaje.create({
       data: {
@@ -65,10 +65,10 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
 };
 
 /**
- * Elimina un mensaje del tablón de una comunidad.
+ * Delete a message from a community board.
  *
- * @param communityId - ID de la comunidad.
- * @param creadoEn - Fecha de creación del mensaje (parte del PK compuesto).
+ * @param communityId - Community ID.
+ * @param creadoEn - Message creation date (part of the composite PK).
  */
 const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void> => {
   const sesionVerificada = await verifySession();

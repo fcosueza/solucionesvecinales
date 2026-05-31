@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * Página de política de privacidad.
- * Informa a los usuarios sobre cómo se recopilan, tratan y protegen sus datos personales
- * en la plataforma Soluciones Vecinales, de conformidad con la normativa de protección de datos.
+ * Privacy Policy Page.
+ * Informs users about how their personal data is collected, processed and protected
+ * on the Neighborhood Solutions platform, in accordance with data protection regulations.
  *
- * @returns La página de política de privacidad renderizada
+ * @returns La rendered privacy policy page
  */
 export default function PoliticaPrivacidadPage(): React.ReactNode {
   return (

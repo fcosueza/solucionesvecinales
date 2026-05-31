@@ -28,7 +28,7 @@ const profileSchema = z
   })
   .refine(
     data => {
-      // Si ambos campos están vacíos, no se actualiza la contraseña.
+      // If both fields are empty, the password is not updated.
       if (!data.password && !data.repeat) return true;
 
       return data.password === data.repeat;

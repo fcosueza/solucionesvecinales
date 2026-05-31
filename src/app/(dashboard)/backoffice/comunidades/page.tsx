@@ -6,13 +6,13 @@ import style from "../style.module.css";
 const PAGE_SIZE = 10;
 
 /**
- * Página de gestión de comunidades del backoffice.
- * Lista todas las comunidades registradas en la plataforma con soporte de búsqueda y paginación.
- * Muestra estadísticas de zonas comunes y solicitudes pendientes.
+ * Backoffice community management page.
+ * Lists all communities registered on the platform with search and pagination support.
+ * Shows statistics of common areas and pending requests.
  *
  * @component
- * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda) y page (página actual)
- * @returns La página de comunidades del backoffice renderizada
+ * @param searchParams Optional search parameters: q (search term) and page (current page)
+ * @returns La backoffice communities page rendered
  */
 export default async function BackOfficeCommunitiesPage({
   searchParams

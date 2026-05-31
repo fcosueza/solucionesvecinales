@@ -20,12 +20,12 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de registro de nuevos usuarios.
+ * New user registration page.
  *
- * Permite crear una nueva cuenta en la plataforma proporcionando datos personales y credenciales.
- * Incluye un formulario de registro y enlaces para usuarios que ya tienen cuenta.
+ * Allows you to create a new account on the platform by providing personal data and credentials.
+ * Includes a registration form and links for users who already have an account.
  *
- * @returns La página de registro renderizada
+ * @returns La rendered registration page
  */
 export default function Register() {
   return (

@@ -10,11 +10,11 @@ interface Props {
 }
 
 /**
- * Formulario modal para reportar una nueva incidencia en una comunidad.
- * Permite introducir el título y la descripción de la incidencia.
+ * Modal form to report a new incident in a community.
+ * Allows you to enter the title and description of the incident.
  *
- * @param communityID ID de la comunidad donde se reporta la incidencia
- * @param onClose Función de cierre del modal
+ * @param communityID ID of the community where the incident is reported
+ * @param onClose Modal close function
  */
 const IncidentAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);

@@ -46,10 +46,10 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Convierte el estado de una solicitud en una etiqueta legible.
+ * Converts a request status into a readable label.
  *
- * @param status Estado de la solicitud (aprobada, denegada, u otro)
- * @returns String con la etiqueta del estado en mayúsculas
+ * @param status Request status (approved, rejected, or other)
+ * @returns String with state label in capital letters
  */
 const toStatusLabel = (status: CommunityRequestItem["estado"]): string => {
   if (status === "aprobada") return "APROBADA";
@@ -58,13 +58,13 @@ const toStatusLabel = (status: CommunityRequestItem["estado"]): string => {
 };
 
 /**
- * Página de solicitudes de una comunidad.
- * Lista todas las solicitudes de suscripción recibidas en la comunidad.
- * Permite a los administradores aprobar o rechazar solicitudes de nuevos miembros.
+ * Community request page.
+ * Lists all subscription requests received in the community.
+ * Allows administrators to approve or reject new member requests.
  *
  * @component
- * @param params Parámetros de la ruta que incluyen el ID de la comunidad
- * @returns La página de solicitudes de la comunidad renderizada
+ * @param params Route parameters including community ID
+ * @returns La community requests page rendered
  */
 const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;

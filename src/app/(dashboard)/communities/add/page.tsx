@@ -19,12 +19,12 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página para crear una nueva comunidad.
- * Permite a los usuarios con rol de administrador crear una nueva comunidad en la plataforma.
- * Redirige a communities si el usuario no tiene los permisos necesarios.
+ * Page to create a new community.
+ * Allows users with an administrator role to create a new community on the platform.
+ * Redirects to communities if the user does not have the necessary permissions.
  *
  * @component
- * @returns La página de creación de comunidad renderizada
+ * @returns La rendered community creation page
  */
 const NewCommunity = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();

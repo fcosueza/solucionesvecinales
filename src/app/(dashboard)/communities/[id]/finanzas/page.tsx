@@ -37,10 +37,10 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Formatea un objeto Date como etiqueta de fecha en español (dd/mm/yyyy).
+ * Formats a Date object as a Spanish date label (dd/mm/yyyy).
  *
  * @param date El objeto Date a formatear
- * @returns String con la fecha en formato dd/mm/yyyy
+ * @returns String with the date in dd/mm/yyyy format
  */
 const toDateLabel = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
@@ -51,14 +51,14 @@ const toDateLabel = (date: Date): string => {
 };
 
 /**
- * Construye un array de filas de tabla para una sección financiera (ingresos o gastos).
- * Incluye un encabezado de sección, filas de registros y una fila de total.
+ * Constructs an array of table rows for a financial section (income or expenses).
+ * It includes a section header, record rows, and a total row.
  *
- * @param title El título de la sección (ej: "Ingresos", "Gastos")
- * @param registros Array de registros financieros de la sección
- * @param emptyMessage Mensaje a mostrar cuando no hay registros
- * @param total El total acumulado de la sección
- * @returns Array de filas (TableRow[]) para renderizar en la tabla
+ * @param title The section title (ex: "Income", "Expenses")
+ * @param registros Array of section financial records
+ * @param emptyMessage Message to show when there are no records
+ * @param total The cumulative total of the section
+ * @returns Array of rows (TableRow[]) to render to the table
  */
 const buildSectionRows = ({
   title,
@@ -107,13 +107,13 @@ const buildSectionRows = ({
 };
 
 /**
- * Página de finanzas de una comunidad.
- * Muestra los ingresos, gastos y balance financiero de la comunidad.
- * Permite a los administradores añadir nuevos registros financieros.
+ * Community finance page.
+ * Shows the income, expenses and financial balance of the community.
+ * Allows administrators to add new financial records.
  *
  * @component
- * @param params Parámetros de la ruta que incluyen el ID de la comunidad
- * @returns La página de finanzas de la comunidad renderizada
+ * @param params Route parameters including community ID
+ * @returns La community finance page rendered
  */
 const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;

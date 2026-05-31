@@ -5,17 +5,17 @@ import { Toaster } from "sonner";
 /**
  * Renderiza el contenedor global de notificaciones (toasts) de Sonner.
  *
- * Este componente debe montarse una sola vez, normalmente en el layout raíz,
- * para que cualquier parte de la aplicación pueda mostrar notificaciones de tipo toast.
+ * This component must be mounted only once, usually in the root layout,
+ * so that any part of the application can show toast type notifications.
  *
- * @returns El componente Toaster configurado para toda la app.
+ * @returns El Toaster component configured for the entire app.
  */
 
 const SonnerToaster = (): React.ReactNode => {
   return (
     <div>
       <Toaster
-        // Configuración visual y de comportamiento por defecto para todos los toasts.
+        // Default visual and behavioral settings for all toasts.
         position="top-right"
         closeButton
         richColors

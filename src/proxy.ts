@@ -7,13 +7,13 @@ const rutasProtegidas = ["/communities", "/communities/add", "/communities/searc
 const rutasPublicas = ["/home", "/login", "/signup"];
 
 /**
- * Gestiona el acceso a rutas públicas y protegidas según la sesión del usuario.
- * Redirige a `login` cuando una ruta protegida no tiene sesión válida,
- * y envía a `communities` si un usuario autenticado intenta acceder a rutas públicas.
+ * Manages access to public and protected routes based on the user session.
+ * Redirect to `login` when a protected route does not have a valid session,
+ * and sends to `communities` if an authenticated user attempts to access public routes.
  *
  * @param req Solicitud entrante de Next.js.
  *
- * @returns Una respuesta que continúa la navegación o redirige al usuario.
+ * @returns Una response that continues navigation or redirects the user.
  */
 
 async function proxy(req: NextRequest): Promise<NextResponse> {
@@ -35,7 +35,7 @@ async function proxy(req: NextRequest): Promise<NextResponse> {
   return NextResponse.next();
 }
 
-// Expresión regular para excluir rutas de API, recursos estáticos y archivos de imagen
+// Regular expression to exclude API routes, static resources and image files
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"]
 };

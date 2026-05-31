@@ -21,18 +21,18 @@ interface Props {
 }
 
 /**
- * Componente de tabla reutilizable que muestra datos en filas y columnas.
+ * Reusable table component that displays data in rows and columns.
  * Soporta variantes de fila (default, section, summary, balance) y
- * muestra un mensaje cuando no hay datos disponibles.
+ * displays a message when no data is available.
  *
  * @param headers Lista de encabezados de columna
- * @param rows Lista de filas con celdas y variante opcional
- * @param emptyMessage Mensaje a mostrar cuando no hay filas (por defecto "No data available.")
- * @param className Clase CSS adicional para el contenedor de la tabla
+ * @param rows List of rows with cells and optional variant
+ * @param emptyMessage Message to display when there are no rows (default "No data available.")
+ * @param className Additional CSS class for table container
  */
 const Table = ({ headers, rows, emptyMessage = "No data available.", className = "" }: Props): React.ReactNode => {
   /**
-   * Normaliza una celda al tipo TableCell para garantizar acceso uniforme a sus propiedades.
+   * Normalizes a cell to the TableCell type to ensure consistent access to its properties.
    *
    * @param cell La celda a normalizar (puede ser ReactNode o TableCell)
    * @returns Objeto TableCell normalizado

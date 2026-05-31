@@ -5,12 +5,12 @@ interface Props {
 }
 
 /**
- * Página índice de una comunidad específica.
- * Redirige automáticamente a la página de overview de la comunidad.
+ * Index page for a specific community.
+ * Automatically redirects to the community overview page.
  *
  * @component
- * @param params Parámetros de la ruta que incluyen el ID de la comunidad
- * @returns No devuelve contenido, solo redirige
+ * @param params Route parameters including community ID
+ * @returns No returns content, only redirects
  */
 const CommunityPage = async ({ params }: Props): Promise<never> => {
   const { id } = await params;

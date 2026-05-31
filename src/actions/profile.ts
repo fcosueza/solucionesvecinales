@@ -15,17 +15,17 @@ import z from "zod";
 type CamposFormularioPerfil = z.infer<typeof profileSchema>;
 
 /**
- * Actualiza los datos de perfil del usuario autenticado.
+ * Updates the authenticated user's profile data.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos enviados desde el formulario de perfil.
+ * @param _prevState Previous state of the form action.
+ * @param formData Data sent from the profile form.
  *
- * @returns El nuevo estado del formulario con el resultado de la actualización.
+ * @returns El new state of the form with the result of the update.
  */
 export const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
 
-  // Si no hay sesión autenticada, se devuelve un estado de error
+  // If there is no authenticated session, an error status is returned
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
     return {
       state: "error",
@@ -34,11 +34,11 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
     };
   }
 
-  // Se validan los datos del formulario usando el esquema definido con Zod
+  // The form data is validated using the schema defined with Zod
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposFormularioPerfil> = profileSchema.safeParse(datos);
 
-  // Si la validación falla, se devuelve un estado de error
+  // If validation fails, an error status is returned
   if (!datosValidados.success) {
     return {
       state: "error",
@@ -48,7 +48,7 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
     };
   }
 
-  // Si la validación es exitosa, se procede a actualizar el perfil del usuario
+  // If the validation is successful, the user's profile is updated.
   try {
     const nuevaContrasena: string = datosValidados.data.password;
     const ficheroImagen = formData.get("imagen");
@@ -61,7 +61,7 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
       passwordCifrado = await bcrypt.hash(nuevaContrasena, salCifrado);
     }
 
-    // Si existe el fichero de imagen se guarda, si no se puede guardar se devuelve un estado de error
+    // If the image file exists it is saved, if it cannot be saved an error status is returned
     if (ficheroImagen instanceof File && ficheroImagen.size > 0) {
       const imagenGuardada = await saveProfileImageFile(ficheroImagen, sesionVerificada.session.userID);
 
@@ -76,7 +76,7 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
       urlImagen = imagenGuardada.imagen;
     }
 
-    // Se actualizan los datos del usuario en la base de datos, incluyendo la nueva imagen y contraseña si se proporcionaron
+    // The user's data is updated in the database, including the new image and password if provided
     await prisma.usuario.update({
       where: { id: sesionVerificada.session.userID },
       data: {
@@ -111,9 +111,9 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
 };
 
 /**
- * Elimina de forma permanente el usuario autenticado y sus datos relacionados.
+ * Permanently deletes the authenticated user and its related data.
  *
- * @returns Estado de error si no se pudo eliminar la cuenta. En éxito redirige a la home.
+ * @returns Error state if the account could not be deleted. On success, redirects to home.
  */
 export const deleteProfile = async (_prevState: FormActionState): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
@@ -143,18 +143,18 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
   redirect("/");
 };
 
-// Formatos permitidos y tamaño máximo para las imágenes de perfil
+// Allowed formats and maximum size for profile images
 const TIPOS_MIME_PERMITIDOS = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const TAMANO_MAX_EN_BYTES = 5 * 1024 * 1024; // 5 MB
 
 /**
- * Guarda el archivo de imagen de perfil en el servidor.
- * Valida el formato y tamaño del archivo antes de guardarlo.
- * El archivo se guarda con el ID del usuario y la fecha actual para evitar colisiones.
+ * Save the profile picture file to the server.
+ * Validate the file format and size before saving it.
+ * The file is saved with the user ID and current date to avoid collisions.
  *
  * @param file El archivo de imagen a guardar
- * @param userID El ID del usuario al que pertenece la imagen
- * @returns Un objeto con la URL de la imagen guardada, o un mensaje de error
+ * @param userID The ID of the user to whom the image belongs
+ * @returns An object with the URL of the saved image, or an error message
  */
 export const saveProfileImageFile = async (
   file: File,
@@ -186,11 +186,11 @@ export const saveProfileImageFile = async (
 };
 
 /**
- * Server action que sube una imagen de perfil para el usuario autenticado.
- * Valida la sesión, procesa el archivo de imagen y actualiza la URL en la base de datos.
+ * Server action that uploads a profile image for the authenticated user.
+ * Validates the session, processes the image file and updates the URL in the database.
  *
- * @param formData FormData que debe contener el campo "imagen" con el archivo a subir
- * @returns Un objeto con la URL de la imagen subida, o un mensaje de error
+ * @param formData FormData that must contain the "image" field with the file to upload
+ * @returns An object with the URL of the uploaded image, or an error message
  */
 export const uploadProfile = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
   const sesionVerificada = await verifySession();

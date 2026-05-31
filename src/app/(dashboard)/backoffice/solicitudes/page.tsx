@@ -6,13 +6,13 @@ import style from "../style.module.css";
 const PAGE_SIZE = 10;
 
 /**
- * Página de gestión de solicitudes de comunidad del backoffice.
- * Lista todas las solicitudes de suscripción a comunidades con soporte de búsqueda y paginación.
- * Muestra el estado (pendiente, aprobada, denegada) de cada solicitud.
+ * Backoffice community request management page.
+ * Lists all community subscription requests with search and pagination support.
+ * Shows the status (pending, approved, denied) of each request.
  *
  * @component
- * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda) y page (página actual)
- * @returns La página de solicitudes del backoffice renderizada
+ * @param searchParams Optional search parameters: q (search term) and page (current page)
+ * @returns La backoffice requests page rendered
  */
 export default async function BackOfficeRequestsPage({
   searchParams

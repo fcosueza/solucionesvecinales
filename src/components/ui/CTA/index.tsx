@@ -14,23 +14,23 @@ interface Props {
 }
 
 /**
- * Componente que crea un elemento CTA (Call to Action) con título, párrafo y botón de navegación.
+ * Component that creates a CTA (Call to Action) element with title, paragraph and navigation button.
  *
  * @param props - Props del componente CTA.
- * @param props.title - Título principal mostrado en el bloque.
- * @param props.highlightText - Fragmento opcional del título para resaltar visualmente.
+ * @param props.title - Main title displayed in the block.
+ * @param props.highlightText - Optional fragment of the title to highlight visually.
  * @param props.para - Texto descriptivo del bloque.
- * @param props.buttonText - Texto del botón de acción.
- * @param props.buttonRoute - Ruta a la que navega el botón.
- * @param props.highlightText - Fragmento del título que se resaltará visualmente si se encuentra en el título.
+ * @param props.buttonText - Action button text.
+ * @param props.buttonRoute - Route to which the button navigates.
+ * @param props.highlightText - Title fragment that will be visually highlighted if found in the title.
  *
- * @returns El bloque CTA con título, párrafo y botón como un elemento React.
+ * @returns El CTA block with title, paragraph and button as a React element.
  */
 const CTA = ({ title, highlightText, para, buttonText, buttonRoute = "/" }: Props): React.ReactNode => {
   const enrutador = useRouter();
   const tieneResaltado = Boolean(highlightText && title.includes(highlightText));
 
-  // Función para renderizar el título con el texto resaltado si se proporciona.
+  // Function to render the title with the text highlighted if provided.
   const renderTitle = (): React.ReactNode => {
     if (!tieneResaltado || !highlightText) {
       return title;

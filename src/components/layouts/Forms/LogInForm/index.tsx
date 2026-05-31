@@ -16,11 +16,11 @@ const estadoInicial: FormActionState = {
 };
 
 /**
- * Componente que renderiza el formulario de inicio de sesión y procesa credenciales.
+ * Component that renders the login form and processes credentials.
  *
  * @param props - Props del componente LogInForm.
  *
- * @returns El formulario de inicio de sesión como un elemento React.
+ * @returns El login form as a React element.
  */
 const LogInForm = (): React.ReactNode => {
   const router = useRouter();

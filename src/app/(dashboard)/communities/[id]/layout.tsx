@@ -8,14 +8,14 @@ interface Props {
 }
 
 /**
- * Diseño de una comunidad específica.
- * Verifica que el usuario tenga acceso a la comunidad y proporciona la estructura común
- * a todas las páginas de esa comunidad.
+ * Design of a specific community.
+ * Verifies that the user has access to the community and provides the common structure
+ * to all the pages of that community.
  *
  * @component
- * @param children Contenido de las páginas anidadas de la comunidad
- * @param params Parámetros de la ruta que incluyen el ID de la comunidad
- * @returns El layout de la comunidad renderizado
+ * @param children Content of nested community pages
+ * @param params Route parameters including community ID
+ * @returns El community layout rendered
  */
 const CommunityLayout = async ({ children, params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;

@@ -10,10 +10,10 @@ interface Props {
 }
 
 /**
- * Componente que representa las acciones disponibles en la vista general, mostrando botones según el rol del usuario.
+ * Component that represents the actions available in the overview, showing buttons according to the user's role.
  *
- * @param role El rol del usuario, utilizado para determinar qué acciones mostrar.
- * @returns Un nodo de React que representa las acciones disponibles en la vista general.
+ * @param role The user's role, used to determine which actions to display.
+ * @returns Un React node that represents the actions available in the overview.
  */
 const OverviewActions = ({ role }: Props): React.ReactNode => {
   const enrutador = useRouter();

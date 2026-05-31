@@ -4,13 +4,13 @@ import { useRouter as enrutadorMock } from "next/navigation";
 import { NavItem } from "@/types";
 import Header from ".";
 
-// Simula el módulo useRouter.
+// Simulates the useRouter module.
 jest.mock("next/navigation", () => ({
   ...jest.requireActual("next/navigation"),
   useRouter: jest.fn()
 }));
 
-// Agrega el método push al mock de useRouter.
+// Add the push method to the useRouter mock.
 (enrutadorMock as jest.Mock).mockReturnValue({
   push: jest.fn()
 });

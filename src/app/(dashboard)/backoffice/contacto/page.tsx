@@ -6,12 +6,12 @@ import style from "../style.module.css";
 const PAGE_SIZE = 10;
 
 /**
- * Página de gestión de mensajes de contacto del backoffice.
- * Lista todos los mensajes recibidos a través del formulario de contacto con soporte de búsqueda y paginación.
+ * Backoffice contact message management page.
+ * Lists all messages received through the contact form with search and pagination support.
  *
  * @component
- * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda) y page (página actual)
- * @returns La página de contacto del backoffice renderizada
+ * @param searchParams Optional search parameters: q (search term) and page (current page)
+ * @returns La backoffice contact page rendered
  */
 export default async function BackOfficeContactoPage({
   searchParams

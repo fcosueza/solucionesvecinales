@@ -1,12 +1,12 @@
 import { redirect } from "next/navigation";
 
 /**
- * Página índice del backoffice.
- * Redirige automáticamente a la página de overview del backoffice.
- * Esta es la ruta principal de acceso al panel de administración.
+ * Backoffice index page.
+ * Automatically redirects to the backoffice overview page.
+ * This is the main access path to the administration panel.
  *
  * @component
- * @returns No devuelve contenido, solo redirige
+ * @returns No returns content, only redirects
  */
 export default function BackOfficeIndexPage() {
   redirect("/backoffice/overview");

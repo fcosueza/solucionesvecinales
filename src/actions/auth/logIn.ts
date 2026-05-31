@@ -11,12 +11,12 @@ import z from "zod";
 type CamposLogin = z.infer<typeof logInSchema>;
 
 /**
- * Crea un nuevo FormData con los mismos campos que el original excepto "password",
- * para evitar que se reenvíe la contraseña al cliente en caso de error.
+ * Create a new FormData with the same fields as the original except "password",
+ * to prevent the password from being forwarded to the client in case of error.
  *
- * @param formData - El FormData original enviado desde el formulario.
+ * @param formData - The original FormData sent from the form.
  *
- * @returns Un nuevo FormData sin el campo "password".
+ * @returns Un new FormData without the "password" field.
  */
 const safePayload = (formData: FormData): FormData => {
   const safe = new FormData();
@@ -30,12 +30,12 @@ const safePayload = (formData: FormData): FormData => {
 };
 
 /**
- * Valida las credenciales del usuario, comprueba su contraseña y crea la sesión si el acceso es correcto.
+ * Validates the user's credentials, checks their password, and creates the session if access is correct.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos enviados desde el formulario de inicio de sesión.
+ * @param _prevState Previous state of the form action.
+ * @param formData Data sent from the login form.
  *
- * @returns El nuevo estado de la acción con el resultado de la autenticación.
+ * @returns El new state of the action with the authentication result.
  */
 
 const logIn = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
@@ -51,7 +51,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     };
   }
 
-  // Buscar el usuario y sus credenciales
+  // Find the user and their credentials
   const usuario = await prisma.usuario.findUnique({
     where: {
       email: datosValidados.data.email
@@ -61,7 +61,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     }
   });
 
-  // El usuario no existe
+  // The user does not exist
   if (!usuario || !usuario.credenciales) {
     return {
       state: "error",
@@ -73,7 +73,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     };
   }
 
-  // Comparar la contraseña proporcionada con el hash almacenado
+  // Compare the provided password with the stored hash
   const passwordMatch: boolean = await bcrypt.compare(datosValidados.data.password, usuario.credenciales.password);
 
   // Password incorrecto
@@ -87,7 +87,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
       payload: safePayload(formData)
     };
 
-  // El usuario y la contraseña son correctos
+  // The username and password are correct
   await crearSesion(usuario.id, usuario.rol as UserRole);
 
   const redirectTo = usuario.rol === UserRole.webAdmin ? "/backoffice/overview" : "/communities";

@@ -3,9 +3,9 @@ import "server-only";
 import { cookies } from "next/headers";
 
 /**
- * Elimina la cookie de sesión del usuario, cerrando su sesión.
+ * Delete the user's session cookie, closing their session.
  *
- * @returns Promesa sin valor devuelto
+ * @returns Promesa no return value
  */
 async function eliminarSesion(): Promise<void> {
   const almacenCookies = await cookies();

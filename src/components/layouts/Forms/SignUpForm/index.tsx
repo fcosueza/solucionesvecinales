@@ -17,10 +17,10 @@ const estadoInicial = {
 };
 
 /**
- * Componente que renderiza el formulario de registro y gestiona la creación de usuarios.
+ * Component that renders the registration form and manages the creation of users.
  *
  * @param props - Props del componente SignUpForm.
- * @returns El formulario de registro como un elemento React.
+ * @returns El registration form as a React element.
  */
 const SignUpForm = (): React.ReactNode => {
   const router = useRouter();

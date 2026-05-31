@@ -2,19 +2,19 @@ const MAX_RESERVATION_DURATION_HOURS = 2;
 const RESERVATION_WINDOW_DAYS = 7;
 
 /**
- * Rellena un número con ceros a la izquierda para que tenga al menos 2 dígitos.
- * Utilizado para formatear horas y minutos.
+ * Fill a number with leading zeros so that it has at least 2 digits.
+ * Used to format hours and minutes.
  *
- * @param value El valor numérico a rellenar
- * @returns El valor formateado como string con 2 dígitos
+ * @param value The numerical value to fill
+ * @returns El value formatted as string with 2 digits
  */
 const padTimePart = (value: number): string => value.toString().padStart(2, "0");
 
 /**
- * Valida y normaliza un string de fecha en formato ISO (YYYY-MM-DD).
+ * Validates and normalizes a date string in ISO format (YYYY-MM-DD).
  *
- * @param value String con la fecha en formato YYYY-MM-DD
- * @returns El mismo valor si es válido, o null si el formato es incorrecto
+ * @param value String with the date in YYYY-MM-DD format
+ * @returns El same value if valid, or null if the format is incorrect
  */
 const parseReservationDate = (value: string): string | null => {
   const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -33,21 +33,21 @@ const parseReservationDate = (value: string): string | null => {
 };
 
 /**
- * Convierte un objeto Date a string con formato YYYY-MM-DD.
+ * Converts a Date object to a string with YYYY-MM-DD format.
  *
  * @param date El objeto Date a convertir
- * @returns String con la fecha en formato YYYY-MM-DD
+ * @returns String with the date in YYYY-MM-DD format
  */
 const toReservationDateValue = (date: Date): string => {
   return [date.getUTCFullYear(), padTimePart(date.getUTCMonth() + 1), padTimePart(date.getUTCDate())].join("-");
 };
 
 /**
- * Construye un array de fechas permitidas para hacer reservas.
- * Las fechas permitidas son los próximos RESERVATION_WINDOW_DAYS días a partir de la fecha base.
+ * Builds an array of dates allowed to make reservations.
+ * The allowed dates are the next RESERVATION_WINDOW_DAYS days from the base date.
  *
- * @param baseDate La fecha base (por defecto la fecha actual)
- * @returns Array de strings con las fechas permitidas en formato YYYY-MM-DD
+ * @param baseDate The base date (defaults to the current date)
+ * @returns Array of strings with the allowed dates in YYYY-MM-DD format
  */
 const buildAllowedReservationDates = (baseDate = new Date()): string[] => {
   const firstAllowedDay = new Date(
@@ -64,26 +64,26 @@ const buildAllowedReservationDates = (baseDate = new Date()): string[] => {
 };
 
 /**
- * Construye un array de horas ocupadas para una reserva.
- * Si una reserva empieza a las 10:00 con duración 2 horas, retorna [10, 11].
+ * Builds an array of busy hours for a reservation.
+ * If a reservation starts at 10:00 with a duration of 2 hours, it returns [10, 11].
  *
- * @param startHour La hora de inicio de la reserva
- * @param duration La duración en horas
- * @returns Array de números de hora que ocupa la reserva
+ * @param startHour The start time of the reservation
+ * @param duration The duration in hours
+ * @returns Array of hour numbers occupied by the reservation
  */
 const buildReservedHours = (startHour: number, duration: number): number[] => {
   return Array.from({ length: duration }, (_, index) => startHour + index);
 };
 
 /**
- * Obtiene las horas de inicio disponibles para una reserva con una duración específica.
- * Valida que no haya solapamiento con horas ya ocupadas y que respete horario de apertura.
+ * Gets the available start times for a reservation with a specific duration.
+ * Validate that there is no overlap with hours already occupied and that opening hours are respected.
  *
- * @param openingHour Hora de apertura de la zona común
- * @param closingHour Hora de cierre de la zona común
- * @param duration Duración deseada de la reserva en horas
- * @param occupiedHours Array de horas ya ocupadas
- * @returns Array de horas en las que se puede iniciar una reserva
+ * @param openingHour Opening time of the common area
+ * @param closingHour Closing time of the common area
+ * @param duration Desired duration of the reservation in hours
+ * @param occupiedHours Array of hours already occupied
+ * @returns Array of hours in which a reservation can be started
  */
 const getAvailableStartHours = ({
   openingHour,
@@ -116,22 +116,22 @@ const getAvailableStartHours = ({
 };
 
 /**
- * Valida si una fecha está dentro del periodo de reserva permitido.
+ * Valid if a date is within the allowed reservation period.
  *
- * @param date La fecha a validar
- * @param baseDate La fecha base para calcular la ventana permitida
- * @returns true si la fecha está permitida, false en caso contrario
+ * @param date The date to validate
+ * @param baseDate The base date to calculate the allowed window
+ * @returns true if date is allowed, false otherwise
  */
 const isAllowedReservationDate = (date: string, baseDate = new Date()): boolean => {
   return buildAllowedReservationDates(baseDate).includes(date);
 };
 
 /**
- * Verifica si una reserva para hoy ya ha terminado o está completamente en el pasado.
+ * Checks if a reservation for today has already ended or is completely in the past.
  *
- * @param reservationDateValue Fecha de la reserva en formato YYYY-MM-DD
- * @param endHour Hora de fin de la reserva
- * @param now Fecha actual para la comparación
+ * @param reservationDateValue Reservation date in YYYY-MM-DD format
+ * @param endHour Reservation end time
+ * @param now Current date for comparison
  * @returns true si la franja ya ha pasado, false en caso contrario
  */
 const isReservationSlotInPast = (reservationDateValue: string, endHour: number, now = new Date()): boolean => {

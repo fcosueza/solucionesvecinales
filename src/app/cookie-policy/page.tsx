@@ -8,12 +8,12 @@ export const metadata: Metadata = {
 };
 
 /**
- * Página de política de cookies.
+ * Cookie policy page.
  *
- * Explica a los usuarios qué son las cookies, cuáles se utilizan en la plataforma,
- * su finalidad y cómo pueden gestionar sus preferencias de cookies.
+ * Explain to users what cookies are, which ones are used on the platform,
+ * their purpose and how you can manage your cookie preferences.
  *
- * @returns La página de política de cookies renderizada
+ * @returns La rendered cookie policy page
  */
 export default function PoliticaCookiesPage(): React.ReactNode {
   return (

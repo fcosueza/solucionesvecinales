@@ -42,13 +42,13 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de búsqueda de comunidades.
- * Permite a los usuarios buscar comunidades disponibles en la plataforma
- * y enviar solicitudes de suscripción a las que deseen unirse.
+ * Community search page.
+ * Allows users to search for communities available on the platform
+ * and send subscription requests to those who want to join.
  *
  * @component
- * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda)
- * @returns La página de búsqueda de comunidades renderizada
+ * @param searchParams Optional search parameters: q (search term)
+ * @returns La rendered community search page
  */
 const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<React.ReactNode> => {
   const verifiedSession = await verifySession();
@@ -60,7 +60,7 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
   const isAdminUser =
     verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  // Realizamos una consulta para obtener todas las comunidades disponibles, ordenadas alfabéticamente por nombre
+  // We run a query to get all available communities, sorted alphabetically by name
   const communities = await prisma.comunidad.findMany({
     select: {
       id: true,
@@ -76,7 +76,7 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
     }
   });
 
-  // Comprobamos qué comunidades tiene el usuario para marcar las que ya tiene inscritas en el formulario de búsqueda
+  // We check which communities the user has to mark the ones they already have registered in the search form
   const userWithCommunities = await prisma.usuario.findUnique({
     where: {
       id: verifiedSession.session.userID
@@ -98,7 +98,7 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
     }
   });
 
-  // Combinamos las comunidades administradas y las comunidades en las que el usuario es inquilino
+  // We combine managed communities and communities in which the user is a tenant
   const enrolledCommunityIDs = new Set<number>(aLista(userWithCommunities?.inscripciones).map(i => i.comunidad));
   const pendingRequestCommunityIDs = new Set<number>(
     aLista(userWithCommunities?.solicitudes).map(request => request.comunidad)

@@ -5,13 +5,13 @@ import { cookies } from "next/headers";
 import { UserRole } from "@/types";
 
 /**
- * Crea una nueva sesión de usuario y la almacena en una cookie segura.
- * La sesión contiene la información básica del usuario y expira después de 7 días.
+ * Creates a new user session and stores it in a secure cookie.
+ * The session contains the user's basic information and expires after 7 days.
  *
- * @param idUsuario El ID único del usuario
- * @param rol El rol del usuario (admin, inquilino, etc.)
+ * @param idUsuario The user's unique ID
+ * @param rol Role of the user (admin, tenant, etc.)
  *
- * @returns Promesa sin valor devuelto
+ * @returns Promesa no return value
  */
 async function crearSesion(idUsuario: string, rol: UserRole): Promise<void> {
   const diasEnMs: number = 7 * 24 * 60 * 60 * 1000;

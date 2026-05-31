@@ -24,12 +24,12 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de mis comunidades del dashboard.
- * Lista todas las comunidades a las que el usuario está suscrito.
- * Proporciona accesos directos para buscar, crear o unirse a nuevas comunidades.
+ * My dashboard communities page.
+ * Lists all communities to which the user is subscribed.
+ * Provides shortcuts to search, create or join new communities.
  *
  * @component
- * @returns La página de comunidades del usuario renderizada
+ * @returns La rendered user communities page
  */
 const CommunitiesPage = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();

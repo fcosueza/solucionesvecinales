@@ -31,13 +31,13 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de zonas comunes de una comunidad.
- * Muestra las zonas comunes disponibles para reserva y las reservas actuales del usuario.
- * Los administradores pueden crear nuevas zonas comunes.
+ * Page of common areas of a community.
+ * Shows the common areas available for reservation and the user's current reservations.
+ * Administrators can create new common areas.
  *
  * @component
- * @param params Parámetros de la ruta que incluyen el ID de la comunidad
- * @returns La página de zonas comunes de la comunidad renderizada
+ * @param params Route parameters including community ID
+ * @returns La community commons page rendered
  */
 const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;

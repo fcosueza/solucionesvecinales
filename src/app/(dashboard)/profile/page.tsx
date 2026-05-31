@@ -22,12 +22,12 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de perfil del usuario.
- * Permite al usuario autenticado ver y editar su información personal, incluyendo
- * nombre, apellido, correo electrónico, contraseña e imagen de perfil.
+ * User profile page.
+ * Allows the authenticated user to view and edit their personal information, including
+ * first name, last name, email, password and profile image.
  *
  * @component
- * @returns La página de perfil del usuario renderizada
+ * @returns La rendered user profile page
  */
 const ProfilePage = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();

@@ -6,8 +6,8 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
 /**
- * Script que puebla la base de datos con datos de prueba.
- * Se puede ejecutar con `npm run db:seed` (o el alias `npm run seed`).
+ * Script that populates the database with test data.
+ * It can be run with `npm run db:seed` (or the alias `npm run seed`).
  */
 
 const ZONES_PER_COMMUNITY = 4;
@@ -168,22 +168,22 @@ const INCIDENT_STATUSES = ["reportado", "procesandose", "resuelto"] as const;
 const REQUEST_STATUSES = ["aprobada", "aprobada", "pendiente", "pendiente", "pendiente"] as const;
 
 /**
- * Crea un objeto Date en UTC con la hora especificada.
- * Se utiliza para inicializar horarios de zonas comunes durante la siembra de datos.
+ * Creates a Date object in UTC with the specified time.
+ * Used to initialize common zone schedules during data seeding.
  *
- * @param hour La hora en formato 24h (0-23)
- * @returns Un objeto Date con la hora especificada
+ * @param hour The time in 24h format (0-23)
+ * @returns Un Date object with the specified time
  */
 function timeAt(hour: number): Date {
   return new Date(Date.UTC(1970, 0, 1, hour, 0, 0, 0));
 }
 
 /**
- * Función principal de siembra de datos que popula la base de datos con datos de prueba.
- * Limpia datos existentes y crea comunidades, usuarios, zonas comunes, reservas,
- * incidencias, mensajes, solicitudes y registros financieros.
+ * Main data seeding function that populates the database with test data.
+ * Clean existing data and create communities, users, common areas, reservations,
+ * incidents, messages, requests and financial records.
  *
- * @returns Promesa sin valor devuelto
+ * @returns Promesa no return value
  */
 async function main(): Promise<void> {
   const communityNames = COMMUNITY_SEED_DATA.map(community => community.nombre);

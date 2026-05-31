@@ -4,9 +4,9 @@ import { eliminarSesion } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 /**
- * Cierra la sesión actual del usuario y lo redirige a la página principal.
+ * Logs out the user's current session and redirects them to the main page.
  *
- * @returns No devuelve ningún valor; finaliza redirigiendo al usuario.
+ * @returns No return no value; ends by redirecting the user.
  */
 
 const logOut = async (): Promise<void> => {

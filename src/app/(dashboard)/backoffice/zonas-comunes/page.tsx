@@ -13,13 +13,13 @@ const formatoHora = new Intl.DateTimeFormat("es-ES", {
 });
 
 /**
- * Página de gestión de zonas comunes del backoffice.
- * Lista todas las zonas comunes de todas las comunidades con soporte de búsqueda y paginación.
- * Muestra información de horarios, reservas y la comunidad a la que pertenece cada zona.
+ * Backoffice common areas management page.
+ * Lists all common areas of all communities with search and pagination support.
+ * Shows information on schedules, reservations and the community to which each area belongs.
  *
  * @component
- * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda) y page (página actual)
- * @returns La página de zonas comunes del backoffice renderizada
+ * @param searchParams Optional search parameters: q (search term) and page (current page)
+ * @returns La backoffice common areas page rendered
  */
 export default async function BackOfficeZonesPage({
   searchParams

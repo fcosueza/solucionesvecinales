@@ -3,12 +3,12 @@ import { UserRole } from "@/types";
 import { redirect } from "next/navigation";
 
 /**
- * Diseño del backoffice (panel de administración web).
- * Verifica que el usuario autenticado tenga el rol webAdmin.
- * Redirige a communities si el usuario no tiene los permisos necesarios.
+ * Backoffice design (web administration panel).
+ * Verify that the authenticated user has the webAdmin role.
+ * Redirects to communities if the user does not have the necessary permissions.
  *
  * @component
- * @param children Contenido de las páginas anidadas del backoffice
+ * @param children Content of nested backoffice pages
  * @returns El layout del backoffice renderizado
  */
 export default async function BackOfficeLayout({ children }: Readonly<{ children: React.ReactNode }>) {

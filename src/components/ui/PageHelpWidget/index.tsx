@@ -15,11 +15,11 @@ interface Props {
 }
 
 /**
- * Widget de ayuda contextual para una página.
- * Muestra un botón "?" que abre un modal con título, resumen,
- * pasos de uso y restricciones de la página actual.
+ * Contextual help widget for a page.
+ * Shows a "?" button which opens a modal with title, summary,
+ * usage steps and restrictions of the current page.
  *
- * @param content Objeto con la información de ayuda: título, resumen, pasos y restricciones
+ * @param content Object with help information: title, summary, steps and restrictions
  */
 const PageHelpWidget = ({ content }: Props): React.ReactNode => {
   const [isOpen, setIsOpen] = useState(false);

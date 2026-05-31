@@ -10,13 +10,13 @@ interface Props {
 }
 
 /**
- * Componente que renderiza enlaces sociales externos con iconos.
+ * Component that renders external social links with icons.
  *
  * @param props - Props del componente Social.
- * @param props.icons - Lista de iconos sociales con metadatos de renderizado.
+ * @param props.icons - List of social icons with rendering metadata.
  *
- * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
- * @returns Los enlaces sociales con iconos como un elemento React.
+ * @param props.className - Optional CSS class to modify the appearance of the component.
+ * @returns Los social links with icons as a React element.
  */
 const Social = ({ icons, className = "" }: Props): React.ReactNode => {
   return (

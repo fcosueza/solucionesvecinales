@@ -14,17 +14,17 @@ interface Props {
 }
 
 /**
- * Componente que muestra una tarheta con la información de una zona común.
+ * Component that displays a card with information about a common area.
  *
- * @param nombre El nombre de la zona común.
- * @param descripcion Una breve descripción de la zona común.
- * @param horaInicio La hora de inicio a la que se puede reservar la zona común.
- * @param horaFin La hora de fin a la que se puede reservar la zona común.
- * @param imageUrl La URL de la imagen representativa de la zona común.
- * @param reservationSummary Texto breve con el estado actual de las reservas para la zona.
- * @param action Acción opcional asociada a la zona, como abrir el formulario de reserva.
+ * @param nombre Name of the common area.
+ * @param descripcion A brief description of the common area.
+ * @param horaInicio The start time at which the common area can be reserved.
+ * @param horaFin The end time at which the common area can be reserved.
+ * @param imageUrl The URL of the representative image of the common area.
+ * @param reservationSummary Brief text with the current status of reserves for the area.
+ * @param action Optional action associated with the area, such as opening the reservation form.
  *
- * @returns Un componente React que muestra una tarjeta con la información de la zona común
+ * @returns Un React component showing a card with common area information
  */
 const CardCommonArea = ({
   nombre,

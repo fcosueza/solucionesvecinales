@@ -15,12 +15,12 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de cierre de sesión.
+ * Logout page.
  *
- * Permite a usuarios autenticados cerrar su sesión actual de forma segura.
- * Solicita confirmación antes de proceder con el cierre de sesión.
+ * Allows authenticated users to securely log out of their current session.
+ * Request confirmation before proceeding with logout.
  *
- * @returns La página de logout renderizada
+ * @returns La rendered logout page
  */
 export default function LogOut() {
   return (

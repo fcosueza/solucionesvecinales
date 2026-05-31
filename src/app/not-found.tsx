@@ -2,10 +2,10 @@ import "../components/not-found.css";
 import Link from "next/link";
 
 /**
- * Página de error 404 - Página no encontrada.
- * Se muestra cuando el usuario intenta acceder a una ruta que no existe en la plataforma.
+ * Error page 404 - Page not found.
+ * Displayed when the user tries to access a route that does not exist on the platform.
  *
- * @returns La página de error 404 renderizada
+ * @returns The rendered 404 error page
  */
 export default function NotFound() {
   return (

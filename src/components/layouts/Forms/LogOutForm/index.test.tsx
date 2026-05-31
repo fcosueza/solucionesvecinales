@@ -7,13 +7,13 @@ import { useRouter as enrutadorMock } from "next/navigation";
 // Simula la Server Action logOutAction.
 jest.mock("@/actions/auth/logOut");
 
-// Simula el módulo useRouter.
+// Simulates the useRouter module.
 jest.mock("next/navigation", () => ({
   ...jest.requireActual("next/navigation"),
   useRouter: jest.fn()
 }));
 
-// Agrega el método back al mock de useRouter.
+// Add the back method to the useRouter mock.
 (enrutadorMock as jest.Mock).mockReturnValue({
   back: jest.fn()
 });

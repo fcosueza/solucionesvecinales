@@ -7,13 +7,13 @@ interface Props {
 }
 
 /**
- * Componente que renderiza las estadísticas de la comunidad, mostrando un título, un valor numérico y una descripción.
+ * Component that renders community statistics, displaying a title, numeric value, and description.
  *
- * @param title El título que describe la estadística, por ejemplo "Incidentes Reportados".
- * @param value El valor numérico que representa la estadística, por ejemplo "15".
- * @param description Una breve descripción que proporciona contexto adicional sobre la estadística, por ejemplo "Número de incidentes reportados en el último mes".
+ * @param title The title that describes the statistic, for example "Reported Incidents."
+ * @param value The numerical value that represents the statistic, for example "15."
+ * @param description A brief description that provides additional context about the statistic, for example "Number of incidents reported in the last month."
  *
- * @returns Un componente React que muestra una tarjeta con la estadística formateada de manera clara y visualmente atractiva.
+ * @returns Un React component that displays a card with the statistics formatted in a clear and visually attractive way.
  */
 const CardStat = ({ title, value, description }: Props): React.ReactNode => {
   return (

@@ -20,15 +20,15 @@ interface Props {
 }
 
 /**
- * Botón que abre el formulario modal de reserva de una zona común.
- * Si está deshabilitado, el usuario no puede iniciar una nueva reserva.
+ * Button that opens the modal reservation form for a common area.
+ * If disabled, the user cannot start a new reservation.
  *
- * @param communityID ID de la comunidad a la que pertenece la zona
- * @param zoneName Nombre de la zona común a reservar
- * @param openingHour Hora de apertura de la zona
- * @param closingHour Hora de cierre de la zona
- * @param existingReservations Lista de reservas existentes para gestionar disponibilidad
- * @param disabled Deshabilita el botón si el usuario ya tiene una reserva activa (por defecto false)
+ * @param communityID ID of the community to which the zone belongs
+ * @param zoneName Name of the common area to reserve
+ * @param openingHour Area opening time
+ * @param closingHour Zone closing time
+ * @param existingReservations List of existing reservations to manage availability
+ * @param disabled Disables the button if the user already has an active reservation (default false)
  */
 const CommonAreaReservationButton = ({
   communityID,

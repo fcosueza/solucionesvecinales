@@ -6,13 +6,13 @@ import { UserRole, FormActionState } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
- * Server action que crea una nueva zona común en una comunidad.
- * Solo puede ser ejecutada por el administrador de la comunidad.
- * Valida que la hora de inicio sea anterior a la de fin y que el nombre sea único.
+ * Server action that creates a new common area in a community.
+ * It can only be executed by the community administrator.
+ * Validates that the start time is before the end time and that the name is unique.
  *
- * @param communityID - ID de la comunidad donde se crea la zona
- * @param formData - FormData que debe contener: nombre, descripcion, horaInicio y horaFin
- * @returns FormActionState con el resultado de la operación
+ * @param communityID - ID of the community where the zone is created
+ * @param formData - FormData that must contain: name, description, starttime and endtime
+ * @returns FormActionState with the result of the operation
  */
 const createZone = async (communityID: number, formData: FormData): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
@@ -136,13 +136,13 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
 };
 
 /**
- * Server action que elimina una zona común de una comunidad.
- * Solo puede ser ejecutada por el administrador de la comunidad.
- * Valida que el usuario tenga permisos para gestionar la comunidad.
+ * Server action that removes a common zone from a community.
+ * It can only be executed by the community administrator.
+ * Validates that the user has permissions to manage the community.
  *
- * @param communityID - ID de la comunidad de la que se elimina la zona
- * @param zoneName - Nombre de la zona a eliminar
- * @returns FormActionState con el resultado de la operación
+ * @param communityID - ID of the community from which the zone is removed
+ * @param zoneName - Name of the area to eliminate
+ * @returns FormActionState with the result of the operation
  */
 const deleteZone = async (communityID: number, zoneName: string): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
@@ -208,11 +208,11 @@ const deleteZone = async (communityID: number, zoneName: string): Promise<FormAc
 };
 
 /**
- * Server action que elimina una zona común desde el backoffice.
+ * Server action that removes a common zone from the backoffice.
  * Solo puede ser ejecutada por webAdmin.
- * Revalida las rutas del backoffice después de eliminar la zona.
+ * Revalidate backoffice routes after deleting the zone.
  *
- * @param formData - FormData que debe contener: nombre y comunidad
+ * @param formData - FormData that must contain: name and community
  */
 const deleteZoneAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();

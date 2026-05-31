@@ -6,23 +6,23 @@ import { UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
- * Server action que elimina un usuario de la base de datos. Solo puede ser ejecutada por un usuario con rol webAdmin.
- * Valida los permisos y revalida las rutas de usuarios y overview del backoffice después de eliminar.
+ * Server action that removes a user from the database. It can only be executed by a user with the webAdmin role.
+ * Validates permissions and revalidates backoffice user and overview paths after deleting.
  *
- * @param formData - FormData que debe contener el campo "id" con el ID del usuario a eliminar
+ * @param formData - FormData that must contain the "id" field with the ID of the user to be deleted
  */
 
 export const deleteUser = async (formData: FormData): Promise<void> => {
   const sesion = await verifySession();
 
-  // Verificar que el usuario esté autenticado y tenga rol webAdmin
+  // Verify that the user is authenticated and has the webAdmin role
   if (!sesion.isAuth || sesion.session?.role !== UserRole.webAdmin) return;
 
-  // Validar que el id sea un string no vacío
+  // Validate that the id is a non-empty string
   const id = String(formData.get("id") ?? "").trim();
   if (!id) return;
 
-  // No permitir eliminar un usuario que sigue administrando comunidades.
+  // Do not allow deleting a user who is still managing communities.
   const hasAdminCommunities = await prisma.comunidad.findFirst({
     where: { adminID: id },
     select: { id: true }
@@ -30,7 +30,7 @@ export const deleteUser = async (formData: FormData): Promise<void> => {
 
   if (hasAdminCommunities) return;
 
-  // Intentar eliminar el usuario y revalidar rutas.
+  // Try to delete the user and revalidate routes.
   try {
     await prisma.usuario.delete({ where: { id } });
     revalidatePath("/backoffice/usuarios");

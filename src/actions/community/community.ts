@@ -10,17 +10,17 @@ import z from "zod";
 type CamposFormularioComunidad = z.infer<typeof communitySchema>;
 
 /**
- * Crea una nueva comunidad, introducida por un usuario administrador, y la almacena en la base de datos.
+ * Creates a new community, entered by an administrator user, and stores it in the database.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos enviados desde el formulario de alta de comunidad.
+ * @param _prevState Previous state of the form action.
+ * @param formData Data sent from the community registration form.
  *
- * @returns El nuevo estado del formulario con el resultado de la creación.
+ * @returns El new state of the form with the result of the creation.
  */
 const addCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const sesionVerificada = await verifySession();
 
-  // Si el usuario no está autenticado, se devuelve un error
+  // If the user is not authenticated, an error is returned
   if (!sesionVerificada.isAuth || !sesionVerificada.session) {
     return {
       state: "error",
@@ -29,11 +29,11 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // Hay que verificar que el usuario es administrador
+  // You must verify that the user is an administrator
   const esAdministrador =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
-  // Si el usuario no es administrador, no puede crear la comunidad
+  // If the user is not an administrator, they cannot create the community
   if (!esAdministrador) {
     return {
       state: "error",
@@ -42,11 +42,11 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // Validamos los datos del formulario utilizando el esquema definido con Zod
+  // We validate the form data using the schema defined with Zod
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposFormularioComunidad> = communitySchema.safeParse(datos);
 
-  // Si los datos no son válidos, se devuelve un estado de error con los mensajes de validación
+  // If the data is invalid, an error status is returned with validation messages
   if (!datosValidados.success) {
     return {
       state: "error",
@@ -56,7 +56,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // Intentamos crear la comunidad en la base de datos
+  // We try to create the community in the database
   try {
     await prisma.comunidad.create({
       data: {
@@ -77,7 +77,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
       }
     });
   } catch (error: unknown) {
-    // Si el error es un conflicto de clave única, devolvemos un error de duplicado
+    // If the error is a unique key conflict, we return a duplicate error
     if (
       typeof error === "object" &&
       error !== null &&
@@ -91,7 +91,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
       };
     }
 
-    // Para cualquier otro error, devolvemos un mensaje genérico
+    // For any other errors, we return a generic message
     return {
       state: "error",
       message: "No se pudo crear la comunidad",
@@ -102,7 +102,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // Si todo va bien, devolvemos el estado como success
+  // If everything goes well, return the status as success
   return {
     state: "success",
     message: "Comunidad creada exitosamente",

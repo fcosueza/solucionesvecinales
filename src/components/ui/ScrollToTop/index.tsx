@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 
 /**
- * Este componente se asegura de que una página tenga el scroll completo hacia la parte superior
- * para evitar que haya elementos que nos vean correctamente al navegar entre páginas.
+ * This component makes sure that a page has the full scroll to the top
+ * to prevent there from being elements that see us correctly when navigating between pages.
  * 
- * @returns null, ya que este componente no renderiza nada visualmente.
+ * @returns null, since this component does not render anything visually.
  */
 const ScrollToTopOnMount = (): null => {
   useEffect(() => {

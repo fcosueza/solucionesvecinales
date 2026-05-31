@@ -1,15 +1,15 @@
 /**
- * Rellena un número con ceros a la izquierda hasta tener 2 dígitos.
+ * Fill a number with leading zeros until it has 2 digits.
  *
- * @param value Valor numérico a formatear
- * @returns String con 2 dígitos
+ * @param value Numeric value to format
+ * @returns String with 2 digits
  */
 const padTimePart = (value: number): string => value.toString().padStart(2, "0");
 
 /**
- * Formatea un objeto Date como hora en formato HH:MM usando UTC.
+ * Formats a Date object as time in HH:MM format using UTC.
  *
- * @param date Fecha con la hora a mostrar
+ * @param date Date with time to display
  * @returns Hora formateada en texto
  */
 const formatTimeLabel = (date: Date): string => {
@@ -17,17 +17,17 @@ const formatTimeLabel = (date: Date): string => {
 };
 
 /**
- * Formatea una hora exacta en formato HH:00.
+ * Formats an exact time in HH:00 format.
  *
- * @param hour Hora en formato 24h
+ * @param hour Time in 24h format
  * @returns Hora formateada en texto
  */
 const formatHourLabel = (hour: number): string => `${padTimePart(hour)}:00`;
 
 /**
- * Formatea una fecha de reserva en español con día de la semana y fecha corta.
+ * Formats a reservation date in Spanish with day of the week and short date.
  *
- * @param date Fecha como Date o string YYYY-MM-DD
+ * @param date Date as Date or string YYYY-MM-DD
  * @returns Fecha formateada en texto
  */
 const formatReservationDateLabel = (date: Date | string): string => {

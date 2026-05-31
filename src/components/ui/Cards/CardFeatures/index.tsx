@@ -14,18 +14,18 @@ interface Props {
 }
 
 /**
- * Componente que crea una tarjeta de características con icono, título y párrafo.
+ * Component that creates a feature card with icon, title, and paragraph.
  *
  * @param props - Props del componente CardFeatures.
  * @param props.iconURL - URL del icono de la tarjeta.
  * @param props.iconAltText - Texto alternativo del icono.
- * @param props.iconWidth - Ancho del icono en píxeles.
- * @param props.iconHeight - Alto del icono en píxeles.
- * @param props.cardTitle - Título principal de la tarjeta.
- * @param props.cardPara - Párrafo descriptivo de la tarjeta.
- * @param props.className - Clase CSS opcional para modifcar la apariencia del componente.
+ * @param props.iconWidth - Width of the icon in pixels.
+ * @param props.iconHeight - Height of the icon in pixels.
+ * @param props.cardTitle - Main title of the card.
+ * @param props.cardPara - Descriptive paragraph of the card.
+ * @param props.className - Optional CSS class to modify the appearance of the component.
  *
- * @returns La tarjeta con icono, título y párrafo como un elemento React.
+ * @returns La card with icon, title and paragraph as a React element.
  */
 const CardFeatures = ({
   iconURL,

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import SonnerToaster from ".";
 
-// El Toaster de Sonner es un componente third-party, así que nosotros testeamos nuestro wrapper.
+// Sonner's Toaster is a third-party component, so we test our wrapper.
 jest.mock("sonner", () => ({
   Toaster: ({
     position,

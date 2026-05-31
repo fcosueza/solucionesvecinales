@@ -20,11 +20,11 @@ const initialState: FormActionState = {
 const DESCRIPCION_MAX = 100;
 
 /**
- * Formulario modal para crear una nueva zona común en una comunidad.
- * Permite introducir nombre, descripción y horario de apertura y cierre.
+ * Modal form to create a new common area in a community.
+ * Allows you to enter name, description and opening and closing hours.
  *
- * @param communityID ID de la comunidad donde se crea la zona
- * @param onClose Función de cierre del modal
+ * @param communityID ID of the community where the zone is created
+ * @param onClose Modal close function
  */
 const AddZoneForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const router = useRouter();

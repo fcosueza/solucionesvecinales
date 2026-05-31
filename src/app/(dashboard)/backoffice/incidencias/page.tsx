@@ -6,13 +6,13 @@ import style from "../style.module.css";
 const PAGE_SIZE = 10;
 
 /**
- * Página de gestión de incidencias del backoffice.
- * Lista todas las incidencias de todas las comunidades con soporte de búsqueda y paginación.
- * Permite revisar el estado operativo del flujo de incidencias (reportado, procesandose, resuelto).
+ * Backoffice incident management page.
+ * Lists all issues from all communities with search and pagination support.
+ * Allows you to review the operational status of the incident flow (reported, being processed, resolved).
  *
  * @component
- * @param searchParams Parámetros de búsqueda opcionales: q (término de búsqueda) y page (página actual)
- * @returns La página de incidencias del backoffice renderizada
+ * @param searchParams Optional search parameters: q (search term) and page (current page)
+ * @returns La backoffice issues page rendered
  */
 export default async function BackOfficeIncidentsPage({
   searchParams

@@ -68,7 +68,7 @@ const iconosSociales: SocialIcon[] = [
   }
 ];
 
-// Datos para las tarjetas
+// Information for the cards
 const datosTarjetas = [
   {
     iconURL: "/assets/icons/feature-tablon-50.png",
@@ -97,11 +97,11 @@ const datosTarjetas = [
 ];
 
 /**
- * Página de inicio pública de la plataforma.
- * Presenta la propuesta de valor, características principales y botones de llamada a la acción
- * para el registro de nuevos usuarios y vista de comunidades.
+ * Public home page of the platform.
+ * Present the value proposition, main features and call to action buttons
+ * for the registration of new users and view of communities.
  *
- * @returns La página de inicio renderizada
+ * @returns La rendered home page
  */
 export default function Home() {
   return (

@@ -11,20 +11,20 @@ import z from "zod";
 type CamposFormContacto = z.infer<typeof contactSchema>;
 
 /**
- * Procesa el formulario de contacto, valida los datos recibidos y guarda el mensaje en la base de datos.
+ * Processes the contact form, validates the data received and saves the message to the database.
  *
- * @param _prevState Estado previo de la acción del formulario.
- * @param formData Datos enviados desde el formulario de contacto.
+ * @param _prevState Previous state of the form action.
+ * @param formData Data sent from the contact form.
  *
- * @throws Si la validación de los datos falla o si ocurre un error al guardar el mensaje, se devuelve un estado de error con detalles.
- * @returns El nuevo estado de la acción con el resultado de la operación.
+ * @throws If data validation fails or an error occurs while saving the message, an error status with details is returned.
+ * @returns El new state of the action with the result of the operation.
  */
 
 const contactMsg = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const datos: object = Object.fromEntries(formData);
   const datosValidados: SafeParseReturnType<object, CamposFormContacto> = contactSchema.safeParse(datos);
 
-  // Si los datos no son válidos, devolver un estado de error con los mensajes de validación
+  // If the data is invalid, return an error status with validation messages
   if (!datosValidados.success) {
     return {
       state: "error",
@@ -34,7 +34,7 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
     };
   }
 
-  // Intentamos crear el mensaje de contacto en la base de datos
+  // We try to create the contact message in the database
   try {
     await prisma.contacto.create({
       data: {
@@ -54,7 +54,7 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
     };
   }
 
-  // Si todo fue exitoso, devolver un estado de éxito
+  // If everything was successful, return a success status
   return {
     state: "success",
     message: "Mensaje creado exitosamente",
@@ -63,15 +63,15 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
 };
 
 /**
- * Server action que elimina un mensaje de contacto. Solo puede ser ejecutada por webAdmin.
- * Revalida la ruta del backoffice de contacto después de eliminar.
+ * Server action that deletes a contact message. It can only be run by webAdmin.
+ * Revalidate the contact backoffice path after deleting.
  *
- * @param formData FormData que debe contener: nombre, email y creadoEn del mensaje a eliminar
+ * @param formData FormData that must contain: name, email and createdIn of the message to be deleted
  */
 const deleteContact = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 
-  // Verificar que el usuario esté autenticado y tenga rol webAdmin
+  // Verify that the user is authenticated and has the webAdmin role
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
 
   const nombre = String(formData.get("nombre") ?? "").trim();

@@ -17,10 +17,10 @@ interface Props {
 }
 
 /**
- * Formatea un objeto Date como etiqueta de fecha y hora en español (dd/mm/yyyy hh:mm).
+ * Formats a Date object as a Spanish date and time label (dd/mm/yyyy hh:mm).
  *
  * @param date El objeto Date a formatear
- * @returns String con la fecha en formato español
+ * @returns String with the date in Spanish format
  */
 const formatMessageDate = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
@@ -33,13 +33,13 @@ const formatMessageDate = (date: Date): string => {
 };
 
 /**
- * Tablón de mensajes de una comunidad.
- * Muestra la lista de mensajes publicados por el administrador.
- * Si el usuario es administrador, puede añadir y eliminar mensajes.
+ * Community message board.
+ * Shows the list of messages posted by the administrator.
+ * If the user is an administrator, they can add and delete messages.
  *
- * @param mensajes Lista de mensajes del tablón
- * @param comunidadId ID de la comunidad a la que pertenece el tablón
- * @param isAdmin Indica si el usuario actual es administrador (por defecto false)
+ * @param mensajes List of messages on the board
+ * @param comunidadId ID of the community to which the board belongs
+ * @param isAdmin Indicates if the current user is an administrator (false by default)
  */
 const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);

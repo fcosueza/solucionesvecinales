@@ -10,13 +10,13 @@ interface Props {
 }
 
 /**
- * Componente que renderiza el logo del proyecto con dimensiones opcionales.
+ * Component that renders the project logo with optional dimensions.
  *
  * @param props - Props del componente Logo.
- * @param props.url - Ruta del recurso de imagen del logo.
- * @param props.altText - Texto alternativo para accesibilidad.
- * @param props.width - Ancho del logo en píxeles.
- * @param props.height - Alto del logo en píxeles.
+ * @param props.url - Logo image resource path.
+ * @param props.altText - Alternative text for accessibility.
+ * @param props.width - Width of the logo in pixels.
+ * @param props.height - Height of the logo in pixels.
  * @returns El logo del proyecto como un elemento React.
  */
 const Logo = ({

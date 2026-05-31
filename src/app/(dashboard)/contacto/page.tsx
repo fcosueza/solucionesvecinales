@@ -16,12 +16,12 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de contacto del dashboard.
- * Proporciona un formulario de contacto para que los usuarios envíen consultas,
- * sugerencias o incidencias directamente al equipo de la plataforma.
+ * Dashboard contact page.
+ * Provides a contact form for users to submit queries,
+ * suggestions or incidents directly to the platform team.
  *
  * @component
- * @returns La página de contacto renderizada
+ * @returns La rendered contact page
  */
 const ContactoPage = async (): Promise<React.ReactNode> => {
   const sesionVerificada = await verifySession();

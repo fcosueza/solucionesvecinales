@@ -11,24 +11,24 @@ interface Props {
   errorMsg?: string | string[];
 }
 
-/** TODO: Implementar la generación de tipo checkbox. */
+/** TODO: Implement checkbox type generation. */
 
 /**
- * Componente de formulario que renderiza controles de radio agrupados con feedback de validación opcional.
+ * Form component that renders grouped radio controls with optional validation feedback.
  *
  * @param props - Props del componente FormRadioBox.
  * @param props.legend - Texto de la leyenda del grupo de opciones.
  * @param props.type - Tipo de control a renderizar (radio o checkbox).
- * @param props.name - Nombre compartido por los inputs del grupo.
- * @param props.elementList - Lista de opciones con etiqueta y atributos del input.
- * @param props.errorMsg - Mensaje de error opcional para el grupo.
+ * @param props.name - Name shared by group entries.
+ * @param props.elementList - List of options with label and input attributes.
+ * @param props.errorMsg - Optional error message for the group.
  *
- * @returns El grupo de controles de radio con feedback de validación como un elemento React.
+ * @returns El group of radio controls with validation feedback as a React element.
  */
 const FormRadioBox = ({ legend, type, name, elementList, errorMsg = "" }: Props): React.ReactNode => {
   if (type == RadioBoxType.checkbox) return <h1>checkbox not implemented yet!!</h1>;
 
-  // Se mapea la lista de opciones para generar los controles de radio con sus etiquetas asociadas.
+  // The list of options to generate the radio controls with their associated labels is mapped.
   const elementosRadio: React.ReactNode = elementList.map(elemento => (
     <div className={style.controlRadio} key={`${elemento.radioAttr.id}`}>
       <input

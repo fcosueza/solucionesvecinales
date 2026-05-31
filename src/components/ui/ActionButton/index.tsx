@@ -15,14 +15,14 @@ interface ActionButtonProps {
 }
 
 /**
- * Renderiza un botón de acción para secciones de comunidad que abre un formulario modal.
+ * Renders an action button for community sections that opens a modal form.
  *
- * @param props Propiedades del botón de acción.
- * @param props.buttonText Texto mostrado en el botón. Si no se proporciona, usa "+ añadir".
- * @param props.canOpen Define si el botón debe renderizarse. Si es false, no se muestra ni permite abrir el modal.
- * @param props.modalType Determina el formulario a abrir: finanzas ("finance") o incidencias ("incident").
- * @param props.communityID Identificador de la comunidad que se envía al formulario abierto.
- * @returns Un nodo React con el botón y, cuando corresponde, el formulario modal abierto.
+ * @param props Action button properties.
+ * @param props.buttonText Text displayed on the button. If not provided, use "+add".
+ * @param props.canOpen Defines whether the button should be rendered. If false, the modal is not displayed or allowed to open.
+ * @param props.modalType Determines the form to open: finance ("finance") or incidents ("incident").
+ * @param props.communityID Community identifier that is sent to the open form.
+ * @returns Un React node with the button and, where applicable, the open modal form.
  */
 const ActionButton = ({ buttonText, canOpen = true, modalType, communityID }: ActionButtonProps): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);

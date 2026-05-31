@@ -10,11 +10,11 @@ interface Props {
 }
 
 /**
- * Formulario modal para publicar un nuevo mensaje en el tablón de una comunidad.
- * Solo accesible para administradores de la comunidad.
+ * Modal form to post a new message on a community board.
+ * Only accessible to community administrators.
  *
- * @param comunidadId ID de la comunidad a la que pertenece el tablón
- * @param onClose Función de cierre del modal
+ * @param comunidadId ID of the community to which the board belongs
+ * @param onClose Modal close function
  */
 const MessageAddForm = ({ comunidadId, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);

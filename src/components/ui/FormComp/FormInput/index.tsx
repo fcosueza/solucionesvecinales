@@ -11,15 +11,15 @@ interface Props {
 }
 
 /**
- * Componente de formulario que renderiza un input o textarea con estado de error opcional.
+ * Form component that renders an input or textarea with optional error status.
  *
  * @param props - Props del componente FormInput.
  * @param props.labelText - Texto visible asociado a la etiqueta del campo.
- * @param props.attr - Atributos HTML y configuración del campo.
+ * @param props.attr - HTML attributes and field configuration.
  * @param props.rows - Cantidad de filas cuando se renderiza un textarea.
- * @param props.errorMsg - Mensaje de error opcional para validación.
+ * @param props.errorMsg - Optional error message for validation.
  *
- * @returns El campo de formulario con etiqueta y estado de error como un elemento React.
+ * @returns The form field with label and error status as a React element.
  */
 const FormInput = ({ labelText, attr, rows = 5, errorMsg = "" }: Props): React.ReactNode => {
   const clasesInput = `${style.control__input} ${errorMsg ? style.control__inputError : ""}`;

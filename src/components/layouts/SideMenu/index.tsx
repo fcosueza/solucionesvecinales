@@ -19,7 +19,7 @@ type MenuLink = {
   href: string;
 };
 
-/// Enlaces base que siempre se muestran en el menú lateral, independientemente de la comunidad activa o el rol del usuario.
+/// Base links that are always displayed in the side menu, regardless of the active community or user role.
 const enlacesBase = [
   { text: "Mis comunidades", href: "/communities" },
   { text: "Perfil de Usuario", href: "/profile" },
@@ -40,10 +40,10 @@ const enlacesBackOffice = [
 ] as const;
 
 /**
- * Genera los enlaces de navegación específicos de una comunidad.
+ * Generates community-specific navigation links.
  *
- * @param id ID de la comunidad
- * @returns Array de objetos con texto y href de cada enlace de la comunidad
+ * @param id Community ID
+ * @returns Array of objects with text and href of each community link
  */
 const enlacesComunidad = (id: string) => [
   { text: "Vista General", href: `/communities/${id}/overview` },
@@ -53,22 +53,22 @@ const enlacesComunidad = (id: string) => [
 ];
 
 /**
- * Genera el enlace a la sección de solicitudes de una comunidad. Solo visible para administradores.
+ * Generate the link to the requests section of a community. Only visible to administrators.
  *
- * @param id ID de la comunidad
- * @returns Objeto con texto y href del enlace de solicitudes
+ * @param id Community ID
+ * @returns Objeto with text and href of the requests link
  */
 const enlaceSolicitudes = (id: string) => ({ text: "Solicitudes", href: `/communities/${id}/requests` });
 
 /**
- * Genera el enlace a la sección de configuración de una comunidad. Solo visible para administradores.
+ * Generates the link to the configuration section of a community. Only visible to administrators.
  *
- * @param id ID de la comunidad
- * @returns Objeto con texto y href del enlace de configuración
+ * @param id Community ID
+ * @returns Objeto with text and href of settings link
  */
 const enlaceConfiguracion = (id: string) => ({ text: "Configuracion", href: `/communities/${id}/settings` });
 
-/** Mapeo de roles de usuario a etiquetas legibles en español para mostrar en la interfaz. */
+/** Mapping user roles to readable labels in Spanish to display in the interface. */
 const etiquetasRol: Record<UserRole, string> = {
   [UserRole.tenant]: "Inquilino",
   [UserRole.admin]: "Administrador",
@@ -76,30 +76,30 @@ const etiquetasRol: Record<UserRole, string> = {
 };
 
 /**
- * Determina si un usuario tiene rol de administrador (admin o webAdmin).
+ * Determines if a user has an administrator role (admin or webAdmin).
  *
- * @param role El rol del usuario
- * @returns true si el usuario es admin o webAdmin
+ * @param role The user role
+ * @returns true if the user is admin or webAdmin
  */
 const isAdmin = (role: UserRole) => role === UserRole.admin || role === UserRole.webAdmin;
 
 /**
- * Determina si la ruta actual pertenece al backoffice.
+ * Determines if the current route belongs to the backoffice.
  *
- * @param rutaActual La ruta actual del navegador
- * @returns true si la ruta es "/backoffice" o comienza por "/backoffice/"
+ * @param rutaActual The current route of the browser
+ * @returns true if the path is "/backoffice" or starts with "/backoffice/"
  */
 const isBackOfficeRoute = (rutaActual: string) => rutaActual === "/backoffice" || rutaActual.startsWith("/backoffice/");
 
 /**
- * Función que determina la ruta activa para resaltar la opción adecuada en el menu lateral
+ * Function that determines the active route to highlight the appropriate option in the side menu
  *
- * @param rutaActual  La ruta actual obtenida del hook usePathname, que representa la URL en la que se encuentra el usuario.
- * @param href El href del enlace que se está evaluando para determinar si es la ruta activa.
- * @param comundiadId El ID de la comunidad extraído de la ruta, utilizado para evaluar enlaces relacionados con la comunidad.
- * @param bloquearDescendientes Un booleano opcional que, si es true, evita que se consideren rutas descendientes como activas
+ * @param rutaActual  The current path obtained from the usePathname hook, which represents the URL the user is on.
+ * @param href The href of the link being evaluated to determine if it is the active route.
+ * @param comundiadId The community ID extracted from the route, used to evaluate links related to the community.
+ * @param bloquearDescendientes An optional boolean that, if true, prevents descendant routes from being considered active
  *
- * @returns  Un booleano que indica si el enlace debe ser considerado activo (true) o no (false)
+ * @returns  Un boolean indicating whether the link should be considered active (true) or not (false)
  */
 const esRutaActiva = ({
   rutaActual,
@@ -112,16 +112,16 @@ const esRutaActiva = ({
   comunidadId: string | null;
   bloquearDescendientes?: boolean;
 }) => {
-  // Verifica si la ruta actual coincide exactamente con el href del enlace.
+  // Checks if the current path exactly matches the link href.
   if (rutaActual === href) {
     return true;
   }
-  // Si se indica bloquear descendientes, no se consideran rutas que empiecen con el href seguido de una barra.
+  // If blocking descendants is indicated, routes starting with the href followed by a slash are not considered.
   if (href === "/logout" || bloquearDescendientes) {
     return false;
   }
 
-  // Para enlaces de comunidad, se consideran activos si la ruta actual es la raíz de la comunidad o cualquier subruta dentro de esa comunidad.
+  // For community links, they are considered active if the current route is the root of the community or any subpaths within that community.
   if (href === `/communities/${comunidadId}/overview` && comunidadId) {
     return rutaActual === `/communities/${comunidadId}` || rutaActual.startsWith(`${href}/`);
   }
@@ -134,13 +134,13 @@ const esRutaActiva = ({
 };
 
 /**
- * Componente que representa el menú lateral de la aplicación, mostrando información del usuario y enlaces de navegación.
+ * Component that represents the application's side menu, displaying user information and navigation links.
  *
- * @param userName El nombre del usuario que se mostrará en el menú lateral.
- * @param role El rol del usuario, utilizado para determinar qué enlaces mostrar.
- * @param avatarUrl La URL del avatar del usuario, con un valor por defecto si no se proporciona.
+ * @param userName The name of the user to be displayed in the side menu.
+ * @param role The user's role, used to determine which links to display.
+ * @param avatarUrl The URL of the user's avatar, with a default value if not provided.
  *
- * @returns Un nodo de React que representa el menú lateral.
+ * @returns Un React node that represents the side menu.
  */
 const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-community.jpeg" }: Props): React.ReactNode => {
   const rutaActual = usePathname();
@@ -156,13 +156,13 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
       return;
     }
 
-    // Si la ruta actual es "/logout", se limpia el estado de comunidadId
+    // If the current path is "/logout", the communityId state is cleared
     if (rutaActual.startsWith("/logout")) {
       setComunidadId(null);
       return;
     }
 
-    // Si se encuentra un ID de comunidad en la ruta, se actualiza el estado para reflejar la comunidad activa
+    // If a community ID is found in the route, the status is updated to reflect the active community
     if (comunidadIdEnRuta) {
       setComunidadId(comunidadIdEnRuta);
       return;
@@ -171,7 +171,7 @@ const SideMenu = ({ userName, role, avatarUrl = "/assets/images/default-communit
     setComunidadId(null);
   }, [mostrarBackOffice, rutaActual, comunidadIdEnRuta]);
 
-  // Se generan los enlaces activos para la comunidad actual, incluyendo opciones adicionales para administradores si corresponde.
+  // Active links are generated for the current community, including additional options for administrators if applicable.
   const enlacesActivosComunidad = comunidadId
     ? [
         ...enlacesComunidad(comunidadId),

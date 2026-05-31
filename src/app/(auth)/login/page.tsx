@@ -23,12 +23,12 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de inicio de sesión.
+ * Login page.
  *
- * Permite a usuarios registrados autenticarse en la plataforma utilizando sus credenciales.
- * Incluye un formulario de login y enlaces para registro de nuevos usuarios.
+ * Allows registered users to authenticate to the platform using their credentials.
+ * Includes a login form and links to register new users.
  *
- * @returns La página de login renderizada
+ * @returns La rendered login page
  */
 export default function LogIn() {
   return (

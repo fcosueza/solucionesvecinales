@@ -15,12 +15,12 @@ const accesosDirectos = [
 ] as const;
 
 /**
- * Página de vista general del backoffice.
- * Muestra un resumen operativo global de la plataforma con estadísticas de comunidades,
- * usuarios, incidencias, zonas comunes, solicitudes y balance financiero.
+ * Backoffice overview page.
+ * Shows a global operational summary of the platform with community statistics,
+ * users, incidents, common areas, requests and financial balance.
  *
  * @component
- * @returns La página de overview del backoffice renderizada
+ * @returns La rendered backoffice overview page
  */
 export default async function BackOfficeOverviewPage(): Promise<React.ReactNode> {
   const [

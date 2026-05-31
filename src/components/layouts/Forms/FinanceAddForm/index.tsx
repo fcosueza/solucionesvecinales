@@ -10,11 +10,11 @@ interface Props {
 }
 
 /**
- * Formulario modal para añadir un registro financiero (ingreso o gasto) a una comunidad.
- * Permite introducir descripción, importe y tipo (ingreso/gasto).
+ * Modal form to add a financial record (income or expense) to a community.
+ * Allows you to enter description, amount and type (income/expense).
  *
- * @param communityID ID de la comunidad a la que se añade el registro financiero
- * @param onClose Función de cierre del modal
+ * @param communityID ID of the community to which the financial record is added
+ * @param onClose Modal close function
  */
 const FinanceAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);

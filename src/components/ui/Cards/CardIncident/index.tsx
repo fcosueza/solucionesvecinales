@@ -17,10 +17,10 @@ interface Props {
 }
 
 /**
- * Formatea un objeto Date como etiqueta de fecha y hora en español (dd/mm/yyyy hh:mm).
+ * Formats a Date object as a Spanish date and time label (dd/mm/yyyy hh:mm).
  *
  * @param date El objeto Date a formatear
- * @returns String con la fecha en formato español
+ * @returns String with the date in Spanish format
  */
 const toDateLabel = (date: Date): string => {
   return new Intl.DateTimeFormat("es-ES", {
@@ -33,10 +33,10 @@ const toDateLabel = (date: Date): string => {
 };
 
 /**
- * Convierte el estado interno de la incidencia en una etiqueta legible en español.
+ * Converts the internal status of the incident into a readable label in Spanish.
  *
- * @param state El estado de la incidencia
- * @returns Etiqueta del estado en español
+ * @param state Incident status
+ * @returns Etiqueta of the state in Spanish
  */
 const toStateLabel = (state: IncidentState): string => {
   if (state === "procesandose") return "procesandose";
@@ -45,10 +45,10 @@ const toStateLabel = (state: IncidentState): string => {
 };
 
 /**
- * Devuelve la etiqueta del botón de acción según el estado actual de la incidencia.
+ * Returns the action button label based on the current status of the issue.
  *
- * @param state El estado actual de la incidencia
- * @returns Texto a mostrar en el botón de cambio de estado
+ * @param state Current incident status
+ * @returns Texto to show on status change button
  */
 const toButtonLabel = (state: IncidentState): string => {
   if (state === "reportado") return "Procesar";
@@ -57,20 +57,20 @@ const toButtonLabel = (state: IncidentState): string => {
 };
 
 /**
- * Tarjeta que muestra los detalles de una incidencia en la comunidad.
- * Muestra información del reportero, descripción y estado actual.
- * Los administradores pueden cambiar el estado y eliminar incidencias resueltas.
+ * Card that shows the details of an incident in the community.
+ * Shows reporter information, description and current status.
+ * Administrators can change the status and delete resolved issues.
  *
- * @param communityID ID de la comunidad a la que pertenece la incidencia
- * @param userID ID del usuario que reportó la incidencia
- * @param incidentDate Fecha en la que se reportó la incidencia
- * @param title Título de la incidencia
- * @param updatedAt Fecha de la última actualización del estado
- * @param userName Nombre del usuario que reportó la incidencia
- * @param userEmail Email del usuario que reportó la incidencia
- * @param description Descripción detallada de la incidencia
+ * @param communityID ID of the community to which the issue belongs
+ * @param userID ID of the user who reported the incident
+ * @param incidentDate Date on which the incident was reported
+ * @param title Incident title
+ * @param updatedAt Date of last status update
+ * @param userName Name of the user who reported the incident
+ * @param userEmail Email of the user who reported the incident
+ * @param description Detailed description of the incident
  * @param state Estado actual de la incidencia (reportado, procesandose, resuelto)
- * @param isAdmin Indica si el usuario actual es administrador (por defecto false)
+ * @param isAdmin Indicates if the current user is an administrator (false by default)
  */
 const CardIncident = ({
   communityID,

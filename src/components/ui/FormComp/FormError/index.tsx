@@ -6,12 +6,12 @@ interface Props {
 }
 
 /**
- * Componente de formulario que muestra un mensaje de error de validación.
+ * Form component that displays a validation error message.
  *
  * @param props - Props del componente FormError.
- * @param props.message - Mensaje o lista de mensajes a mostrar.
+ * @param props.message - Message or list of messages to display.
  *
- * @returns El mensaje de error de validación del formulario como un elemento React.
+ * @returns The form validation error message as a React element.
  */
 const FormError = ({ message }: Props): React.ReactNode => (
   <p role="alert" aria-live="assertive" className={style.errorMsg}>

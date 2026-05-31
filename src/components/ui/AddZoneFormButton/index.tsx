@@ -9,9 +9,9 @@ interface Props {
 }
 
 /**
- * Botón que muestra u oculta el formulario modal para añadir una nueva zona común.
+ * Button that shows or hides the modal form to add a new common area.
  *
- * @param communityID ID de la comunidad donde se añadirá la zona
+ * @param communityID ID of the community where the zone will be added
  */
 const AddZoneFormButton = ({ communityID }: Props): React.ReactNode => {
   const [isOpen, setIsOpen] = useState(false);

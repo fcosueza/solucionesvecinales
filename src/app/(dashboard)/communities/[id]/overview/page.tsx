@@ -31,13 +31,13 @@ const helpContent: HelpContent = {
 };
 
 /**
- * Página de vista general de una comunidad.
- * Muestra el resumen principal de la comunidad con estadísticas, tablón de mensajes y
- * zonas comunes destacadas. Proporciona accesos rápidos a los módulos de la comunidad.
+ * Community overview page.
+ * Shows the main community summary with statistics, message board and
+ * Featured common areas. Provides quick access to community modules.
  *
  * @component
- * @param params Parámetros de la ruta que incluyen el ID de la comunidad
- * @returns La página de overview de la comunidad renderizada
+ * @param params Route parameters including community ID
+ * @returns La community overview page rendered
  */
 const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;

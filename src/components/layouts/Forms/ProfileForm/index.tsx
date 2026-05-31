@@ -19,7 +19,7 @@ interface Props {
   tieneComunidades?: boolean;
 }
 
-// Estado inicial para el formulario de perfil
+// Initial state for profile form
 const estadoInicial: FormActionState = {
   state: "error" as const,
   message: ""
@@ -32,17 +32,17 @@ const etiquetasRol: Record<UserRole, string> = {
 };
 
 /**
- * Formulario para actualizar el perfil del usuario autenticado.
- * Permite modificar nombre, apellido, email y avatar.
- * También incluye la opción de eliminar la cuenta permanentemente.
- * Los administradores con comunidades activas no pueden eliminar su cuenta directamente.
+ * Form to update the profile of the authenticated user.
+ * Allows you to modify name, surname, email and avatar.
+ * It also includes the option to permanently delete the account.
+ * Administrators with active communities cannot delete their account directly.
  *
- * @param nombre Nombre actual del usuario
- * @param apellido Apellido(s) actuales del usuario
- * @param email Email actual del usuario
- * @param rol Rol del usuario (tenant, admin, webAdmin)
- * @param imagen URL del avatar actual del usuario (opcional)
- * @param tieneComunidades Indica si el administrador tiene comunidades activas (por defecto false)
+ * @param nombre Current user name
+ * @param apellido User's current last name(s)
+ * @param email User's current email
+ * @param rol Role of the user (tenant, admin, webAdmin)
+ * @param imagen URL of the user's current avatar (optional)
+ * @param tieneComunidades Indicates whether the administrator has active communities (false by default)
  */
 const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = false }: Props): React.ReactNode => {
   const router = useRouter();

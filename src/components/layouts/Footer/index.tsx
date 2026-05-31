@@ -12,13 +12,13 @@ interface Props {
 }
 
 /**
- * Componente que renderiza el pie de página con navegación, redes sociales y logo opcional.
+ * Component that renders the footer with navigation, social networks and optional logo.
  *
  * @param props - Props del componente Footer.
- * @param props.links - Lista de enlaces para el menú del pie de página.
- * @param props.socialIcons - Lista de iconos sociales para mostrar.
- * @param props.withLogo - Indica si se debe mostrar el logo institucional.
- * @returns El pie de página con navegación, redes sociales y logo como un elemento React.
+ * @param props.links - List of links for footer menu.
+ * @param props.socialIcons - List of social icons to display.
+ * @param props.withLogo - Indicates whether the institutional logo should be shown.
+ * @returns El Footer with navigation, social media and logo as a React element.
  */
 const Footer = ({ links, socialIcons, withLogo = false }: Props): React.ReactNode => {
   const menuNavegacion = links ? <NavMenu links={links} orientation="vertical" /> : "";
