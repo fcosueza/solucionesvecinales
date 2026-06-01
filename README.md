@@ -1,6 +1,6 @@
 # Soluciones Vecinales
 
-Soluciones Vecinales is an application that helps manage residential communities in an efficient and simple way.
+Soluciones Vecinales is an application that helps manage residential communities in a simple and efficient way.
 
 ## Installation
 
@@ -66,7 +66,7 @@ This section explains how to install the software required to run the applicatio
 
    Download and install PostgreSQL from: https://www.postgresql.org/download/windows/
 
-   During installation, keep these details:
+   During installation, make note of these details:
    - user
    - password
    - port (default 5432)
@@ -132,14 +132,14 @@ This section explains how to install the software required to run the applicatio
    npm run db:seed
    ```
 
-   Sample users created by seed (all with the same password):
+   Sample users created by the seed (all with the same password):
    | Email | Password | Role |
    |---|---|---|
    | webadmin@vecinos.local | VecinosSeguro2026! | adminWeb |
    | lucia.martinez@vecinos.local | VecinosSeguro2026! | admin |
    | alvaro.santos@vecinos.local | VecinosSeguro2026! | tenant |
 
-   > The seed creates more users for multiple communities; the ones above are quick-access reference accounts.
+   > The seed creates additional users for multiple communities; the ones above are quick-access reference accounts.
 
 5. **Start the development server**
 
@@ -226,7 +226,7 @@ This section explains how to install Docker and run the full project stack with 
 The project includes a [docker-compose.yml](docker-compose.yml) file with profiles for development and production,
 plus PostgreSQL. Playwright is integrated in the development profile (`app-dev`).
 
-- The app is reachable from your browser outside Docker at: [http://localhost:3000](http://localhost:3000)
+- The app is accessible from your browser at: [http://localhost:3000](http://localhost:3000)
 - Migrations and seed run automatically when the app starts
 - PostgreSQL data and uploads are persisted in Docker volumes
 
@@ -338,7 +338,7 @@ Relevant scripts in this repository:
 
 - Translate all code to English
 - Make the app responsive for small devices (high priority)
-- Refactor reservation system allowing up to 3 reservations per user
+- Refactor the reservation system to allow up to 3 reservations per user
 - Refactor server functions (if needed)
 - Redesign some forms UI
 - WebAdmin needs to be able to add elements
