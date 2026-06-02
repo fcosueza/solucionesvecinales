@@ -20,13 +20,13 @@ type CamposFormularioPerfil = z.infer<typeof profileSchema>;
  * @param _prevState Previous state of the form action.
  * @param formData Data sent from the profile form.
  *
- * @returns El new state of the form with the result of the update.
+ * @returns The new state of the form with the result of the update.
  */
 export const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
   // If there is no authenticated session, an error status is returned
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
       message: "Debes iniciar sesión para actualizar tu perfil",
@@ -50,46 +50,46 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
 
   // If the validation is successful, the user's profile is updated.
   try {
-    const nuevaContrasena: string = datosValidados.data.password;
-    const ficheroImagen = formData.get("imagen");
+    const newPassword: string = datosValidados.data.password;
+    const imageFile = formData.get("imagen");
 
-    let passwordCifrado: string | null = null;
-    let urlImagen: string | undefined = undefined;
+    let cypherPassword: string | null = null;
+    let imageURL: string | undefined = undefined;
 
-    if (nuevaContrasena) {
-      const salCifrado: number = 10;
-      passwordCifrado = await bcrypt.hash(nuevaContrasena, salCifrado);
+    if (newPassword) {
+      const saltCypher: number = 10;
+      cypherPassword = await bcrypt.hash(newPassword, saltCypher);
     }
 
     // If the image file exists it is saved, if it cannot be saved an error status is returned
-    if (ficheroImagen instanceof File && ficheroImagen.size > 0) {
-      const imagenGuardada = await saveProfileImageFile(ficheroImagen, sesionVerificada.session.userID);
+    if (imageFile instanceof File && imageFile.size > 0) {
+      const savedImage = await saveProfileImageFile(imageFile, verifiedSession.session.userID);
 
-      if (imagenGuardada.error) {
+      if (savedImage.error) {
         return {
           state: "error",
-          message: imagenGuardada.error,
+          message: savedImage.error,
           payload: formData
         };
       }
 
-      urlImagen = imagenGuardada.imagen;
+      imageURL = savedImage.imagen;
     }
 
     // The user's data is updated in the database, including the new image and password if provided
     await prisma.usuario.update({
-      where: { id: sesionVerificada.session.userID },
+      where: { id: verifiedSession.session.userID },
       data: {
         nombre: datosValidados.data.name,
         apellido: datosValidados.data.surname,
         email: datosValidados.data.email,
-        ...(urlImagen ? { imagen: urlImagen } : {}),
-        ...(passwordCifrado
+        ...(imageURL ? { imagen: imageURL } : {}),
+        ...(cypherPassword
           ? {
               credenciales: {
                 upsert: {
-                  create: { password: passwordCifrado },
-                  update: { password: passwordCifrado }
+                  create: { password: cypherPassword },
+                  update: { password: cypherPassword }
                 }
               }
             }
@@ -116,16 +116,16 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
  * @returns Error state if the account could not be deleted. On success, redirects to home.
  */
 export const deleteProfile = async (_prevState: FormActionState): Promise<FormActionState> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
       message: "Debes iniciar sesión para eliminar tu cuenta"
     };
   }
 
-  const userID = String(sesionVerificada.session.userID);
+  const userID = String(verifiedSession.session.userID);
 
   try {
     await prisma.$transaction(async tx => {
@@ -144,15 +144,14 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
 };
 
 // Allowed formats and maximum size for profile images
-const TIPOS_MIME_PERMITIDOS = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const TAMANO_MAX_EN_BYTES = 5 * 1024 * 1024; // 5 MB
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 MB
 
 /**
- * Save the profile picture file to the server.
- * Validate the file format and size before saving it.
+ * Save the profile picture file to the server, validating the file format and size before saving it.
  * The file is saved with the user ID and current date to avoid collisions.
  *
- * @param file El archivo de imagen a guardar
+ * @param file The image file to save
  * @param userID The ID of the user to whom the image belongs
  * @returns An object with the URL of the saved image, or an error message
  */
@@ -164,25 +163,25 @@ export const saveProfileImageFile = async (
     return { error: "No se ha proporcionado ningún archivo" };
   }
 
-  if (!TIPOS_MIME_PERMITIDOS.includes(file.type)) {
+  if (!ALLOWED_MIME_TYPES.includes(file.type)) {
     return { error: "Formato de imagen no permitido. Usa JPG, PNG, WebP o GIF." };
   }
 
-  if (file.size > TAMANO_MAX_EN_BYTES) {
+  if (file.size > MAX_SIZE_IN_BYTES) {
     return { error: "La imagen no puede superar los 5 MB." };
   }
 
-  const extension = extname(file.name) || ".jpg";
-  const nombreFichero = `${userID}-${Date.now()}${extension}`;
-  const directorioSubida = join(process.cwd(), "public", "uploads", "profiles");
-  const rutaFichero = join(directorioSubida, nombreFichero);
+  const ext = extname(file.name) || ".jpg";
+  const fileName = `${userID}-${Date.now()}${ext}`;
+  const uploadDir = join(process.cwd(), "public", "uploads", "profiles");
+  const filePath = join(uploadDir, fileName);
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  await writeFile(rutaFichero, buffer);
+  await writeFile(filePath, buffer);
 
-  const imagenUrl = `/uploads/profiles/${nombreFichero}`;
+  const imageURL = `/uploads/profiles/${fileName}`;
 
-  return { imagen: imagenUrl };
+  return { imagen: imageURL };
 };
 
 /**
@@ -193,21 +192,21 @@ export const saveProfileImageFile = async (
  * @returns An object with the URL of the uploaded image, or an error message
  */
 export const uploadProfile = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return { error: "Debes iniciar sesión para subir una imagen" };
   }
 
   const file = formData.get("imagen");
-  const result = await saveProfileImageFile(file as File, sesionVerificada.session.userID);
+  const result = await saveProfileImageFile(file as File, verifiedSession.session.userID);
 
   if (result.error) {
     return { error: result.error };
   }
 
   await prisma.usuario.update({
-    where: { id: sesionVerificada.session.userID },
+    where: { id: verifiedSession.session.userID },
     data: { imagen: result.imagen }
   });
 

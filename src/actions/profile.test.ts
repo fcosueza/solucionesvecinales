@@ -35,7 +35,7 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de profile actions", () => {
+describe("Test suite for profile actions", () => {
   const verifySessionMock = verifySession as jest.Mock;
   const bcryptHashMock = bcrypt.hash as jest.Mock;
   const eliminarSesionMock = eliminarSesion as jest.Mock;
@@ -67,7 +67,7 @@ describe("Suite de pruebas de profile actions", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver error en updateProfile si no hay sesión", async () => {
+  it("Should return an error in updateProfile if there is no session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
     const formData = formValido();
 
@@ -79,7 +79,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error en updateProfile si la validación falla", async () => {
+  it("Should return an error in updateProfile if validation fails", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -102,7 +102,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe actualizar perfil sin imagen ni contraseña", async () => {
+  it("Should update profile without image or password", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -125,7 +125,7 @@ describe("Suite de pruebas de profile actions", () => {
     });
   });
 
-  it("Debe actualizar perfil con una contraseña cifrada", async () => {
+  it("Should update profile with a hashed password", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -162,7 +162,7 @@ describe("Suite de pruebas de profile actions", () => {
     });
   });
 
-  it("Debe devolver error en updateProfile si falla el guardado de imagen", async () => {
+  it("Should return an error in updateProfile if image saving fails", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -179,7 +179,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error en updateProfile si la imagen supera el tamano maximo", async () => {
+  it("Should return an error in updateProfile if the image exceeds the maximum size", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -196,7 +196,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error en updateProfile si falla la persistencia de imagen", async () => {
+  it("Should return an error in updateProfile if image persistence fails", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -218,7 +218,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error en updateProfile si prisma lanza excepcion", async () => {
+  it("Should return an error in updateProfile if Prisma throws an exception", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -235,7 +235,7 @@ describe("Suite de pruebas de profile actions", () => {
     });
   });
 
-  it("Debe actualizar perfil con imagen valida", async () => {
+  it("Should update profile with a valid image", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -258,7 +258,7 @@ describe("Suite de pruebas de profile actions", () => {
     );
   });
 
-  it("Debe omitir el bloque de imagen si el archivo tiene tamaño cero", async () => {
+  it("Should skip the image block if the file has zero size", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -287,7 +287,7 @@ describe("Suite de pruebas de profile actions", () => {
     });
   });
 
-  it("Debe devolver error en deleteProfile si no hay sesion", async () => {
+  it("Should return an error in deleteProfile if there is no session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
 
     const resultado = await deleteProfile({ state: "error", message: "" });
@@ -299,7 +299,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(prismaTransactionMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error en deleteProfile si falla la transaccion", async () => {
+  it("Should return an error in deleteProfile if the transaction fails", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
@@ -316,7 +316,7 @@ describe("Suite de pruebas de profile actions", () => {
     expect(redirectMock).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar perfil, cerrar sesion y redirigir", async () => {
+  it("Should delete the profile, close the session, and redirect", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: 25, role: "tenant" }
@@ -339,37 +339,37 @@ describe("Suite de pruebas de profile actions", () => {
   });
 });
 
-describe("Suite de pruebas de saveProfileImageFile", () => {
+describe("Test suite for saveProfileImageFile", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver error si el valor no es un File", async () => {
+  it("Should return an error if the value is not a File", async () => {
     const resultado = await saveProfileImageFile("no-es-un-file" as unknown as File, "user-1");
 
     expect(resultado).toEqual({ error: "No se ha proporcionado ningún archivo" });
   });
 
-  it("Debe devolver error si el archivo tiene tamaño 0", async () => {
+  it("Should return an error if the file has size 0", async () => {
     const resultado = await saveProfileImageFile(new File([], "vacio.png", { type: "image/png" }), "user-1");
 
     expect(resultado).toEqual({ error: "No se ha proporcionado ningún archivo" });
   });
 
-  it("Debe devolver error si el tipo MIME no esta permitido", async () => {
+  it("Should return an error if the MIME type is not allowed", async () => {
     const resultado = await saveProfileImageFile(new File(["data"], "archivo.txt", { type: "text/plain" }), "user-1");
 
     expect(resultado).toEqual({ error: "Formato de imagen no permitido. Usa JPG, PNG, WebP o GIF." });
   });
 
-  it("Debe devolver error si el archivo supera el tamaño maximo", async () => {
+  it("Should return an error if the file exceeds the maximum size", async () => {
     const grande = new File(["x".repeat(5 * 1024 * 1024 + 1)], "grande.png", { type: "image/png" });
     const resultado = await saveProfileImageFile(grande, "user-1");
 
     expect(resultado).toEqual({ error: "La imagen no puede superar los 5 MB." });
   });
 
-  it("Debe guardar el archivo y devolver la URL si los datos son validos", async () => {
+  it("Should save the file and return the URL if the data is valid", async () => {
     mkdirSync(join(process.cwd(), "public", "uploads", "profiles"), { recursive: true });
 
     const file = new File(["img"], "avatar.png", { type: "image/png" });
@@ -379,7 +379,7 @@ describe("Suite de pruebas de saveProfileImageFile", () => {
     expect(resultado.imagen).toMatch(/^\/uploads\/profiles\/user-42-\d+\.png$/);
   });
 
-  it("Debe usar la extension .jpg si el archivo no tiene extension", async () => {
+  it("Should use the .jpg extension if the file has no extension", async () => {
     mkdirSync(join(process.cwd(), "public", "uploads", "profiles"), { recursive: true });
 
     const file = new File(["img"], "avatar", { type: "image/png" });
@@ -389,7 +389,7 @@ describe("Suite de pruebas de saveProfileImageFile", () => {
     expect(resultado.imagen).toMatch(/^\/uploads\/profiles\/user-42-\d+\.jpg$/);
   });
 
-  it("Debe propagar el error si falla la lectura del archivo", async () => {
+  it("Should propagate the error if reading the file fails", async () => {
     const file = new File(["img"], "avatar.png", { type: "image/png" });
     Object.defineProperty(file, "arrayBuffer", {
       value: jest.fn().mockRejectedValue(new Error("disco lleno")),
@@ -400,7 +400,7 @@ describe("Suite de pruebas de saveProfileImageFile", () => {
   });
 });
 
-describe("Suite de pruebas de uploadProfile", () => {
+describe("Test suite for uploadProfile", () => {
   const verifySessionMock = verifySession as jest.Mock;
   const prismaUsuarioUpdateMock = (prisma as any).usuario.update as jest.Mock;
 
@@ -408,7 +408,7 @@ describe("Suite de pruebas de uploadProfile", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver error si no hay sesion autenticada", async () => {
+  it("Should return an error if there is no authenticated session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false, session: null });
 
     const resultado = await uploadProfile(new FormData());
@@ -417,7 +417,7 @@ describe("Suite de pruebas de uploadProfile", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error si saveProfileImageFile devuelve error", async () => {
+  it("Should return an error if saveProfileImageFile returns an error", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
 
     const fd = new FormData();
@@ -429,7 +429,7 @@ describe("Suite de pruebas de uploadProfile", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error generico si saveProfileImageFile no retorna imagen ni error", async () => {
+  it("Should return a generic error if saveProfileImageFile returns neither image nor error", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
 
     // Pass a non-File value so saveProfileImageFile returns { error: "..." }
@@ -443,7 +443,7 @@ describe("Suite de pruebas de uploadProfile", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver error generico si saveProfileImageFile no retorna imagen", async () => {
+  it("Should return a generic error if saveProfileImageFile does not return an image", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
 
     // Pass a non-File value so saveProfileImageFile returns { error: "..." }
@@ -456,7 +456,7 @@ describe("Suite de pruebas de uploadProfile", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Debe actualizar la imagen del usuario y devolver la URL si tiene exito", async () => {
+  it("Should update the user image and return the URL on success", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
     mkdirSync(join(process.cwd(), "public", "uploads", "profiles"), { recursive: true });
     prismaUsuarioUpdateMock.mockResolvedValueOnce({});

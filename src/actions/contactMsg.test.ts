@@ -16,7 +16,7 @@ jest.mock("next/cache", () => ({
 }));
 jest.mock("@/lib/dal", () => jest.fn());
 
-describe("Suite de pruebas de contactMsgAction", () => {
+describe("contactMsgAction test suite", () => {
   const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
@@ -31,7 +31,7 @@ describe("Suite de pruebas de contactMsgAction", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver un error si la validación falla", async () => {
+  it("Should return an error when validation fails", async () => {
     const datosForm = crearFormData({
       name: "a",
       email: "not-an-email@gmail.c",
@@ -46,7 +46,7 @@ describe("Suite de pruebas de contactMsgAction", () => {
     expect(prisma.contacto.create).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver un error si Prisma no puede crear el mensaje", async () => {
+  it("Should return an error when Prisma cannot create the message", async () => {
     (prisma.contacto.create as jest.Mock).mockRejectedValueOnce(new Error("DB error"));
 
     const datosForm = crearFormData({
@@ -62,7 +62,7 @@ describe("Suite de pruebas de contactMsgAction", () => {
     expect(resultado.errors?.prisma).not.toBeNull();
   });
 
-  it("Debe devolver éxito si el mensaje se crea correctamente", async () => {
+  it("Should return success when the message is created correctly", async () => {
     (prisma.contacto.create as jest.Mock).mockResolvedValueOnce({ id: 1 });
 
     const datosForm = crearFormData({
@@ -85,7 +85,7 @@ describe("Suite de pruebas de contactMsgAction", () => {
   });
 });
 
-describe("Suite de pruebas de deleteContact", () => {
+describe("deleteContact test suite", () => {
   const verifySessionMock = verifySession as jest.Mock;
   const revalidatePathMock = revalidatePath as jest.Mock;
 
@@ -93,7 +93,7 @@ describe("Suite de pruebas de deleteContact", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe salir sin actuar si no hay sesión autenticada", async () => {
+  it("Should exit without acting when there is no authenticated session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false, session: null });
 
     await deleteContact(new FormData());
@@ -101,7 +101,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin actuar si el rol no es webAdmin", async () => {
+  it("Should exit without acting when the role is not webAdmin", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "tenant" } });
 
     await deleteContact(new FormData());
@@ -109,7 +109,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin actuar si la sesión es válida pero sin datos de usuario", async () => {
+  it("Should exit without acting when session is valid but has no user data", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: null });
 
     await deleteContact(new FormData());
@@ -117,7 +117,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin actuar si faltan campos obligatorios", async () => {
+  it("Should exit without acting when required fields are missing", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
 
     await deleteContact(new FormData());
@@ -125,7 +125,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin actuar si el nombre esta presente pero falta el email", async () => {
+  it("Should exit without acting when name is present but email is missing", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
 
     const fd = new FormData();
@@ -137,7 +137,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin actuar si la fecha proporcionada es inválida", async () => {
+  it("Should exit without acting when the provided date is invalid", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
 
     const fd = new FormData();
@@ -150,7 +150,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(prisma.contacto.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar el contacto y revalidar la ruta si los datos son válidos", async () => {
+  it("Should delete the contact and revalidate the path when data is valid", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
     (prisma.contacto.delete as jest.Mock).mockResolvedValue({});
 
@@ -174,7 +174,7 @@ describe("Suite de pruebas de deleteContact", () => {
     expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/contacto");
   });
 
-  it("Debe manejar errores de prisma silenciosamente", async () => {
+  it("Should handle Prisma errors silently", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
     (prisma.contacto.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
 

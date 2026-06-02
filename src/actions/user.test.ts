@@ -22,18 +22,18 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de las server function de user", () => {
+describe("Test suite for user server functions", () => {
   const verifySessionMock = verifySession as jest.Mock;
-  const prismaComunidadFindFirstMock = (prisma as any).comunidad.findFirst as jest.Mock;
-  const prismaUsuarioDeleteMock = (prisma as any).usuario.delete as jest.Mock;
+  const prismaCommunityFindMock = (prisma as any).comunidad.findFirst as jest.Mock;
+  const prismaUserDeleteMock = (prisma as any).usuario.delete as jest.Mock;
   const revalidatePathMock = revalidatePath as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    prismaComunidadFindFirstMock.mockResolvedValue(null);
+    prismaCommunityFindMock.mockResolvedValue(null);
   });
 
-  it("Debe salir sin hacer nada si no hay sesión autenticada", async () => {
+  it("Should exit without doing anything if there is no authenticated session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
 
     const formData = new FormData();
@@ -41,12 +41,12 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
-    expect(prismaComunidadFindFirstMock).not.toHaveBeenCalled();
-    expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
+    expect(prismaCommunityFindMock).not.toHaveBeenCalled();
+    expect(prismaUserDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin hacer nada si el rol no es webAdmin", async () => {
+  it("Should exit without doing anything if the role is not webAdmin", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
@@ -57,12 +57,12 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
-    expect(prismaComunidadFindFirstMock).not.toHaveBeenCalled();
-    expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
+    expect(prismaCommunityFindMock).not.toHaveBeenCalled();
+    expect(prismaUserDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin hacer nada si el id es vacío", async () => {
+  it("Should exit without doing anything if the id is empty", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -73,12 +73,12 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
-    expect(prismaComunidadFindFirstMock).not.toHaveBeenCalled();
-    expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
+    expect(prismaCommunityFindMock).not.toHaveBeenCalled();
+    expect(prismaUserDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe salir sin hacer nada si no se envía id", async () => {
+  it("Should exit without doing anything if no id is sent", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -88,49 +88,49 @@ describe("Suite de pruebas de las server function de user", () => {
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
-    expect(prismaComunidadFindFirstMock).not.toHaveBeenCalled();
-    expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
+    expect(prismaCommunityFindMock).not.toHaveBeenCalled();
+    expect(prismaUserDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar el usuario si administra alguna comunidad", async () => {
+  it("Should not delete the user if they manage any community", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
     });
 
-    prismaComunidadFindFirstMock.mockResolvedValue({ id: 10 });
+    prismaCommunityFindMock.mockResolvedValue({ id: 10 });
 
     const formData = new FormData();
     formData.set("id", "user-25");
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
-    expect(prismaComunidadFindFirstMock).toHaveBeenCalledWith({
+    expect(prismaCommunityFindMock).toHaveBeenCalledWith({
       where: { adminID: "user-25" },
       select: { id: true }
     });
-    expect(prismaUsuarioDeleteMock).not.toHaveBeenCalled();
+    expect(prismaUserDeleteMock).not.toHaveBeenCalled();
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar usuario y revalidar rutas cuando todo es válido", async () => {
+  it("Should delete the user and revalidate paths when everything is valid", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
     });
-    prismaUsuarioDeleteMock.mockResolvedValue({});
+    prismaUserDeleteMock.mockResolvedValue({});
 
     const formData = new FormData();
     formData.set("id", "  user-25  ");
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
-    expect(prismaComunidadFindFirstMock).toHaveBeenCalledWith({
+    expect(prismaCommunityFindMock).toHaveBeenCalledWith({
       where: { adminID: "user-25" },
       select: { id: true }
     });
-    expect(prismaUsuarioDeleteMock).toHaveBeenCalledWith({
+    expect(prismaUserDeleteMock).toHaveBeenCalledWith({
       where: { id: "user-25" }
     });
     expect(revalidatePathMock).toHaveBeenCalledTimes(2);
@@ -138,21 +138,21 @@ describe("Suite de pruebas de las server function de user", () => {
     expect(revalidatePathMock).toHaveBeenNthCalledWith(2, "/backoffice/overview");
   });
 
-  it("Debe ignorar el error de prisma en deleteUser", async () => {
+  it("Should ignore the Prisma error in deleteUser", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
     });
 
-    prismaUsuarioDeleteMock.mockRejectedValue(new Error("DB delete failed"));
+    prismaUserDeleteMock.mockRejectedValue(new Error("DB delete failed"));
 
     const formData = new FormData();
     formData.set("id", "user-25");
 
     await expect(deleteUser(formData)).resolves.toBeUndefined();
 
-    expect(prismaComunidadFindFirstMock).toHaveBeenCalledWith({ where: { adminID: "user-25" }, select: { id: true } });
-    expect(prismaUsuarioDeleteMock).toHaveBeenCalledWith({
+    expect(prismaCommunityFindMock).toHaveBeenCalledWith({ where: { adminID: "user-25" }, select: { id: true } });
+    expect(prismaUserDeleteMock).toHaveBeenCalledWith({
       where: { id: "user-25" }
     });
     expect(revalidatePathMock).not.toHaveBeenCalled();

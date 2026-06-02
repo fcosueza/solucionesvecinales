@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
-type CamposFormContacto = z.infer<typeof contactSchema>;
+type contactFormFields = z.infer<typeof contactSchema>;
 
 /**
  * Processes the contact form, validates the data received and saves the message to the database.
@@ -17,19 +17,19 @@ type CamposFormContacto = z.infer<typeof contactSchema>;
  * @param formData Data sent from the contact form.
  *
  * @throws If data validation fails or an error occurs while saving the message, an error status with details is returned.
- * @returns El new state of the action with the result of the operation.
+ * @returns The new state of the action with the result of the operation.
  */
 
 const contactMsg = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const datos: object = Object.fromEntries(formData);
-  const datosValidados: SafeParseReturnType<object, CamposFormContacto> = contactSchema.safeParse(datos);
+  const data: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, contactFormFields> = contactSchema.safeParse(data);
 
   // If the data is invalid, return an error status with validation messages
-  if (!datosValidados.success) {
+  if (!validatedData.success) {
     return {
       state: "error",
       message: "Datos del formulario incorrectos",
-      errors: datosValidados.error.flatten().fieldErrors,
+      errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
   }
@@ -38,9 +38,9 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
   try {
     await prisma.contacto.create({
       data: {
-        nombre: datosValidados.data.name,
-        email: datosValidados.data.email,
-        mensaje: datosValidados.data.msg
+        nombre: validatedData.data.name,
+        email: validatedData.data.email,
+        mensaje: validatedData.data.msg
       }
     });
   } catch {

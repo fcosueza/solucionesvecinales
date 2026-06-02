@@ -13,10 +13,10 @@ import { revalidatePath } from "next/cache";
  */
 
 export const deleteUser = async (formData: FormData): Promise<void> => {
-  const sesion = await verifySession();
+  const session = await verifySession();
 
   // Verify that the user is authenticated and has the webAdmin role
-  if (!sesion.isAuth || sesion.session?.role !== UserRole.webAdmin) return;
+  if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
 
   // Validate that the id is a non-empty string
   const id = String(formData.get("id") ?? "").trim();
