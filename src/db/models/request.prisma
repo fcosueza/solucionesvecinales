@@ -1,0 +1,18 @@
+enum RequestStatus {
+  pending
+  approved
+  rejected
+}
+
+model Request {
+  id           Int             @id @default(autoincrement())
+  user      String
+  community    Int
+  status       RequestStatus @default(pending)
+  createdAt     DateTime        @default(now())
+
+  userRef   User   @relation(fields: [user], references: [id], onDelete: Cascade)
+  communityRef Community @relation(fields: [community], references: [id], onDelete: Cascade)
+
+  @@index([user, community])
+}

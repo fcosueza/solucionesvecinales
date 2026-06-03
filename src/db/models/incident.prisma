@@ -1,0 +1,20 @@
+enum IncidentStatus {
+  reported
+  inProgress
+  resolved
+}
+
+model Incident {
+  community   Int
+  user        String
+  date        DateTime       @default(now())
+  title       String         @default("Untitled")
+  description String
+  status      IncidentStatus @default(reported)
+  updatedAt   DateTime       @default(now())
+
+  communityRef Community @relation(fields: [community], references: [id], onDelete: Cascade)
+  userRef      User      @relation(fields: [user], references: [id], onDelete: Cascade)
+
+  @@id([community, user, date])
+}

@@ -1,0 +1,17 @@
+enum RecordType {
+    income
+    expense
+}
+
+model FinancialRecord {
+    id          Int        @id @default(autoincrement())
+    community   Int
+    description String
+    amount      Decimal    @db.Decimal(12, 2)
+    type        RecordType
+    createdAt   DateTime   @default(now())
+
+    communityRef Community @relation(fields: [community], references: [id], onDelete: Cascade)
+
+    @@index([community, type, createdAt])
+}

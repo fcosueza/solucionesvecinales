@@ -1,0 +1,17 @@
+model Reservation {
+  id        Int      @id @default(autoincrement())
+  user      String
+  community Int
+  zone      String
+  date      DateTime
+  startTime DateTime @db.Time()
+  endTime   DateTime @db.Time()
+  createdAt DateTime @default(now())
+
+  userRef User              @relation(fields: [user], references: [id], onDelete: Cascade)
+  zoneRef Zone              @relation(fields: [zone, community], references: [name, community], onDelete: Cascade)
+  slots   ReservationSlot[]
+
+  @@index([user, date])
+  @@index([community, zone, date])
+}

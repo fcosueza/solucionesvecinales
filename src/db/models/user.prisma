@@ -1,0 +1,22 @@
+enum Role {
+  tenant
+  admin
+  adminWeb
+}
+
+model User {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  role      Role     @default(tenant)
+  name   String
+  lastName String
+  image   String?
+
+  credentials Credentials?
+  incidents  Incident[]
+  reservations     Reservation[]
+  requests  Request[]
+  memberships Membership[]
+
+  adminCommunities Community[] @relation("admin")
+}

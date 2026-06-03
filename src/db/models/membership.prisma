@@ -1,0 +1,10 @@
+model Membership {
+  user      String
+  community Int
+  createdAt DateTime @default(now())
+
+  userRef      User      @relation(fields: [user], references: [id], onDelete: Cascade)
+  communityRef Community @relation(fields: [community], references: [id], onDelete: Cascade)
+
+  @@id([user, community])
+}
