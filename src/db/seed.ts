@@ -16,86 +16,86 @@ const INCIDENTS_PER_COMMUNITY = 7;
 const RESERVATIONS_PER_COMMUNITY = 3;
 const SEED_SHARED_PASSWORD = "VecinosSeguro2026!";
 const WEB_ADMIN_SEED_USER = {
-  nombre: "Admin",
-  apellido: "Plataforma",
+  name: "Admin",
+  lastName: "Plataforma",
   email: "webadmin@vecinos.local",
-  rol: "adminWeb"
+  role: "adminWeb"
 } as const;
 
 const COMMUNITY_SEED_DATA = [
   {
-    nombre: "Residencial Los Arrayanes",
-    calle: "Calle Arrayanes",
-    numero: 6,
-    ciudad: "Granada",
-    provincia: "Granada",
-    pais: "Espana",
+    name: "Residencial Los Arrayanes",
+    street: "Calle Arrayanes",
+    number: 6,
+    city: "Granada",
+    province: "Granada",
+    country: "Espana",
     users: [
-      { nombre: "Lucia", apellido: "Martinez", email: "lucia.martinez@vecinos.local", rol: "admin" },
-      { nombre: "Alvaro", apellido: "Santos", email: "alvaro.santos@vecinos.local", rol: "inquilino" },
-      { nombre: "Marta", apellido: "Ruiz", email: "marta.ruiz@vecinos.local", rol: "inquilino" },
-      { nombre: "Pablo", apellido: "Lopez", email: "pablo.lopez@vecinos.local", rol: "inquilino" },
-      { nombre: "Elena", apellido: "Diaz", email: "elena.diaz@vecinos.local", rol: "inquilino" }
+      { name: "Lucia", lastName: "Martinez", email: "lucia.martinez@vecinos.local", role: "admin" },
+      { name: "Alvaro", lastName: "Santos", email: "alvaro.santos@vecinos.local", role: "inquilino" },
+      { name: "Marta", lastName: "Ruiz", email: "marta.ruiz@vecinos.local", role: "inquilino" },
+      { name: "Pablo", lastName: "Lopez", email: "pablo.lopez@vecinos.local", role: "inquilino" },
+      { name: "Elena", lastName: "Diaz", email: "elena.diaz@vecinos.local", role: "inquilino" }
     ]
   },
   {
-    nombre: "Mirador del Genil",
-    calle: "Avenida del Genil",
-    numero: 14,
-    ciudad: "Granada",
-    provincia: "Granada",
-    pais: "Espana",
+    name: "Mirador del Genil",
+    street: "Avenida del Genil",
+    number: 14,
+    city: "Granada",
+    province: "Granada",
+    country: "Espana",
     users: [
-      { nombre: "Javier", apellido: "Navarro", email: "javier.navarro@vecinos.local", rol: "admin" },
-      { nombre: "Sara", apellido: "Molina", email: "sara.molina@vecinos.local", rol: "inquilino" },
-      { nombre: "Irene", apellido: "Castro", email: "irene.castro@vecinos.local", rol: "inquilino" },
-      { nombre: "Diego", apellido: "Vega", email: "diego.vega@vecinos.local", rol: "inquilino" },
-      { nombre: "Raquel", apellido: "Peña", email: "raquel.pena@vecinos.local", rol: "inquilino" }
+      { name: "Javier", lastName: "Navarro", email: "javier.navarro@vecinos.local", role: "admin" },
+      { name: "Sara", lastName: "Molina", email: "sara.molina@vecinos.local", role: "inquilino" },
+      { name: "Irene", lastName: "Castro", email: "irene.castro@vecinos.local", role: "inquilino" },
+      { name: "Diego", lastName: "Vega", email: "diego.vega@vecinos.local", role: "inquilino" },
+      { name: "Raquel", lastName: "Peña", email: "raquel.pena@vecinos.local", role: "inquilino" }
     ]
   },
   {
-    nombre: "Jardines de la Vega",
-    calle: "Calle Vega Alta",
-    numero: 21,
-    ciudad: "Granada",
-    provincia: "Granada",
-    pais: "Espana",
+    name: "Jardines de la Vega",
+    street: "Calle Vega Alta",
+    number: 21,
+    city: "Granada",
+    province: "Granada",
+    country: "Espana",
     users: [
-      { nombre: "Carlos", apellido: "Ortega", email: "carlos.ortega@vecinos.local", rol: "admin" },
-      { nombre: "Nuria", apellido: "Lara", email: "nuria.lara@vecinos.local", rol: "inquilino" },
-      { nombre: "Sergio", apellido: "Campos", email: "sergio.campos@vecinos.local", rol: "inquilino" },
-      { nombre: "Beatriz", apellido: "Ramos", email: "beatriz.ramos@vecinos.local", rol: "inquilino" },
-      { nombre: "Adrian", apellido: "Moreno", email: "adrian.moreno@vecinos.local", rol: "inquilino" }
+      { name: "Carlos", lastName: "Ortega", email: "carlos.ortega@vecinos.local", role: "admin" },
+      { name: "Nuria", lastName: "Lara", email: "nuria.lara@vecinos.local", role: "inquilino" },
+      { name: "Sergio", lastName: "Campos", email: "sergio.campos@vecinos.local", role: "inquilino" },
+      { name: "Beatriz", lastName: "Ramos", email: "beatriz.ramos@vecinos.local", role: "inquilino" },
+      { name: "Adrian", lastName: "Moreno", email: "adrian.moreno@vecinos.local", role: "inquilino" }
     ]
   },
   {
-    nombre: "Patio de la Alhambra",
-    calle: "Calle Albaicin",
-    numero: 9,
-    ciudad: "Granada",
-    provincia: "Granada",
-    pais: "Espana",
+    name: "Patio de la Alhambra",
+    street: "Calle Albaicin",
+    number: 9,
+    city: "Granada",
+    province: "Granada",
+    country: "Espana",
     users: [
-      { nombre: "Carmen", apellido: "Herrera", email: "carmen.herrera@vecinos.local", rol: "admin" },
-      { nombre: "Hector", apellido: "Gil", email: "hector.gil@vecinos.local", rol: "inquilino" },
-      { nombre: "Paula", apellido: "Arias", email: "paula.arias@vecinos.local", rol: "inquilino" },
-      { nombre: "Ruben", apellido: "Blanco", email: "ruben.blanco@vecinos.local", rol: "inquilino" },
-      { nombre: "Alicia", apellido: "Prieto", email: "alicia.prieto@vecinos.local", rol: "inquilino" }
+      { name: "Carmen", lastName: "Herrera", email: "carmen.herrera@vecinos.local", role: "admin" },
+      { name: "Hector", lastName: "Gil", email: "hector.gil@vecinos.local", role: "inquilino" },
+      { name: "Paula", lastName: "Arias", email: "paula.arias@vecinos.local", role: "inquilino" },
+      { name: "Ruben", lastName: "Blanco", email: "ruben.blanco@vecinos.local", role: "inquilino" },
+      { name: "Alicia", lastName: "Prieto", email: "alicia.prieto@vecinos.local", role: "inquilino" }
     ]
   },
   {
-    nombre: "Parque del Zaidin",
-    calle: "Avenida de Cadiz",
-    numero: 31,
-    ciudad: "Granada",
-    provincia: "Granada",
-    pais: "Espana",
+    name: "Parque del Zaidin",
+    street: "Avenida de Cadiz",
+    number: 31,
+    city: "Granada",
+    province: "Granada",
+    country: "Espana",
     users: [
-      { nombre: "Miguel", apellido: "Reyes", email: "miguel.reyes@vecinos.local", rol: "admin" },
-      { nombre: "Claudia", apellido: "Fuentes", email: "claudia.fuentes@vecinos.local", rol: "inquilino" },
-      { nombre: "Ivan", apellido: "Soria", email: "ivan.soria@vecinos.local", rol: "inquilino" },
-      { nombre: "Noelia", apellido: "Mendez", email: "noelia.mendez@vecinos.local", rol: "inquilino" },
-      { nombre: "Tomas", apellido: "Aguilar", email: "tomas.aguilar@vecinos.local", rol: "inquilino" }
+      { name: "Miguel", lastName: "Reyes", email: "miguel.reyes@vecinos.local", role: "admin" },
+      { name: "Claudia", lastName: "Fuentes", email: "claudia.fuentes@vecinos.local", role: "inquilino" },
+      { name: "Ivan", lastName: "Soria", email: "ivan.soria@vecinos.local", role: "inquilino" },
+      { name: "Noelia", lastName: "Mendez", email: "noelia.mendez@vecinos.local", role: "inquilino" },
+      { name: "Tomas", lastName: "Aguilar", email: "tomas.aguilar@vecinos.local", role: "inquilino" }
     ]
   }
 ] as const;
@@ -107,28 +107,28 @@ const SEEDED_USER_EMAILS = [
 
 const ZONE_TEMPLATES = [
   {
-    nombre: "Piscina",
-    descripcion: "Piscina comunitaria exterior",
-    inicio: 9,
-    fin: 21
+    name: "Piscina",
+    description: "Piscina comunitaria exterior",
+    start: 9,
+    end: 21
   },
   {
-    nombre: "Pista de Padel",
-    descripcion: "Pista de padel cerrada",
-    inicio: 8,
-    fin: 22
+    name: "Pista de Padel",
+    description: "Pista de padel cerrada",
+    start: 8,
+    end: 22
   },
   {
-    nombre: "Gimnasio",
-    descripcion: "Sala de entrenamiento comunitaria",
-    inicio: 7,
-    fin: 23
+    name: "Gimnasio",
+    description: "Sala de entrenamiento comunitaria",
+    start: 7,
+    end: 23
   },
   {
-    nombre: "Sala Multiusos",
-    descripcion: "Sala para reuniones y actividades",
-    inicio: 10,
-    fin: 22
+    name: "Sala Multiusos",
+    description: "Sala para reuniones y actividades",
+    start: 10,
+    end: 22
   }
 ] as const;
 
@@ -140,39 +140,39 @@ const MESSAGE_TEMPLATES = [
 ] as const;
 
 const INCIDENT_TEMPLATES = [
-  { titulo: "Bombilla fundida", descripcion: "Bombilla fundida en el portal." },
-  { titulo: "Ruidos nocturnos", descripcion: "Quejas por ruido en horario nocturno." },
+  { title: "Bombilla fundida", description: "Bombilla fundida en el portal." },
+  { title: "Ruidos nocturnos", description: "Quejas por ruido en horario nocturno." },
   {
-    titulo: "Fuga de agua",
-    descripcion: "Se detecta pequena fuga en cuarto de contadores."
+    title: "Fuga de agua",
+    description: "Se detecta pequena fuga en cuarto de contadores."
   },
   {
-    titulo: "Puerta averiada",
-    descripcion: "La puerta del garaje no cierra correctamente."
+    title: "Puerta averiada",
+    description: "La puerta del garaje no cierra correctamente."
   },
   {
-    titulo: "Suciedad en patio",
-    descripcion: "Acumulacion de residuos en el patio interior."
+    title: "Suciedad en patio",
+    description: "Acumulacion de residuos en el patio interior."
   },
   {
-    titulo: "Fallo de luz",
-    descripcion: "Intermitencias en iluminacion de escalera."
+    title: "Fallo de luz",
+    description: "Intermitencias en iluminacion de escalera."
   },
   {
-    titulo: "Desperfecto en pista",
-    descripcion: "Pavimento levantado en zona deportiva."
+    title: "Desperfecto en pista",
+    description: "Pavimento levantado en zona deportiva."
   }
 ] as const;
 
-const INCIDENT_STATUSES = ["reportado", "procesandose", "resuelto"] as const;
-const REQUEST_STATUSES = ["aprobada", "aprobada", "pendiente", "pendiente", "pendiente"] as const;
+const INCIDENT_STATUSES = ["reported", "inProgress", "resolved"] as const;
+const REQUEST_STATUSES = ["approved", "approved", "pending", "pending", "pending"] as const;
 
 /**
  * Creates a Date object in UTC with the specified time.
  * Used to initialize common zone schedules during data seeding.
  *
  * @param hour The time in 24h format (0-23)
- * @returns Un Date object with the specified time
+ * @returns A Date object with the specified time
  */
 function timeAt(hour: number): Date {
   return new Date(Date.UTC(1970, 0, 1, hour, 0, 0, 0));
@@ -183,28 +183,28 @@ function timeAt(hour: number): Date {
  * Clean existing data and create communities, users, common areas, reservations,
  * incidents, messages, requests and financial records.
  *
- * @returns Promesa no return value
+ * @returns Promise with no return value
  */
 async function main(): Promise<void> {
-  const communityNames = COMMUNITY_SEED_DATA.map(community => community.nombre);
+  const communityNames = COMMUNITY_SEED_DATA.map(community => community.name);
 
-  await prisma.comunidad.deleteMany({
+  await prisma.community.deleteMany({
     where: {
-      nombre: {
+      name: {
         in: communityNames
       }
     }
   });
 
-  await prisma.comunidad.deleteMany({
+  await prisma.community.deleteMany({
     where: {
-      nombre: {
+      name: {
         startsWith: "Comunidad Seed "
       }
     }
   });
 
-  await prisma.contacto.deleteMany({
+  await prisma.contact.deleteMany({
     where: {
       email: {
         endsWith: "@seed.local"
@@ -214,38 +214,43 @@ async function main(): Promise<void> {
 
   const userSeed: Array<{
     email: string;
-    rol: "admin" | "inquilino" | "adminWeb";
-    nombre: string;
-    apellido: string;
+    role: "admin" | "tenant" | "adminWeb";
+    name: string;
+    lastName: string;
   }> = COMMUNITY_SEED_DATA.flatMap(community =>
     community.users.map(user => ({
       email: user.email,
-      rol: user.rol,
-      nombre: user.nombre,
-      apellido: user.apellido
+      role: user.role === "inquilino" ? "tenant" : user.role,
+      name: user.name,
+      lastName: user.lastName
     }))
   );
 
   userSeed.push({
     email: WEB_ADMIN_SEED_USER.email,
-    rol: WEB_ADMIN_SEED_USER.rol,
-    nombre: WEB_ADMIN_SEED_USER.nombre,
-    apellido: WEB_ADMIN_SEED_USER.apellido
+    role: WEB_ADMIN_SEED_USER.role,
+    name: WEB_ADMIN_SEED_USER.name,
+    lastName: WEB_ADMIN_SEED_USER.lastName
   });
 
   for (const user of userSeed) {
-    await prisma.usuario.upsert({
+    await prisma.user.upsert({
       where: { email: user.email },
       update: {
-        rol: user.rol,
-        nombre: user.nombre,
-        apellido: user.apellido
+        role: user.role,
+        name: user.name,
+        lastName: user.lastName
       },
-      create: user
+      create: {
+        email: user.email,
+        role: user.role,
+        name: user.name,
+        lastName: user.lastName
+      }
     });
   }
 
-  const allUsers = await prisma.usuario.findMany({
+  const allUsers = await prisma.user.findMany({
     where: {
       email: {
         in: SEEDED_USER_EMAILS
@@ -261,11 +266,11 @@ async function main(): Promise<void> {
   const sharedPasswordHash = await bcrypt.hash(SEED_SHARED_PASSWORD, 10);
 
   for (const user of allUsers) {
-    await prisma.credenciales.upsert({
-      where: { usuario: user.id },
+    await prisma.credentials.upsert({
+      where: { user: user.id },
       update: { password: sharedPasswordHash },
       create: {
-        usuario: user.id,
+        user: user.id,
         password: sharedPasswordHash
       }
     });
@@ -283,200 +288,200 @@ async function main(): Promise<void> {
       return { ...user, id };
     });
 
-    const adminUser = communityUsers.find(user => user.rol === "admin");
+    const adminUser = communityUsers.find(user => user.role === "admin");
     if (!adminUser) {
-      throw new Error(`Admin user missing for community ${communityData.nombre}`);
+      throw new Error(`Admin user missing for community ${communityData.name}`);
     }
 
     const userRequestStatuses = communityUsers.map((user, index) => ({
       user,
-      estado: REQUEST_STATUSES[index % REQUEST_STATUSES.length]
+      status: REQUEST_STATUSES[index % REQUEST_STATUSES.length]
     }));
 
     const usersWithAccess = userRequestStatuses
-      .filter(({ user, estado }) => user.rol === "admin" || estado === "aprobada")
+      .filter(({ user, status }) => user.role === "admin" || status === "approved")
       .map(({ user }) => user);
 
-    const comunidad = await prisma.comunidad.create({
+    const community = await prisma.community.create({
       data: {
-        nombre: communityData.nombre,
-        calle: communityData.calle,
-        numero: communityData.numero,
-        ciudad: communityData.ciudad,
-        provincia: communityData.provincia,
-        pais: communityData.pais,
-        adminID: adminUser.id
+        name: communityData.name,
+        street: communityData.street,
+        number: communityData.number,
+        city: communityData.city,
+        province: communityData.province,
+        country: communityData.country,
+        adminId: adminUser.id
       }
     });
 
-    await prisma.inscripcion.createMany({
+    await prisma.membership.createMany({
       data: usersWithAccess.map(user => ({
-        usuario: user.id,
-        comunidad: comunidad.id
+        user: user.id,
+        community: community.id
       })),
       skipDuplicates: true
     });
 
-    const zoneNames = ZONE_TEMPLATES.slice(0, ZONES_PER_COMMUNITY).map(zone => zone.nombre);
+    const zoneNames = ZONE_TEMPLATES.slice(0, ZONES_PER_COMMUNITY).map(zone => zone.name);
 
-    await prisma.zona.createMany({
+    await prisma.zone.createMany({
       data: ZONE_TEMPLATES.slice(0, ZONES_PER_COMMUNITY).map(zone => ({
-        nombre: zone.nombre,
-        comunidad: comunidad.id,
-        descripcion: zone.descripcion,
-        imagen: null,
-        hora_inicio: timeAt(zone.inicio),
-        hora_fin: timeAt(zone.fin)
+        name: zone.name,
+        community: community.id,
+        description: zone.description,
+        image: null,
+        startTime: timeAt(zone.start),
+        endTime: timeAt(zone.end)
       })),
       skipDuplicates: true
     });
 
     const messageBase = new Date(Date.UTC(2026, 0, communityNumber, 10, 0, 0));
-    await prisma.mensaje.createMany({
-      data: MESSAGE_TEMPLATES.slice(0, MESSAGES_PER_COMMUNITY).map((texto, index) => ({
-        comunidad: comunidad.id,
-        texto,
-        creadoEn: new Date(messageBase.getTime() + index * 1000)
+    await prisma.message.createMany({
+      data: MESSAGE_TEMPLATES.slice(0, MESSAGES_PER_COMMUNITY).map((text, index) => ({
+        community: community.id,
+        text,
+        createdAt: new Date(messageBase.getTime() + index * 1000)
       })),
       skipDuplicates: true
     });
 
     const incidentBase = new Date(Date.UTC(2026, 0, communityNumber + 5, 8, 0, 0));
-    await prisma.incidencia.createMany({
+    await prisma.incident.createMany({
       data: INCIDENT_TEMPLATES.slice(0, INCIDENTS_PER_COMMUNITY).map((incident, index) => ({
-        comunidad: comunidad.id,
-        usuario: usersWithAccess[index % usersWithAccess.length].id,
-        fecha: new Date(incidentBase.getTime() + index * 60000),
-        titulo: incident.titulo,
-        descripcion: incident.descripcion,
-        estado: INCIDENT_STATUSES[index % INCIDENT_STATUSES.length]
+        community: community.id,
+        user: usersWithAccess[index % usersWithAccess.length].id,
+        date: new Date(incidentBase.getTime() + index * 60000),
+        title: incident.title,
+        description: incident.description,
+        status: INCIDENT_STATUSES[index % INCIDENT_STATUSES.length]
       })),
       skipDuplicates: true
     });
 
-    await prisma.solicitud.createMany({
-      data: userRequestStatuses.map(({ user, estado }) => ({
-        usuario: user.id,
-        comunidad: comunidad.id,
-        estado
+    await prisma.request.createMany({
+      data: userRequestStatuses.map(({ user, status }) => ({
+        user: user.id,
+        community: community.id,
+        status
       })),
       skipDuplicates: true
     });
 
-    await prisma.reserva.createMany({
+    await prisma.reservation.createMany({
       data: Array.from({ length: RESERVATIONS_PER_COMMUNITY }, (_, reservationIndex) => {
         const startHour = 10 + reservationIndex * 2;
         return {
-          usuario: usersWithAccess[reservationIndex % usersWithAccess.length].id,
-          comunidad: comunidad.id,
-          zona: zoneNames[reservationIndex % zoneNames.length],
-          fecha: new Date(Date.UTC(2026, 1, communityNumber + reservationIndex, 0, 0, 0)),
-          hora_inicio: timeAt(startHour),
-          hora_fin: timeAt(startHour + 1)
+          user: usersWithAccess[reservationIndex % usersWithAccess.length].id,
+          community: community.id,
+          zone: zoneNames[reservationIndex % zoneNames.length],
+          date: new Date(Date.UTC(2026, 1, communityNumber + reservationIndex, 0, 0, 0)),
+          startTime: timeAt(startHour),
+          endTime: timeAt(startHour + 1)
         };
       }),
       skipDuplicates: true
     });
 
-    const createdReservations = await prisma.reserva.findMany({
+    const createdReservations = await prisma.reservation.findMany({
       where: {
-        comunidad: comunidad.id,
-        zona: {
+        community: community.id,
+        zone: {
           in: zoneNames
         }
       },
       select: {
         id: true,
-        comunidad: true,
-        zona: true,
-        fecha: true,
-        hora_inicio: true,
-        hora_fin: true
+        community: true,
+        zone: true,
+        date: true,
+        startTime: true,
+        endTime: true
       }
     });
 
-    await prisma.reservaFranja.createMany({
-      data: createdReservations.flatMap(reserva => {
-        const inicio = reserva.hora_inicio.getUTCHours();
-        const fin = reserva.hora_fin.getUTCHours();
+    await prisma.reservationSlot.createMany({
+      data: createdReservations.flatMap(reservation => {
+        const start = reservation.startTime.getUTCHours();
+        const end = reservation.endTime.getUTCHours();
 
-        return Array.from({ length: fin - inicio }, (_, hourOffset) => ({
-          reservaId: reserva.id,
-          comunidad: reserva.comunidad,
-          zona: reserva.zona,
-          fecha: reserva.fecha,
-          hora: timeAt(inicio + hourOffset)
+        return Array.from({ length: end - start }, (_, hourOffset) => ({
+          reservationId: reservation.id,
+          community: reservation.community,
+          zone: reservation.zone,
+          date: reservation.date,
+          time: timeAt(start + hourOffset)
         }));
       }),
       skipDuplicates: true
     });
 
     const financeBase = new Date(Date.UTC(2026, 2, communityNumber, 9, 0, 0));
-    await prisma.registro.createMany({
+    await prisma.financialRecord.createMany({
       data: [
         {
-          comunidad: comunidad.id,
-          descripcion: `Cuotas enero comunidad ${communityNumber}`,
-          importe: 1400 + communityNumber * 40,
-          tipo: "ingreso",
-          creadoEn: new Date(financeBase.getTime())
+          community: community.id,
+          description: `Cuotas enero comunidad ${communityNumber}`,
+          amount: 1400 + communityNumber * 40,
+          type: "income",
+          createdAt: new Date(financeBase.getTime())
         },
         {
-          comunidad: comunidad.id,
-          descripcion: `Cuotas febrero comunidad ${communityNumber}`,
-          importe: 1425 + communityNumber * 40,
-          tipo: "ingreso",
-          creadoEn: new Date(financeBase.getTime() + 1000)
+          community: community.id,
+          description: `Cuotas febrero comunidad ${communityNumber}`,
+          amount: 1425 + communityNumber * 40,
+          type: "income",
+          createdAt: new Date(financeBase.getTime() + 1000)
         },
         {
-          comunidad: comunidad.id,
-          descripcion: `Mantenimiento ascensor comunidad ${communityNumber}`,
-          importe: 500 + communityNumber * 20,
-          tipo: "gasto",
-          creadoEn: new Date(financeBase.getTime() + 2000)
+          community: community.id,
+          description: `Mantenimiento ascensor comunidad ${communityNumber}`,
+          amount: 500 + communityNumber * 20,
+          type: "expense",
+          createdAt: new Date(financeBase.getTime() + 2000)
         },
         {
-          comunidad: comunidad.id,
-          descripcion: `Limpieza mensual comunidad ${communityNumber}`,
-          importe: 260 + communityNumber * 10,
-          tipo: "gasto",
-          creadoEn: new Date(financeBase.getTime() + 3000)
+          community: community.id,
+          description: `Limpieza mensual comunidad ${communityNumber}`,
+          amount: 260 + communityNumber * 10,
+          type: "expense",
+          createdAt: new Date(financeBase.getTime() + 3000)
         }
       ]
     });
   }
 
-  await prisma.contacto.createMany({
+  await prisma.contact.createMany({
     data: [
       {
-        nombre: "Ana Ruiz",
+        name: "Ana Ruiz",
         email: "ana.ruiz@gmail.com",
-        mensaje: "Consulta sobre normas de uso de la piscina.",
-        creadoEn: new Date(Date.UTC(2026, 3, 1, 10, 0, 0))
+        message: "Consulta sobre normas de uso de la piscina.",
+        createdAt: new Date(Date.UTC(2026, 3, 1, 10, 0, 0))
       },
       {
-        nombre: "David Leon",
+        name: "David Leon",
         email: "david.leon@yahoo.es",
-        mensaje: "Me gustaria informacion sobre cuotas comunitarias.",
-        creadoEn: new Date(Date.UTC(2026, 3, 2, 10, 0, 0))
+        message: "Me gustaria informacion sobre cuotas comunitarias.",
+        createdAt: new Date(Date.UTC(2026, 3, 2, 10, 0, 0))
       },
       {
-        nombre: "Laura Segura",
+        name: "Laura Segura",
         email: "laura.segura@gmail.com",
-        mensaje: "Hay disponibilidad en la pista de padel por las tardes?",
-        creadoEn: new Date(Date.UTC(2026, 3, 3, 10, 0, 0))
+        message: "Hay disponibilidad en la pista de padel por las tardes?",
+        createdAt: new Date(Date.UTC(2026, 3, 3, 10, 0, 0))
       },
       {
-        nombre: "Mario Cano",
+        name: "Mario Cano",
         email: "mario.cano@outlook.com",
-        mensaje: "Quiero reportar una incidencia en la puerta del garaje.",
-        creadoEn: new Date(Date.UTC(2026, 3, 4, 10, 0, 0))
+        message: "Quiero reportar una incidencia en la puerta del garaje.",
+        createdAt: new Date(Date.UTC(2026, 3, 4, 10, 0, 0))
       },
       {
-        nombre: "Julia Prieto",
+        name: "Julia Prieto",
         email: "julia.prieto@gmail.com",
-        mensaje: "Gracias por la gestion de la ultima junta.",
-        creadoEn: new Date(Date.UTC(2026, 3, 5, 10, 0, 0))
+        message: "Gracias por la gestion de la ultima junta.",
+        createdAt: new Date(Date.UTC(2026, 3, 5, 10, 0, 0))
       }
     ],
     skipDuplicates: true
