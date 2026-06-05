@@ -11,9 +11,9 @@ const publicRoutes = ["/home", "/login", "/signup"];
  * Redirect to `login` when a protected route does not have a valid session,
  * and sends to `communities` if an authenticated user attempts to access public routes.
  *
- * @param req Solicitud entrante de Next.js.
+ * @param req Incoming Next.js request.
  *
- * @returns Una response that continues navigation or redirects the user.
+ * @returns A response that continues navigation or redirects the user.
  */
 
 async function proxy(req: NextRequest): Promise<NextResponse> {
