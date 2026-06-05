@@ -3,8 +3,8 @@ import { SessionPayload, BasicError } from "@/types";
 import { descifrarSesion } from "./lib/session";
 import { cookies } from "next/headers";
 
-const rutasProtegidas = ["/communities", "/communities/add", "/communities/search", "/profile"];
-const rutasPublicas = ["/home", "/login", "/signup"];
+const protectedRoutes = ["/communities", "/communities/add", "/communities/search", "/profile"];
+const publicRoutes = ["/home", "/login", "/signup"];
 
 /**
  * Manages access to public and protected routes based on the user session.
@@ -17,18 +17,18 @@ const rutasPublicas = ["/home", "/login", "/signup"];
  */
 
 async function proxy(req: NextRequest): Promise<NextResponse> {
-  const ruta: string = req.nextUrl.pathname;
-  const esRutaProtegida: boolean = rutasProtegidas.includes(ruta);
-  const esRutaPublica: boolean = rutasPublicas.includes(ruta);
+  const route: string = req.nextUrl.pathname;
+  const isProtectedRoute: boolean = protectedRoutes.includes(route);
+  const isPublicRoute: boolean = publicRoutes.includes(route);
 
-  const valorCookie: string | undefined = (await cookies()).get("session")?.value;
-  const sesion: SessionPayload | BasicError = await descifrarSesion(valorCookie);
+  const cookieValue: string | undefined = (await cookies()).get("session")?.value;
+  const session: SessionPayload | BasicError = await descifrarSesion(cookieValue);
 
-  if (esRutaProtegida && "error" in sesion) {
+  if (isProtectedRoute && "error" in session) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  if (esRutaPublica && "userID" in sesion && !req.nextUrl.pathname.startsWith("/communities")) {
+  if (isPublicRoute && "userID" in session && !req.nextUrl.pathname.startsWith("/communities")) {
     return NextResponse.redirect(new URL("/communities", req.nextUrl));
   }
 
