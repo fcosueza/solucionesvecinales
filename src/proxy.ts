@@ -8,7 +8,7 @@ const publicRoutes = ["/home", "/login", "/signup"];
 
 /**
  * Manages access to public and protected routes based on the user session.
- * Redirect to `login` when a protected route does not have a valid session,
+ * Redirects to `login` when a protected route does not have a valid session,
  * and sends to `communities` if an authenticated user attempts to access public routes.
  *
  * @param req Incoming Next.js request.
