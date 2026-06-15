@@ -33,7 +33,7 @@ export const deleteUser = async (formData: FormData): Promise<BasicError | void>
       message: "A valid user ID is required"
     };
 
-  // Do not allow deleting a user who is still managing communities.
+  // Do not allow deleting an admin user who is still managing communities.
   const hasAdminCommunities = await prisma.community.findFirst({
     where: { adminId: id },
     select: { id: true }
