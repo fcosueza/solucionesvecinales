@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { INQUILINO_CREDENTIALS } from "../auth/constants";
+import { TENANT_CREDENTIALS } from "../auth/constants";
 
 const URL = "http://localhost:3000/login";
 const elementoToast = "[data-sonner-toaster] li";
@@ -131,7 +131,7 @@ test.describe("validación del formulario con datos incorrectos", () => {
   }) => {
     await page.goto(URL);
 
-    await page.locator("#email").fill(INQUILINO_CREDENTIALS.email);
+    await page.locator("#email").fill(TENANT_CREDENTIALS.email);
     await page.locator("#password").fill("contrasenaincorrecta123");
     await page.getByRole("button", { name: "Enviar" }).click();
 
@@ -143,7 +143,7 @@ test.describe("validación del formulario con datos incorrectos", () => {
   test("Mantiene el correo en el campo después de un error de contraseña", async ({ page }) => {
     await page.goto(URL);
 
-    const correo = INQUILINO_CREDENTIALS.email;
+    const correo = TENANT_CREDENTIALS.email;
 
     await page.locator("#email").fill(correo);
     await page.locator("#password").fill("contrasenaincorrecta123");
@@ -159,8 +159,8 @@ test.describe("inicio de sesión con datos correctos", () => {
   test("Redirige a /communities al iniciar sesión como inquilino", async ({ page }) => {
     await page.goto(URL);
 
-    await page.locator("#email").fill(INQUILINO_CREDENTIALS.email);
-    await page.locator("#password").fill(INQUILINO_CREDENTIALS.password);
+    await page.locator("#email").fill(TENANT_CREDENTIALS.email);
+    await page.locator("#password").fill(TENANT_CREDENTIALS.password);
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(elementoToast).first()).toBeVisible({ timeout: 8000 });

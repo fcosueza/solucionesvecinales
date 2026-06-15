@@ -2,7 +2,7 @@ import { JWTPayload } from "jose";
 import { ChangeEventHandler } from "react";
 
 export enum UserRole {
-  tenant = "inquilino",
+  tenant = "tenant",
   admin = "admin",
   webAdmin = "adminWeb"
 }

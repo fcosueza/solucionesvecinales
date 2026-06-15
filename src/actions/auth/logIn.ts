@@ -52,17 +52,17 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
   }
 
   // Find the user and their credentials
-  const usuario = await prisma.usuario.findUnique({
+  const usuario = await prisma.user.findUnique({
     where: {
       email: datosValidados.data.email
     },
     include: {
-      credenciales: true
+      credentials: true
     }
   });
 
   // The user does not exist
-  if (!usuario || !usuario.credenciales) {
+  if (!usuario || !usuario.credentials) {
     return {
       state: "error",
       message: "Datos del formulario incorrectos",
@@ -74,7 +74,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
   }
 
   // Compare the provided password with the stored hash
-  const passwordMatch: boolean = await bcrypt.compare(datosValidados.data.password, usuario.credenciales.password);
+  const passwordMatch: boolean = await bcrypt.compare(datosValidados.data.password, usuario.credentials.password);
 
   // Password incorrecto
   if (!passwordMatch)
@@ -88,9 +88,9 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     };
 
   // The username and password are correct
-  await crearSesion(usuario.id, usuario.rol as UserRole);
+  await crearSesion(usuario.id, usuario.role as UserRole);
 
-  const redirectTo = usuario.rol === UserRole.webAdmin ? "/backoffice/overview" : "/communities";
+  const redirectTo = usuario.role === UserRole.webAdmin ? "/backoffice/overview" : "/communities";
 
   return {
     state: "success",

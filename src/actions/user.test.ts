@@ -11,14 +11,11 @@ jest.mock("next/cache", () => ({
 }));
 
 jest.mock("@/lib/prisma", () => ({
-  __esModule: true,
-  default: {
-    community: {
-      findFirst: jest.fn()
-    },
-    user: {
-      delete: jest.fn()
-    }
+  community: {
+    findFirst: jest.fn()
+  },
+  user: {
+    delete: jest.fn()
   }
 }));
 

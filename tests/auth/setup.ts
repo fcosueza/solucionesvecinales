@@ -1,6 +1,6 @@
 import { test as setup, expect } from "@playwright/test";
 import fs from "fs";
-import { ADMIN_CREDENTIALS, ADMIN_FILE, AUTH_DIR, INQUILINO_CREDENTIALS, INQUILINO_FILE } from "./constants";
+import { ADMIN_CREDENTIALS, ADMIN_FILE, AUTH_DIR, TENANT_CREDENTIALS, TENANT_FILE } from "./constants";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -14,14 +14,14 @@ async function iniciarSesion(page: import("@playwright/test").Page, email: strin
   await expect(page).toHaveURL(/communities|backoffice/, { timeout: 8000 });
 }
 
-setup("guardar sesión de inquilino", async ({ page }) => {
+setup("save tenant session", async ({ page }) => {
   fs.mkdirSync(AUTH_DIR, { recursive: true });
 
-  await iniciarSesion(page, INQUILINO_CREDENTIALS.email, INQUILINO_CREDENTIALS.password);
-  await page.context().storageState({ path: INQUILINO_FILE });
+  await iniciarSesion(page, TENANT_CREDENTIALS.email, TENANT_CREDENTIALS.password);
+  await page.context().storageState({ path: TENANT_FILE });
 });
 
-setup("guardar sesión de administrador", async ({ page }) => {
+setup("save admin session", async ({ page }) => {
   fs.mkdirSync(AUTH_DIR, { recursive: true });
 
   await iniciarSesion(page, ADMIN_CREDENTIALS.email, ADMIN_CREDENTIALS.password);

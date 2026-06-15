@@ -1,13 +1,13 @@
 import path from "path";
 
 export const AUTH_DIR = path.join(__dirname, "../.auth");
-export const INQUILINO_FILE = path.join(AUTH_DIR, "inquilino.json");
+export const TENANT_FILE = path.join(AUTH_DIR, "tenant.json");
 export const ADMIN_FILE = path.join(AUTH_DIR, "admin.json");
 
-export const INQUILINO_CREDENTIALS = {
+export const TENANT_CREDENTIALS = {
   email: "alvaro.santos@vecinos.local",
   password: "VecinosSeguro2026!",
-  role: "inquilino"
+  role: "tenant"
 };
 
 export const ADMIN_CREDENTIALS = {
