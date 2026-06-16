@@ -1,22 +1,22 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("navegación pagina de inicio", () => {
-  test("Cualquier usuario puede navegar a la página de inicio", async ({ page }) => {
+test.describe("home page navigation", () => {
+  test("Any user can navigate to the home page", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     await expect(page).toHaveURL("http://localhost:3000/");
     await expect(page.getByRole("main")).toBeVisible();
   });
 
-  test("La página de inicio tiene el título correcto", async ({ page }) => {
+  test("The home page has the correct title", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     await expect(page).toHaveTitle(/Soluciones Vecinales/i);
   });
 });
 
-test.describe("contenido de la cabecera", () => {
-  test("La página de inicio tiene dos logotipos", async ({ page }) => {
+test.describe("header content", () => {
+  test("The home page shows two logos", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     const images = await page.getByRole("img", { name: /Logo/i }).all();
@@ -24,25 +24,25 @@ test.describe("contenido de la cabecera", () => {
     expect(images).toHaveLength(2);
   });
 
-  test("El menú principal contiene los enlaces correctos", async ({ page }) => {
+  test("The main menu contains the correct links", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
-    const enlaceInicio = page.getByRole("link", { name: "Inicio" }).first();
-    const enlaceCaracteristicas = page.getByRole("link", { name: "Características" });
-    const enlaceContacto = page.getByRole("link", { name: "Contacto" }).first();
+    const homePageLink = page.getByRole("link", { name: "Inicio" }).first();
+    const featuresLink = page.getByRole("link", { name: "Características" });
+    const contactLink = page.getByRole("link", { name: "Contacto" }).first();
 
-    await expect(enlaceInicio).toBeVisible();
-    await expect(enlaceCaracteristicas).toBeVisible();
-    await expect(enlaceContacto).toBeVisible();
+    await expect(homePageLink).toBeVisible();
+    await expect(featuresLink).toBeVisible();
+    await expect(contactLink).toBeVisible();
 
-    await expect(enlaceInicio).toHaveAttribute("href", "#");
-    await expect(enlaceCaracteristicas).toHaveAttribute("href", "#gallery");
-    await expect(enlaceContacto).toHaveAttribute("href", "#contact");
+    await expect(homePageLink).toHaveAttribute("href", "#");
+    await expect(featuresLink).toHaveAttribute("href", "#gallery");
+    await expect(contactLink).toHaveAttribute("href", "#contact");
   });
 });
 
-test.describe("Contenido de las secciones", () => {
-  test("La sección hero contiene sus elementos correctos", async ({ page }) => {
+test.describe("section content", () => {
+  test("The hero section contains the expected elements", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     await expect(page.getByRole("heading", { level: 1, name: "¡Tu comunidad, más conectada" })).toBeVisible();
@@ -51,7 +51,7 @@ test.describe("Contenido de las secciones", () => {
     await expect(page.getByRole("img", { name: "Imagen de la pantalla de un monitor" }).first()).toBeVisible();
   });
 
-  test("La sección de motivación contiene su mensaje principal", async ({ page }) => {
+  test("The motivation section contains its main message", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     const seccionMotivacion = page.locator("section#gallery");
@@ -61,7 +61,7 @@ test.describe("Contenido de las secciones", () => {
     await expect(seccionMotivacion.getByRole("heading", { level: 2 })).toContainText("necesita en un solo lugar");
   });
 
-  test("La sección gallery contiene las tarjetas correctas", async ({ page }) => {
+  test("The gallery section contains the correct cards", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     const seccionGallery = page.locator("section#gallery");
@@ -75,7 +75,7 @@ test.describe("Contenido de las secciones", () => {
     await expect(seccionGallery.getByRole("heading", { level: 3, name: "Consulta las finanzas" })).toBeVisible();
   });
 
-  test("La sección de contacto contiene el contenido y formulario correctos", async ({ page }) => {
+  test("The contact section contains the correct content and form", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     const seccionContacto = page.locator("section#contact");
@@ -92,8 +92,8 @@ test.describe("Contenido de las secciones", () => {
   });
 });
 
-test.describe("contenido del footer", () => {
-  test("El footer contiene los enlaces de navegación correctos", async ({ page }) => {
+test.describe("footer content", () => {
+  test("The footer contains the correct navigation links", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     const footer = page.getByRole("contentinfo");
@@ -107,7 +107,7 @@ test.describe("contenido del footer", () => {
     );
   });
 
-  test("El footer muestra los iconos sociales esperados con enlaces externos", async ({ page }) => {
+  test("The footer shows the expected social icons with external links", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     const footer = page.getByRole("contentinfo");
@@ -129,7 +129,7 @@ test.describe("contenido del footer", () => {
     await expect(footer.getByRole("img", { name: "Icono de X" })).toBeVisible();
   });
 
-  test("El footer muestra el logo", async ({ page }) => {
+  test("The footer shows the logo", async ({ page }) => {
     await page.goto("http://localhost:3000");
 
     const footer = page.getByRole("contentinfo");

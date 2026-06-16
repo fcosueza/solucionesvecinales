@@ -1,50 +1,50 @@
 import { test, expect } from "@playwright/test";
 
 const URL = "http://localhost:3000/signup";
-const elementoToast = "[data-sonner-toaster] li";
+const toastElement = "[data-sonner-toaster] li";
 
-test.describe("navegación página de registro", () => {
-  test("Cualquier usuario puede navegar a la página de registro", async ({ page }) => {
+test.describe("sign-up page navigation", () => {
+  test("Any user can navigate to the sign-up page", async ({ page }) => {
     await page.goto(URL);
 
     await expect(page).toHaveURL(URL);
     await expect(page.getByRole("main")).toBeVisible();
   });
 
-  test("La página de registro tiene el título correcto", async ({ page }) => {
+  test("The sign-up page has the correct title", async ({ page }) => {
     await page.goto(URL);
 
     await expect(page).toHaveTitle(/Soluciones Vecinales/i);
   });
 });
 
-test.describe("contenido de la cabecera", () => {
-  test("La cabecera contiene el enlace a la página de inicio", async ({ page }) => {
+test.describe("header content", () => {
+  test("The header contains the link to the home page", async ({ page }) => {
     await page.goto(URL);
 
     await expect(page.getByRole("link", { name: "Inicio" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "/");
   });
 
-  test("La cabecera contiene el botón de iniciar sesión que enlaza a /login", async ({ page }) => {
+  test("The header contains the login button linking to /login", async ({ page }) => {
     await page.goto(URL);
 
-    const botonInicioSesion = page.getByRole("button", { name: "Iniciar sesión" });
+    const signInButton = page.getByRole("button", { name: "Iniciar sesión" });
 
-    await expect(botonInicioSesion).toBeVisible();
-    await botonInicioSesion.click();
+    await expect(signInButton).toBeVisible();
+    await signInButton.click();
     await expect(page).toHaveURL("http://localhost:3000/login");
   });
 });
 
-test.describe("contenido del formulario", () => {
-  test("El formulario de registro es visible", async ({ page }) => {
+test.describe("form content", () => {
+  test("The sign-up form is visible", async ({ page }) => {
     await page.goto(URL);
 
     await expect(page.getByRole("form")).toBeVisible();
   });
 
-  test("El formulario contiene todos los campos requeridos", async ({ page }) => {
+  test("The form contains all required fields", async ({ page }) => {
     await page.goto(URL);
 
     await expect(page.locator("#name")).toBeVisible();
@@ -54,50 +54,50 @@ test.describe("contenido del formulario", () => {
     await expect(page.locator("#repeat")).toBeVisible();
   });
 
-  test("El formulario contiene los dos roles de usuario como opciones de radio", async ({ page }) => {
+  test("The form contains both user roles as radio options", async ({ page }) => {
     await page.goto(URL);
 
     await expect(page.locator("#tenant")).toBeVisible();
     await expect(page.locator("#admin")).toBeVisible();
   });
 
-  test("El rol inquilino está seleccionado por defecto", async ({ page }) => {
+  test("The tenant role is selected by default", async ({ page }) => {
     await page.goto(URL);
 
     await expect(page.locator("#tenant")).toBeChecked();
     await expect(page.locator("#admin")).not.toBeChecked();
   });
 
-  test("El formulario contiene el botón de envío", async ({ page }) => {
+  test("The form contains the submit button", async ({ page }) => {
     await page.goto(URL);
 
     await expect(page.getByRole("button", { name: "Enviar" })).toBeVisible();
   });
 
-  test("La página contiene el enlace a la página de inicio de sesión", async ({ page }) => {
+  test("The page contains the link to the login page", async ({ page }) => {
     await page.goto(URL);
 
-    const enlaceInicioSesion = page.getByRole("link", { name: "inicia sesión" });
+    const signInLink = page.getByRole("link", { name: "inicia sesión" });
 
-    await expect(enlaceInicioSesion).toBeVisible();
-    await expect(enlaceInicioSesion).toHaveAttribute("href", "/login");
+    await expect(signInLink).toBeVisible();
+    await expect(signInLink).toHaveAttribute("href", "/login");
   });
 });
 
-test.describe("validación del formulario con datos incorrectos", () => {
-  test("Muestra un toast de error al enviar el formulario con todos los campos vacíos", async ({ page }) => {
+test.describe("form validation with invalid data", () => {
+  test("Shows an error toast when submitting the form with all fields empty", async ({ page }) => {
     await page.goto(URL);
 
     await page.getByRole("button", { name: "Enviar" }).click();
 
-    await expect(page.locator(elementoToast)).toHaveCount(0);
+    await expect(page.locator(toastElement)).toHaveCount(0);
     expect(await page.locator("#name").evaluate(input => (input as HTMLInputElement).validity.valueMissing)).toBe(true);
     expect(await page.locator("#email").evaluate(input => (input as HTMLInputElement).validity.valueMissing)).toBe(
       true
     );
   });
 
-  test("Muestra errores de campo cuando el nombre y apellidos tienen menos de 2 caracteres", async ({ page }) => {
+  test("Shows field errors when first name and surname have fewer than 2 characters", async ({ page }) => {
     await page.goto(URL);
 
     await page.locator("#name").fill("a");
@@ -107,11 +107,11 @@ test.describe("validación del formulario con datos incorrectos", () => {
     await page.locator("#repeat").fill("contrasenavalida123");
     await page.getByRole("button", { name: "Enviar" }).click();
 
-    await expect(page.locator(elementoToast).first()).toBeVisible({ timeout: 5000 });
+    await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
     await expect(page.getByRole("alert").first()).toBeVisible();
   });
 
-  test("Muestra un toast de error con un correo con formato incorrecto", async ({ page }) => {
+  test("Shows an error toast with an invalid email format", async ({ page }) => {
     await page.goto(URL);
 
     await page.locator("#name").fill("NombreValido");
@@ -121,13 +121,13 @@ test.describe("validación del formulario con datos incorrectos", () => {
     await page.locator("#repeat").fill("contrasenavalida123");
     await page.getByRole("button", { name: "Enviar" }).click();
 
-    await expect(page.locator(elementoToast)).toHaveCount(0);
+    await expect(page.locator(toastElement)).toHaveCount(0);
     expect(await page.locator("#email").evaluate(input => (input as HTMLInputElement).validity.typeMismatch)).toBe(
       true
     );
   });
 
-  test("Muestra un toast de error cuando la contraseña tiene menos de 15 caracteres", async ({ page }) => {
+  test("Shows an error toast when the password has fewer than 15 characters", async ({ page }) => {
     await page.goto(URL);
 
     await page.locator("#name").fill("NombreValido");
@@ -137,11 +137,11 @@ test.describe("validación del formulario con datos incorrectos", () => {
     await page.locator("#repeat").fill("corta");
     await page.getByRole("button", { name: "Enviar" }).click();
 
-    await expect(page.locator(elementoToast).first()).toBeVisible({ timeout: 5000 });
-    await expect(page.locator(elementoToast).first()).toContainText(/formulario/i);
+    await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
+    await expect(page.locator(toastElement).first()).toContainText(/formulario/i);
   });
 
-  test("Muestra un toast de error cuando las contraseñas no coinciden", async ({ page }) => {
+  test("Shows an error toast when passwords do not match", async ({ page }) => {
     await page.goto(URL);
 
     await page.locator("#name").fill("NombreValido");
@@ -151,11 +151,11 @@ test.describe("validación del formulario con datos incorrectos", () => {
     await page.locator("#repeat").fill("contrasenadiferente456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
-    await expect(page.locator(elementoToast).first()).toBeVisible({ timeout: 5000 });
-    await expect(page.locator(elementoToast).first()).toContainText(/formulario/i);
+    await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
+    await expect(page.locator(toastElement).first()).toContainText(/formulario/i);
   });
 
-  test("Muestra un error de campo de contraseña repetida cuando las contraseñas no coinciden", async ({ page }) => {
+  test("Shows a repeat-password field error when passwords do not match", async ({ page }) => {
     await page.goto(URL);
 
     await page.locator("#name").fill("NombreValido");
@@ -169,51 +169,51 @@ test.describe("validación del formulario con datos incorrectos", () => {
   });
 });
 
-test.describe("envío del formulario con datos correctos", () => {
-  test("Muestra un toast de éxito y redirige a /login al registrar un usuario correctamente", async ({ page }) => {
-    const correoUnico = `testuser_${Date.now()}@example.com`;
+test.describe("form submission with valid data", () => {
+  test("Shows a success toast and redirects to /login when registering a user successfully", async ({ page }) => {
+    const uniqueEmail = `testuser_${Date.now()}@example.com`;
 
     await page.goto(URL);
 
     await page.locator("#name").fill("NombreValido");
     await page.locator("#surname").fill("ApellidoValido");
     await page.locator("#tenant").check();
-    await page.locator("#email").fill(correoUnico);
+    await page.locator("#email").fill(uniqueEmail);
     await page.locator("#password").fill("contrasenavalida123");
     await page.locator("#repeat").fill("contrasenavalida123");
     await page.getByRole("button", { name: "Enviar" }).click();
 
-    await expect(page.locator(elementoToast).first()).toBeVisible({ timeout: 8000 });
-    await expect(page.locator(elementoToast).first()).toContainText(/creado correctamente/i);
+    await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
+    await expect(page.locator(toastElement).first()).toContainText(/creado correctamente/i);
     await expect(page).toHaveURL("http://localhost:3000/login", { timeout: 8000 });
   });
 
-  test("Se puede registrar un usuario como administrador correctamente", async ({ page }) => {
-    const correoUnico = `adminuser_${Date.now()}@example.com`;
+  test("Can register a user as an admin successfully", async ({ page }) => {
+    const uniqueEmail = `adminuser_${Date.now()}@example.com`;
 
     await page.goto(URL);
 
     await page.locator("#name").fill("AdminValido");
     await page.locator("#surname").fill("ApellidoAdmin");
     await page.locator("#admin").check();
-    await page.locator("#email").fill(correoUnico);
+    await page.locator("#email").fill(uniqueEmail);
     await page.locator("#password").fill("contrasenavalida123");
     await page.locator("#repeat").fill("contrasenavalida123");
     await page.getByRole("button", { name: "Enviar" }).click();
 
-    await expect(page.locator(elementoToast).first()).toBeVisible({ timeout: 8000 });
-    await expect(page.locator(elementoToast).first()).toContainText(/creado correctamente/i);
+    await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
+    await expect(page.locator(toastElement).first()).toContainText(/creado correctamente/i);
     await expect(page).toHaveURL("http://localhost:3000/login", { timeout: 8000 });
   });
 
-  test("Muestra un toast de error al intentar registrar un correo ya existente", async ({ page }) => {
-    const correoDuplicado = `duplicate_${Date.now()}@example.com`;
+  test("Shows an error toast when trying to register an existing email", async ({ page }) => {
+    const duplicateEmail = `duplicate_${Date.now()}@example.com`;
 
     // Registra el usuario por primera vez
     await page.goto(URL);
     await page.locator("#name").fill("NombreValido");
     await page.locator("#surname").fill("ApellidoValido");
-    await page.locator("#email").fill(correoDuplicado);
+    await page.locator("#email").fill(duplicateEmail);
     await page.locator("#password").fill("contrasenavalida123");
     await page.locator("#repeat").fill("contrasenavalida123");
     await page.getByRole("button", { name: "Enviar" }).click();
@@ -223,13 +223,13 @@ test.describe("envío del formulario con datos correctos", () => {
     await page.goto(URL);
     await page.locator("#name").fill("OtroNombre");
     await page.locator("#surname").fill("OtroApellido");
-    await page.locator("#email").fill(correoDuplicado);
+    await page.locator("#email").fill(duplicateEmail);
     await page.locator("#password").fill("contrasenavalida123");
     await page.locator("#repeat").fill("contrasenavalida123");
     await page.getByRole("button", { name: "Enviar" }).click();
 
-    await expect(page.locator(elementoToast).first()).toBeVisible({ timeout: 8000 });
-    await expect(page.locator(elementoToast).first()).toContainText(/usuario/i);
+    await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
+    await expect(page.locator(toastElement).first()).toContainText(/usuario/i);
     await expect(page).toHaveURL(URL);
   });
 });
