@@ -93,8 +93,8 @@ test.describe("form validation with invalid data", () => {
   test("Shows an error toast with an invalid email format", async ({ page }) => {
     await page.goto(URL);
 
-    await page.locator("#email").fill("correoincorrecto");
-    await page.locator("#password").fill("contrasenavalida123");
+    await page.locator("#email").fill("invalid-email-format");
+    await page.locator("#password").fill("validpassword123456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement)).toHaveCount(0);
@@ -118,7 +118,7 @@ test.describe("form validation with invalid data", () => {
     await page.goto(URL);
 
     await page.locator("#email").fill("noexiste@example.com");
-    await page.locator("#password").fill("contrasenavalida123");
+    await page.locator("#password").fill("validpassword123456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
@@ -130,7 +130,7 @@ test.describe("form validation with invalid data", () => {
     await page.goto(URL);
 
     await page.locator("#email").fill(TENANT_CREDENTIALS.email);
-    await page.locator("#password").fill("contrasenaincorrecta123");
+    await page.locator("#password").fill("invalidpassword123");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
@@ -144,7 +144,7 @@ test.describe("form validation with invalid data", () => {
     const email = TENANT_CREDENTIALS.email;
 
     await page.locator("#email").fill(email);
-    await page.locator("#password").fill("contrasenaincorrecta123");
+    await page.locator("#password").fill("invalidpassword123");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });

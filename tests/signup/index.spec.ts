@@ -103,8 +103,8 @@ test.describe("form validation with invalid data", () => {
     await page.locator("#name").fill("a");
     await page.locator("#surname").fill("b");
     await page.locator("#email").fill("test@example.com");
-    await page.locator("#password").fill("contrasenavalida123");
-    await page.locator("#repeat").fill("contrasenavalida123");
+    await page.locator("#password").fill("validpassword123456");
+    await page.locator("#repeat").fill("validpassword123456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
@@ -114,11 +114,11 @@ test.describe("form validation with invalid data", () => {
   test("Shows an error toast with an invalid email format", async ({ page }) => {
     await page.goto(URL);
 
-    await page.locator("#name").fill("NombreValido");
-    await page.locator("#surname").fill("ApellidoValido");
-    await page.locator("#email").fill("correoincorrecto");
-    await page.locator("#password").fill("contrasenavalida123");
-    await page.locator("#repeat").fill("contrasenavalida123");
+    await page.locator("#name").fill("ValidName");
+    await page.locator("#surname").fill("ValidSurname");
+    await page.locator("#email").fill("invalid-email-format");
+    await page.locator("#password").fill("validpassword123456");
+    await page.locator("#repeat").fill("validpassword123456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement)).toHaveCount(0);
@@ -130,11 +130,11 @@ test.describe("form validation with invalid data", () => {
   test("Shows an error toast when the password has fewer than 15 characters", async ({ page }) => {
     await page.goto(URL);
 
-    await page.locator("#name").fill("NombreValido");
-    await page.locator("#surname").fill("ApellidoValido");
+    await page.locator("#name").fill("ValidName");
+    await page.locator("#surname").fill("ValidSurname");
     await page.locator("#email").fill("test@example.com");
-    await page.locator("#password").fill("corta");
-    await page.locator("#repeat").fill("corta");
+    await page.locator("#password").fill("short");
+    await page.locator("#repeat").fill("short");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
@@ -144,11 +144,11 @@ test.describe("form validation with invalid data", () => {
   test("Shows an error toast when passwords do not match", async ({ page }) => {
     await page.goto(URL);
 
-    await page.locator("#name").fill("NombreValido");
-    await page.locator("#surname").fill("ApellidoValido");
+    await page.locator("#name").fill("ValidName");
+    await page.locator("#surname").fill("ValidSurname");
     await page.locator("#email").fill("test@example.com");
-    await page.locator("#password").fill("contrasenavalida123");
-    await page.locator("#repeat").fill("contrasenadiferente456");
+    await page.locator("#password").fill("validpassword123456");
+    await page.locator("#repeat").fill("differentpassword456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
@@ -158,11 +158,11 @@ test.describe("form validation with invalid data", () => {
   test("Shows a repeat-password field error when passwords do not match", async ({ page }) => {
     await page.goto(URL);
 
-    await page.locator("#name").fill("NombreValido");
-    await page.locator("#surname").fill("ApellidoValido");
+    await page.locator("#name").fill("ValidName");
+    await page.locator("#surname").fill("ValidSurname");
     await page.locator("#email").fill("test@example.com");
-    await page.locator("#password").fill("contrasenavalida123");
-    await page.locator("#repeat").fill("contrasenadiferente456");
+    await page.locator("#password").fill("validpassword123456");
+    await page.locator("#repeat").fill("differentpassword456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.getByText(/Las contraseñas deben coincidir/i)).toBeVisible({ timeout: 5000 });
@@ -175,12 +175,12 @@ test.describe("form submission with valid data", () => {
 
     await page.goto(URL);
 
-    await page.locator("#name").fill("NombreValido");
-    await page.locator("#surname").fill("ApellidoValido");
+    await page.locator("#name").fill("ValidName");
+    await page.locator("#surname").fill("ValidSurname");
     await page.locator("#tenant").check();
     await page.locator("#email").fill(uniqueEmail);
-    await page.locator("#password").fill("contrasenavalida123");
-    await page.locator("#repeat").fill("contrasenavalida123");
+    await page.locator("#password").fill("validpassword123456");
+    await page.locator("#repeat").fill("validpassword123456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
@@ -193,12 +193,12 @@ test.describe("form submission with valid data", () => {
 
     await page.goto(URL);
 
-    await page.locator("#name").fill("AdminValido");
-    await page.locator("#surname").fill("ApellidoAdmin");
+    await page.locator("#name").fill("ValidAdminName");
+    await page.locator("#surname").fill("ValidAdminSurname");
     await page.locator("#admin").check();
     await page.locator("#email").fill(uniqueEmail);
-    await page.locator("#password").fill("contrasenavalida123");
-    await page.locator("#repeat").fill("contrasenavalida123");
+    await page.locator("#password").fill("validpassword123456");
+    await page.locator("#repeat").fill("validpassword123456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
@@ -211,21 +211,21 @@ test.describe("form submission with valid data", () => {
 
     // Registra el usuario por primera vez
     await page.goto(URL);
-    await page.locator("#name").fill("NombreValido");
-    await page.locator("#surname").fill("ApellidoValido");
+    await page.locator("#name").fill("ValidName");
+    await page.locator("#surname").fill("ValidSurname");
     await page.locator("#email").fill(duplicateEmail);
-    await page.locator("#password").fill("contrasenavalida123");
-    await page.locator("#repeat").fill("contrasenavalida123");
+    await page.locator("#password").fill("validpassword123456");
+    await page.locator("#repeat").fill("validpassword123456");
     await page.getByRole("button", { name: "Enviar" }).click();
     await expect(page).toHaveURL("http://localhost:3000/login", { timeout: 8000 });
 
     // Intenta registrarlo de nuevo con el mismo correo
     await page.goto(URL);
-    await page.locator("#name").fill("OtroNombre");
-    await page.locator("#surname").fill("OtroApellido");
+    await page.locator("#name").fill("AnotherValidName");
+    await page.locator("#surname").fill("AnotherValidSurname");
     await page.locator("#email").fill(duplicateEmail);
-    await page.locator("#password").fill("contrasenavalida123");
-    await page.locator("#repeat").fill("contrasenavalida123");
+    await page.locator("#password").fill("validpassword123456");
+    await page.locator("#repeat").fill("validpassword123456");
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
