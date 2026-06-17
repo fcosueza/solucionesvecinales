@@ -1,7 +1,7 @@
 import ActionButton from "@/components/ui/ActionButton";
 import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
 import Table, { TableRow } from "@/components/ui/Table";
-import { calculateFinancialSummary, formatCurrencyAmount, RegistroCalculable } from "@/lib/finance";
+import { calculateFinancialSummary, formatCurrencyAmount, FinancialRecordCalculable } from "@/lib/finance";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
@@ -16,7 +16,7 @@ interface Props {
 interface RegistroItem {
   id: number;
   descripcion: string;
-  importe: RegistroCalculable["importe"];
+  importe: FinancialRecordCalculable["amount"];
   tipo: "ingreso" | "gasto";
   creadoEn: Date;
 }
@@ -129,7 +129,7 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
     redirect("/login");
   }
 
-  const community = await prisma.comunidad.findUnique({
+  const community = await prisma.community.findUnique({
     where: { id: communityID },
     select: {
       id: true,

@@ -3,10 +3,10 @@ import { calculateFinancialSummary, formatCurrencyAmount } from "./finance";
 describe("Suite de pruebas del modulo finance", () => {
   it("Debe calcular ingresos, pagos y balance final", () => {
     const summary = calculateFinancialSummary([
-      { tipo: "ingreso", importe: 1000 },
-      { tipo: "gasto", importe: 250.5 },
-      { tipo: "ingreso", importe: "99.50" },
-      { tipo: "gasto", importe: { toString: () => "10.25" } }
+      { type: "income", amount: 1000 },
+      { type: "expense", amount: 250.5 },
+      { type: "income", amount: "99.50" },
+      { type: "expense", amount: { toString: () => "10.25" } }
     ]);
 
     expect(summary).toEqual({
