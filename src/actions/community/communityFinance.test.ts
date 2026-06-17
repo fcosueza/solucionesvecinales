@@ -9,10 +9,10 @@ jest.mock("next/cache", () => ({
   revalidatePath: jest.fn()
 }));
 jest.mock("@/lib/prisma", () => ({
-  inscripcion: {
+  membership: {
     findUnique: jest.fn()
   },
-  registro: {
+  financialRecord: {
     create: jest.fn(),
     delete: jest.fn()
   }
@@ -37,7 +37,7 @@ describe("Suite de pruebas de communityFinance", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue({ usuario: "admin-1" });
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "admin-1" });
   });
 
   it("No debe hacer nada si el usuario no esta autenticado", async () => {
@@ -45,7 +45,7 @@ describe("Suite de pruebas de communityFinance", () => {
 
     await communityFinance(1, createFormData({}));
 
-    expect(prisma.registro.create).not.toHaveBeenCalled();
+    expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si el usuario no es administrador", async () => {
@@ -56,7 +56,7 @@ describe("Suite de pruebas de communityFinance", () => {
 
     await communityFinance(1, createFormData({}));
 
-    expect(prisma.registro.create).not.toHaveBeenCalled();
+    expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si el formulario es invalido", async () => {
@@ -67,7 +67,7 @@ describe("Suite de pruebas de communityFinance", () => {
 
     await communityFinance(0, createFormData({ descripcion: "", importe: "NaN", tipo: "otro" }));
 
-    expect(prisma.registro.create).not.toHaveBeenCalled();
+    expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si faltan campos en el FormData", async () => {
@@ -79,7 +79,7 @@ describe("Suite de pruebas de communityFinance", () => {
 
     await communityFinance(1, formData);
 
-    expect(prisma.registro.create).not.toHaveBeenCalled();
+    expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si el usuario no esta inscrito en la comunidad", async () => {
@@ -87,11 +87,11 @@ describe("Suite de pruebas de communityFinance", () => {
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
     });
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue(null);
 
     await communityFinance(1, createFormData({}));
 
-    expect(prisma.registro.create).not.toHaveBeenCalled();
+    expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
   it("Debe crear un registro y revalidar rutas si el usuario es admin", async () => {
@@ -99,16 +99,16 @@ describe("Suite de pruebas de communityFinance", () => {
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
     });
-    (prisma.registro.create as jest.Mock).mockResolvedValue({});
+    (prisma.financialRecord.create as jest.Mock).mockResolvedValue({});
 
     await communityFinance(4, createFormData({ descripcion: "  Cuota mensual  ", importe: "300", tipo: "ingreso" }));
 
-    expect(prisma.registro.create).toHaveBeenCalledWith({
+    expect(prisma.financialRecord.create).toHaveBeenCalledWith({
       data: {
-        comunidad: 4,
-        descripcion: "Cuota mensual",
-        importe: 300,
-        tipo: "ingreso"
+        community: 4,
+        description: "Cuota mensual",
+        amount: 300,
+        type: "income"
       }
     });
     expect(revalidatePath).toHaveBeenCalledWith("/communities/4/finanzas");
@@ -120,11 +120,11 @@ describe("Suite de pruebas de communityFinance", () => {
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
     });
-    (prisma.registro.create as jest.Mock).mockResolvedValue({});
+    (prisma.financialRecord.create as jest.Mock).mockResolvedValue({});
 
     await communityFinance(2, createFormData({ tipo: "gasto" }));
 
-    expect(prisma.registro.create).toHaveBeenCalled();
+    expect(prisma.financialRecord.create).toHaveBeenCalled();
   });
 
   it("No debe lanzar error si prisma.create falla", async () => {
@@ -132,7 +132,7 @@ describe("Suite de pruebas de communityFinance", () => {
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
     });
-    (prisma.registro.create as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (prisma.financialRecord.create as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     await expect(communityFinance(1, createFormData({}))).resolves.toBeUndefined();
     expect(revalidatePath).not.toHaveBeenCalled();
@@ -152,7 +152,7 @@ describe("Suite de pruebas de deleteRecord", () => {
 
     await deleteRecord(formData);
 
-    expect(prisma.registro.delete).not.toHaveBeenCalled();
+    expect(prisma.financialRecord.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -167,7 +167,7 @@ describe("Suite de pruebas de deleteRecord", () => {
 
     await deleteRecord(formData);
 
-    expect(prisma.registro.delete).not.toHaveBeenCalled();
+    expect(prisma.financialRecord.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -182,7 +182,7 @@ describe("Suite de pruebas de deleteRecord", () => {
 
     await deleteRecord(formData);
 
-    expect(prisma.registro.delete).not.toHaveBeenCalled();
+    expect(prisma.financialRecord.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -191,14 +191,14 @@ describe("Suite de pruebas de deleteRecord", () => {
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
     });
-    (prisma.registro.delete as jest.Mock).mockResolvedValue({});
+    (prisma.financialRecord.delete as jest.Mock).mockResolvedValue({});
 
     const formData = new FormData();
     formData.append("id", "18");
 
     await deleteRecord(formData);
 
-    expect(prisma.registro.delete).toHaveBeenCalledWith({ where: { id: 18 } });
+    expect(prisma.financialRecord.delete).toHaveBeenCalledWith({ where: { id: 18 } });
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/finanzas");
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
   });
@@ -208,7 +208,7 @@ describe("Suite de pruebas de deleteRecord", () => {
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
     });
-    (prisma.registro.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (prisma.financialRecord.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     const formData = new FormData();
     formData.append("id", "18");

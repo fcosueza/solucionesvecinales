@@ -28,15 +28,15 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
     return;
   }
 
-  const inscripcion = await prisma.inscripcion.findUnique({
+  const inscripcion = await prisma.membership.findUnique({
     where: {
-      usuario_comunidad: {
-        usuario: sesionVerificada.session.userID,
-        comunidad: communityId
+      user_community: {
+        user: sesionVerificada.session.userID,
+        community: communityId
       }
     },
     select: {
-      usuario: true
+      user: true
     }
   });
 
@@ -53,10 +53,10 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
 
   // We try to create the message in the database
   try {
-    await prisma.mensaje.create({
+    await prisma.message.create({
       data: {
-        comunidad: communityId,
-        texto
+        community: communityId,
+        text: texto
       }
     });
 
@@ -84,15 +84,15 @@ const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void>
     return;
   }
 
-  const inscripcion = await prisma.inscripcion.findUnique({
+  const inscripcion = await prisma.membership.findUnique({
     where: {
-      usuario_comunidad: {
-        usuario: sesionVerificada.session.userID,
-        comunidad: communityId
+      user_community: {
+        user: sesionVerificada.session.userID,
+        community: communityId
       }
     },
     select: {
-      usuario: true
+      user: true
     }
   });
 
@@ -101,11 +101,11 @@ const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void>
   }
 
   try {
-    await prisma.mensaje.delete({
+    await prisma.message.delete({
       where: {
-        creadoEn_comunidad: {
-          creadoEn,
-          comunidad: communityId
+        createdAt_community: {
+          createdAt: creadoEn,
+          community: communityId
         }
       }
     });

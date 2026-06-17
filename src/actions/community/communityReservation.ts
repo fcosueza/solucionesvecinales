@@ -23,8 +23,8 @@ import { revalidatePath } from "next/cache";
  * @returns Objeto filter for Prism
  */
 const getUpcomingReservationFilter = (userID: string, currentDate: Date, currentTime: Date) => ({
-  usuario: userID,
-  OR: [{ fecha: { gt: currentDate } }, { fecha: currentDate, hora_fin: { gt: currentTime } }]
+  user: userID,
+  OR: [{ date: { gt: currentDate } }, { date: currentDate, endTime: { gt: currentTime } }]
 });
 
 /**
@@ -84,28 +84,28 @@ const reserveCommonArea = async (
   }
 
   const [inscription, zone] = await Promise.all([
-    prisma.inscripcion.findUnique({
+    prisma.membership.findUnique({
       where: {
-        usuario_comunidad: {
-          usuario: verifiedSession.session.userID,
-          comunidad: communityID
+        user_community: {
+          user: verifiedSession.session.userID,
+          community: communityID
         }
       },
       select: {
-        usuario: true
+        user: true
       }
     }),
-    prisma.zona.findUnique({
+    prisma.zone.findUnique({
       where: {
-        nombre_comunidad: {
-          nombre: zoneName,
-          comunidad: communityID
+        name_community: {
+          name: zoneName,
+          community: communityID
         }
       },
       select: {
-        nombre: true,
-        hora_inicio: true,
-        hora_fin: true
+        name: true,
+        startTime: true,
+        endTime: true
       }
     })
   ]);
@@ -118,8 +118,8 @@ const reserveCommonArea = async (
     return createReservationError("La zona común no existe", formData);
   }
 
-  const openingHour = zone.hora_inicio.getUTCHours();
-  const closingHour = zone.hora_fin.getUTCHours();
+  const openingHour = zone.startTime.getUTCHours();
+  const closingHour = zone.endTime.getUTCHours();
   const endHour = startHour + duration;
 
   if (startHour < openingHour || endHour > closingHour) {
@@ -138,7 +138,7 @@ const reserveCommonArea = async (
 
   try {
     const result = await prisma.$transaction(async tx => {
-      const activeReservation = await tx.reserva.findFirst({
+      const activeReservation = await tx.reservation.findFirst({
         where: getUpcomingReservationFilter(verifiedSession.session!.userID, today, currentTime),
         select: {
           id: true
@@ -152,12 +152,12 @@ const reserveCommonArea = async (
       const reservedHours = buildReservedHours(startHour, duration);
       const reservedTimeDates = reservedHours.map(hour => new Date(Date.UTC(1970, 0, 1, hour, 0, 0, 0)));
 
-      const overlappingSlots = await tx.reservaFranja.findMany({
+      const overlappingSlots = await tx.reservationSlot.findMany({
         where: {
-          comunidad: communityID,
-          zona: zoneName,
-          fecha: reservationDate,
-          hora: {
+          community: communityID,
+          zone: zoneName,
+          date: reservationDate,
+          time: {
             in: reservedTimeDates
           }
         },
@@ -170,20 +170,20 @@ const reserveCommonArea = async (
         return { state: "overlap" as const };
       }
 
-      await tx.reserva.create({
+      await tx.reservation.create({
         data: {
-          usuario: verifiedSession.session!.userID,
-          comunidad: communityID,
-          zona: zoneName,
-          fecha: reservationDate,
-          hora_inicio: new Date(Date.UTC(1970, 0, 1, startHour, 0, 0, 0)),
-          hora_fin: new Date(Date.UTC(1970, 0, 1, endHour, 0, 0, 0)),
-          franjas: {
+          user: verifiedSession.session!.userID,
+          community: communityID,
+          zone: zoneName,
+          date: reservationDate,
+          startTime: new Date(Date.UTC(1970, 0, 1, startHour, 0, 0, 0)),
+          endTime: new Date(Date.UTC(1970, 0, 1, endHour, 0, 0, 0)),
+          slots: {
             create: reservedTimeDates.map(timeDate => ({
-              comunidad: communityID,
-              zona: zoneName,
-              fecha: reservationDate,
-              hora: timeDate
+              community: communityID,
+              zone: zoneName,
+              date: reservationDate,
+              time: timeDate
             }))
           }
         }
@@ -232,11 +232,11 @@ const deleteReservation = async (reservationID: number, communityID: number): Pr
     return createReservationError("Datos de la reserva no válidos");
   }
 
-  const reservation = await prisma.reserva.findFirst({
+  const reservation = await prisma.reservation.findFirst({
     where: {
       id: reservationID,
-      usuario: verifiedSession.session.userID,
-      comunidad: communityID
+      user: verifiedSession.session.userID,
+      community: communityID
     },
     select: { id: true }
   });
@@ -246,7 +246,7 @@ const deleteReservation = async (reservationID: number, communityID: number): Pr
   }
 
   try {
-    await prisma.reserva.delete({ where: { id: reservationID } });
+    await prisma.reservation.delete({ where: { id: reservationID } });
   } catch {
     return createReservationError("No se pudo cancelar la reserva. Inténtalo de nuevo");
   }

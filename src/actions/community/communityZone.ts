@@ -43,12 +43,12 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
     };
   }
 
-  const community = await prisma.comunidad.findUnique({
+  const community = await prisma.community.findUnique({
     where: { id: communityID },
-    select: { adminID: true }
+    select: { adminId: true }
   });
 
-  if (!community || community.adminID !== verifiedSession.session.userID) {
+  if (!community || community.adminId !== verifiedSession.session.userID) {
     return {
       state: "error",
       message: "No tienes permisos para gestionar esta comunidad",
@@ -96,13 +96,13 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
   }
 
   try {
-    await prisma.zona.create({
+    await prisma.zone.create({
       data: {
-        nombre,
-        descripcion,
-        comunidad: communityID,
-        hora_inicio: horaInicioDate,
-        hora_fin: horaFinDate
+        name: nombre,
+        description: descripcion,
+        community: communityID,
+        startTime: horaInicioDate,
+        endTime: horaFinDate
       }
     });
   } catch (error: unknown) {
@@ -170,12 +170,12 @@ const deleteZone = async (communityID: number, zoneName: string): Promise<FormAc
     };
   }
 
-  const community = await prisma.comunidad.findUnique({
+  const community = await prisma.community.findUnique({
     where: { id: communityID },
-    select: { adminID: true }
+    select: { adminId: true }
   });
 
-  if (!community || community.adminID !== verifiedSession.session.userID) {
+  if (!community || community.adminId !== verifiedSession.session.userID) {
     return {
       state: "error",
       message: "No tienes permisos para gestionar esta comunidad"
@@ -183,11 +183,11 @@ const deleteZone = async (communityID: number, zoneName: string): Promise<FormAc
   }
 
   try {
-    await prisma.zona.delete({
+    await prisma.zone.delete({
       where: {
-        nombre_comunidad: {
-          nombre: zoneName,
-          comunidad: communityID
+        name_community: {
+          name: zoneName,
+          community: communityID
         }
       }
     });
@@ -225,8 +225,8 @@ const deleteZoneAdmin = async (formData: FormData): Promise<void> => {
   if (!nombre || !comunidad || isNaN(comunidad)) return;
 
   try {
-    await prisma.zona.delete({
-      where: { nombre_comunidad: { nombre, comunidad } }
+    await prisma.zone.delete({
+      where: { name_community: { name: nombre, community: comunidad } }
     });
     revalidatePath("/backoffice/zonas-comunes");
     revalidatePath("/backoffice/overview");

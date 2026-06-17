@@ -9,10 +9,10 @@ jest.mock("next/cache", () => ({
   revalidatePath: jest.fn()
 }));
 jest.mock("@/lib/prisma", () => ({
-  inscripcion: {
+  membership: {
     findUnique: jest.fn()
   },
-  mensaje: {
+  message: {
     create: jest.fn(),
     delete: jest.fn()
   }
@@ -20,8 +20,8 @@ jest.mock("@/lib/prisma", () => ({
 
 describe("Suite de pruebas de communityMessage", () => {
   const verifySessionMock = verifySession as jest.Mock;
-  const prismaCreateMock = prisma.mensaje.create as jest.Mock;
-  const prismaDeleteMock = prisma.mensaje.delete as jest.Mock;
+  const prismaCreateMock = prisma.message.create as jest.Mock;
+  const prismaDeleteMock = prisma.message.delete as jest.Mock;
   const revalidatePathMock = revalidatePath as jest.Mock;
 
   const createFormData = (texto?: string) => {
@@ -36,7 +36,7 @@ describe("Suite de pruebas de communityMessage", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue({ usuario: "admin-1" });
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "admin-1" });
   });
 
   it("No debe anadir mensaje si no hay sesion", async () => {
@@ -92,8 +92,8 @@ describe("Suite de pruebas de communityMessage", () => {
 
     expect(prismaCreateMock).toHaveBeenCalledWith({
       data: {
-        comunidad: 15,
-        texto: "Aviso de reunion"
+        community: 15,
+        text: "Aviso de reunion"
       }
     });
     expect(revalidatePathMock).toHaveBeenCalledWith("/communities/15/overview");
@@ -113,8 +113,8 @@ describe("Suite de pruebas de communityMessage", () => {
 
     expect(prismaCreateMock).toHaveBeenCalledWith({
       data: {
-        comunidad: 22,
-        texto: "Mensaje web admin"
+        community: 22,
+        text: "Mensaje web admin"
       }
     });
     expect(revalidatePathMock).toHaveBeenCalledWith("/communities/22/overview");
@@ -128,7 +128,7 @@ describe("Suite de pruebas de communityMessage", () => {
         role: UserRole.admin
       }
     });
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue(null);
 
     await addMessage(15, createFormData("Mensaje"));
 
@@ -189,9 +189,9 @@ describe("Suite de pruebas de communityMessage", () => {
 
     expect(prismaDeleteMock).toHaveBeenCalledWith({
       where: {
-        creadoEn_comunidad: {
-          creadoEn,
-          comunidad: 7
+        createdAt_community: {
+          createdAt: creadoEn,
+          community: 7
         }
       }
     });
@@ -213,9 +213,9 @@ describe("Suite de pruebas de communityMessage", () => {
 
     expect(prismaDeleteMock).toHaveBeenCalledWith({
       where: {
-        creadoEn_comunidad: {
-          creadoEn,
-          comunidad: 11
+        createdAt_community: {
+          createdAt: creadoEn,
+          community: 11
         }
       }
     });
@@ -230,7 +230,7 @@ describe("Suite de pruebas de communityMessage", () => {
         role: UserRole.admin
       }
     });
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue(null);
 
     await deleteMessage(7, new Date("2026-05-02T09:30:00.000Z"));
 

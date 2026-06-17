@@ -58,19 +58,19 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
 
   // We try to create the community in the database
   try {
-    await prisma.comunidad.create({
+    await prisma.community.create({
       data: {
-        nombre: datosValidados.data.name,
-        calle: datosValidados.data.street,
-        numero: datosValidados.data.number,
-        ciudad: datosValidados.data.city,
-        provincia: datosValidados.data.province,
-        pais: datosValidados.data.country,
-        adminID: sesionVerificada.session.userID,
-        inscripciones: {
+        name: datosValidados.data.name,
+        street: datosValidados.data.street,
+        number: datosValidados.data.number,
+        city: datosValidados.data.city,
+        province: datosValidados.data.province,
+        country: datosValidados.data.country,
+        adminId: sesionVerificada.session.userID,
+        memberships: {
           create: [
             {
-              usuario: sesionVerificada.session.userID
+              user: sesionVerificada.session.userID
             }
           ]
         }

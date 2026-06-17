@@ -39,7 +39,7 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
 
   // We perform the necessary queries in parallel to optimize performance
   const [comunidad, comunidadesUsuario, solicitudesPendientes] = await Promise.all([
-    prisma.comunidad.findUnique({
+    prisma.community.findUnique({
       where: {
         id: idComunidad
       },
@@ -47,29 +47,29 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
         id: true
       }
     }),
-    prisma.usuario.findUnique({
+    prisma.user.findUnique({
       where: {
         id: idUsuario
       },
       select: {
-        inscripciones: {
+        memberships: {
           where: {
-            comunidad: idComunidad
+            community: idComunidad
           },
           select: {
-            comunidad: true
+            community: true
           }
         }
       }
     }),
-    prisma.solicitud.findFirst({
+    prisma.request.findFirst({
       where: {
-        usuario: idUsuario,
-        comunidad: idComunidad,
-        estado: "pendiente"
+        user: idUsuario,
+        community: idComunidad,
+        status: "pending"
       },
       select: {
-        estado: true
+        status: true
       }
     })
   ]);
@@ -79,7 +79,7 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
     return;
   }
 
-  const yaSubscrito = (comunidadesUsuario?.inscripciones.length ?? 0) > 0;
+  const yaSubscrito = (comunidadesUsuario?.memberships.length ?? 0) > 0;
 
   // If the user is already subscribed to the community, we do nothing
   if (yaSubscrito) {
@@ -92,11 +92,11 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
   }
 
   // If everything is valid, create the request in "pending" status
-  await prisma.solicitud.create({
+  await prisma.request.create({
     data: {
-      usuario: idUsuario,
-      comunidad: idComunidad,
-      estado: "pendiente"
+      user: idUsuario,
+      community: idComunidad,
+      status: "pending"
     }
   });
 
@@ -112,7 +112,7 @@ const deleteRequest = async (formData: FormData): Promise<void> => {
   if (!id || isNaN(id)) return;
 
   try {
-    await prisma.solicitud.delete({ where: { id } });
+    await prisma.request.delete({ where: { id } });
     revalidatePath("/backoffice/solicitudes");
     revalidatePath("/backoffice/overview");
   } catch {}

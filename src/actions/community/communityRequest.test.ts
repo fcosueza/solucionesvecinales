@@ -9,13 +9,13 @@ jest.mock("next/cache", () => ({
   revalidatePath: jest.fn()
 }));
 jest.mock("@/lib/prisma", () => ({
-  comunidad: {
+  community: {
     findUnique: jest.fn()
   },
-  usuario: {
+  user: {
     findUnique: jest.fn()
   },
-  solicitud: {
+  request: {
     findFirst: jest.fn(),
     create: jest.fn(),
     delete: jest.fn()
@@ -40,8 +40,8 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
 
     await requestCommunitySubscription(formDataWithCommunity("5"));
 
-    expect(prisma.comunidad.findUnique).not.toHaveBeenCalled();
-    expect(prisma.solicitud.create).not.toHaveBeenCalled();
+    expect(prisma.community.findUnique).not.toHaveBeenCalled();
+    expect(prisma.request.create).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -55,8 +55,8 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
 
     await requestCommunitySubscription(formDataWithCommunity("abc"));
 
-    expect(prisma.comunidad.findUnique).not.toHaveBeenCalled();
-    expect(prisma.solicitud.create).not.toHaveBeenCalled();
+    expect(prisma.community.findUnique).not.toHaveBeenCalled();
+    expect(prisma.request.create).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -71,10 +71,10 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
 
     await requestCommunitySubscription(formDataWithCommunity("5"));
 
-    expect(prisma.comunidad.findUnique).not.toHaveBeenCalled();
-    expect(prisma.usuario.findUnique).not.toHaveBeenCalled();
-    expect(prisma.solicitud.findFirst).not.toHaveBeenCalled();
-    expect(prisma.solicitud.create).not.toHaveBeenCalled();
+    expect(prisma.community.findUnique).not.toHaveBeenCalled();
+    expect(prisma.user.findUnique).not.toHaveBeenCalled();
+    expect(prisma.request.findFirst).not.toHaveBeenCalled();
+    expect(prisma.request.create).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -86,15 +86,15 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
       }
     });
 
-    (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
-      inscripciones: [{ comunidad: 5 }]
+    (prisma.community.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
+      memberships: [{ community: 5 }]
     });
-    (prisma.solicitud.findFirst as jest.Mock).mockResolvedValue(null);
+    (prisma.request.findFirst as jest.Mock).mockResolvedValue(null);
 
     await requestCommunitySubscription(formDataWithCommunity("5"));
 
-    expect(prisma.solicitud.create).not.toHaveBeenCalled();
+    expect(prisma.request.create).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -106,15 +106,15 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
       }
     });
 
-    (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
-      inscripciones: []
+    (prisma.community.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
+      memberships: []
     });
-    (prisma.solicitud.findFirst as jest.Mock).mockResolvedValue({ id: 10 });
+    (prisma.request.findFirst as jest.Mock).mockResolvedValue({ id: 10 });
 
     await requestCommunitySubscription(formDataWithCommunity("5"));
 
-    expect(prisma.solicitud.create).not.toHaveBeenCalled();
+    expect(prisma.request.create).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -126,19 +126,19 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
       }
     });
 
-    (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
-      inscripciones: []
+    (prisma.community.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
+      memberships: []
     });
-    (prisma.solicitud.findFirst as jest.Mock).mockResolvedValue(null);
+    (prisma.request.findFirst as jest.Mock).mockResolvedValue(null);
 
     await requestCommunitySubscription(formDataWithCommunity("5"));
 
-    expect(prisma.solicitud.create).toHaveBeenCalledWith({
+    expect(prisma.request.create).toHaveBeenCalledWith({
       data: {
-        usuario: "tenant-1",
-        comunidad: 5,
-        estado: "pendiente"
+        user: "tenant-1",
+        community: 5,
+        status: "pending"
       }
     });
     expect(revalidatePath).toHaveBeenCalledWith("/communities/search");
@@ -152,13 +152,13 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
       }
     });
 
-    (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue(null);
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({ inscripciones: [] });
-    (prisma.solicitud.findFirst as jest.Mock).mockResolvedValue(null);
+    (prisma.community.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({ memberships: [] });
+    (prisma.request.findFirst as jest.Mock).mockResolvedValue(null);
 
     await requestCommunitySubscription(formDataWithCommunity("5"));
 
-    expect(prisma.solicitud.create).not.toHaveBeenCalled();
+    expect(prisma.request.create).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -170,13 +170,13 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
       }
     });
 
-    (prisma.comunidad.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue(null);
-    (prisma.solicitud.findFirst as jest.Mock).mockResolvedValue(null);
+    (prisma.community.findUnique as jest.Mock).mockResolvedValue({ id: 5 });
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.request.findFirst as jest.Mock).mockResolvedValue(null);
 
     await requestCommunitySubscription(formDataWithCommunity("5"));
 
-    expect(prisma.solicitud.create).toHaveBeenCalled();
+    expect(prisma.request.create).toHaveBeenCalled();
   });
 });
 
@@ -193,7 +193,7 @@ describe("Suite de pruebas de deleteRequest", () => {
 
     await deleteRequest(formData);
 
-    expect(prisma.solicitud.delete).not.toHaveBeenCalled();
+    expect(prisma.request.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -208,7 +208,7 @@ describe("Suite de pruebas de deleteRequest", () => {
 
     await deleteRequest(formData);
 
-    expect(prisma.solicitud.delete).not.toHaveBeenCalled();
+    expect(prisma.request.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -223,7 +223,7 @@ describe("Suite de pruebas de deleteRequest", () => {
 
     await deleteRequest(formData);
 
-    expect(prisma.solicitud.delete).not.toHaveBeenCalled();
+    expect(prisma.request.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -232,14 +232,14 @@ describe("Suite de pruebas de deleteRequest", () => {
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
     });
-    (prisma.solicitud.delete as jest.Mock).mockResolvedValue({});
+    (prisma.request.delete as jest.Mock).mockResolvedValue({});
 
     const formData = new FormData();
     formData.append("id", "24");
 
     await deleteRequest(formData);
 
-    expect(prisma.solicitud.delete).toHaveBeenCalledWith({ where: { id: 24 } });
+    expect(prisma.request.delete).toHaveBeenCalledWith({ where: { id: 24 } });
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/solicitudes");
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
   });
@@ -249,7 +249,7 @@ describe("Suite de pruebas de deleteRequest", () => {
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
     });
-    (prisma.solicitud.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (prisma.request.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     const formData = new FormData();
     formData.append("id", "24");

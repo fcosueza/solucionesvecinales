@@ -28,7 +28,7 @@ jest.mock("next/navigation", () => ({
 jest.mock("@/lib/prisma", () => ({
   __esModule: true,
   default: {
-    usuario: {
+    user: {
       update: jest.fn()
     },
     $transaction: jest.fn()
@@ -41,7 +41,7 @@ describe("Test suite for profile actions", () => {
   const eliminarSesionMock = eliminarSesion as jest.Mock;
   const redirectMock = redirect as unknown as jest.Mock;
 
-  const prismaUsuarioUpdateMock = (prisma as any).usuario.update as jest.Mock;
+  const prismaUsuarioUpdateMock = (prisma as any).user.update as jest.Mock;
   const prismaTransactionMock = (prisma as any).$transaction as jest.Mock;
 
   const crearFormData = (data: Record<string, string>) => {
@@ -118,8 +118,8 @@ describe("Test suite for profile actions", () => {
     expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
       data: {
-        nombre: "Juan",
-        apellido: "Perez",
+        name: "Juan",
+        lastName: "Perez",
         email: "juan@example.com"
       }
     });
@@ -149,10 +149,10 @@ describe("Test suite for profile actions", () => {
     expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
       data: {
-        nombre: "Juan",
-        apellido: "Perez",
+        name: "Juan",
+        lastName: "Perez",
         email: "juan@example.com",
-        credenciales: {
+        credentials: {
           upsert: {
             create: { password: "hashed-pass" },
             update: { password: "hashed-pass" }
@@ -253,7 +253,7 @@ describe("Test suite for profile actions", () => {
     expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: "user-1" },
-        data: expect.objectContaining({ imagen: expect.stringMatching(/^\/uploads\/profiles\/user-1-\d+\.png$/) })
+        data: expect.objectContaining({ image: expect.stringMatching(/^\/uploads\/profiles\/user-1-\d+\.png$/) })
       })
     );
   });
@@ -283,7 +283,7 @@ describe("Test suite for profile actions", () => {
     expect(resultado.state).toBe("success");
     expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
-      data: { nombre: "Juan", apellido: "Perez", email: "juan@example.com" }
+      data: { name: "Juan", lastName: "Perez", email: "juan@example.com" }
     });
   });
 
@@ -323,8 +323,8 @@ describe("Test suite for profile actions", () => {
     });
 
     const tx = {
-      comunidad: { deleteMany: jest.fn().mockResolvedValue({}) },
-      usuario: { delete: jest.fn().mockResolvedValue({}) }
+      community: { deleteMany: jest.fn().mockResolvedValue({}) },
+      user: { delete: jest.fn().mockResolvedValue({}) }
     };
 
     prismaTransactionMock.mockImplementation(async (callback: (arg: typeof tx) => Promise<void>) => callback(tx));
@@ -332,8 +332,8 @@ describe("Test suite for profile actions", () => {
     await deleteProfile({ state: "error", message: "" });
 
     expect(prismaTransactionMock).toHaveBeenCalledTimes(1);
-    expect(tx.comunidad.deleteMany).toHaveBeenCalledWith({ where: { adminID: "25" } });
-    expect(tx.usuario.delete).toHaveBeenCalledWith({ where: { id: "25" } });
+    expect(tx.community.deleteMany).toHaveBeenCalledWith({ where: { adminId: "25" } });
+    expect(tx.user.delete).toHaveBeenCalledWith({ where: { id: "25" } });
     expect(eliminarSesionMock).toHaveBeenCalledTimes(1);
     expect(redirectMock).toHaveBeenCalledWith("/");
   });
@@ -402,7 +402,7 @@ describe("Test suite for saveProfileImageFile", () => {
 
 describe("Test suite for uploadProfile", () => {
   const verifySessionMock = verifySession as jest.Mock;
-  const prismaUsuarioUpdateMock = (prisma as any).usuario.update as jest.Mock;
+  const prismaUsuarioUpdateMock = (prisma as any).user.update as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -470,7 +470,7 @@ describe("Test suite for uploadProfile", () => {
     expect(resultado.imagen).toMatch(/^\/uploads\/profiles\/user-1-\d+\.png$/);
     expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
-      data: { imagen: resultado.imagen }
+      data: { image: resultado.imagen }
     });
   });
 });

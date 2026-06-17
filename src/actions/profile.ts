@@ -77,16 +77,16 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
     }
 
     // The user's data is updated in the database, including the new image and password if provided
-    await prisma.usuario.update({
+    await prisma.user.update({
       where: { id: verifiedSession.session.userID },
       data: {
-        nombre: datosValidados.data.name,
-        apellido: datosValidados.data.surname,
+        name: datosValidados.data.name,
+        lastName: datosValidados.data.surname,
         email: datosValidados.data.email,
-        ...(imageURL ? { imagen: imageURL } : {}),
+        ...(imageURL ? { image: imageURL } : {}),
         ...(cypherPassword
           ? {
-              credenciales: {
+              credentials: {
                 upsert: {
                   create: { password: cypherPassword },
                   update: { password: cypherPassword }
@@ -129,8 +129,8 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
 
   try {
     await prisma.$transaction(async tx => {
-      await tx.comunidad.deleteMany({ where: { adminID: userID } });
-      await tx.usuario.delete({ where: { id: userID } });
+      await tx.community.deleteMany({ where: { adminId: userID } });
+      await tx.user.delete({ where: { id: userID } });
     });
   } catch {
     return {
@@ -205,9 +205,9 @@ export const uploadProfile = async (formData: FormData): Promise<{ error?: strin
     return { error: result.error };
   }
 
-  await prisma.usuario.update({
+  await prisma.user.update({
     where: { id: verifiedSession.session.userID },
-    data: { imagen: result.imagen }
+    data: { image: result.imagen }
   });
 
   return { imagen: result.imagen };

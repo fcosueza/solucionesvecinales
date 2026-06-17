@@ -36,11 +36,11 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
 
   // We try to create the contact message in the database
   try {
-    await prisma.contacto.create({
+    await prisma.contact.create({
       data: {
-        nombre: validatedData.data.name,
+        name: validatedData.data.name,
         email: validatedData.data.email,
-        mensaje: validatedData.data.msg
+        message: validatedData.data.msg
       }
     });
   } catch {
@@ -81,7 +81,7 @@ const deleteContact = async (formData: FormData): Promise<void> => {
   if (!nombre || !email || isNaN(creadoEn.getTime())) return;
 
   try {
-    await prisma.contacto.delete({ where: { nombre_email_creadoEn: { nombre, email, creadoEn } } });
+    await prisma.contact.delete({ where: { name_email_createdAt: { name: nombre, email, createdAt: creadoEn } } });
     revalidatePath("/backoffice/contacto");
   } catch {}
 };

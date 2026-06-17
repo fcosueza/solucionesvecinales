@@ -51,12 +51,12 @@ export const updateCommunity = async (_prevState: FormActionState, formData: For
     };
   }
 
-  const comunidad = await prisma.comunidad.findUnique({
+  const comunidad = await prisma.community.findUnique({
     where: { id: communityID },
-    select: { adminID: true }
+    select: { adminId: true }
   });
 
-  if (!comunidad || comunidad.adminID !== sesionVerificada.session.userID) {
+  if (!comunidad || comunidad.adminId !== sesionVerificada.session.userID) {
     return {
       state: "error",
       message: "No tienes permisos para actualizar esta comunidad",
@@ -77,15 +77,15 @@ export const updateCommunity = async (_prevState: FormActionState, formData: For
   }
 
   try {
-    await prisma.comunidad.update({
+    await prisma.community.update({
       where: { id: communityID },
       data: {
-        nombre: datosValidados.data.name,
-        calle: datosValidados.data.street,
-        numero: datosValidados.data.number,
-        ciudad: datosValidados.data.city,
-        provincia: datosValidados.data.province,
-        pais: datosValidados.data.country
+        name: datosValidados.data.name,
+        street: datosValidados.data.street,
+        number: datosValidados.data.number,
+        city: datosValidados.data.city,
+        province: datosValidados.data.province,
+        country: datosValidados.data.country
       }
     });
   } catch {
@@ -140,12 +140,12 @@ export const deleteCommunity = async (_prevState: FormActionState, formData: For
     };
   }
 
-  const comunidad = await prisma.comunidad.findUnique({
+  const comunidad = await prisma.community.findUnique({
     where: { id: communityID },
-    select: { adminID: true }
+    select: { adminId: true }
   });
 
-  if (!comunidad || comunidad.adminID !== sesionVerificada.session.userID) {
+  if (!comunidad || comunidad.adminId !== sesionVerificada.session.userID) {
     return {
       state: "error",
       message: "No tienes permisos para eliminar esta comunidad"
@@ -153,7 +153,7 @@ export const deleteCommunity = async (_prevState: FormActionState, formData: For
   }
 
   try {
-    await prisma.comunidad.delete({
+    await prisma.community.delete({
       where: { id: communityID }
     });
   } catch {
@@ -182,7 +182,7 @@ export const deleteCommunityAdmin = async (formData: FormData): Promise<void> =>
   if (!id || isNaN(id)) return;
 
   try {
-    await prisma.comunidad.delete({ where: { id } });
+    await prisma.community.delete({ where: { id } });
     revalidatePath("/backoffice/comunidades");
     revalidatePath("/backoffice/overview");
   } catch {}

@@ -48,23 +48,23 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
   }
 
   // Verify that the community exists
-  const community = await prisma.comunidad.findUnique({
+  const community = await prisma.community.findUnique({
     where: {
       id: communityID
     },
     select: {
       id: true,
-      adminID: true
+      adminId: true
     }
   });
 
   // Verify that the user is the community admin
-  if (!community || community.adminID !== verifiedSession.session.userID) {
+  if (!community || community.adminId !== verifiedSession.session.userID) {
     return;
   }
 
   // Determine the new status of the request
-  const nextStatus = decisionValue === "approve" ? "aprobada" : "denegada";
+  const nextStatus = decisionValue === "approve" ? "approved" : "rejected";
 
   /*
    * In this case, unlike other server actions, we perform the operation with the database
@@ -77,14 +77,14 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
    * By using a transaction, we guarantee that both operations complete correctly or that neither is applied in case of error.
    */
   await prisma.$transaction(async tx => {
-    const solicitud = await tx.solicitud.findFirst({
+    const solicitud = await tx.request.findFirst({
       where: {
         id: requestID,
-        comunidad: communityID,
-        estado: "pendiente"
+        community: communityID,
+        status: "pending"
       },
       select: {
-        usuario: true
+        user: true
       }
     });
 
@@ -94,14 +94,14 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
     }
 
     // Update request status
-    const updatedRequests = await tx.solicitud.updateMany({
+    const updatedRequests = await tx.request.updateMany({
       where: {
         id: requestID,
-        comunidad: communityID,
-        estado: "pendiente"
+        community: communityID,
+        status: "pending"
       },
       data: {
-        estado: nextStatus
+        status: nextStatus
       }
     });
 
@@ -111,18 +111,18 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
     }
 
     // If the request was approved, create the registration
-    if (nextStatus === "aprobada") {
-      await tx.inscripcion.upsert({
+    if (nextStatus === "approved") {
+      await tx.membership.upsert({
         where: {
-          usuario_comunidad: {
-            usuario: solicitud.usuario,
-            comunidad: communityID
+          user_community: {
+            user: solicitud.user,
+            community: communityID
           }
         },
         update: {},
         create: {
-          usuario: solicitud.usuario,
-          comunidad: communityID
+          user: solicitud.user,
+          community: communityID
         }
       });
     }

@@ -10,10 +10,10 @@ jest.mock("next/cache", () => ({
 }));
 
 jest.mock("@/lib/prisma", () => ({
-  inscripcion: {
+  membership: {
     findUnique: jest.fn()
   },
-  incidencia: {
+  incident: {
     findFirst: jest.fn(),
     updateMany: jest.fn(),
     create: jest.fn(),
@@ -42,7 +42,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue({ usuario: "user-1" });
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "user-1" });
   });
 
   it("No debe hacer nada si el usuario no esta autenticado", async () => {
@@ -50,8 +50,8 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
 
     await updateIncidentStatus(createFormData({}));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si el formulario es invalido", async () => {
@@ -59,7 +59,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
 
     await updateIncidentStatus(createFormData({ communityID: "abc", incidentDate: "invalid-date" }));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si userID esta vacio", async () => {
@@ -67,8 +67,8 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
 
     await updateIncidentStatus(createFormData({ userID: "   " }));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si incidentDate no es valida", async () => {
@@ -76,8 +76,8 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
 
     await updateIncidentStatus(createFormData({ incidentDate: "fecha-invalida" }));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si faltan userID e incidentDate en el FormData", async () => {
@@ -87,36 +87,36 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
 
     await updateIncidentStatus(formData);
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
   it("No debe actualizar incidencia si el usuario no esta inscrito en la comunidad", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue(null);
 
     await updateIncidentStatus(createFormData({}));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
   it("Debe cambiar estado de reportado a procesandose", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue({ estado: "reportado" });
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "reported" });
 
     await updateIncidentStatus(createFormData({}));
 
-    expect(prisma.incidencia.updateMany).toHaveBeenCalledWith({
+    expect(prisma.incident.updateMany).toHaveBeenCalledWith({
       where: {
-        comunidad: 1,
-        usuario: "user-1",
-        fecha: new Date("2026-05-02T09:30:00.000Z"),
-        estado: "reportado"
+        community: 1,
+        user: "user-1",
+        date: new Date("2026-05-02T09:30:00.000Z"),
+        status: "reported"
       },
       data: {
-        estado: "procesandose",
-        actualizadaEn: expect.any(Date)
+        status: "inProgress",
+        updatedAt: expect.any(Date)
       }
     });
     expect(revalidatePath).toHaveBeenCalledWith("/communities/1/incidencias");
@@ -125,58 +125,58 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
 
   it("Debe cambiar estado de procesandose a resuelto", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue({ estado: "procesandose" });
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "inProgress" });
 
     await updateIncidentStatus(createFormData({}));
 
-    expect(prisma.incidencia.updateMany).toHaveBeenCalledWith({
+    expect(prisma.incident.updateMany).toHaveBeenCalledWith({
       where: {
-        comunidad: 1,
-        usuario: "user-1",
-        fecha: new Date("2026-05-02T09:30:00.000Z"),
-        estado: "procesandose"
+        community: 1,
+        user: "user-1",
+        date: new Date("2026-05-02T09:30:00.000Z"),
+        status: "inProgress"
       },
       data: {
-        estado: "resuelto",
-        actualizadaEn: expect.any(Date)
+        status: "resolved",
+        updatedAt: expect.any(Date)
       }
     });
   });
 
   it("No debe actualizar si la incidencia ya esta resuelta", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue({ estado: "resuelto" });
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "resolved" });
 
     await updateIncidentStatus(createFormData({}));
 
-    expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
+    expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
   it("No debe actualizar si la incidencia no existe", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue(null);
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue(null);
 
     await updateIncidentStatus(createFormData({}));
 
-    expect(prisma.incidencia.updateMany).not.toHaveBeenCalled();
+    expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
   it("Debe usar estado resuelto si llega un estado no esperado", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue({ estado: "desconocido" });
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "desconocido" });
 
     await updateIncidentStatus(createFormData({}));
 
-    expect(prisma.incidencia.updateMany).toHaveBeenCalledWith({
+    expect(prisma.incident.updateMany).toHaveBeenCalledWith({
       where: {
-        comunidad: 1,
-        usuario: "user-1",
-        fecha: new Date("2026-05-02T09:30:00.000Z"),
-        estado: "desconocido"
+        community: 1,
+        user: "user-1",
+        date: new Date("2026-05-02T09:30:00.000Z"),
+        status: "desconocido"
       },
       data: {
-        estado: "resuelto",
-        actualizadaEn: expect.any(Date)
+        status: "resolved",
+        updatedAt: expect.any(Date)
       }
     });
   });
@@ -203,7 +203,7 @@ describe("Suite de pruebas de deleteIncident", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue({ usuario: "admin-1" });
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "admin-1" });
   });
 
   it("No debe eliminar si no hay sesion", async () => {
@@ -211,8 +211,8 @@ describe("Suite de pruebas de deleteIncident", () => {
 
     await deleteIncident(createFormData({}));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
   it("No debe eliminar si el usuario no es admin", async () => {
@@ -226,8 +226,8 @@ describe("Suite de pruebas de deleteIncident", () => {
 
     await deleteIncident(createFormData({}));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
   it("No debe eliminar si los datos son invalidos", async () => {
@@ -241,8 +241,8 @@ describe("Suite de pruebas de deleteIncident", () => {
 
     await deleteIncident(createFormData({ communityID: "abc", incidentDate: "fecha-invalida" }));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
   it("No debe eliminar si userID esta vacio", async () => {
@@ -256,9 +256,9 @@ describe("Suite de pruebas de deleteIncident", () => {
 
     await deleteIncident(createFormData({ userID: "   " }));
 
-    expect(prisma.inscripcion.findUnique).not.toHaveBeenCalled();
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.membership.findUnique).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
   it("No debe eliminar si faltan userID e incidentDate en el FormData", async () => {
@@ -275,9 +275,9 @@ describe("Suite de pruebas de deleteIncident", () => {
 
     await deleteIncident(formData);
 
-    expect(prisma.inscripcion.findUnique).not.toHaveBeenCalled();
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.membership.findUnique).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
   it("No debe eliminar si el admin no esta inscrito en la comunidad", async () => {
@@ -288,12 +288,12 @@ describe("Suite de pruebas de deleteIncident", () => {
         role: UserRole.admin
       }
     });
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue(null);
 
     await deleteIncident(createFormData({}));
 
-    expect(prisma.incidencia.findFirst).not.toHaveBeenCalled();
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.findFirst).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
   it("No debe eliminar si la incidencia no existe", async () => {
@@ -304,11 +304,11 @@ describe("Suite de pruebas de deleteIncident", () => {
         role: UserRole.admin
       }
     });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue(null);
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue(null);
 
     await deleteIncident(createFormData({}));
 
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
   it("No debe eliminar incidencias que no esten resueltas", async () => {
@@ -319,11 +319,11 @@ describe("Suite de pruebas de deleteIncident", () => {
         role: UserRole.admin
       }
     });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue({ estado: "procesandose" });
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "inProgress" });
 
     await deleteIncident(createFormData({}));
 
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
   it("Debe eliminar incidencias resueltas y revalidar rutas", async () => {
@@ -334,17 +334,17 @@ describe("Suite de pruebas de deleteIncident", () => {
         role: UserRole.admin
       }
     });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue({ estado: "resuelto" });
-    (prisma.incidencia.delete as jest.Mock).mockResolvedValue({});
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "resolved" });
+    (prisma.incident.delete as jest.Mock).mockResolvedValue({});
 
     await deleteIncident(createFormData({ communityID: "7" }));
 
-    expect(prisma.incidencia.delete).toHaveBeenCalledWith({
+    expect(prisma.incident.delete).toHaveBeenCalledWith({
       where: {
-        comunidad_usuario_fecha: {
-          comunidad: 7,
-          usuario: "user-1",
-          fecha: new Date("2026-05-02T09:30:00.000Z")
+        community_user_date: {
+          community: 7,
+          user: "user-1",
+          date: new Date("2026-05-02T09:30:00.000Z")
         }
       }
     });
@@ -360,8 +360,8 @@ describe("Suite de pruebas de deleteIncident", () => {
         role: UserRole.webAdmin
       }
     });
-    (prisma.incidencia.findFirst as jest.Mock).mockResolvedValue({ estado: "resuelto" });
-    (prisma.incidencia.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "resolved" });
+    (prisma.incident.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     await expect(deleteIncident(createFormData({}))).resolves.toBeUndefined();
     expect(revalidatePath).not.toHaveBeenCalled();
@@ -386,7 +386,7 @@ describe("Suite de pruebas de addIncident", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue({ usuario: "user-1" });
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "user-1" });
   });
 
   it("No debe hacer nada si el usuario no esta autenticado", async () => {
@@ -394,7 +394,7 @@ describe("Suite de pruebas de addIncident", () => {
 
     await addIncident(1, createFormData({}));
 
-    expect(prisma.incidencia.create).not.toHaveBeenCalled();
+    expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
   it("No debe hacer nada si los datos son invalidos", async () => {
@@ -402,7 +402,7 @@ describe("Suite de pruebas de addIncident", () => {
 
     await addIncident(0, createFormData({ titulo: "", descripcion: "" }));
 
-    expect(prisma.incidencia.create).not.toHaveBeenCalled();
+    expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
   it("No debe crear incidencia si el titulo queda vacio tras trim", async () => {
@@ -410,7 +410,7 @@ describe("Suite de pruebas de addIncident", () => {
 
     await addIncident(3, createFormData({ titulo: "   ", descripcion: "Descripcion valida" }));
 
-    expect(prisma.incidencia.create).not.toHaveBeenCalled();
+    expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
   it("No debe crear incidencia si la descripcion queda vacia tras trim", async () => {
@@ -418,7 +418,7 @@ describe("Suite de pruebas de addIncident", () => {
 
     await addIncident(3, createFormData({ titulo: "Titulo valido", descripcion: "   " }));
 
-    expect(prisma.incidencia.create).not.toHaveBeenCalled();
+    expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
   it("No debe crear incidencia si faltan titulo y descripcion en el FormData", async () => {
@@ -427,31 +427,31 @@ describe("Suite de pruebas de addIncident", () => {
 
     await addIncident(3, formData);
 
-    expect(prisma.incidencia.create).not.toHaveBeenCalled();
+    expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
   it("No debe crear incidencia si el usuario no esta inscrito en la comunidad", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
-    (prisma.inscripcion.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.membership.findUnique as jest.Mock).mockResolvedValue(null);
 
     await addIncident(3, createFormData({}));
 
-    expect(prisma.incidencia.create).not.toHaveBeenCalled();
+    expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
   it("Debe crear incidencia y revalidar rutas", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
-    (prisma.incidencia.create as jest.Mock).mockResolvedValue({});
+    (prisma.incident.create as jest.Mock).mockResolvedValue({});
 
     await addIncident(3, createFormData({ titulo: "  Luz fundida  ", descripcion: "  Escalera oscura  " }));
 
-    expect(prisma.incidencia.create).toHaveBeenCalledWith({
+    expect(prisma.incident.create).toHaveBeenCalledWith({
       data: {
-        comunidad: 3,
-        usuario: "user-1",
-        titulo: "Luz fundida",
-        descripcion: "Escalera oscura",
-        estado: "reportado"
+        community: 3,
+        user: "user-1",
+        title: "Luz fundida",
+        description: "Escalera oscura",
+        status: "reported"
       }
     });
     expect(revalidatePath).toHaveBeenCalledWith("/communities/3/incidencias");
@@ -460,7 +460,7 @@ describe("Suite de pruebas de addIncident", () => {
 
   it("No debe lanzar error si prisma.create falla", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
-    (prisma.incidencia.create as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (prisma.incident.create as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     await expect(addIncident(3, createFormData({}))).resolves.toBeUndefined();
     expect(revalidatePath).not.toHaveBeenCalled();
@@ -495,7 +495,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
 
     await deleteIncidentAdmin(createFormData({}));
 
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -507,7 +507,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
 
     await deleteIncidentAdmin(createFormData({}));
 
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -519,7 +519,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
 
     await deleteIncidentAdmin(createFormData({ comunidad: "abc", fecha: "fecha-invalida" }));
 
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -534,7 +534,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
 
     await deleteIncidentAdmin(formData);
 
-    expect(prisma.incidencia.delete).not.toHaveBeenCalled();
+    expect(prisma.incident.delete).not.toHaveBeenCalled();
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
@@ -543,16 +543,16 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
     });
-    (prisma.incidencia.delete as jest.Mock).mockResolvedValue({});
+    (prisma.incident.delete as jest.Mock).mockResolvedValue({});
 
     await deleteIncidentAdmin(createFormData({ comunidad: "7", usuario: "u-9" }));
 
-    expect(prisma.incidencia.delete).toHaveBeenCalledWith({
+    expect(prisma.incident.delete).toHaveBeenCalledWith({
       where: {
-        comunidad_usuario_fecha: {
-          comunidad: 7,
-          usuario: "u-9",
-          fecha: new Date("2026-05-02T09:30:00.000Z")
+        community_user_date: {
+          community: 7,
+          user: "u-9",
+          date: new Date("2026-05-02T09:30:00.000Z")
         }
       }
     });
@@ -565,7 +565,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
     });
-    (prisma.incidencia.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (prisma.incident.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     await expect(deleteIncidentAdmin(createFormData({}))).resolves.toBeUndefined();
     expect(revalidatePath).not.toHaveBeenCalled();

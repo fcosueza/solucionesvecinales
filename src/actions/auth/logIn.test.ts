@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 
 jest.mock("@/lib/session");
 jest.mock("@/lib/prisma", () => ({
-  usuario: {
+  user: {
     findUnique: jest.fn()
   }
 }));
@@ -38,11 +38,11 @@ describe("Suite de pruebas de logInAction", () => {
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
     expect(resultado.errors).toBeDefined();
-    expect(prisma.usuario.findUnique).not.toHaveBeenCalled();
+    expect(prisma.user.findUnique).not.toHaveBeenCalled();
   });
 
   it("Debe devolver un error si el usuario no existe", async () => {
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue(null);
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
 
     const datosForm = crearFormData({
       email: "john@example.com",
@@ -59,10 +59,10 @@ describe("Suite de pruebas de logInAction", () => {
   it("Debe devolver un error si la contraseña no coincide", async () => {
     const hashedPassword = await bcrypt.hash("testestestestestestest", 10);
 
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       id: "1",
       role: "admin",
-      credenciales: { password: hashedPassword }
+      credentials: { password: hashedPassword }
     });
 
     const datosForm = crearFormData({
@@ -80,10 +80,10 @@ describe("Suite de pruebas de logInAction", () => {
   it("Debe devolver success si el usuario existe y la contraseña es correcta", async () => {
     const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
 
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       id: "1",
-      rol: "admin",
-      credenciales: { password: hashedPassword }
+      role: "admin",
+      credentials: { password: hashedPassword }
     });
 
     const datosForm = crearFormData({
@@ -102,10 +102,10 @@ describe("Suite de pruebas de logInAction", () => {
   it("Debe devolver redirectTo a backoffice cuando el usuario es webAdmin", async () => {
     const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
 
-    (prisma.usuario.findUnique as jest.Mock).mockResolvedValue({
+    (prisma.user.findUnique as jest.Mock).mockResolvedValue({
       id: "1",
-      rol: UserRole.webAdmin,
-      credenciales: { password: hashedPassword }
+      role: UserRole.webAdmin,
+      credentials: { password: hashedPassword }
     });
 
     const datosForm = crearFormData({

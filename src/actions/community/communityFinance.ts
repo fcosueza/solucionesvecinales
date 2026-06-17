@@ -26,15 +26,15 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
     return;
   }
 
-  const inscription = await prisma.inscripcion.findUnique({
+  const inscription = await prisma.membership.findUnique({
     where: {
-      usuario_comunidad: {
-        usuario: verifiedSession.session.userID,
-        comunidad: communityID
+      user_community: {
+        user: verifiedSession.session.userID,
+        community: communityID
       }
     },
     select: {
-      usuario: true
+      user: true
     }
   });
 
@@ -45,6 +45,7 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
   const descripcion = String(formData.get("descripcion") ?? "").trim();
   const importe = Number(formData.get("importe"));
   const tipo = String(formData.get("tipo") ?? "").trim();
+  const recordType = tipo === "ingreso" ? "income" : tipo === "gasto" ? "expense" : null;
 
   if (
     !Number.isInteger(communityID) ||
@@ -52,18 +53,18 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
     !descripcion ||
     !Number.isFinite(importe) ||
     importe <= 0 ||
-    (tipo !== "ingreso" && tipo !== "gasto")
+    !recordType
   ) {
     return;
   }
 
   try {
-    await prisma.registro.create({
+    await prisma.financialRecord.create({
       data: {
-        comunidad: communityID,
-        descripcion,
-        importe,
-        tipo
+        community: communityID,
+        description: descripcion,
+        amount: importe,
+        type: recordType
       }
     });
 
@@ -87,7 +88,7 @@ const deleteRecord = async (formData: FormData): Promise<void> => {
   if (!id || isNaN(id)) return;
 
   try {
-    await prisma.registro.delete({ where: { id } });
+    await prisma.financialRecord.delete({ where: { id } });
     revalidatePath("/backoffice/finanzas");
     revalidatePath("/backoffice/overview");
   } catch {}

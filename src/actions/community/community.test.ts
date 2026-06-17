@@ -6,7 +6,7 @@ import verifySession from "@/lib/dal";
 // Mocks
 jest.mock("@/lib/dal", () => jest.fn());
 jest.mock("@/lib/prisma", () => ({
-  comunidad: {
+  community: {
     create: jest.fn()
   }
 }));
@@ -43,7 +43,7 @@ describe("Suite de pruebas de addCommunity", () => {
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Debes iniciar sesión para crear una comunidad");
-    expect(prisma.comunidad.create).not.toHaveBeenCalled();
+    expect(prisma.community.create).not.toHaveBeenCalled();
   });
 
   it("Debe devolver un error si el usuario no tiene rol administrador", async () => {
@@ -59,7 +59,7 @@ describe("Suite de pruebas de addCommunity", () => {
 
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("No tienes permisos para crear comunidades");
-    expect(prisma.comunidad.create).not.toHaveBeenCalled();
+    expect(prisma.community.create).not.toHaveBeenCalled();
   });
 
   it("Debe devolver un error si la validación falla", async () => {
@@ -85,7 +85,7 @@ describe("Suite de pruebas de addCommunity", () => {
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
     expect(resultado.errors).toBeDefined();
-    expect(prisma.comunidad.create).not.toHaveBeenCalled();
+    expect(prisma.community.create).not.toHaveBeenCalled();
   });
 
   it("Debe crear la comunidad correctamente cuando los datos son válidos", async () => {
@@ -97,25 +97,25 @@ describe("Suite de pruebas de addCommunity", () => {
       }
     });
 
-    (prisma.comunidad.create as jest.Mock).mockResolvedValue({ id: 1 });
+    (prisma.community.create as jest.Mock).mockResolvedValue({ id: 1 });
 
     const resultado = await addCommunity({} as FormActionState, formValido());
 
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("Comunidad creada exitosamente");
-    expect(prisma.comunidad.create).toHaveBeenCalledWith({
+    expect(prisma.community.create).toHaveBeenCalledWith({
       data: {
-        nombre: "Comunidad Centro",
-        calle: "Mayor",
-        numero: 10,
-        ciudad: "Madrid",
-        provincia: "Madrid",
-        pais: "España",
-        adminID: "admin-1",
-        inscripciones: {
+        name: "Comunidad Centro",
+        street: "Mayor",
+        number: 10,
+        city: "Madrid",
+        province: "Madrid",
+        country: "España",
+        adminId: "admin-1",
+        memberships: {
           create: [
             {
-              usuario: "admin-1"
+              user: "admin-1"
             }
           ]
         }
@@ -132,7 +132,7 @@ describe("Suite de pruebas de addCommunity", () => {
       }
     });
 
-    (prisma.comunidad.create as jest.Mock).mockRejectedValue({ code: "P2002" });
+    (prisma.community.create as jest.Mock).mockRejectedValue({ code: "P2002" });
 
     const datosFormulario = formValido();
     const resultado = await addCommunity({} as FormActionState, datosFormulario);
@@ -151,7 +151,7 @@ describe("Suite de pruebas de addCommunity", () => {
       }
     });
 
-    (prisma.comunidad.create as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (prisma.community.create as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     const datosFormulario = formValido();
     const resultado = await addCommunity({} as FormActionState, datosFormulario);

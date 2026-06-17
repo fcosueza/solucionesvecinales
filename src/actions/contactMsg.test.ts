@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 // Mocks
 jest.mock("../lib/prisma", () => ({
-  contacto: {
+  contact: {
     create: jest.fn(),
     delete: jest.fn()
   }
@@ -43,11 +43,11 @@ describe("contactMsgAction test suite", () => {
     expect(resultado.state).toBe("error");
     expect(resultado.message).toBe("Datos del formulario incorrectos");
     expect(resultado.errors).toBeDefined();
-    expect(prisma.contacto.create).not.toHaveBeenCalled();
+    expect(prisma.contact.create).not.toHaveBeenCalled();
   });
 
   it("Should return an error when Prisma cannot create the message", async () => {
-    (prisma.contacto.create as jest.Mock).mockRejectedValueOnce(new Error("DB error"));
+    (prisma.contact.create as jest.Mock).mockRejectedValueOnce(new Error("DB error"));
 
     const datosForm = crearFormData({
       name: "John Doe",
@@ -63,7 +63,7 @@ describe("contactMsgAction test suite", () => {
   });
 
   it("Should return success when the message is created correctly", async () => {
-    (prisma.contacto.create as jest.Mock).mockResolvedValueOnce({ id: 1 });
+    (prisma.contact.create as jest.Mock).mockResolvedValueOnce({ id: 1 });
 
     const datosForm = crearFormData({
       name: "John Doe",
@@ -75,11 +75,11 @@ describe("contactMsgAction test suite", () => {
 
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("Mensaje creado exitosamente");
-    expect(prisma.contacto.create).toHaveBeenCalledWith({
+    expect(prisma.contact.create).toHaveBeenCalledWith({
       data: {
-        nombre: "John Doe",
+        name: "John Doe",
         email: "john@example.com",
-        mensaje: "Hola, este es un mensaje de prueba para contactMsgAction"
+        message: "Hola, este es un mensaje de prueba para contactMsgAction"
       }
     });
   });
@@ -98,7 +98,7 @@ describe("deleteContact test suite", () => {
 
     await deleteContact(new FormData());
 
-    expect(prisma.contacto.delete).not.toHaveBeenCalled();
+    expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
   it("Should exit without acting when the role is not webAdmin", async () => {
@@ -106,7 +106,7 @@ describe("deleteContact test suite", () => {
 
     await deleteContact(new FormData());
 
-    expect(prisma.contacto.delete).not.toHaveBeenCalled();
+    expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
   it("Should exit without acting when session is valid but has no user data", async () => {
@@ -114,7 +114,7 @@ describe("deleteContact test suite", () => {
 
     await deleteContact(new FormData());
 
-    expect(prisma.contacto.delete).not.toHaveBeenCalled();
+    expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
   it("Should exit without acting when required fields are missing", async () => {
@@ -122,7 +122,7 @@ describe("deleteContact test suite", () => {
 
     await deleteContact(new FormData());
 
-    expect(prisma.contacto.delete).not.toHaveBeenCalled();
+    expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
   it("Should exit without acting when name is present but email is missing", async () => {
@@ -134,7 +134,7 @@ describe("deleteContact test suite", () => {
 
     await deleteContact(fd);
 
-    expect(prisma.contacto.delete).not.toHaveBeenCalled();
+    expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
   it("Should exit without acting when the provided date is invalid", async () => {
@@ -147,12 +147,12 @@ describe("deleteContact test suite", () => {
 
     await deleteContact(fd);
 
-    expect(prisma.contacto.delete).not.toHaveBeenCalled();
+    expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
   it("Should delete the contact and revalidate the path when data is valid", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
-    (prisma.contacto.delete as jest.Mock).mockResolvedValue({});
+    (prisma.contact.delete as jest.Mock).mockResolvedValue({});
 
     const fecha = "2024-01-01T00:00:00.000Z";
     const fd = new FormData();
@@ -162,12 +162,12 @@ describe("deleteContact test suite", () => {
 
     await deleteContact(fd);
 
-    expect(prisma.contacto.delete).toHaveBeenCalledWith({
+    expect(prisma.contact.delete).toHaveBeenCalledWith({
       where: {
-        nombre_email_creadoEn: {
-          nombre: "Juan",
+        name_email_createdAt: {
+          name: "Juan",
           email: "juan@example.com",
-          creadoEn: new Date(fecha)
+          createdAt: new Date(fecha)
         }
       }
     });
@@ -176,7 +176,7 @@ describe("deleteContact test suite", () => {
 
   it("Should handle Prisma errors silently", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
-    (prisma.contacto.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (prisma.contact.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
 
     const fd = new FormData();
     fd.append("nombre", "Juan");

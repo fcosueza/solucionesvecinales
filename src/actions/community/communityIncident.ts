@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { UserRole } from "@/types";
 
-type IncidentState = "reportado" | "procesandose" | "resuelto";
+type IncidentState = "reported" | "inProgress" | "resolved";
 
 /**
  * Gets the next status in the progression of an issue.
@@ -15,15 +15,15 @@ type IncidentState = "reportado" | "procesandose" | "resuelto";
  * @returns Next status in the sequence
  */
 const getNextState = (currentState: IncidentState): IncidentState => {
-  if (currentState === "reportado") {
-    return "procesandose";
+  if (currentState === "reported") {
+    return "inProgress";
   }
 
-  if (currentState === "procesandose") {
-    return "resuelto";
+  if (currentState === "inProgress") {
+    return "resolved";
   }
 
-  return "resuelto";
+  return "resolved";
 };
 
 /**
@@ -49,15 +49,15 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
     return;
   }
 
-  const inscription = await prisma.inscripcion.findUnique({
+  const inscription = await prisma.membership.findUnique({
     where: {
-      usuario_comunidad: {
-        usuario: verifiedSession.session.userID,
-        comunidad: communityID
+      user_community: {
+        user: verifiedSession.session.userID,
+        community: communityID
       }
     },
     select: {
-      usuario: true
+      user: true
     }
   });
 
@@ -65,33 +65,33 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
     return;
   }
 
-  const incident = await prisma.incidencia.findFirst({
+  const incident = await prisma.incident.findFirst({
     where: {
-      comunidad: communityID,
-      usuario: userID,
-      fecha: incidentDate
+      community: communityID,
+      user: userID,
+      date: incidentDate
     },
     select: {
-      estado: true
+      status: true
     }
   });
 
-  if (!incident || incident.estado === "resuelto") {
+  if (!incident || incident.status === "resolved") {
     return;
   }
 
-  const nextState = getNextState(incident.estado);
+  const nextState = getNextState(incident.status as IncidentState);
 
-  await prisma.incidencia.updateMany({
+  await prisma.incident.updateMany({
     where: {
-      comunidad: communityID,
-      usuario: userID,
-      fecha: incidentDate,
-      estado: incident.estado
+      community: communityID,
+      user: userID,
+      date: incidentDate,
+      status: incident.status
     },
     data: {
-      estado: nextState,
-      actualizadaEn: new Date()
+      status: nextState,
+      updatedAt: new Date()
     }
   });
 
@@ -127,15 +127,15 @@ const deleteIncident = async (formData: FormData): Promise<void> => {
     return;
   }
 
-  const inscription = await prisma.inscripcion.findUnique({
+  const inscription = await prisma.membership.findUnique({
     where: {
-      usuario_comunidad: {
-        usuario: verifiedSession.session.userID,
-        comunidad: communityID
+      user_community: {
+        user: verifiedSession.session.userID,
+        community: communityID
       }
     },
     select: {
-      usuario: true
+      user: true
     }
   });
 
@@ -143,28 +143,28 @@ const deleteIncident = async (formData: FormData): Promise<void> => {
     return;
   }
 
-  const incident = await prisma.incidencia.findFirst({
+  const incident = await prisma.incident.findFirst({
     where: {
-      comunidad: communityID,
-      usuario: userID,
-      fecha: incidentDate
+      community: communityID,
+      user: userID,
+      date: incidentDate
     },
     select: {
-      estado: true
+      status: true
     }
   });
 
-  if (!incident || incident.estado !== "resuelto") {
+  if (!incident || incident.status !== "resolved") {
     return;
   }
 
   try {
-    await prisma.incidencia.delete({
+    await prisma.incident.delete({
       where: {
-        comunidad_usuario_fecha: {
-          comunidad: communityID,
-          usuario: userID,
-          fecha: incidentDate
+        community_user_date: {
+          community: communityID,
+          user: userID,
+          date: incidentDate
         }
       }
     });
@@ -188,15 +188,15 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
     return;
   }
 
-  const inscription = await prisma.inscripcion.findUnique({
+  const inscription = await prisma.membership.findUnique({
     where: {
-      usuario_comunidad: {
-        usuario: verifiedSession.session.userID,
-        comunidad: communityID
+      user_community: {
+        user: verifiedSession.session.userID,
+        community: communityID
       }
     },
     select: {
-      usuario: true
+      user: true
     }
   });
 
@@ -205,13 +205,13 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
   }
 
   try {
-    await prisma.incidencia.create({
+    await prisma.incident.create({
       data: {
-        comunidad: communityID,
-        usuario: verifiedSession.session.userID,
-        titulo: title,
-        descripcion: description,
-        estado: "reportado"
+        community: communityID,
+        user: verifiedSession.session.userID,
+        title,
+        description,
+        status: "reported"
       }
     });
 
@@ -232,8 +232,8 @@ const deleteIncidentAdmin = async (formData: FormData): Promise<void> => {
   if (!comunidad || isNaN(comunidad) || !usuario || isNaN(fecha.getTime())) return;
 
   try {
-    await prisma.incidencia.delete({
-      where: { comunidad_usuario_fecha: { comunidad, usuario, fecha } }
+    await prisma.incident.delete({
+      where: { community_user_date: { community: comunidad, user: usuario, date: fecha } }
     });
     revalidatePath("/backoffice/incidencias");
     revalidatePath("/backoffice/overview");
