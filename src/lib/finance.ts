@@ -1,9 +1,17 @@
 export type RegistroTipo = "ingreso" | "gasto";
+export type FinancialRecordType = "income" | "expense";
 
-export interface RegistroCalculable {
+export interface LegacyRegistroCalculable {
   tipo: RegistroTipo;
   importe: number | string | { toString(): string };
 }
+
+export interface PrismaFinancialRecordCalculable {
+  type: FinancialRecordType;
+  amount: number | string | { toString(): string };
+}
+
+export type RegistroCalculable = LegacyRegistroCalculable | PrismaFinancialRecordCalculable;
 
 interface FinancialSummary {
   totalIngresos: number;
@@ -18,13 +26,15 @@ interface FinancialSummary {
  * @param importe The amount to convert (number, string or object with toString)
  * @returns El amount converted to number
  */
-const toAmountNumber = (importe: RegistroCalculable["importe"]): number => {
+const toAmountNumber = (importe: number | string | { toString(): string }): number => {
   if (typeof importe === "number") {
     return importe;
   }
 
   return Number(importe.toString());
 };
+
+const isLegacyRegistro = (registro: RegistroCalculable): registro is LegacyRegistroCalculable => "tipo" in registro;
 
 /**
  * Calcula el resumen financiero (ingresos, gastos y saldo) de una lista de registros.
@@ -36,9 +46,10 @@ const toAmountNumber = (importe: RegistroCalculable["importe"]): number => {
 const calculateFinancialSummary = (registros: RegistroCalculable[]): FinancialSummary => {
   return registros.reduce<FinancialSummary>(
     (summary, registro) => {
-      const amount = toAmountNumber(registro.importe);
+      const amount = toAmountNumber(isLegacyRegistro(registro) ? registro.importe : registro.amount);
+      const isIncome = isLegacyRegistro(registro) ? registro.tipo === "ingreso" : registro.type === "income";
 
-      if (registro.tipo === "ingreso") {
+      if (isIncome) {
         summary.totalIngresos += amount;
       } else {
         summary.totalPagos += amount;

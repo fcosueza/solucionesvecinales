@@ -32,24 +32,24 @@ export default async function BackOfficeOverviewPage(): Promise<React.ReactNode>
     registros,
     comunidadesRecientes
   ] = await Promise.all([
-    prisma.comunidad.count(),
-    prisma.usuario.count(),
-    prisma.incidencia.count(),
-    prisma.zona.count(),
-    prisma.solicitud.count({ where: { estado: "pendiente" } }),
-    prisma.registro.findMany({ select: { tipo: true, importe: true } }),
-    prisma.comunidad.findMany({
+    prisma.community.count(),
+    prisma.user.count(),
+    prisma.incident.count(),
+    prisma.zone.count(),
+    prisma.request.count({ where: { status: "pending" } }),
+    prisma.financialRecord.findMany({ select: { type: true, amount: true } }),
+    prisma.community.findMany({
       take: 5,
       orderBy: { id: "desc" },
       select: {
         id: true,
-        nombre: true,
-        ciudad: true,
-        provincia: true,
+        name: true,
+        city: true,
+        province: true,
         admin: {
           select: {
-            nombre: true,
-            apellido: true
+            name: true,
+            lastName: true
           }
         }
       }
@@ -112,12 +112,12 @@ export default async function BackOfficeOverviewPage(): Promise<React.ReactNode>
             <ul className={style.list}>
               {comunidadesRecientes.map(comunidad => (
                 <li key={comunidad.id} className={style.listItem}>
-                  <p className={style.itemTitle}>{comunidad.nombre}</p>
+                  <p className={style.itemTitle}>{comunidad.name}</p>
                   <p className={style.itemMeta}>
-                    {comunidad.ciudad}, {comunidad.provincia}
+                    {comunidad.city}, {comunidad.province}
                   </p>
                   <p className={style.itemMeta}>
-                    Admin: {comunidad.admin.nombre} {comunidad.admin.apellido}
+                    Admin: {comunidad.admin.name} {comunidad.admin.lastName}
                   </p>
                 </li>
               ))}

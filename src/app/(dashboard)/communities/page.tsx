@@ -38,35 +38,35 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
     redirect("/login");
   }
 
-  const usuario = await prisma.usuario.findUnique({
+  const usuario = await prisma.user.findUnique({
     where: {
       id: sesionVerificada.session.userID
     },
     select: {
-      rol: true,
-      inscripciones: {
+      role: true,
+      memberships: {
         select: {
-          comunidadID: {
+          communityRef: {
             select: {
               id: true,
-              nombre: true,
-              calle: true,
-              numero: true,
-              ciudad: true
+              name: true,
+              street: true,
+              number: true,
+              city: true
             }
           }
         }
       },
-      solicitudes: {
-        where: { estado: "pendiente" },
+      requests: {
+        where: { status: "pending" },
         select: {
-          comunidadID: {
+          communityRef: {
             select: {
               id: true,
-              nombre: true,
-              calle: true,
-              numero: true,
-              ciudad: true
+              name: true,
+              street: true,
+              number: true,
+              city: true
             }
           }
         }
@@ -78,13 +78,13 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
     redirect("/login");
   }
 
-  const comunidadesSuscritas = usuario.inscripciones.map(inscripcion => inscripcion.comunidadID);
+  const comunidadesSuscritas = usuario.memberships.map(inscripcion => inscripcion.communityRef);
   const comunidadesUnicas = Array.from(
     new Map(comunidadesSuscritas.map(comunidad => [comunidad.id, comunidad])).values()
   );
 
-  const comunidadesPendientes = usuario.solicitudes
-    .map(s => s.comunidadID)
+  const comunidadesPendientes = usuario.requests
+    .map(s => s.communityRef)
     .filter(c => !comunidadesUnicas.some(inscrita => inscrita.id === c.id));
 
   return (
@@ -103,9 +103,9 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
                 <CardCommunity
                   className={style.cardCommunity}
                   imageURL="/assets/images/default-community.jpeg"
-                  imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
-                  communityName={comunidad.nombre}
-                  communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
+                  imageAltText={`Imagen de la comunidad ${comunidad.name}`}
+                  communityName={comunidad.name}
+                  communityAddress={`${comunidad.street}, ${comunidad.number}. ${comunidad.city}`}
                   ctaButtonType="submit"
                   ctaFormID={detalleComunidadFormID}
                 />
@@ -120,9 +120,9 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
               key={comunidad.id}
               className={style.cardCommunity}
               imageURL="/assets/images/default-community.jpeg"
-              imageAltText={`Imagen de la comunidad ${comunidad.nombre}`}
-              communityName={comunidad.nombre}
-              communityAddress={`${comunidad.calle}, ${comunidad.numero}. ${comunidad.ciudad}`}
+              imageAltText={`Imagen de la comunidad ${comunidad.name}`}
+              communityName={comunidad.name}
+              communityAddress={`${comunidad.street}, ${comunidad.number}. ${comunidad.city}`}
               ctaText="Solicitud pendiente"
               ctaDisabled
             />
@@ -135,7 +135,7 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
       </section>
 
       <section className={style.actionsSection}>
-        <OverviewActions role={usuario.rol as UserRole} />
+        <OverviewActions role={usuario.role as UserRole} />
       </section>
     </main>
   );

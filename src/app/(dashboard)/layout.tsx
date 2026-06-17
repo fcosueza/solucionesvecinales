@@ -22,15 +22,15 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
     redirect("/login");
   }
 
-  const usuario = await prisma.usuario.findUnique({
+  const usuario = await prisma.user.findUnique({
     where: {
       id: sesionVerificada.session.userID
     },
     select: {
-      nombre: true,
-      apellido: true,
-      rol: true,
-      imagen: true
+      name: true,
+      lastName: true,
+      role: true,
+      image: true
     }
   });
 
@@ -41,9 +41,9 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
   return (
     <div className={style.layoutWrapper}>
       <SideMenu
-        userName={`${usuario.nombre} ${usuario.apellido}`}
-        role={usuario.rol as UserRole}
-        avatarUrl={usuario.imagen ?? undefined}
+        userName={`${usuario.name} ${usuario.lastName}`}
+        role={usuario.role as UserRole}
+        avatarUrl={usuario.image ?? undefined}
       />
       <div className={style.contentArea}>{children}</div>
     </div>
