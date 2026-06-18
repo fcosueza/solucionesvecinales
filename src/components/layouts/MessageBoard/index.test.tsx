@@ -22,8 +22,8 @@ jest.mock("@/components/layouts/Forms/MessageAddForm", () => ({
 const deleteMessageMock = deleteMessage as jest.Mock;
 
 const mensajesEjemplo = [
-  { texto: "Aviso de reunión vecinal", creadoEn: new Date("2024-03-01T10:00:00") },
-  { texto: "Corte de agua el martes", creadoEn: new Date("2024-03-02T15:30:00") }
+  { text: "Aviso de reunión vecinal", createdAt: new Date("2024-03-01T10:00:00") },
+  { text: "Corte de agua el martes", createdAt: new Date("2024-03-02T15:30:00") }
 ];
 
 describe("Suite de pruebas del componente MessageBoard", () => {
@@ -73,7 +73,7 @@ describe("Suite de pruebas del componente MessageBoard", () => {
     await userEvent.click(botonesEliminar[0]);
 
     expect(deleteMessageMock).toHaveBeenCalledTimes(1);
-    expect(deleteMessageMock).toHaveBeenCalledWith(7, mensajesEjemplo[0].creadoEn);
+    expect(deleteMessageMock).toHaveBeenCalledWith(7, mensajesEjemplo[0].createdAt);
   });
 
   it("Debe abrir el MessageAddForm al pulsar '+ Añadir mensaje' en estado vacío", async () => {

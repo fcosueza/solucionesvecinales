@@ -20,16 +20,6 @@ const toDateLabel = (date: Date): string => {
   }).format(date);
 };
 
-interface CommunityRequestItem {
-  id: number;
-  usuario: string;
-  estado: "pendiente" | "aprobada" | "denegada";
-  creadoEn: Date;
-  nombre: string;
-  apellido: string;
-  email: string;
-}
-
 const helpContent: HelpContent = {
   title: "Ayuda: Solicitudes",
   summary: "Gestiona altas pendientes de usuarios en la comunidad.",
@@ -51,9 +41,9 @@ const helpContent: HelpContent = {
  * @param status Request status (approved, rejected, or other)
  * @returns String with state label in capital letters
  */
-const toStatusLabel = (status: CommunityRequestItem["estado"]): string => {
-  if (status === "aprobada") return "APROBADA";
-  if (status === "denegada") return "RECHAZADA";
+const toStatusLabel = (status: "pending" | "approved" | "rejected"): string => {
+  if (status === "approved") return "APROBADA";
+  if (status === "rejected") return "RECHAZADA";
   return "PENDIENTE";
 };
 
@@ -80,19 +70,19 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
     redirect("/login");
   }
 
-  const community = await prisma.comunidad.findUnique({
+  const community = await prisma.community.findUnique({
     where: {
       id: communityID
     },
     select: {
       id: true,
-      nombre: true,
-      calle: true,
-      numero: true,
-      ciudad: true,
-      provincia: true,
-      pais: true,
-      adminID: true
+      name: true,
+      street: true,
+      number: true,
+      city: true,
+      province: true,
+      country: true,
+      adminId: true
     }
   });
 
@@ -100,26 +90,30 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
     notFound();
   }
 
-  if (community.adminID !== verifiedSession.session.userID) {
+  if (community.adminId !== verifiedSession.session.userID) {
     redirect(`/communities/${communityID}/overview`);
   }
 
-  const requests = await prisma.$queryRaw<CommunityRequestItem[]>`
-    SELECT
-      s."id",
-      s."usuario",
-      s."estado",
-      s."creadoEn",
-      u."nombre",
-      u."apellido",
-      u."email"
-    FROM "Solicitud" s
-    INNER JOIN "Usuario" u ON u."id" = s."usuario"
-    WHERE s."comunidad" = ${communityID}
-    ORDER BY
-      CASE s."estado" WHEN 'pendiente' THEN 0 WHEN 'aprobada' THEN 1 ELSE 2 END ASC,
-      s."creadoEn" DESC
-  `;
+  const requests = await prisma.request.findMany({
+    where: {
+      community: communityID
+    },
+    select: {
+      id: true,
+      status: true,
+      createdAt: true,
+      userRef: {
+        select: {
+          name: true,
+          lastName: true,
+          email: true
+        }
+      }
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
 
   return (
     <main className={style.main}>
@@ -127,7 +121,7 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"
-          alt={`Imagen de la comunidad ${community.nombre}`}
+          alt={`Imagen de la comunidad ${community.name}`}
           width={240}
           height={160}
           className={style.headerImage}
@@ -136,9 +130,9 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
 
         <div className={style.headerInfo}>
           <h1 className={style.title}>Solicitudes</h1>
-          <p className={style.communityName}>{community.nombre}</p>
+          <p className={style.communityName}>{community.name}</p>
           <p className={style.address}>
-            {community.calle}, {community.numero}. {community.ciudad}, {community.provincia}, {community.pais}
+            {community.street}, {community.number}. {community.city}, {community.province}, {community.country}
           </p>
         </div>
       </section>
@@ -150,11 +144,11 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
           <div className={style.listViewport}>
             <ul className={style.requestList}>
               {requests.map(request => {
-                const isPending = request.estado === "pendiente";
+                const isPending = request.status === "pending";
                 const statusClassName =
-                  request.estado === "aprobada"
+                  request.status === "approved"
                     ? style.statusApproved
-                    : request.estado === "denegada"
+                    : request.status === "rejected"
                       ? style.statusRejected
                       : style.statusPending;
 
@@ -162,15 +156,15 @@ const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode
                   <li key={request.id} className={style.requestItem}>
                     <div className={style.requestInfo}>
                       <p className={style.userName}>
-                        {request.nombre} {request.apellido}
+                        {request.userRef.name} {request.userRef.lastName}
                       </p>
-                      <p className={style.userEmail}>{request.email}</p>
-                      <p className={style.requestDate}>Fecha: {toDateLabel(request.creadoEn)}</p>
+                      <p className={style.userEmail}>{request.userRef.email}</p>
+                      <p className={style.requestDate}>Fecha: {toDateLabel(request.createdAt)}</p>
                     </div>
 
                     <div className={style.requestStateWrap}>
                       <p className={`${style.requestStatus} ${statusClassName}`.trim()}>
-                        {toStatusLabel(request.estado)}
+                        {toStatusLabel(request.status)}
                       </p>
                     </div>
 

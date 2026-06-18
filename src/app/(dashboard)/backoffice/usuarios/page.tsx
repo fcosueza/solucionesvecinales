@@ -33,38 +33,38 @@ export default async function BackOfficeUsersPage({
   const where = q
     ? {
         OR: [
-          { nombre: { contains: q, mode: "insensitive" as const } },
-          { apellido: { contains: q, mode: "insensitive" as const } },
+          { name: { contains: q, mode: "insensitive" as const } },
+          { lastName: { contains: q, mode: "insensitive" as const } },
           { email: { contains: q, mode: "insensitive" as const } }
         ]
       }
     : undefined;
 
   const [totalUsuarios, totalInquilinos, totalAdmins, totalAdminsWeb, usuarios, totalFiltrados] = await Promise.all([
-    prisma.usuario.count(),
-    prisma.usuario.count({ where: { rol: UserRole.tenant } }),
-    prisma.usuario.count({ where: { rol: UserRole.admin } }),
-    prisma.usuario.count({ where: { rol: UserRole.webAdmin } }),
-    prisma.usuario.findMany({
+    prisma.user.count(),
+    prisma.user.count({ where: { role: UserRole.tenant } }),
+    prisma.user.count({ where: { role: UserRole.admin } }),
+    prisma.user.count({ where: { role: UserRole.webAdmin } }),
+    prisma.user.findMany({
       where,
       skip,
       take: PAGE_SIZE,
-      orderBy: [{ apellido: "asc" }, { nombre: "asc" }],
+      orderBy: [{ lastName: "asc" }, { name: "asc" }],
       select: {
         id: true,
-        nombre: true,
-        apellido: true,
+        name: true,
+        lastName: true,
         email: true,
-        rol: true,
+        role: true,
         _count: {
           select: {
-            inscripciones: true,
-            solicitudes: true
+            memberships: true,
+            requests: true
           }
         }
       }
     }),
-    prisma.usuario.count({ where })
+    prisma.user.count({ where })
   ]);
 
   const totalPages = Math.max(1, Math.ceil(totalFiltrados / PAGE_SIZE));
@@ -110,13 +110,13 @@ export default async function BackOfficeUsersPage({
               {usuarios.map(usuario => (
                 <li key={usuario.id} className={style.listItem}>
                   <p className={style.itemTitle}>
-                    {usuario.nombre} {usuario.apellido}
+                    {usuario.name} {usuario.lastName}
                   </p>
                   <p className={style.itemMeta}>{usuario.email}</p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{etiquetasRol[usuario.rol as UserRole]}</span>
-                    <span className={style.pill}>{usuario._count.inscripciones} inscripciones</span>
-                    <span className={style.pill}>{usuario._count.solicitudes} solicitudes</span>
+                    <span className={style.pill}>{etiquetasRol[usuario.role as UserRole]}</span>
+                    <span className={style.pill}>{usuario._count.memberships} inscripciones</span>
+                    <span className={style.pill}>{usuario._count.requests} solicitudes</span>
                   </div>
                   <form action={deleteUser}>
                     <input type="hidden" name="id" value={usuario.id} />

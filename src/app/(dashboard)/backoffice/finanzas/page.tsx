@@ -24,31 +24,31 @@ export default async function BackOfficeFinancePage({
   const page = Math.max(1, parseInt(pageParam, 10) || 1);
   const skip = (page - 1) * PAGE_SIZE;
 
-  const where = q ? { descripcion: { contains: q, mode: "insensitive" as const } } : undefined;
+  const where = q ? { description: { contains: q, mode: "insensitive" as const } } : undefined;
 
   const [registrosTodos, totalRegistros, comunidadesConMovimientos, movimientos, totalFiltrados] = await Promise.all([
-    prisma.registro.findMany({ select: { tipo: true, importe: true } }),
-    prisma.registro.count(),
-    prisma.comunidad.count({ where: { registrosFinancieros: { some: {} } } }),
-    prisma.registro.findMany({
+    prisma.financialRecord.findMany({ select: { type: true, amount: true } }),
+    prisma.financialRecord.count(),
+    prisma.community.count({ where: { financialRecords: { some: {} } } }),
+    prisma.financialRecord.findMany({
       where,
       skip,
       take: PAGE_SIZE,
-      orderBy: { creadoEn: "desc" },
+      orderBy: { createdAt: "desc" },
       select: {
         id: true,
-        descripcion: true,
-        importe: true,
-        tipo: true,
-        creadoEn: true,
-        comunidadID: {
+        description: true,
+        amount: true,
+        type: true,
+        createdAt: true,
+        communityRef: {
           select: {
-            nombre: true
+            name: true
           }
         }
       }
     }),
-    prisma.registro.count({ where })
+    prisma.financialRecord.count({ where })
   ]);
 
   const { totalIngresos, totalPagos, balanceFinal } = calculateFinancialSummary(registrosTodos);
@@ -102,12 +102,12 @@ export default async function BackOfficeFinancePage({
             <ul className={style.list}>
               {movimientos.map(registro => (
                 <li key={registro.id} className={style.listItem}>
-                  <p className={style.itemTitle}>{registro.descripcion}</p>
-                  <p className={style.itemMeta}>Comunidad: {registro.comunidadID.nombre}</p>
+                  <p className={style.itemTitle}>{registro.description}</p>
+                  <p className={style.itemMeta}>Comunidad: {registro.communityRef.name}</p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{registro.tipo}</span>
-                    <span className={style.pill}>{formatCurrencyAmount(Number(registro.importe.toString()))}</span>
-                    <span className={style.pill}>{registro.creadoEn.toLocaleDateString("es-ES")}</span>
+                    <span className={style.pill}>{registro.type}</span>
+                    <span className={style.pill}>{formatCurrencyAmount(Number(registro.amount.toString()))}</span>
+                    <span className={style.pill}>{registro.createdAt.toLocaleDateString("es-ES")}</span>
                   </div>
                   <form action={deleteRecord}>
                     <input type="hidden" name="id" value={registro.id} />

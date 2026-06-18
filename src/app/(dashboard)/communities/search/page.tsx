@@ -61,47 +61,47 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
     verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
   // We run a query to get all available communities, sorted alphabetically by name
-  const communities = await prisma.comunidad.findMany({
+  const communities = await prisma.community.findMany({
     select: {
       id: true,
-      nombre: true,
-      calle: true,
-      numero: true,
-      ciudad: true,
-      provincia: true,
-      pais: true
+      name: true,
+      street: true,
+      number: true,
+      city: true,
+      province: true,
+      country: true
     },
     orderBy: {
-      nombre: "asc"
+      name: "asc"
     }
   });
 
   // We check which communities the user has to mark the ones they already have registered in the search form
-  const userWithCommunities = await prisma.usuario.findUnique({
+  const userWithCommunities = await prisma.user.findUnique({
     where: {
       id: verifiedSession.session.userID
     },
     select: {
-      inscripciones: {
+      memberships: {
         select: {
-          comunidad: true
+          community: true
         }
       },
-      solicitudes: {
+      requests: {
         where: {
-          estado: "pendiente"
+          status: "pending"
         },
         select: {
-          comunidad: true
+          community: true
         }
       }
     }
   });
 
   // We combine managed communities and communities in which the user is a tenant
-  const enrolledCommunityIDs = new Set<number>(aLista(userWithCommunities?.inscripciones).map(i => i.comunidad));
+  const enrolledCommunityIDs = new Set<number>(aLista(userWithCommunities?.memberships).map(i => i.community));
   const pendingRequestCommunityIDs = new Set<number>(
-    aLista(userWithCommunities?.solicitudes).map(request => request.comunidad)
+    aLista(userWithCommunities?.requests).map(request => request.community)
   );
 
   const resolvedSearchParams = await searchParams;
@@ -112,12 +112,12 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
       ? communities
       : communities.filter(community => {
           const searchableFields = [
-            community.nombre,
-            community.calle,
-            String(community.numero),
-            community.ciudad,
-            community.provincia,
-            community.pais
+            community.name,
+            community.street,
+            String(community.number),
+            community.city,
+            community.province,
+            community.country
           ];
 
           return searchableFields.some(field => field.toLowerCase().includes(searchTerm));
@@ -154,9 +154,9 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
                     <CardCommunity
                       className={style.cardCommunity}
                       imageURL="/assets/images/default-community.jpeg"
-                      imageAltText={`Imagen de la comunidad ${community.nombre}`}
-                      communityName={community.nombre}
-                      communityAddress={`${community.calle}, ${community.numero}. ${community.ciudad}`}
+                      imageAltText={`Imagen de la comunidad ${community.name}`}
+                      communityName={community.name}
+                      communityAddress={`${community.street}, ${community.number}. ${community.city}`}
                       ctaText={ctaText}
                       ctaDisabled={shouldDisableCTA}
                       ctaButtonType="submit"

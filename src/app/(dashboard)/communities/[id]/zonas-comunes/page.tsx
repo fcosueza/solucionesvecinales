@@ -61,59 +61,59 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
   const currentTime = new Date(Date.UTC(1970, 0, 1, now.getUTCHours(), now.getUTCMinutes(), 0, 0));
 
   const [community, userReservations] = await Promise.all([
-    prisma.comunidad.findUnique({
+    prisma.community.findUnique({
       where: { id: communityID },
       select: {
         id: true,
-        nombre: true,
-        calle: true,
-        numero: true,
-        ciudad: true,
-        provincia: true,
-        pais: true,
-        zonas: {
+        name: true,
+        street: true,
+        number: true,
+        city: true,
+        province: true,
+        country: true,
+        zones: {
           select: {
-            nombre: true,
-            descripcion: true,
-            hora_inicio: true,
-            hora_fin: true,
-            imagen: true,
-            reservas: {
+            name: true,
+            description: true,
+            startTime: true,
+            endTime: true,
+            image: true,
+            reservations: {
               where: {
-                fecha: {
+                date: {
                   gte: reservationWindowStart,
                   lte: reservationWindowEnd
                 }
               },
               select: {
-                fecha: true,
-                hora_inicio: true,
-                hora_fin: true
+                date: true,
+                startTime: true,
+                endTime: true
               },
-              orderBy: [{ fecha: "asc" }, { hora_inicio: "asc" }]
+              orderBy: [{ date: "asc" }, { startTime: "asc" }]
             }
           },
           orderBy: {
-            nombre: "asc"
+            name: "asc"
           }
         }
       }
     }),
-    prisma.reserva.findMany({
+    prisma.reservation.findMany({
       where: {
-        comunidad: communityID,
-        usuario: verifiedSession.session.userID,
-        OR: [{ fecha: { gt: today } }, { fecha: today, hora_fin: { gt: currentTime } }]
+        community: communityID,
+        user: verifiedSession.session.userID,
+        OR: [{ date: { gt: today } }, { date: today, endTime: { gt: currentTime } }]
       },
       select: {
         id: true,
-        comunidad: true,
-        zona: true,
-        fecha: true,
-        hora_inicio: true,
-        hora_fin: true
+        community: true,
+        zone: true,
+        date: true,
+        startTime: true,
+        endTime: true
       },
-      orderBy: [{ fecha: "asc" }, { hora_inicio: "asc" }]
+      orderBy: [{ date: "asc" }, { startTime: "asc" }]
     })
   ]);
 
@@ -130,7 +130,7 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"
-          alt={`Imagen de la comunidad ${community.nombre}`}
+          alt={`Imagen de la comunidad ${community.name}`}
           width={240}
           height={160}
           className={style.headerImage}
@@ -139,9 +139,9 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
 
         <div className={style.headerInfo}>
           <h1 className={style.title}>Zonas comunes</h1>
-          <p className={style.communityName}>{community.nombre}</p>
+          <p className={style.communityName}>{community.name}</p>
           <p className={style.address}>
-            {community.calle}, {community.numero}. {community.ciudad}, {community.provincia}, {community.pais}
+            {community.street}, {community.number}. {community.city}, {community.province}, {community.country}
           </p>
         </div>
       </section>
@@ -161,10 +161,10 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
           {isAdmin ? <AddZoneFormButton communityID={communityID} /> : null}
         </div>
 
-        {community.zonas.length > 0 ? (
+        {community.zones.length > 0 ? (
           <div className={style.zonesGrid}>
-            {community.zonas.map(zone => {
-              const weeklyReservations = zone.reservas.length;
+            {community.zones.map(zone => {
+              const weeklyReservations = zone.reservations.length;
               const reservationSummary =
                 weeklyReservations > 0
                   ? `${weeklyReservations} reservas previstas para los próximos 7 días.`
@@ -172,7 +172,7 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
 
               return (
                 <ZoneCardWrapper
-                  key={zone.nombre}
+                  key={zone.name}
                   communityID={communityID}
                   zone={zone}
                   reservationSummary={reservationSummary}
@@ -197,9 +197,9 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
                 key={reservation.id}
                 reservationID={reservation.id}
                 communityID={communityID}
-                zona={reservation.zona}
-                fecha={formatReservationDateLabel(reservation.fecha)}
-                horario={`${formatTimeLabel(reservation.hora_inicio)} - ${formatTimeLabel(reservation.hora_fin)}`}
+                zona={reservation.zone}
+                fecha={formatReservationDateLabel(reservation.date)}
+                horario={`${formatTimeLabel(reservation.startTime)} - ${formatTimeLabel(reservation.endTime)}`}
               />
             ))}
           </div>

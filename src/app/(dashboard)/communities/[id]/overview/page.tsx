@@ -53,47 +53,47 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
     redirect("/login");
   }
 
-  const comunidad = await prisma.comunidad.findUnique({
+  const comunidad = await prisma.community.findUnique({
     where: { id: comunidadId },
     select: {
       id: true,
-      nombre: true,
-      calle: true,
-      numero: true,
-      ciudad: true,
-      provincia: true,
-      pais: true,
-      mensajes: {
+      name: true,
+      street: true,
+      number: true,
+      city: true,
+      province: true,
+      country: true,
+      messages: {
         select: {
-          texto: true,
-          creadoEn: true
+          text: true,
+          createdAt: true
         },
         orderBy: {
-          creadoEn: "desc"
+          createdAt: "desc"
         },
         take: 20
       },
-      zonas: {
+      zones: {
         select: {
-          nombre: true,
-          descripcion: true,
-          hora_inicio: true,
-          hora_fin: true,
-          imagen: true
+          name: true,
+          description: true,
+          startTime: true,
+          endTime: true,
+          image: true
         },
         orderBy: {
-          nombre: "asc"
+          name: "asc"
         }
       },
       _count: {
         select: {
-          incidentes: true
+          incidents: true
         }
       },
-      registrosFinancieros: {
+      financialRecords: {
         select: {
-          tipo: true,
-          importe: true
+          type: true,
+          amount: true
         }
       }
     }
@@ -103,7 +103,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
     notFound();
   }
 
-  const { balanceFinal } = calculateFinancialSummary(comunidad.registrosFinancieros);
+  const { balanceFinal } = calculateFinancialSummary(comunidad.financialRecords);
   const esAdmin =
     sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
 
@@ -113,7 +113,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"
-          alt={`Imagen de la comunidad ${comunidad.nombre}`}
+          alt={`Imagen de la comunidad ${comunidad.name}`}
           width={240}
           height={160}
           className={style.headerImage}
@@ -121,31 +121,31 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
         />
 
         <div className={style.headerInfo}>
-          <h1 className={style.title}>{comunidad.nombre}</h1>
+          <h1 className={style.title}>{comunidad.name}</h1>
           <p className={style.address}>
-            {comunidad.calle}, {comunidad.numero}. {comunidad.ciudad}, {comunidad.provincia}, {comunidad.pais}
+            {comunidad.street}, {comunidad.number}. {comunidad.city}, {comunidad.province}, {comunidad.country}
           </p>
         </div>
       </section>
 
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Tablón de mensajes</h2>
-        <MessageBoard mensajes={comunidad.mensajes} comunidadId={comunidadId} isAdmin={esAdmin} />
+        <MessageBoard mensajes={comunidad.messages} comunidadId={comunidadId} isAdmin={esAdmin} />
       </section>
 
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Zonas comunes</h2>
 
-        {comunidad.zonas.length > 0 ? (
+        {comunidad.zones.length > 0 ? (
           <div className={style.zonesGrid}>
-            {comunidad.zonas.map(zona => (
+            {comunidad.zones.map(zona => (
               <CardCommonArea
-                key={zona.nombre}
-                nombre={zona.nombre}
-                descripcion={zona.descripcion}
-                horaInicio={zona.hora_inicio}
-                horaFin={zona.hora_fin}
-                imageUrl={zona.imagen ?? "/assets/images/default-community.jpeg"}
+                key={zona.name}
+                nombre={zona.name}
+                descripcion={zona.description}
+                horaInicio={zona.startTime}
+                horaFin={zona.endTime}
+                imageUrl={zona.image ?? "/assets/images/default-community.jpeg"}
                 reservationSummary="Reserva turnos de 1 o 2 horas en los próximos 7 días. Solo una reserva activa por usuario."
                 action={
                   <Link className={style.zoneLink} href={`/communities/${comunidadId}/zonas-comunes`}>
@@ -163,7 +163,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
       <section className={`${style.section} ${style.statsSection}`.trim()}>
         <CardStat
           title="Incidencias"
-          value={String(comunidad._count.incidentes)}
+          value={String(comunidad._count.incidents)}
           description="Incidencias totales registradas en la comunidad"
         />
         <CardStat

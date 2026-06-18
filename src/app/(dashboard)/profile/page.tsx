@@ -38,14 +38,14 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
 
   const userID = sesionVerificada.session.userID;
 
-  const usuario = await prisma.usuario.findUnique({
+  const usuario = await prisma.user.findUnique({
     where: { id: userID },
     select: {
-      nombre: true,
-      apellido: true,
+      name: true,
+      lastName: true,
       email: true,
-      rol: true,
-      imagen: true
+      role: true,
+      image: true
     }
   });
 
@@ -53,8 +53,8 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
     redirect("/login");
   }
 
-  const esAdministrador = usuario.rol === UserRole.admin || usuario.rol === UserRole.webAdmin;
-  const tieneComunidades = esAdministrador ? (await prisma.comunidad.count({ where: { adminID: userID } })) > 0 : false;
+  const esAdministrador = usuario.role === UserRole.admin || usuario.role === UserRole.webAdmin;
+  const tieneComunidades = esAdministrador ? (await prisma.community.count({ where: { adminId: userID } })) > 0 : false;
 
   return (
     <main className={style.main}>
@@ -62,11 +62,11 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
       <h1 className={style.title}>Mi perfil</h1>
       <p className={style.description}>Cambiar los datos de tu perfil</p>
       <ProfileForm
-        nombre={usuario.nombre}
-        apellido={usuario.apellido}
+        nombre={usuario.name}
+        apellido={usuario.lastName}
         email={usuario.email}
-        rol={usuario.rol as UserRole}
-        imagen={usuario.imagen ?? undefined}
+        rol={usuario.role as UserRole}
+        imagen={usuario.image ?? undefined}
         tieneComunidades={tieneComunidades}
       />
     </main>

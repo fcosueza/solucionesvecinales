@@ -9,15 +9,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 interface Zone {
-  nombre: string;
-  descripcion: string;
-  hora_inicio: Date;
-  hora_fin: Date;
-  imagen: string | null;
-  reservas: Array<{
-    fecha: Date;
-    hora_inicio: Date;
-    hora_fin: Date;
+  name: string;
+  description: string;
+  startTime: Date;
+  endTime: Date;
+  image: string | null;
+  reservations: Array<{
+    date: Date;
+    startTime: Date;
+    endTime: Date;
   }>;
 }
 
@@ -53,7 +53,7 @@ const ZoneCardWrapper = ({
 
   const handleDelete = async () => {
     setPending(true);
-    const result = await deleteZone(communityID, zone.nombre);
+    const result = await deleteZone(communityID, zone.name);
     setPending(false);
 
     if (result.state === "success") {
@@ -69,24 +69,24 @@ const ZoneCardWrapper = ({
   return (
     <>
       <CardCommonArea
-        nombre={zone.nombre}
-        descripcion={zone.descripcion}
-        horaInicio={zone.hora_inicio}
-        horaFin={zone.hora_fin}
-        imageUrl={zone.imagen ?? "/assets/images/default-community.jpeg"}
+        nombre={zone.name}
+        descripcion={zone.description}
+        horaInicio={zone.startTime}
+        horaFin={zone.endTime}
+        imageUrl={zone.image ?? "/assets/images/default-community.jpeg"}
         reservationSummary={reservationSummary}
         isAdmin={isAdmin}
         onDeleteRequest={() => setShowConfirm(true)}
         action={
           <CommonAreaReservationButton
             communityID={communityID}
-            zoneName={zone.nombre}
-            openingHour={zone.hora_inicio.getUTCHours()}
-            closingHour={zone.hora_fin.getUTCHours()}
-            existingReservations={zone.reservas.map(reservation => ({
-              date: toReservationDateValue(reservation.fecha),
-              startHour: reservation.hora_inicio.getUTCHours(),
-              endHour: reservation.hora_fin.getUTCHours()
+            zoneName={zone.name}
+            openingHour={zone.startTime.getUTCHours()}
+            closingHour={zone.endTime.getUTCHours()}
+            existingReservations={zone.reservations.map(reservation => ({
+              date: toReservationDateValue(reservation.date),
+              startHour: reservation.startTime.getUTCHours(),
+              endHour: reservation.endTime.getUTCHours()
             }))}
             disabled={hasActiveReservation}
           />
@@ -124,7 +124,7 @@ const ZoneCardWrapper = ({
               Eliminar zona
             </h3>
             <p style={{ marginTop: "1rem", fontSize: "1.5rem", lineHeight: 1.6, color: "var(--font-color-secondary)" }}>
-              ¿Seguro que quieres eliminar la zona <strong>{zone.nombre}</strong>? Se cancelarán todas las reservas
+              ¿Seguro que quieres eliminar la zona <strong>{zone.name}</strong>? Se cancelarán todas las reservas
               asociadas.
             </p>
 

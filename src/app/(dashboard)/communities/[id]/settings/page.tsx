@@ -54,17 +54,17 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
     redirect(`/communities/${communityID}/overview`);
   }
 
-  const comunidad = await prisma.comunidad.findUnique({
+  const comunidad = await prisma.community.findUnique({
     where: { id: communityID },
     select: {
       id: true,
-      nombre: true,
-      calle: true,
-      numero: true,
-      ciudad: true,
-      provincia: true,
-      pais: true,
-      adminID: true
+      name: true,
+      street: true,
+      number: true,
+      city: true,
+      province: true,
+      country: true,
+      adminId: true
     }
   });
 
@@ -72,7 +72,7 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
     notFound();
   }
 
-  if (comunidad.adminID !== sesionVerificada.session.userID) {
+  if (comunidad.adminId !== sesionVerificada.session.userID) {
     redirect(`/communities/${communityID}/overview`);
   }
 
@@ -83,12 +83,12 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
       <p className={style.description}>Gestiona los datos y ajustes de la comunidad</p>
       <CommunitySettingsForm
         communityID={comunidad.id}
-        nombre={comunidad.nombre}
-        calle={comunidad.calle}
-        numero={comunidad.numero}
-        ciudad={comunidad.ciudad}
-        provincia={comunidad.provincia}
-        pais={comunidad.pais}
+        nombre={comunidad.name}
+        calle={comunidad.street}
+        numero={comunidad.number}
+        ciudad={comunidad.city}
+        provincia={comunidad.province}
+        pais={comunidad.country}
       />
     </main>
   );

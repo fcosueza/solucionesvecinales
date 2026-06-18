@@ -23,39 +23,39 @@ export default async function BackOfficeIncidentsPage({
   const page = Math.max(1, parseInt(pageParam, 10) || 1);
   const skip = (page - 1) * PAGE_SIZE;
 
-  const where = q ? { titulo: { contains: q, mode: "insensitive" as const } } : undefined;
+  const where = q ? { title: { contains: q, mode: "insensitive" as const } } : undefined;
 
   const [totalIncidencias, reportadas, enProceso, resueltas, incidencias, totalFiltradas] = await Promise.all([
-    prisma.incidencia.count(),
-    prisma.incidencia.count({ where: { estado: "reportado" } }),
-    prisma.incidencia.count({ where: { estado: "procesandose" } }),
-    prisma.incidencia.count({ where: { estado: "resuelto" } }),
-    prisma.incidencia.findMany({
+    prisma.incident.count(),
+    prisma.incident.count({ where: { status: "reported" } }),
+    prisma.incident.count({ where: { status: "inProgress" } }),
+    prisma.incident.count({ where: { status: "resolved" } }),
+    prisma.incident.findMany({
       where,
       skip,
       take: PAGE_SIZE,
-      orderBy: [{ actualizadaEn: "desc" }, { fecha: "desc" }],
+      orderBy: [{ updatedAt: "desc" }, { date: "desc" }],
       select: {
-        titulo: true,
-        estado: true,
-        fecha: true,
-        actualizadaEn: true,
-        comunidad: true,
-        usuario: true,
-        comunidadID: {
+        title: true,
+        status: true,
+        date: true,
+        updatedAt: true,
+        community: true,
+        user: true,
+        communityRef: {
           select: {
-            nombre: true
+            name: true
           }
         },
-        usuarioID: {
+        userRef: {
           select: {
-            nombre: true,
-            apellido: true
+            name: true,
+            lastName: true
           }
         }
       }
     }),
-    prisma.incidencia.count({ where })
+    prisma.incident.count({ where })
   ]);
 
   const totalPages = Math.max(1, Math.ceil(totalFiltradas / PAGE_SIZE));
@@ -100,22 +100,22 @@ export default async function BackOfficeIncidentsPage({
             <ul className={style.list}>
               {incidencias.map(incidencia => (
                 <li
-                  key={`${incidencia.titulo}-${incidencia.fecha.toISOString()}-${incidencia.comunidadID.nombre}`}
+                  key={`${incidencia.title}-${incidencia.date.toISOString()}-${incidencia.communityRef.name}`}
                   className={style.listItem}
                 >
-                  <p className={style.itemTitle}>{incidencia.titulo}</p>
-                  <p className={style.itemMeta}>Comunidad: {incidencia.comunidadID.nombre}</p>
+                  <p className={style.itemTitle}>{incidencia.title}</p>
+                  <p className={style.itemMeta}>Comunidad: {incidencia.communityRef.name}</p>
                   <p className={style.itemMeta}>
-                    Reportada por {incidencia.usuarioID.nombre} {incidencia.usuarioID.apellido}
+                    Reportada por {incidencia.userRef.name} {incidencia.userRef.lastName}
                   </p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{incidencia.estado}</span>
-                    <span className={style.pill}>{incidencia.actualizadaEn.toLocaleDateString("es-ES")}</span>
+                    <span className={style.pill}>{incidencia.status}</span>
+                    <span className={style.pill}>{incidencia.updatedAt.toLocaleDateString("es-ES")}</span>
                   </div>
                   <form action={deleteIncidentAdmin}>
-                    <input type="hidden" name="comunidad" value={incidencia.comunidad} />
-                    <input type="hidden" name="usuario" value={incidencia.usuario} />
-                    <input type="hidden" name="fecha" value={incidencia.fecha.toISOString()} />
+                    <input type="hidden" name="comunidad" value={incidencia.community} />
+                    <input type="hidden" name="usuario" value={incidencia.user} />
+                    <input type="hidden" name="fecha" value={incidencia.date.toISOString()} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar
                     </button>

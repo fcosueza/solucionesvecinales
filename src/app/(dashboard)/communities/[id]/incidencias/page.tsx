@@ -12,23 +12,6 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-type IncidentState = "reportado" | "procesandose" | "resuelto";
-
-interface IncidentItem {
-  comunidad: number;
-  usuario: string;
-  fecha: Date;
-  titulo: string;
-  descripcion: string;
-  estado: IncidentState;
-  actualizadaEn: Date;
-  usuarioID: {
-    nombre: string;
-    apellido: string;
-    email: string;
-  };
-}
-
 const helpContent: HelpContent = {
   title: "Ayuda: Incidencias",
   summary: "Gestiona incidencias reportadas por la comunidad.",
@@ -69,18 +52,18 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
 
   const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  const community = await prisma.comunidad.findUnique({
+  const community = await prisma.community.findUnique({
     where: {
       id: communityID
     },
     select: {
       id: true,
-      nombre: true,
-      calle: true,
-      numero: true,
-      ciudad: true,
-      provincia: true,
-      pais: true
+      name: true,
+      street: true,
+      number: true,
+      city: true,
+      province: true,
+      country: true
     }
   });
 
@@ -88,32 +71,32 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
     notFound();
   }
 
-  const incidents = await prisma.incidencia.findMany({
+  const incidents = await prisma.incident.findMany({
     where: {
-      comunidad: communityID
+      community: communityID
     },
     select: {
-      comunidad: true,
-      usuario: true,
-      fecha: true,
-      titulo: true,
-      descripcion: true,
-      estado: true,
-      actualizadaEn: true,
-      usuarioID: {
+      community: true,
+      user: true,
+      date: true,
+      title: true,
+      description: true,
+      status: true,
+      updatedAt: true,
+      userRef: {
         select: {
-          nombre: true,
-          apellido: true,
+          name: true,
+          lastName: true,
           email: true
         }
       }
     },
     orderBy: [
       {
-        estado: "asc"
+        status: "asc"
       },
       {
-        fecha: "desc"
+        date: "desc"
       }
     ]
   });
@@ -124,7 +107,7 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"
-          alt={`Imagen de la comunidad ${community.nombre}`}
+          alt={`Imagen de la comunidad ${community.name}`}
           width={240}
           height={160}
           className={style.headerImage}
@@ -133,9 +116,9 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
 
         <div className={style.headerInfo}>
           <h1 className={style.title}>Incidencias</h1>
-          <p className={style.communityName}>{community.nombre}</p>
+          <p className={style.communityName}>{community.name}</p>
           <p className={style.address}>
-            {community.calle}, {community.numero}. {community.ciudad}, {community.provincia}, {community.pais}
+            {community.street}, {community.number}. {community.city}, {community.province}, {community.country}
           </p>
         </div>
       </section>
@@ -149,18 +132,24 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
         {incidents.length > 0 ? (
           <div className={style.listViewport}>
             <ul className={style.incidentsList}>
-              {incidents.map((incident: IncidentItem) => (
+              {incidents.map(incident => (
                 <CardIncident
-                  key={`${incident.comunidad}-${incident.usuario}-${incident.fecha.toISOString()}`}
-                  communityID={incident.comunidad}
-                  userID={incident.usuario}
-                  incidentDate={incident.fecha}
-                  title={incident.titulo}
-                  updatedAt={incident.actualizadaEn}
-                  userName={`${incident.usuarioID.nombre} ${incident.usuarioID.apellido}`}
-                  userEmail={incident.usuarioID.email}
-                  description={incident.descripcion}
-                  state={incident.estado}
+                  key={`${incident.community}-${incident.user}-${incident.date.toISOString()}`}
+                  communityID={incident.community}
+                  userID={incident.user}
+                  incidentDate={incident.date}
+                  title={incident.title}
+                  updatedAt={incident.updatedAt}
+                  userName={`${incident.userRef.name} ${incident.userRef.lastName}`}
+                  userEmail={incident.userRef.email}
+                  description={incident.description}
+                  state={
+                    incident.status === "reported"
+                      ? "reportado"
+                      : incident.status === "inProgress"
+                        ? "procesandose"
+                        : "resuelto"
+                  }
                   isAdmin={isAdmin}
                 />
               ))}

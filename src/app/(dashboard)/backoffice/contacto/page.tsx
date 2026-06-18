@@ -25,21 +25,21 @@ export default async function BackOfficeContactoPage({
   const where = q
     ? {
         OR: [
-          { nombre: { contains: q, mode: "insensitive" as const } },
+          { name: { contains: q, mode: "insensitive" as const } },
           { email: { contains: q, mode: "insensitive" as const } },
-          { mensaje: { contains: q, mode: "insensitive" as const } }
+          { message: { contains: q, mode: "insensitive" as const } }
         ]
       }
     : undefined;
 
   const [total, totalFiltrados, mensajes] = await Promise.all([
-    prisma.contacto.count(),
-    prisma.contacto.count({ where }),
-    prisma.contacto.findMany({
+    prisma.contact.count(),
+    prisma.contact.count({ where }),
+    prisma.contact.findMany({
       where,
       skip,
       take: PAGE_SIZE,
-      orderBy: { creadoEn: "desc" }
+      orderBy: { createdAt: "desc" }
     })
   ]);
 
@@ -82,19 +82,19 @@ export default async function BackOfficeContactoPage({
             <ul className={style.list}>
               {mensajes.map(contacto => (
                 <li
-                  key={`${contacto.nombre}-${contacto.email}-${contacto.creadoEn.toISOString()}`}
+                  key={`${contacto.name}-${contacto.email}-${contacto.createdAt.toISOString()}`}
                   className={style.listItem}
                 >
-                  <p className={style.itemTitle}>{contacto.nombre}</p>
+                  <p className={style.itemTitle}>{contacto.name}</p>
                   <p className={style.itemMeta}>{contacto.email}</p>
-                  <p className={style.itemMeta}>{contacto.mensaje}</p>
+                  <p className={style.itemMeta}>{contacto.message}</p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{contacto.creadoEn.toLocaleDateString("es-ES")}</span>
+                    <span className={style.pill}>{contacto.createdAt.toLocaleDateString("es-ES")}</span>
                   </div>
                   <form action={deleteContact}>
-                    <input type="hidden" name="nombre" value={contacto.nombre} />
+                    <input type="hidden" name="nombre" value={contacto.name} />
                     <input type="hidden" name="email" value={contacto.email} />
-                    <input type="hidden" name="creadoEn" value={contacto.creadoEn.toISOString()} />
+                    <input type="hidden" name="creadoEn" value={contacto.createdAt.toISOString()} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar
                     </button>

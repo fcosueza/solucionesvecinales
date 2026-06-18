@@ -15,10 +15,10 @@ interface Props {
 
 interface RegistroItem {
   id: number;
-  descripcion: string;
-  importe: FinancialRecordCalculable["amount"];
-  tipo: "ingreso" | "gasto";
-  creadoEn: Date;
+  description: FinancialRecordCalculable["description"];
+  amount: FinancialRecordCalculable["amount"];
+  type: "income" | "expense";
+  createdAt: Date;
 }
 
 const helpContent: HelpContent = {
@@ -89,9 +89,9 @@ const buildSectionRows = ({
       ...registros.map(registro => ({
         key: registro.id,
         cells: [
-          registro.descripcion,
-          toDateLabel(registro.creadoEn),
-          formatCurrencyAmount(Number(registro.importe.toString()))
+          registro.description,
+          toDateLabel(registro.createdAt),
+          formatCurrencyAmount(Number(registro.amount.toString()))
         ]
       }))
     );
@@ -133,22 +133,22 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
     where: { id: communityID },
     select: {
       id: true,
-      nombre: true,
-      calle: true,
-      numero: true,
-      ciudad: true,
-      provincia: true,
-      pais: true,
-      registrosFinancieros: {
+      name: true,
+      street: true,
+      number: true,
+      city: true,
+      province: true,
+      country: true,
+      financialRecords: {
         select: {
           id: true,
-          descripcion: true,
-          importe: true,
-          tipo: true,
-          creadoEn: true
+          description: true,
+          amount: true,
+          type: true,
+          createdAt: true
         },
         orderBy: {
-          creadoEn: "desc"
+          createdAt: "desc"
         }
       }
     }
@@ -158,12 +158,12 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
     notFound();
   }
 
-  const pagos = community.registrosFinancieros.filter(registro => registro.tipo === "gasto") as RegistroItem[];
-  const ingresos = community.registrosFinancieros.filter(registro => registro.tipo === "ingreso") as RegistroItem[];
+  const pagos = community.financialRecords.filter(registro => registro.type === "expense");
+  const ingresos = community.financialRecords.filter(registro => registro.type === "income");
   const canAddRecord =
     verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  const { totalIngresos, totalPagos, balanceFinal } = calculateFinancialSummary(community.registrosFinancieros);
+  const { totalIngresos, totalPagos, balanceFinal } = calculateFinancialSummary(community.financialRecords);
 
   const rows: TableRow[] = [
     ...buildSectionRows({
@@ -191,7 +191,7 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"
-          alt={`Imagen de la comunidad ${community.nombre}`}
+          alt={`Imagen de la comunidad ${community.name}`}
           width={240}
           height={160}
           className={style.headerImage}
@@ -200,9 +200,9 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
 
         <div className={style.headerInfo}>
           <h1 className={style.title}>Finanzas</h1>
-          <p className={style.communityName}>{community.nombre}</p>
+          <p className={style.communityName}>{community.name}</p>
           <p className={style.address}>
-            {community.calle}, {community.numero}. {community.ciudad}, {community.provincia}, {community.pais}
+            {community.street}, {community.number}. {community.city}, {community.province}, {community.country}
           </p>
         </div>
       </section>

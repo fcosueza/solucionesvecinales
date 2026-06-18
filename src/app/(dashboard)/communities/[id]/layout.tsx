@@ -31,7 +31,7 @@ const CommunityLayout = async ({ children, params }: Props): Promise<React.React
     redirect("/login");
   }
 
-  const comunidad = await prisma.comunidad.findUnique({
+  const comunidad = await prisma.community.findUnique({
     where: { id: comunidadId },
     select: { id: true }
   });
@@ -40,15 +40,15 @@ const CommunityLayout = async ({ children, params }: Props): Promise<React.React
     notFound();
   }
 
-  const inscripcion = await prisma.inscripcion.findUnique({
+  const inscripcion = await prisma.membership.findUnique({
     where: {
-      usuario_comunidad: {
-        usuario: sesionVerificada.session.userID,
-        comunidad: comunidadId
+      user_community: {
+        user: sesionVerificada.session.userID,
+        community: comunidadId
       }
     },
     select: {
-      usuario: true
+      user: true
     }
   });
 

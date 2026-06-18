@@ -30,36 +30,36 @@ export default async function BackOfficeZonesPage({
   const page = Math.max(1, parseInt(pageParam, 10) || 1);
   const skip = (page - 1) * PAGE_SIZE;
 
-  const where = q ? { nombre: { contains: q, mode: "insensitive" as const } } : undefined;
+  const where = q ? { name: { contains: q, mode: "insensitive" as const } } : undefined;
 
   const [totalZonas, totalReservas, comunidadesConZonas, zonas, totalFiltradas] = await Promise.all([
-    prisma.zona.count(),
-    prisma.reserva.count(),
-    prisma.comunidad.count({ where: { zonas: { some: {} } } }),
-    prisma.zona.findMany({
+    prisma.zone.count(),
+    prisma.reservation.count(),
+    prisma.community.count({ where: { zones: { some: {} } } }),
+    prisma.zone.findMany({
       where,
       skip,
       take: PAGE_SIZE,
-      orderBy: [{ comunidad: "asc" }, { nombre: "asc" }],
+      orderBy: [{ community: "asc" }, { name: "asc" }],
       select: {
-        nombre: true,
-        descripcion: true,
-        hora_inicio: true,
-        hora_fin: true,
-        comunidad: true,
-        comunidadID: {
+        name: true,
+        description: true,
+        startTime: true,
+        endTime: true,
+        community: true,
+        communityRef: {
           select: {
-            nombre: true
+            name: true
           }
         },
         _count: {
           select: {
-            reservas: true
+            reservations: true
           }
         }
       }
     }),
-    prisma.zona.count({ where })
+    prisma.zone.count({ where })
   ]);
 
   const totalPages = Math.max(1, Math.ceil(totalFiltradas / PAGE_SIZE));
@@ -106,19 +106,19 @@ export default async function BackOfficeZonesPage({
           <>
             <ul className={style.list}>
               {zonas.map(zona => (
-                <li key={`${zona.comunidadID.nombre}-${zona.nombre}`} className={style.listItem}>
-                  <p className={style.itemTitle}>{zona.nombre}</p>
-                  <p className={style.itemMeta}>Comunidad: {zona.comunidadID.nombre}</p>
-                  <p className={style.itemMeta}>{zona.descripcion}</p>
+                <li key={`${zona.communityRef.name}-${zona.name}`} className={style.listItem}>
+                  <p className={style.itemTitle}>{zona.name}</p>
+                  <p className={style.itemMeta}>Comunidad: {zona.communityRef.name}</p>
+                  <p className={style.itemMeta}>{zona.description}</p>
                   <div className={style.pillRow}>
                     <span className={style.pill}>
-                      {formatoHora.format(zona.hora_inicio)} - {formatoHora.format(zona.hora_fin)}
+                      {formatoHora.format(zona.startTime)} - {formatoHora.format(zona.endTime)}
                     </span>
-                    <span className={style.pill}>{zona._count.reservas} reservas</span>
+                    <span className={style.pill}>{zona._count.reservations} reservas</span>
                   </div>
                   <form action={deleteZoneAdmin}>
-                    <input type="hidden" name="nombre" value={zona.nombre} />
-                    <input type="hidden" name="comunidad" value={zona.comunidad} />
+                    <input type="hidden" name="nombre" value={zona.name} />
+                    <input type="hidden" name="comunidad" value={zona.community} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar
                     </button>

@@ -23,41 +23,41 @@ export default async function BackOfficeCommunitiesPage({
   const page = Math.max(1, parseInt(pageParam, 10) || 1);
   const skip = (page - 1) * PAGE_SIZE;
 
-  const where = q ? { nombre: { contains: q, mode: "insensitive" as const } } : undefined;
+  const where = q ? { name: { contains: q, mode: "insensitive" as const } } : undefined;
 
   const [totalComunidades, comunidadesConZonas, comunidadesConSolicitudesPendientes, comunidades, totalFiltradas] =
     await Promise.all([
-      prisma.comunidad.count(),
-      prisma.comunidad.count({ where: { zonas: { some: {} } } }),
-      prisma.comunidad.count({ where: { solicitudes: { some: { estado: "pendiente" } } } }),
-      prisma.comunidad.findMany({
+      prisma.community.count(),
+      prisma.community.count({ where: { zones: { some: {} } } }),
+      prisma.community.count({ where: { requests: { some: { status: "pending" } } } }),
+      prisma.community.findMany({
         where,
         skip,
         take: PAGE_SIZE,
         orderBy: { id: "desc" },
         select: {
           id: true,
-          nombre: true,
-          calle: true,
-          numero: true,
-          ciudad: true,
-          provincia: true,
+          name: true,
+          street: true,
+          number: true,
+          city: true,
+          province: true,
           admin: {
             select: {
-              nombre: true,
-              apellido: true
+              name: true,
+              lastName: true
             }
           },
           _count: {
             select: {
-              zonas: true,
-              incidentes: true,
-              solicitudes: true
+              zones: true,
+              incidents: true,
+              requests: true
             }
           }
         }
       }),
-      prisma.comunidad.count({ where })
+      prisma.community.count({ where })
     ]);
 
   const totalPages = Math.max(1, Math.ceil(totalFiltradas / PAGE_SIZE));
@@ -109,17 +109,17 @@ export default async function BackOfficeCommunitiesPage({
             <ul className={style.list}>
               {comunidades.map(comunidad => (
                 <li key={comunidad.id} className={style.listItem}>
-                  <p className={style.itemTitle}>{comunidad.nombre}</p>
+                  <p className={style.itemTitle}>{comunidad.name}</p>
                   <p className={style.itemMeta}>
-                    {comunidad.calle}, {comunidad.numero}. {comunidad.ciudad}, {comunidad.provincia}
+                    {comunidad.street}, {comunidad.number}. {comunidad.city}, {comunidad.province}
                   </p>
                   <p className={style.itemMeta}>
-                    Admin: {comunidad.admin.nombre} {comunidad.admin.apellido}
+                    Admin: {comunidad.admin.name} {comunidad.admin.lastName}
                   </p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{comunidad._count.zonas} zonas</span>
-                    <span className={style.pill}>{comunidad._count.incidentes} incidencias</span>
-                    <span className={style.pill}>{comunidad._count.solicitudes} solicitudes</span>
+                    <span className={style.pill}>{comunidad._count.zones} zonas</span>
+                    <span className={style.pill}>{comunidad._count.incidents} incidencias</span>
+                    <span className={style.pill}>{comunidad._count.requests} solicitudes</span>
                   </div>
                   <form action={deleteCommunityAdmin}>
                     <input type="hidden" name="id" value={comunidad.id} />

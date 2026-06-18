@@ -6,8 +6,8 @@ import MessageAddForm from "@/components/layouts/Forms/MessageAddForm";
 import style from "./style.module.css";
 
 interface Message {
-  texto: string;
-  creadoEn: Date;
+  text: string;
+  createdAt: Date;
 }
 
 interface Props {
@@ -44,8 +44,8 @@ const formatMessageDate = (date: Date): string => {
 const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);
 
-  const handleDelete = async (creadoEn: Date) => {
-    await deleteMessage(comunidadId, creadoEn);
+  const handleDelete = async (createdAt: Date) => {
+    await deleteMessage(comunidadId, createdAt);
   };
 
   return (
@@ -64,17 +64,17 @@ const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.
         <div className={style.board}>
           <ul className={style.messageList}>
             {mensajes.map(mensaje => (
-              <li key={`${mensaje.creadoEn.toISOString()}-${mensaje.texto}`} className={style.messageItem}>
+              <li key={`${mensaje.createdAt.toISOString()}-${mensaje.text}`} className={style.messageItem}>
                 <div className={style.messageContent}>
-                  <p className={style.messageText}>{mensaje.texto}</p>
-                  <p className={style.messageDate}>{formatMessageDate(mensaje.creadoEn)}</p>
+                  <p className={style.messageText}>{mensaje.text}</p>
+                  <p className={style.messageDate}>{formatMessageDate(mensaje.createdAt)}</p>
                 </div>
                 {isAdmin && (
                   <button
                     type="button"
                     className={style.deleteBtn}
                     aria-label="Eliminar mensaje"
-                    onClick={() => handleDelete(mensaje.creadoEn)}
+                    onClick={() => handleDelete(mensaje.createdAt)}
                   >
                     ✕
                   </button>

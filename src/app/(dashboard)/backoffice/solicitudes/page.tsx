@@ -26,41 +26,41 @@ export default async function BackOfficeRequestsPage({
   const where = q
     ? {
         OR: [
-          { comunidadID: { nombre: { contains: q, mode: "insensitive" as const } } },
-          { usuarioID: { nombre: { contains: q, mode: "insensitive" as const } } },
-          { usuarioID: { apellido: { contains: q, mode: "insensitive" as const } } }
+          { communityRef: { name: { contains: q, mode: "insensitive" as const } } },
+          { userRef: { name: { contains: q, mode: "insensitive" as const } } },
+          { userRef: { lastName: { contains: q, mode: "insensitive" as const } } }
         ]
       }
     : undefined;
 
   const [pendientes, aprobadas, denegadas, solicitudes, totalFiltradas] = await Promise.all([
-    prisma.solicitud.count({ where: { estado: "pendiente" } }),
-    prisma.solicitud.count({ where: { estado: "aprobada" } }),
-    prisma.solicitud.count({ where: { estado: "denegada" } }),
-    prisma.solicitud.findMany({
+    prisma.request.count({ where: { status: "pending" } }),
+    prisma.request.count({ where: { status: "approved" } }),
+    prisma.request.count({ where: { status: "rejected" } }),
+    prisma.request.findMany({
       where,
       skip,
       take: PAGE_SIZE,
-      orderBy: { creadoEn: "desc" },
+      orderBy: { createdAt: "desc" },
       select: {
         id: true,
-        estado: true,
-        creadoEn: true,
-        comunidadID: {
+        status: true,
+        createdAt: true,
+        communityRef: {
           select: {
-            nombre: true
+            name: true
           }
         },
-        usuarioID: {
+        userRef: {
           select: {
-            nombre: true,
-            apellido: true,
+            name: true,
+            lastName: true,
             email: true
           }
         }
       }
     }),
-    prisma.solicitud.count({ where })
+    prisma.request.count({ where })
   ]);
 
   const totalPages = Math.max(1, Math.ceil(totalFiltradas / PAGE_SIZE));
@@ -104,13 +104,13 @@ export default async function BackOfficeRequestsPage({
             <ul className={style.list}>
               {solicitudes.map(solicitud => (
                 <li key={solicitud.id} className={style.listItem}>
-                  <p className={style.itemTitle}>{solicitud.comunidadID.nombre}</p>
+                  <p className={style.itemTitle}>{solicitud.communityRef.name}</p>
                   <p className={style.itemMeta}>
-                    {solicitud.usuarioID.nombre} {solicitud.usuarioID.apellido} · {solicitud.usuarioID.email}
+                    {solicitud.userRef.name} {solicitud.userRef.lastName} · {solicitud.userRef.email}
                   </p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{solicitud.estado}</span>
-                    <span className={style.pill}>{solicitud.creadoEn.toLocaleDateString("es-ES")}</span>
+                    <span className={style.pill}>{solicitud.status}</span>
+                    <span className={style.pill}>{solicitud.createdAt.toLocaleDateString("es-ES")}</span>
                   </div>
                   <form action={deleteRequest}>
                     <input type="hidden" name="id" value={solicitud.id} />
