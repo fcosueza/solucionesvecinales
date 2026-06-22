@@ -1,6 +1,6 @@
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
-import { UserRole } from "@/types";
+import { FormActionState, UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 import { deleteUser } from "./user";
 
@@ -35,9 +35,10 @@ describe("Test suite for user server functions", () => {
 
     const formData = new FormData();
     formData.set("id", "user-1");
+    const prevState: FormActionState = { state: "error", message: "" };
 
-    await expect(deleteUser(formData)).resolves.toEqual({
-      error: "unauthorized",
+    await expect(deleteUser(prevState, formData)).resolves.toEqual({
+      state: "error",
       message: "You are not authorized to delete users"
     });
 
@@ -54,9 +55,10 @@ describe("Test suite for user server functions", () => {
 
     const formData = new FormData();
     formData.set("id", "user-1");
+    const prevState: FormActionState = { state: "error", message: "" };
 
-    await expect(deleteUser(formData)).resolves.toEqual({
-      error: "unauthorized",
+    await expect(deleteUser(prevState, formData)).resolves.toEqual({
+      state: "error",
       message: "You are not authorized to delete users"
     });
 
@@ -73,9 +75,10 @@ describe("Test suite for user server functions", () => {
 
     const formData = new FormData();
     formData.set("id", "   ");
+    const prevState: FormActionState = { state: "error", message: "" };
 
-    await expect(deleteUser(formData)).resolves.toEqual({
-      error: "invalid_user_id",
+    await expect(deleteUser(prevState, formData)).resolves.toEqual({
+      state: "error",
       message: "A valid user ID is required"
     });
 
@@ -91,9 +94,10 @@ describe("Test suite for user server functions", () => {
     });
 
     const formData = new FormData();
+    const prevState: FormActionState = { state: "error", message: "" };
 
-    await expect(deleteUser(formData)).resolves.toEqual({
-      error: "invalid_user_id",
+    await expect(deleteUser(prevState, formData)).resolves.toEqual({
+      state: "error",
       message: "A valid user ID is required"
     });
 
@@ -112,9 +116,10 @@ describe("Test suite for user server functions", () => {
 
     const formData = new FormData();
     formData.set("id", "user-25");
+    const prevState: FormActionState = { state: "error", message: "" };
 
-    await expect(deleteUser(formData)).resolves.toEqual({
-      error: "user_is_community_admin",
+    await expect(deleteUser(prevState, formData)).resolves.toEqual({
+      state: "error",
       message: "Cannot delete a user who still manages communities"
     });
 
@@ -135,8 +140,12 @@ describe("Test suite for user server functions", () => {
 
     const formData = new FormData();
     formData.set("id", "  user-25  ");
+    const prevState: FormActionState = { state: "error", message: "" };
 
-    await expect(deleteUser(formData)).resolves.toBeUndefined();
+    await expect(deleteUser(prevState, formData)).resolves.toEqual({
+      state: "success",
+      message: "User deleted successfully"
+    });
 
     expect(prismaCommunityFindMock).toHaveBeenCalledWith({
       where: { adminId: "user-25" },
@@ -160,9 +169,10 @@ describe("Test suite for user server functions", () => {
 
     const formData = new FormData();
     formData.set("id", "user-25");
+    const prevState: FormActionState = { state: "error", message: "" };
 
-    await expect(deleteUser(formData)).resolves.toEqual({
-      error: "delete_user_failed",
+    await expect(deleteUser(prevState, formData)).resolves.toEqual({
+      state: "error",
       message: "Could not delete user"
     });
 

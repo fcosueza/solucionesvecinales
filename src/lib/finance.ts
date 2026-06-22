@@ -3,6 +3,7 @@ export type FinancialRecordType = "income" | "expense";
 export interface FinancialRecordCalculable {
   type: FinancialRecordType;
   amount: number | string | { toString(): string };
+  description?: string;
 }
 
 interface FinancialSummary {

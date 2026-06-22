@@ -2,25 +2,24 @@
 
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
-import { BasicError, UserRole } from "@/types";
+import { FormActionState, UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
  * Server action that removes a user from the database. It can only be executed by a user with the webAdmin role.
  * Validates permissions and revalidates backoffice user and overview paths after deleting.
  *
+ * @param _prevState - Previous form state
  * @param formData - FormData that must contain the "id" field with the ID of the user to be deleted
- *
- * @returns A BasicError object if an error occurs, or void if the operation is successful
  */
 
-export const deleteUser = async (formData: FormData): Promise<BasicError | void> => {
+export const deleteUser = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const session = await verifySession();
 
   // Verify that the user is authenticated and has the webAdmin role
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin)
     return {
-      error: "unauthorized",
+      state: "error",
       message: "You are not authorized to delete users"
     };
 
@@ -29,7 +28,7 @@ export const deleteUser = async (formData: FormData): Promise<BasicError | void>
 
   if (!id)
     return {
-      error: "invalid_user_id",
+      state: "error",
       message: "A valid user ID is required"
     };
 
@@ -41,7 +40,7 @@ export const deleteUser = async (formData: FormData): Promise<BasicError | void>
 
   if (hasAdminCommunities)
     return {
-      error: "user_is_community_admin",
+      state: "error",
       message: "Cannot delete a user who still manages communities"
     };
 
@@ -52,10 +51,13 @@ export const deleteUser = async (formData: FormData): Promise<BasicError | void>
     revalidatePath("/backoffice/users");
     revalidatePath("/backoffice/overview");
 
-    return;
+    return {
+      state: "success",
+      message: "User deleted successfully"
+    };
   } catch {
     return {
-      error: "delete_user_failed",
+      state: "error",
       message: "Could not delete user"
     };
   }

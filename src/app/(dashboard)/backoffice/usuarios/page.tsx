@@ -1,5 +1,5 @@
 import CardStat from "@/components/ui/Cards/CardStat";
-import { deleteUser } from "@/actions/user";
+import UserDeleteForm from "@/components/layouts/Forms/UserDeleteForm";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@/types";
 import style from "../style.module.css";
@@ -118,12 +118,7 @@ export default async function BackOfficeUsersPage({
                     <span className={style.pill}>{usuario._count.memberships} inscripciones</span>
                     <span className={style.pill}>{usuario._count.requests} solicitudes</span>
                   </div>
-                  <form action={deleteUser}>
-                    <input type="hidden" name="id" value={usuario.id} />
-                    <button type="submit" className={style.deleteBtn}>
-                      Eliminar
-                    </button>
-                  </form>
+                  <UserDeleteForm userId={usuario.id} deleteClassName={style.deleteBtn} />
                 </li>
               ))}
             </ul>
