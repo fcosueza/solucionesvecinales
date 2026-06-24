@@ -7,14 +7,9 @@ import { FormActionState } from "@/types";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
-type CamposRegistro = z.infer<typeof signUpSchema>;
+type RecordFields = z.infer<typeof signUpSchema>;
 
-/**
- * Create a secure payload to return to the client in case of error, excluding sensitive fields such as passwords.
- *
- * @param formData Original data from the form sent by the client.
- * @returns Un Secure FormData object that excludes sensitive fields.
- */
+// Doesn't include password and repeat fields in the payload to avoid sending sensitive information back to the client
 const safePayload = (formData: FormData): FormData => {
   const safe = new FormData();
 
@@ -26,42 +21,29 @@ const safePayload = (formData: FormData): FormData => {
   return safe;
 };
 
-/**
- * Validates registration data, creates the user and stores their credentials securely.
- *
- * @param _prevState Previous state of the form action.
- * @param formData Data sent from the registration form.
- *
- * @throws If data validation fails or an error occurs while creating the user, an error status with details is returned.
- * @returns El new state of the action with the result of the registration.
- */
-
 const signUp = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const datos: object = Object.fromEntries(formData);
-  const datosValidados: SafeParseReturnType<object, CamposRegistro> = signUpSchema.safeParse(datos);
+  const rawData: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, RecordFields> = signUpSchema.safeParse(rawData);
 
-  // If validation fails, return an error status with details of the errors.
-  if (!datosValidados.success) {
+  if (!validatedData.success) {
     return {
       state: "error",
-      message: "Datos del formulario incorrectos",
-      errors: datosValidados.error.flatten().fieldErrors,
+      message: "Form data validation failed",
+      errors: validatedData.error.flatten().fieldErrors,
       payload: safePayload(formData)
     };
   }
 
-  // The password is encrypted before being stored, using bcrypt.
-  const salCifrado: number = 10;
-  const hashedPassword: string = await bcrypt.hash(datosValidados.data.password, salCifrado);
+  const saltRounds: number = 10;
+  const hashedPassword: string = await bcrypt.hash(validatedData.data.password, saltRounds);
 
-  // Try to create the user and their credentials
   try {
     await prisma.user.create({
       data: {
-        email: datosValidados.data.email,
-        role: datosValidados.data.role,
-        name: datosValidados.data.name,
-        lastName: datosValidados.data.surname,
+        email: validatedData.data.email,
+        role: validatedData.data.role,
+        name: validatedData.data.name,
+        lastName: validatedData.data.surname,
         credentials: {
           create: {
             password: hashedPassword
@@ -72,7 +54,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
   } catch (error: any) {
     return {
       state: "error",
-      message: "No se pudo crear el usuario",
+      message: "Failed to create user",
       errors: {
         prisma: error.message
       },
@@ -83,7 +65,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
   // Successfully created user
   return {
     state: "success",
-    message: "Usuario creado correctamente"
+    message: "User created successfully"
   };
 };
 

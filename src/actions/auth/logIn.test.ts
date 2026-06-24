@@ -36,7 +36,7 @@ describe("Suite de pruebas de logInAction", () => {
     const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Datos del formulario incorrectos");
+    expect(resultado.message).toBe("Form data validation failed");
     expect(resultado.errors).toBeDefined();
     expect(prisma.user.findUnique).not.toHaveBeenCalled();
   });
@@ -52,8 +52,8 @@ describe("Suite de pruebas de logInAction", () => {
     const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Datos del formulario incorrectos");
-    expect(resultado.errors?.email).toBe("No existe ningún usuario con ese correo");
+    expect(resultado.message).toBe("Form data validation failed");
+    expect(resultado.errors?.email).toBe("There is no user with this email in the database.");
   });
 
   it("Debe devolver un error si la contraseña no coincide", async () => {
@@ -73,8 +73,8 @@ describe("Suite de pruebas de logInAction", () => {
     const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Datos del formulario incorrectos");
-    expect(resultado.errors?.password).toBe("La contraseña no es válida para este usuario.");
+    expect(resultado.message).toBe("Form data validation failed");
+    expect(resultado.errors?.password).toBe("The password is not valid for this user.");
   });
 
   it("Debe devolver success si el usuario existe y la contraseña es correcta", async () => {
@@ -94,7 +94,7 @@ describe("Suite de pruebas de logInAction", () => {
     const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("success");
-    expect(resultado.message).toBe("El usuario y la contraseña son correctos");
+    expect(resultado.message).toBe("The username and password are correct");
     expect(resultado.redirectTo).toBe("/communities");
     await waitFor(() => expect(crearSesion).toHaveBeenCalledTimes(1));
   });

@@ -10,14 +10,7 @@ import z from "zod";
 
 type CamposLogin = z.infer<typeof logInSchema>;
 
-/**
- * Create a new FormData with the same fields as the original except "password",
- * to prevent the password from being forwarded to the client in case of error.
- *
- * @param formData - The original FormData sent from the form.
- *
- * @returns Un new FormData without the "password" field.
- */
+// Doesn't include password and repeat fields in the payload to avoid sending sensitive information back to the client
 const safePayload = (formData: FormData): FormData => {
   const safe = new FormData();
 
@@ -29,72 +22,58 @@ const safePayload = (formData: FormData): FormData => {
   return safe;
 };
 
-/**
- * Validates the user's credentials, checks their password, and creates the session if access is correct.
- *
- * @param _prevState Previous state of the form action.
- * @param formData Data sent from the login form.
- *
- * @returns El new state of the action with the authentication result.
- */
-
 const logIn = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const datos: object = Object.fromEntries(formData);
-  const datosValidados: SafeParseReturnType<object, CamposLogin> = logInSchema.safeParse(datos);
+  const rawData: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, CamposLogin> = logInSchema.safeParse(rawData);
 
-  if (!datosValidados.success) {
+  if (!validatedData.success) {
     return {
       state: "error",
-      message: "Datos del formulario incorrectos",
-      errors: datosValidados.error.flatten().fieldErrors,
+      message: "Form data validation failed",
+      errors: validatedData.error.flatten().fieldErrors,
       payload: safePayload(formData)
     };
   }
 
-  // Find the user and their credentials
   const usuario = await prisma.user.findUnique({
     where: {
-      email: datosValidados.data.email
+      email: validatedData.data.email
     },
     include: {
       credentials: true
     }
   });
 
-  // The user does not exist
   if (!usuario || !usuario.credentials) {
     return {
       state: "error",
-      message: "Datos del formulario incorrectos",
+      message: "Form data validation failed",
       errors: {
-        email: "No existe ningún usuario con ese correo"
+        email: "There is no user with this email in the database."
       },
       payload: safePayload(formData)
     };
   }
 
-  // Compare the provided password with the stored hash
-  const passwordMatch: boolean = await bcrypt.compare(datosValidados.data.password, usuario.credentials.password);
+  const passwordMatch: boolean = await bcrypt.compare(validatedData.data.password, usuario.credentials.password);
 
-  // Password incorrecto
   if (!passwordMatch)
     return {
       state: "error",
-      message: "Datos del formulario incorrectos",
+      message: "Form data validation failed",
       errors: {
-        password: "La contraseña no es válida para este usuario."
+        password: "The password is not valid for this user."
       },
       payload: safePayload(formData)
     };
 
-  // The username and password are correct
   await crearSesion(usuario.id, usuario.role as UserRole);
 
   const redirectTo = usuario.role === UserRole.webAdmin ? "/backoffice/overview" : "/communities";
 
   return {
     state: "success",
-    message: "El usuario y la contraseña son correctos",
+    message: "The username and password are correct",
     redirectTo
   };
 };
