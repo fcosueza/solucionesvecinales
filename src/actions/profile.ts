@@ -12,45 +12,33 @@ import { extname, join } from "path";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
-type CamposFormularioPerfil = z.infer<typeof profileSchema>;
+type ProfileFormFields = z.infer<typeof profileSchema>;
 
-/**
- * Updates the authenticated user's profile data.
- *
- * @param _prevState Previous state of the form action.
- * @param formData Data sent from the profile form.
- *
- * @returns The new state of the form with the result of the update.
- */
 export const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
 
-  // If there is no authenticated session, an error status is returned
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
-      message: "Debes iniciar sesión para actualizar tu perfil",
+      message: "You must be logged in to update your profile",
       payload: formData
     };
   }
 
-  // The form data is validated using the schema defined with Zod
-  const datos: object = Object.fromEntries(formData);
-  const datosValidados: SafeParseReturnType<object, CamposFormularioPerfil> = profileSchema.safeParse(datos);
+  const rawData: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, ProfileFormFields> = profileSchema.safeParse(rawData);
 
-  // If validation fails, an error status is returned
-  if (!datosValidados.success) {
+  if (!validatedData.success) {
     return {
       state: "error",
-      message: "Datos del formulario incorrectos",
-      errors: datosValidados.error.flatten().fieldErrors,
+      message: "Invalid form data",
+      errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
   }
 
-  // If the validation is successful, the user's profile is updated.
   try {
-    const newPassword: string = datosValidados.data.password;
+    const newPassword: string = validatedData.data.password;
     const imageFile = formData.get("imagen");
 
     let cypherPassword: string | null = null;
@@ -61,7 +49,6 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
       cypherPassword = await bcrypt.hash(newPassword, saltCypher);
     }
 
-    // If the image file exists it is saved, if it cannot be saved an error status is returned
     if (imageFile instanceof File && imageFile.size > 0) {
       const savedImage = await saveProfileImageFile(imageFile, verifiedSession.session.userID);
 
@@ -76,13 +63,12 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
       imageURL = savedImage.imagen;
     }
 
-    // The user's data is updated in the database, including the new image and password if provided
     await prisma.user.update({
       where: { id: verifiedSession.session.userID },
       data: {
-        name: datosValidados.data.name,
-        lastName: datosValidados.data.surname,
-        email: datosValidados.data.email,
+        name: validatedData.data.name,
+        lastName: validatedData.data.surname,
+        email: validatedData.data.email,
         ...(imageURL ? { image: imageURL } : {}),
         ...(cypherPassword
           ? {
@@ -99,29 +85,25 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
 
     return {
       state: "success",
-      message: "Perfil actualizado correctamente"
+      message: "Profile updated successfully",
+      payload: formData
     };
   } catch {
     return {
       state: "error",
-      message: "Error al actualizar el perfil. Inténtalo de nuevo.",
+      message: "Error updating profile. Please try again.",
       payload: formData
     };
   }
 };
 
-/**
- * Permanently deletes the authenticated user and its related data.
- *
- * @returns Error state if the account could not be deleted. On success, redirects to home.
- */
 export const deleteProfile = async (_prevState: FormActionState): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
 
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
-      message: "Debes iniciar sesión para eliminar tu cuenta"
+      message: "You must be logged in to delete your account"
     };
   }
 
@@ -135,7 +117,7 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
   } catch {
     return {
       state: "error",
-      message: "No se pudo eliminar la cuenta. Inténtalo de nuevo."
+      message: "Could not delete account. Please try again."
     };
   }
 
@@ -160,15 +142,15 @@ export const saveProfileImageFile = async (
   userID: number | string
 ): Promise<{ error?: string; imagen?: string }> => {
   if (!(file instanceof File) || file.size === 0) {
-    return { error: "No se ha proporcionado ningún archivo" };
+    return { error: "No file provided" };
   }
 
   if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-    return { error: "Formato de imagen no permitido. Usa JPG, PNG, WebP o GIF." };
+    return { error: "Invalid image format. Use JPG, PNG, WebP, or GIF." };
   }
 
   if (file.size > MAX_SIZE_IN_BYTES) {
-    return { error: "La imagen no puede superar los 5 MB." };
+    return { error: "Image size cannot exceed 5 MB." };
   }
 
   const ext = extname(file.name) || ".jpg";
@@ -195,7 +177,7 @@ export const uploadProfile = async (formData: FormData): Promise<{ error?: strin
   const verifiedSession = await verifySession();
 
   if (!verifiedSession.isAuth || !verifiedSession.session) {
-    return { error: "Debes iniciar sesión para subir una imagen" };
+    return { error: "You must be logged in to upload an image" };
   }
 
   const file = formData.get("imagen");

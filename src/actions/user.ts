@@ -5,25 +5,15 @@ import prisma from "@/lib/prisma";
 import { FormActionState, UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
-/**
- * Server action that removes a user from the database. It can only be executed by a user with the webAdmin role.
- * Validates permissions and revalidates backoffice user and overview paths after deleting.
- *
- * @param _prevState - Previous form state
- * @param formData - FormData that must contain the "id" field with the ID of the user to be deleted
- */
-
 export const deleteUser = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const session = await verifySession();
 
-  // Verify that the user is authenticated and has the webAdmin role
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin)
     return {
       state: "error",
       message: "You are not authorized to delete users"
     };
 
-  // Validate that the id is a non-empty string
   const id = String(formData.get("id") ?? "").trim();
 
   if (!id)
@@ -32,19 +22,18 @@ export const deleteUser = async (_prevState: FormActionState, formData: FormData
       message: "A valid user ID is required"
     };
 
-  // Do not allow deleting an admin user who is still managing communities.
   const hasAdminCommunities = await prisma.community.findFirst({
     where: { adminId: id },
     select: { id: true }
   });
 
+  // if the user is an admin of any community, we cannot delete the user to avoid having a community without an admin
   if (hasAdminCommunities)
     return {
       state: "error",
       message: "Cannot delete a user who still manages communities"
     };
 
-  // Try to delete the user and revalidate routes.
   try {
     await prisma.user.delete({ where: { id } });
 

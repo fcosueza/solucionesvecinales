@@ -74,7 +74,7 @@ describe("Test suite for profile actions", () => {
     const resultado = await updateProfile({ state: "error", message: "" }, formData);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Debes iniciar sesión para actualizar tu perfil");
+    expect(resultado.message).toBe("You must be logged in to update your profile");
     expect(resultado.payload).toBe(formData);
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
@@ -97,7 +97,7 @@ describe("Test suite for profile actions", () => {
     );
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Datos del formulario incorrectos");
+    expect(resultado.message).toBe("Invalid form data");
     expect(resultado.errors).toBeDefined();
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
@@ -113,7 +113,8 @@ describe("Test suite for profile actions", () => {
 
     expect(resultado).toEqual({
       state: "success",
-      message: "Perfil actualizado correctamente"
+      message: "Profile updated successfully",
+      payload: expect.any(FormData)
     });
     expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
@@ -174,7 +175,7 @@ describe("Test suite for profile actions", () => {
     const resultado = await updateProfile({ state: "error", message: "" }, formData);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Formato de imagen no permitido. Usa JPG, PNG, WebP o GIF.");
+    expect(resultado.message).toBe("Invalid image format. Use JPG, PNG, WebP, or GIF.");
     expect(resultado.payload).toBe(formData);
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
@@ -191,7 +192,7 @@ describe("Test suite for profile actions", () => {
     const resultado = await updateProfile({ state: "error", message: "" }, formData);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("La imagen no puede superar los 5 MB.");
+    expect(resultado.message).toBe("Image size cannot exceed 5 MB.");
     expect(resultado.payload).toBe(formData);
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
@@ -214,7 +215,7 @@ describe("Test suite for profile actions", () => {
     const resultado = await updateProfile({ state: "error", message: "" }, formData);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Error al actualizar el perfil. Inténtalo de nuevo.");
+    expect(resultado.message).toBe("Error updating profile. Please try again.");
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
@@ -230,7 +231,7 @@ describe("Test suite for profile actions", () => {
 
     expect(resultado).toEqual({
       state: "error",
-      message: "Error al actualizar el perfil. Inténtalo de nuevo.",
+      message: "Error updating profile. Please try again.",
       payload: formData
     });
   });
@@ -249,7 +250,7 @@ describe("Test suite for profile actions", () => {
     const resultado = await updateProfile({ state: "error", message: "" }, formData);
 
     expect(resultado.state).toBe("success");
-    expect(resultado.message).toBe("Perfil actualizado correctamente");
+    expect(resultado.message).toBe("Profile updated successfully");
     expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: "user-1" },
@@ -294,7 +295,7 @@ describe("Test suite for profile actions", () => {
 
     expect(resultado).toEqual({
       state: "error",
-      message: "Debes iniciar sesión para eliminar tu cuenta"
+      message: "You must be logged in to delete your account"
     });
     expect(prismaTransactionMock).not.toHaveBeenCalled();
   });
@@ -310,7 +311,7 @@ describe("Test suite for profile actions", () => {
 
     expect(resultado).toEqual({
       state: "error",
-      message: "No se pudo eliminar la cuenta. Inténtalo de nuevo."
+      message: "Could not delete account. Please try again."
     });
     expect(eliminarSesionMock).not.toHaveBeenCalled();
     expect(redirectMock).not.toHaveBeenCalled();
@@ -347,26 +348,26 @@ describe("Test suite for saveProfileImageFile", () => {
   it("Should return an error if the value is not a File", async () => {
     const resultado = await saveProfileImageFile("no-es-un-file" as unknown as File, "user-1");
 
-    expect(resultado).toEqual({ error: "No se ha proporcionado ningún archivo" });
+    expect(resultado).toEqual({ error: "No file provided" });
   });
 
   it("Should return an error if the file has size 0", async () => {
     const resultado = await saveProfileImageFile(new File([], "vacio.png", { type: "image/png" }), "user-1");
 
-    expect(resultado).toEqual({ error: "No se ha proporcionado ningún archivo" });
+    expect(resultado).toEqual({ error: "No file provided" });
   });
 
   it("Should return an error if the MIME type is not allowed", async () => {
     const resultado = await saveProfileImageFile(new File(["data"], "archivo.txt", { type: "text/plain" }), "user-1");
 
-    expect(resultado).toEqual({ error: "Formato de imagen no permitido. Usa JPG, PNG, WebP o GIF." });
+    expect(resultado).toEqual({ error: "Invalid image format. Use JPG, PNG, WebP, or GIF." });
   });
 
   it("Should return an error if the file exceeds the maximum size", async () => {
     const grande = new File(["x".repeat(5 * 1024 * 1024 + 1)], "grande.png", { type: "image/png" });
     const resultado = await saveProfileImageFile(grande, "user-1");
 
-    expect(resultado).toEqual({ error: "La imagen no puede superar los 5 MB." });
+    expect(resultado).toEqual({ error: "Image size cannot exceed 5 MB." });
   });
 
   it("Should save the file and return the URL if the data is valid", async () => {
@@ -413,7 +414,7 @@ describe("Test suite for uploadProfile", () => {
 
     const resultado = await uploadProfile(new FormData());
 
-    expect(resultado).toEqual({ error: "Debes iniciar sesión para subir una imagen" });
+    expect(resultado).toEqual({ error: "You must be logged in to upload an image" });
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
@@ -425,7 +426,7 @@ describe("Test suite for uploadProfile", () => {
 
     const resultado = await uploadProfile(fd);
 
-    expect(resultado).toEqual({ error: "Formato de imagen no permitido. Usa JPG, PNG, WebP o GIF." });
+    expect(resultado).toEqual({ error: "Invalid image format. Use JPG, PNG, WebP, or GIF." });
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
