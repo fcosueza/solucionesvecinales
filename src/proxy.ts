@@ -3,7 +3,7 @@ import { SessionPayload, BasicError } from "@/types";
 import { descifrarSesion } from "./lib/session";
 import { cookies } from "next/headers";
 
-const protectedRoutes = ["/communities", "/communities/add", "/communities/search", "/profile"];
+const protectedRoutes = ["/communities", "/backoffice", "/profile", "/contact"];
 const publicRoutes = ["/home", "/login", "/signup"];
 
 /**
@@ -18,7 +18,7 @@ const publicRoutes = ["/home", "/login", "/signup"];
 
 async function proxy(req: NextRequest): Promise<NextResponse> {
   const route: string = req.nextUrl.pathname;
-  const isProtectedRoute: boolean = protectedRoutes.includes(route);
+  const isProtectedRoute: boolean = protectedRoutes.some(pattern => route.startsWith(pattern));
   const isPublicRoute: boolean = publicRoutes.includes(route);
 
   const cookieValue: string | undefined = (await cookies()).get("session")?.value;
