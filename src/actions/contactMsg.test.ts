@@ -41,7 +41,7 @@ describe("contactMsgAction test suite", () => {
     const resultado = await contactMsg({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Invalid form data");
+    expect(resultado.message).toBe("Datos del formulario no válidos");
     expect(resultado.errors).toBeDefined();
     expect(prisma.contact.create).not.toHaveBeenCalled();
   });
@@ -58,7 +58,7 @@ describe("contactMsgAction test suite", () => {
     const resultado = await contactMsg({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Failed to create the message");
+    expect(resultado.message).toBe("No se pudo crear el mensaje");
     expect(resultado.errors?.prisma).not.toBeNull();
   });
 
@@ -74,7 +74,7 @@ describe("contactMsgAction test suite", () => {
     const resultado = await contactMsg({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("success");
-    expect(resultado.message).toBe("Message created successfully");
+    expect(resultado.message).toBe("Mensaje creado exitosamente");
     expect(prisma.contact.create).toHaveBeenCalledWith({
       data: {
         name: "John Doe",

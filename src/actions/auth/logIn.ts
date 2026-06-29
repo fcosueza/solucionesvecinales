@@ -29,7 +29,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
   if (!validatedData.success) {
     return {
       state: "error",
-      message: "Form data validation failed",
+      message: "Validación de datos del formulario fallida",
       errors: validatedData.error.flatten().fieldErrors,
       payload: safePayload(formData)
     };
@@ -47,9 +47,9 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
   if (!usuario || !usuario.credentials) {
     return {
       state: "error",
-      message: "Form data validation failed",
+      message: "Validación de datos del formulario fallida",
       errors: {
-        email: "There is no user with this email in the database."
+        email: "No existe un usuario con este correo electrónico en la base de datos."
       },
       payload: safePayload(formData)
     };
@@ -60,9 +60,9 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
   if (!passwordMatch)
     return {
       state: "error",
-      message: "Form data validation failed",
+      message: "Validación de datos del formulario fallida",
       errors: {
-        password: "The password is not valid for this user."
+        password: "La contraseña no es válida para este usuario."
       },
       payload: safePayload(formData)
     };
@@ -73,7 +73,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
 
   return {
     state: "success",
-    message: "The username and password are correct",
+    message: "El nombre de usuario y la contraseña son correctos",
     redirectTo
   };
 };

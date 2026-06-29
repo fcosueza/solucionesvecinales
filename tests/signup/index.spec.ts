@@ -138,7 +138,7 @@ test.describe("form validation with invalid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
-    await expect(page.locator(toastElement).first()).toContainText(/Form data validation failed/i);
+    await expect(page.locator(toastElement).first()).toContainText(/Validación de datos del formulario fallida/i);
   });
 
   test("Shows an error toast when passwords do not match", async ({ page }) => {
@@ -152,7 +152,7 @@ test.describe("form validation with invalid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
-    await expect(page.locator(toastElement).first()).toContainText(/Form data validation failed/i);
+    await expect(page.locator(toastElement).first()).toContainText(/Validación de datos del formulario fallida/i);
   });
 
   test("Shows a repeat-password field error when passwords do not match", async ({ page }) => {
@@ -184,7 +184,7 @@ test.describe("form submission with valid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
-    await expect(page.locator(toastElement).first()).toContainText(/User created successfully/i);
+    await expect(page.locator(toastElement).first()).toContainText(/Usuario creado exitosamente/i);
     await expect(page).toHaveURL("http://localhost:3000/login", { timeout: 8000 });
   });
 
@@ -202,7 +202,7 @@ test.describe("form submission with valid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
-    await expect(page.locator(toastElement).first()).toContainText(/User created successfully/i);
+    await expect(page.locator(toastElement).first()).toContainText(/Usuario creado exitosamente/i);
     await expect(page).toHaveURL("http://localhost:3000/login", { timeout: 8000 });
   });
 
@@ -229,7 +229,7 @@ test.describe("form submission with valid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
-    await expect(page.locator(toastElement).first()).toContainText(/Failed to create user/i);
+    await expect(page.locator(toastElement).first()).toContainText(/No se pudo crear el usuario/i);
     await expect(page).toHaveURL(URL);
   });
 });

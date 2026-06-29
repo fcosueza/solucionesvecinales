@@ -28,7 +28,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
   if (!validatedData.success) {
     return {
       state: "error",
-      message: "Form data validation failed",
+      message: "Validación de datos del formulario fallida",
       errors: validatedData.error.flatten().fieldErrors,
       payload: safePayload(formData)
     };
@@ -54,7 +54,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
   } catch (error: any) {
     return {
       state: "error",
-      message: "Failed to create user",
+      message: "No se pudo crear el usuario",
       errors: {
         prisma: error.message
       },
@@ -65,7 +65,7 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
   // Successfully created user
   return {
     state: "success",
-    message: "User created successfully"
+    message: "Usuario creado exitosamente"
   };
 };
 

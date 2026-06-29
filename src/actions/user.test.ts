@@ -39,7 +39,7 @@ describe("Test suite for user server functions", () => {
 
     await expect(deleteUser(prevState, formData)).resolves.toEqual({
       state: "error",
-      message: "You are not authorized to delete users"
+      message: "No estas autorizado para realizar esta acción"
     });
 
     expect(prismaCommunityFindMock).not.toHaveBeenCalled();
@@ -59,7 +59,7 @@ describe("Test suite for user server functions", () => {
 
     await expect(deleteUser(prevState, formData)).resolves.toEqual({
       state: "error",
-      message: "You are not authorized to delete users"
+      message: "No estas autorizado para realizar esta acción"
     });
 
     expect(prismaCommunityFindMock).not.toHaveBeenCalled();
@@ -79,7 +79,7 @@ describe("Test suite for user server functions", () => {
 
     await expect(deleteUser(prevState, formData)).resolves.toEqual({
       state: "error",
-      message: "A valid user ID is required"
+      message: "Se requiere un ID de usuario válido"
     });
 
     expect(prismaCommunityFindMock).not.toHaveBeenCalled();
@@ -98,7 +98,7 @@ describe("Test suite for user server functions", () => {
 
     await expect(deleteUser(prevState, formData)).resolves.toEqual({
       state: "error",
-      message: "A valid user ID is required"
+      message: "Se requiere un ID de usuario válido"
     });
 
     expect(prismaCommunityFindMock).not.toHaveBeenCalled();
@@ -120,7 +120,7 @@ describe("Test suite for user server functions", () => {
 
     await expect(deleteUser(prevState, formData)).resolves.toEqual({
       state: "error",
-      message: "Cannot delete a user who still manages communities"
+      message: "No se puede eliminar un usuario que aún administra comunidades"
     });
 
     expect(prismaCommunityFindMock).toHaveBeenCalledWith({
@@ -144,7 +144,7 @@ describe("Test suite for user server functions", () => {
 
     await expect(deleteUser(prevState, formData)).resolves.toEqual({
       state: "success",
-      message: "User deleted successfully"
+      message: "Usuario eliminado exitosamente"
     });
 
     expect(prismaCommunityFindMock).toHaveBeenCalledWith({
@@ -173,7 +173,7 @@ describe("Test suite for user server functions", () => {
 
     await expect(deleteUser(prevState, formData)).resolves.toEqual({
       state: "error",
-      message: "Could not delete user"
+      message: "No se pudo eliminar el usuario"
     });
 
     expect(prismaCommunityFindMock).toHaveBeenCalledWith({ where: { adminId: "user-25" }, select: { id: true } });

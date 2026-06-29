@@ -36,7 +36,7 @@ describe("Suite de pruebas de logInAction", () => {
     const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Form data validation failed");
+    expect(resultado.message).toBe("Validación de datos del formulario fallida");
     expect(resultado.errors).toBeDefined();
     expect(prisma.user.findUnique).not.toHaveBeenCalled();
   });
@@ -52,8 +52,8 @@ describe("Suite de pruebas de logInAction", () => {
     const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Form data validation failed");
-    expect(resultado.errors?.email).toBe("There is no user with this email in the database.");
+    expect(resultado.message).toBe("Validación de datos del formulario fallida");
+    expect(resultado.errors?.email).toBe("No existe un usuario con este correo electrónico en la base de datos.");
   });
 
   it("Debe devolver un error si la contraseña no coincide", async () => {
@@ -73,8 +73,8 @@ describe("Suite de pruebas de logInAction", () => {
     const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Form data validation failed");
-    expect(resultado.errors?.password).toBe("The password is not valid for this user.");
+    expect(resultado.message).toBe("Validación de datos del formulario fallida");
+    expect(resultado.errors?.password).toBe("La contraseña no es válida para este usuario.");
   });
 
   it("Debe devolver success si el usuario existe y la contraseña es correcta", async () => {
@@ -94,7 +94,7 @@ describe("Suite de pruebas de logInAction", () => {
     const resultado = await logIn({} as FormActionState, datosForm);
 
     expect(resultado.state).toBe("success");
-    expect(resultado.message).toBe("The username and password are correct");
+    expect(resultado.message).toBe("El nombre de usuario y la contraseña son correctos");
     expect(resultado.redirectTo).toBe("/communities");
     await waitFor(() => expect(crearSesion).toHaveBeenCalledTimes(1));
   });

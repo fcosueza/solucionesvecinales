@@ -20,7 +20,7 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
-      message: "You must be logged in to update your profile",
+      message: "Debes iniciar sesión para actualizar tu perfil",
       payload: formData
     };
   }
@@ -85,13 +85,13 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
 
     return {
       state: "success",
-      message: "Profile updated successfully",
+      message: "Perfil actualizado exitosamente",
       payload: formData
     };
   } catch {
     return {
       state: "error",
-      message: "Error updating profile. Please try again.",
+      message: "No se pudo actualizar el perfil. Por favor, inténtalo de nuevo.",
       payload: formData
     };
   }
@@ -103,7 +103,7 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
-      message: "You must be logged in to delete your account"
+      message: "Debes iniciar sesión para eliminar tu cuenta"
     };
   }
 
@@ -117,7 +117,7 @@ export const deleteProfile = async (_prevState: FormActionState): Promise<FormAc
   } catch {
     return {
       state: "error",
-      message: "Could not delete account. Please try again."
+      message: "No se pudo eliminar la cuenta. Por favor, inténtalo de nuevo."
     };
   }
 
@@ -146,11 +146,11 @@ export const saveProfileImageFile = async (
   }
 
   if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-    return { error: "Invalid image format. Use JPG, PNG, WebP, or GIF." };
+    return { error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF." };
   }
 
   if (file.size > MAX_SIZE_IN_BYTES) {
-    return { error: "Image size cannot exceed 5 MB." };
+    return { error: "El tamaño de la imagen no puede exceder los 5 MB." };
   }
 
   const ext = extname(file.name) || ".jpg";
@@ -177,7 +177,7 @@ export const uploadProfile = async (formData: FormData): Promise<{ error?: strin
   const verifiedSession = await verifySession();
 
   if (!verifiedSession.isAuth || !verifiedSession.session) {
-    return { error: "You must be logged in to upload an image" };
+    return { error: "Debes iniciar sesión para subir una imagen" };
   }
 
   const file = formData.get("imagen");

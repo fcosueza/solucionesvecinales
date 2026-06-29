@@ -17,7 +17,7 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
   if (!validatedData.success) {
     return {
       state: "error",
-      message: "Invalid form data",
+      message: "Datos del formulario no válidos",
       errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
@@ -34,9 +34,9 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
   } catch {
     return {
       state: "error",
-      message: "Failed to create the message",
+      message: "No se pudo crear el mensaje",
       errors: {
-        prisma: "Internal error"
+        prisma: "Error interno"
       },
       payload: formData
     };
@@ -44,7 +44,7 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
 
   return {
     state: "success",
-    message: "Message created successfully",
+    message: "Mensaje creado exitosamente",
     payload: formData
   };
 };

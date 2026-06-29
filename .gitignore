@@ -59,6 +59,3 @@ node_modules/
 
 # User uploads
 /public/uploads/**
-!/public/uploads/
-!/public/uploads/profiles/
-!/public/uploads/profiles/.gitkeep

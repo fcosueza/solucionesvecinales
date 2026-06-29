@@ -111,7 +111,7 @@ test.describe("form validation with invalid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
-    await expect(page.locator(toastElement).first()).toContainText(/Form data validation failed/i);
+    await expect(page.locator(toastElement).first()).toContainText(/Validación de datos del formulario fallida/i);
   });
 
   test("Shows a field error and an error toast with an unregistered email", async ({ page }) => {
@@ -122,8 +122,10 @@ test.describe("form validation with invalid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
-    await expect(page.locator(toastElement).first()).toContainText(/Form data validation failed/i);
-    await expect(page.getByText(/There is no user with this email in the database/i)).toBeVisible({ timeout: 5000 });
+    await expect(page.locator(toastElement).first()).toContainText(/Validación de datos del formulario fallida/i);
+    await expect(page.getByText(/No existe un usuario con este correo electrónico en la base de datos/i)).toBeVisible({
+      timeout: 5000
+    });
   });
 
   test("Shows a field error and an error toast with an incorrect password for an existing user", async ({ page }) => {
@@ -134,8 +136,8 @@ test.describe("form validation with invalid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 5000 });
-    await expect(page.locator(toastElement).first()).toContainText(/Form data validation failed/i);
-    await expect(page.getByText(/The password is not valid for this user/i)).toBeVisible({ timeout: 5000 });
+    await expect(page.locator(toastElement).first()).toContainText(/Validación de datos del formulario fallida/i);
+    await expect(page.getByText(/La contraseña no es válida para este usuario/i)).toBeVisible({ timeout: 5000 });
   });
 
   test("Keeps the email in the field after a password error", async ({ page }) => {
@@ -162,7 +164,7 @@ test.describe("login with valid data", () => {
     await page.getByRole("button", { name: "Enviar" }).click();
 
     await expect(page.locator(toastElement).first()).toBeVisible({ timeout: 8000 });
-    await expect(page.locator(toastElement).first()).toContainText(/correct/i);
+    await expect(page.locator(toastElement).first()).toContainText(/correctos/i);
     await expect(page).toHaveURL("http://localhost:3000/communities", { timeout: 8000 });
   });
 });

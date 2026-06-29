@@ -11,7 +11,7 @@ export const deleteUser = async (_prevState: FormActionState, formData: FormData
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin)
     return {
       state: "error",
-      message: "You are not authorized to delete users"
+      message: "No estas autorizado para realizar esta acción"
     };
 
   const id = String(formData.get("id") ?? "").trim();
@@ -19,7 +19,7 @@ export const deleteUser = async (_prevState: FormActionState, formData: FormData
   if (!id)
     return {
       state: "error",
-      message: "A valid user ID is required"
+      message: "Se requiere un ID de usuario válido"
     };
 
   const hasAdminCommunities = await prisma.community.findFirst({
@@ -31,7 +31,7 @@ export const deleteUser = async (_prevState: FormActionState, formData: FormData
   if (hasAdminCommunities)
     return {
       state: "error",
-      message: "Cannot delete a user who still manages communities"
+      message: "No se puede eliminar un usuario que aún administra comunidades"
     };
 
   try {
@@ -42,12 +42,12 @@ export const deleteUser = async (_prevState: FormActionState, formData: FormData
 
     return {
       state: "success",
-      message: "User deleted successfully"
+      message: "Usuario eliminado exitosamente"
     };
   } catch {
     return {
       state: "error",
-      message: "Could not delete user"
+      message: "No se pudo eliminar el usuario"
     };
   }
 };
