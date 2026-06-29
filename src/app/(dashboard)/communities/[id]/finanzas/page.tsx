@@ -163,20 +163,20 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
   const canAddRecord =
     verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  const { totalIngresos, totalPagos, balanceFinal } = calculateFinancialSummary(community.financialRecords);
+  const { totalIncome, totalPayments, balanceFinal } = calculateFinancialSummary(community.financialRecords);
 
   const rows: TableRow[] = [
     ...buildSectionRows({
       title: "Pagos",
       registros: pagos,
       emptyMessage: "No hay pagos registrados.",
-      total: totalPagos
+      total: totalPayments
     }),
     ...buildSectionRows({
       title: "Ingresos",
       registros: ingresos,
       emptyMessage: "No hay ingresos registrados.",
-      total: totalIngresos
+      total: totalIncome
     }),
     {
       key: "balance-final",

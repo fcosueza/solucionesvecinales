@@ -51,7 +51,7 @@ export default async function BackOfficeFinancePage({
     prisma.financialRecord.count({ where })
   ]);
 
-  const { totalIngresos, totalPagos, balanceFinal } = calculateFinancialSummary(registrosTodos);
+  const { totalIncome, totalPayments, balanceFinal } = calculateFinancialSummary(registrosTodos);
   const totalPages = Math.max(1, Math.ceil(totalFiltrados / PAGE_SIZE));
 
   return (
@@ -64,12 +64,8 @@ export default async function BackOfficeFinancePage({
 
       <section className={style.statsGrid}>
         <CardStat title="Movimientos" value={String(totalRegistros)} description="Registros financieros acumulados" />
-        <CardStat
-          title="Ingresos"
-          value={formatCurrencyAmount(totalIngresos)}
-          description="Importe total de ingresos"
-        />
-        <CardStat title="Gastos" value={formatCurrencyAmount(totalPagos)} description="Importe total de gastos" />
+        <CardStat title="Ingresos" value={formatCurrencyAmount(totalIncome)} description="Importe total de ingresos" />
+        <CardStat title="Gastos" value={formatCurrencyAmount(totalPayments)} description="Importe total de gastos" />
         <CardStat
           title="Balance"
           value={formatCurrencyAmount(balanceFinal)}
