@@ -6,7 +6,7 @@ const RESERVATION_WINDOW_DAYS = 7;
  * Used to format hours and minutes.
  *
  * @param value The numerical value to fill
- * @returns El value formatted as string with 2 digits
+ * @returns The value formatted as string with 2 digits
  */
 const padTimePart = (value: number): string => value.toString().padStart(2, "0");
 
@@ -14,7 +14,7 @@ const padTimePart = (value: number): string => value.toString().padStart(2, "0")
  * Validates and normalizes a date string in ISO format (YYYY-MM-DD).
  *
  * @param value String with the date in YYYY-MM-DD format
- * @returns El same value if valid, or null if the format is incorrect
+ * @returns The same value if valid, or null if the format is incorrect
  */
 const parseReservationDate = (value: string): string | null => {
   const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -35,7 +35,7 @@ const parseReservationDate = (value: string): string | null => {
 /**
  * Converts a Date object to a string with YYYY-MM-DD format.
  *
- * @param date El objeto Date a convertir
+ * @param date The Date object to convert
  * @returns String with the date in YYYY-MM-DD format
  */
 const toReservationDateValue = (date: Date): string => {
@@ -132,7 +132,8 @@ const isAllowedReservationDate = (date: string, baseDate = new Date()): boolean 
  * @param reservationDateValue Reservation date in YYYY-MM-DD format
  * @param endHour Reservation end time
  * @param now Current date for comparison
- * @returns true si la franja ya ha pasado, false en caso contrario
+ *
+ * @returns true if the reservation slot has already passed, false otherwise
  */
 const isReservationSlotInPast = (reservationDateValue: string, endHour: number, now = new Date()): boolean => {
   const currentDateValue = toReservationDateValue(now);

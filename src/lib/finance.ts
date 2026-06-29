@@ -7,8 +7,8 @@ export interface FinancialRecordCalculable {
 }
 
 interface FinancialSummary {
-  totalIngresos: number;
-  totalPagos: number;
+  totalIncome: number;
+  totalPayments: number;
   balanceFinal: number;
 }
 
@@ -17,7 +17,7 @@ interface FinancialSummary {
  * Accepts numbers, strings and objects with toString method.
  *
  * @param amount The amount to convert (number, string or object with toString)
- * @returns El amount converted to number
+ * @returns The amount converted to number
  */
 const toAmountNumber = (amount: number | string | { toString(): string }): number => {
   if (typeof amount === "number") {
@@ -28,11 +28,11 @@ const toAmountNumber = (amount: number | string | { toString(): string }): numbe
 };
 
 /**
- * Calcula el resumen financiero (ingresos, gastos y saldo) de una lista de registros.
- * Suma todos los ingresos, gastos y calcula el balance final.
+ * Calculates the financial summary (income, expenses, and balance) of a list of records.
+ * Sums all incomes, expenses, and calculates the final balance.
  *
- * @param records Array de registros financieros a procesar
- * @returns Objeto with totalIncome, totalPayments and balanceFinal
+ * @param records Array of financial records to process
+ * @returns Object with totalIncome, totalPayments and balanceFinal
  */
 const calculateFinancialSummary = (records: FinancialRecordCalculable[]): FinancialSummary => {
   return records.reduce<FinancialSummary>(
@@ -41,18 +41,18 @@ const calculateFinancialSummary = (records: FinancialRecordCalculable[]): Financ
       const isIncome = record.type === "income";
 
       if (isIncome) {
-        summary.totalIngresos += amount;
+        summary.totalIncome += amount;
       } else {
-        summary.totalPagos += amount;
+        summary.totalPayments += amount;
       }
 
-      summary.balanceFinal = summary.totalIngresos - summary.totalPagos;
+      summary.balanceFinal = summary.totalIncome - summary.totalPayments;
 
       return summary;
     },
     {
-      totalIngresos: 0,
-      totalPagos: 0,
+      totalIncome: 0,
+      totalPayments: 0,
       balanceFinal: 0
     }
   );
@@ -60,9 +60,9 @@ const calculateFinancialSummary = (records: FinancialRecordCalculable[]): Financ
 
 /**
  * Formats a numerical quantity as euro currency with thousands separators.
- * Ejemplo: 1234.56 -> "1.234,56 €"
+ * Example: 1234.56 -> "1.234,56 €"
  *
- * @param amount La cantidad a formatear
+ * @param amount The amount to format
  * @returns String with currency format (euros)
  */
 const formatCurrencyAmount = (amount: number): string => {

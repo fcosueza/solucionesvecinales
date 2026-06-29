@@ -1,7 +1,7 @@
 import { calculateFinancialSummary, formatCurrencyAmount } from "./finance";
 
-describe("Suite de pruebas del modulo finance", () => {
-  it("Debe calcular ingresos, pagos y balance final", () => {
+describe("Finance module test suite", () => {
+  it("should calculate income, payments and final balance", () => {
     const summary = calculateFinancialSummary([
       { type: "income", amount: 1000 },
       { type: "expense", amount: 250.5 },
@@ -10,21 +10,21 @@ describe("Suite de pruebas del modulo finance", () => {
     ]);
 
     expect(summary).toEqual({
-      totalIngresos: 1099.5,
-      totalPagos: 260.75,
+      totalIncome: 1099.5,
+      totalPayments: 260.75,
       balanceFinal: 838.75
     });
   });
 
-  it("Debe devolver totales a cero si no hay registros", () => {
+  it("should return zero totals when there are no records", () => {
     expect(calculateFinancialSummary([])).toEqual({
-      totalIngresos: 0,
-      totalPagos: 0,
+      totalIncome: 0,
+      totalPayments: 0,
       balanceFinal: 0
     });
   });
 
-  it("Debe formatear importes en euros", () => {
+  it("should format amounts in euros", () => {
     expect(formatCurrencyAmount(1234.5)).toContain("1.234,50 €");
   });
 });
