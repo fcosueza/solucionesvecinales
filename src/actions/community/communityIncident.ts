@@ -174,6 +174,12 @@ const deleteIncident = async (formData: FormData): Promise<void> => {
   } catch {}
 };
 
+/**
+ * Creates a new incident report in a community for the authenticated member.
+ *
+ * @param communityID Community identifier
+ * @param formData Form data containing title and description
+ */
 const addIncident = async (communityID: number, formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
 
@@ -220,6 +226,11 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
   } catch {}
 };
 
+/**
+ * Deletes an incident from backoffice when performed by a web administrator.
+ *
+ * @param formData Form data containing community, user and incident date
+ */
 const deleteIncidentAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 

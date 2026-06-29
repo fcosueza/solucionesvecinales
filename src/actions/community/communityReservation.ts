@@ -221,6 +221,13 @@ const reserveCommonArea = async (
   };
 };
 
+/**
+ * Cancels an existing reservation owned by the authenticated user.
+ *
+ * @param reservationID Reservation identifier
+ * @param communityID Community identifier
+ * @returns Form action state with cancellation result
+ */
 const deleteReservation = async (reservationID: number, communityID: number): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
 

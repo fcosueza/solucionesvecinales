@@ -10,6 +10,13 @@ import z from "zod";
 
 type contactFormFields = z.infer<typeof contactSchema>;
 
+/**
+ * Validates and stores a contact message submitted from the contact form.
+ *
+ * @param _prevState Previous form action state
+ * @param formData Contact form payload
+ * @returns Form action state indicating success or validation/persistence errors
+ */
 const contactMsg = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const data: object = Object.fromEntries(formData);
   const validatedData: SafeParseReturnType<object, contactFormFields> = contactSchema.safeParse(data);
@@ -49,6 +56,11 @@ const contactMsg = async (_prevState: FormActionState, formData: FormData): Prom
   };
 };
 
+/**
+ * Deletes a contact message from backoffice when executed by a web administrator.
+ *
+ * @param formData Form data containing the composite contact identifier
+ */
 const deleteContact = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 

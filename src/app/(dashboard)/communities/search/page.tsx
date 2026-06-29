@@ -2,7 +2,7 @@ import CommunitySearchForm from "@/components/layouts/Forms/CommunitySearchForm"
 import Gallery from "@/components/layouts/Gallery";
 import CardCommunity from "@/components/ui/Cards/CardCommunity";
 import PageHelpWidget, { type HelpContent } from "@/components/ui/PageHelpWidget";
-import requestCommunitySubscription from "@/actions/community/communityRequest";
+import { requestCommunitySubscription } from "@/actions/community/communityRequest";
 import ScrollToTopOnMount from "@/components/ui/ScrollToTop";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";

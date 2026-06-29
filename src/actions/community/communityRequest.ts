@@ -103,6 +103,12 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
   revalidatePath("/communities/search");
 };
 
+/**
+ * Deletes a community subscription request from backoffice.
+ * Only available to web administrators.
+ *
+ * @param formData Form data containing the request id
+ */
 const deleteRequest = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 
@@ -118,5 +124,4 @@ const deleteRequest = async (formData: FormData): Promise<void> => {
   } catch {}
 };
 
-export { deleteRequest };
-export default requestCommunitySubscription;
+export { deleteRequest, requestCommunitySubscription };

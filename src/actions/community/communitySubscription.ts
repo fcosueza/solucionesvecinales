@@ -6,28 +6,18 @@ import { revalidatePath } from "next/cache";
 
 type Decision = "approve" | "reject";
 
-/**
- * Validates whether a string is a valid decision (approve or reject).
- *
- * @param value El valor a validar
- * @returns true si el valor es "approve" o "reject"
- */
 const isValidDecision = (value: string): value is Decision => {
   return value === "approve" || value === "reject";
 };
 
 /**
- * Review a community subscription request.
- * If approved, creates the user's enrollment in the community.
- * If rejected, updates the request status.
- * Only community administrators can do this.
+ * Reviews a pending community subscription request and approves or rejects it.
  *
- * @param formData FormData that must contain: communityID, requestID and decision (approve/reject)
+ * @param formData Form data containing communityID, requestID and decision
  */
 const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
 
-  // Verify that the user is authenticated
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     return;
   }
@@ -36,7 +26,6 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
   const requestID = Number(formData.get("requestID"));
   const decisionValue = String(formData.get("decision") ?? "").trim();
 
-  // Validate input data
   if (
     !Number.isInteger(communityID) ||
     communityID <= 0 ||
@@ -47,7 +36,6 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
     return;
   }
 
-  // Verify that the community exists
   const community = await prisma.community.findUnique({
     where: {
       id: communityID
@@ -58,12 +46,10 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
     }
   });
 
-  // Verify that the user is the community admin
   if (!community || community.adminId !== verifiedSession.session.userID) {
     return;
   }
 
-  // Determine the new status of the request
   const nextStatus = decisionValue === "approve" ? "approved" : "rejected";
 
   /*
@@ -77,7 +63,7 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
    * By using a transaction, we guarantee that both operations complete correctly or that neither is applied in case of error.
    */
   await prisma.$transaction(async tx => {
-    const solicitud = await tx.request.findFirst({
+    const communityRequest = await tx.request.findFirst({
       where: {
         id: requestID,
         community: communityID,
@@ -88,8 +74,7 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
       }
     });
 
-    // If the request is not found or is not in pending status, we do nothing
-    if (!solicitud) {
+    if (!communityRequest) {
       return;
     }
 
@@ -105,23 +90,21 @@ const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
       }
     });
 
-    // If no request was updated, we do nothing further
     if (updatedRequests.count === 0) {
       return;
     }
 
-    // If the request was approved, create the registration
     if (nextStatus === "approved") {
       await tx.membership.upsert({
         where: {
           user_community: {
-            user: solicitud.user,
+            user: communityRequest.user,
             community: communityID
           }
         },
         update: {},
         create: {
-          user: solicitud.user,
+          user: communityRequest.user,
           community: communityID
         }
       });

@@ -5,7 +5,14 @@ import prisma from "@/lib/prisma";
 import { FormActionState, UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 
-export const deleteUser = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+/**
+ * Deletes a user from backoffice when requested by a web administrator.
+ *
+ * @param _prevState Previous form action state
+ * @param formData Form data containing the user identifier
+ * @returns Form action state with authorization/validation/deletion result
+ */
+const deleteUser = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const session = await verifySession();
 
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin)
@@ -27,7 +34,6 @@ export const deleteUser = async (_prevState: FormActionState, formData: FormData
     select: { id: true }
   });
 
-  // if the user is an admin of any community, we cannot delete the user to avoid having a community without an admin
   if (hasAdminCommunities)
     return {
       state: "error",
@@ -51,3 +57,5 @@ export const deleteUser = async (_prevState: FormActionState, formData: FormData
     };
   }
 };
+
+export { deleteUser };

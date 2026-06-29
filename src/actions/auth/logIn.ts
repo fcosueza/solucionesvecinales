@@ -22,6 +22,13 @@ const safePayload = (formData: FormData): FormData => {
   return safe;
 };
 
+/**
+ * Authenticates a user with email and password and creates a session when credentials are valid.
+ *
+ * @param _prevState Previous form action state
+ * @param formData Login form payload
+ * @returns Form action state with validation result and optional redirect path
+ */
 const logIn = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const rawData: object = Object.fromEntries(formData);
   const validatedData: SafeParseReturnType<object, CamposLogin> = logInSchema.safeParse(rawData);

@@ -6,13 +6,11 @@ import { UserRole, FormActionState } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
- * Server action that creates a new common area in a community.
- * It can only be executed by the community administrator.
- * Validates that the start time is before the end time and that the name is unique.
+ * Creates a new common area in a community managed by the authenticated admin.
  *
- * @param communityID - ID of the community where the zone is created
- * @param formData - FormData that must contain: name, description, starttime and endtime
- * @returns FormActionState with the result of the operation
+ * @param communityID Community identifier
+ * @param formData Form data with zone name, description and time range
+ * @returns Form action state with creation result
  */
 const createZone = async (communityID: number, formData: FormData): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
@@ -56,12 +54,12 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
     };
   }
 
-  const nombre = String(formData.get("nombre") ?? "").trim();
-  const descripcion = String(formData.get("descripcion") ?? "").trim();
-  const horaInicio = String(formData.get("horaInicio") ?? "").trim();
-  const horaFin = String(formData.get("horaFin") ?? "").trim();
+  const name = String(formData.get("nombre") ?? "").trim();
+  const description = String(formData.get("descripcion") ?? "").trim();
+  const startTime = String(formData.get("horaInicio") ?? "").trim();
+  const endTime = String(formData.get("horaFin") ?? "").trim();
 
-  if (!nombre || !descripcion || !horaInicio || !horaFin) {
+  if (!name || !description || !startTime || !endTime) {
     return {
       state: "error",
       message: "Todos los campos son requeridos",
@@ -69,7 +67,7 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
     };
   }
 
-  if (descripcion.length > 100) {
+  if (description.length > 100) {
     return {
       state: "error",
       message: "La descripción no puede superar los 100 caracteres",
@@ -84,10 +82,10 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
     return new Date(Date.UTC(1970, 0, 1, Number(hours), Number(minutes), 0, 0));
   };
 
-  const horaInicioDate = parseTime(horaInicio);
-  const horaFinDate = parseTime(horaFin);
+  const startTimeDate = parseTime(startTime);
+  const endTimeDate = parseTime(endTime);
 
-  if (!horaInicioDate || !horaFinDate || horaInicioDate >= horaFinDate) {
+  if (!startTimeDate || !endTimeDate || startTimeDate >= endTimeDate) {
     return {
       state: "error",
       message: "Los horarios no son válidos. La hora de fin debe ser posterior a la de inicio",
@@ -98,11 +96,11 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
   try {
     await prisma.zone.create({
       data: {
-        name: nombre,
-        description: descripcion,
+        name: name,
+        description: description,
         community: communityID,
-        startTime: horaInicioDate,
-        endTime: horaFinDate
+        startTime: startTimeDate,
+        endTime: endTimeDate
       }
     });
   } catch (error: unknown) {
@@ -136,13 +134,11 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
 };
 
 /**
- * Server action that removes a common zone from a community.
- * It can only be executed by the community administrator.
- * Validates that the user has permissions to manage the community.
+ * Deletes a common area from a community managed by the authenticated admin.
  *
- * @param communityID - ID of the community from which the zone is removed
- * @param zoneName - Name of the area to eliminate
- * @returns FormActionState with the result of the operation
+ * @param communityID Community identifier
+ * @param zoneName Zone name
+ * @returns Form action state with deletion result
  */
 const deleteZone = async (communityID: number, zoneName: string): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
@@ -208,25 +204,23 @@ const deleteZone = async (communityID: number, zoneName: string): Promise<FormAc
 };
 
 /**
- * Server action that removes a common zone from the backoffice.
- * Solo puede ser ejecutada por webAdmin.
- * Revalidate backoffice routes after deleting the zone.
+ * Deletes a common area from backoffice when executed by a web administrator.
  *
- * @param formData - FormData that must contain: name and community
+ * @param formData Form data containing the community id and zone name
  */
 const deleteZoneAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
 
-  const nombre = String(formData.get("nombre") ?? "").trim();
-  const comunidad = Number(formData.get("comunidad"));
+  const name = String(formData.get("nombre") ?? "").trim();
+  const community = Number(formData.get("comunidad"));
 
-  if (!nombre || !comunidad || isNaN(comunidad)) return;
+  if (!name || !community || isNaN(community)) return;
 
   try {
     await prisma.zone.delete({
-      where: { name_community: { name: nombre, community: comunidad } }
+      where: { name_community: { name: name, community: community } }
     });
     revalidatePath("/backoffice/zonas-comunes");
     revalidatePath("/backoffice/overview");

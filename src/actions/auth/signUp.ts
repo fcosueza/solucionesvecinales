@@ -21,6 +21,13 @@ const safePayload = (formData: FormData): FormData => {
   return safe;
 };
 
+/**
+ * Registers a new user and stores hashed credentials in the database.
+ *
+ * @param _prevState Previous form action state
+ * @param formData Sign-up form payload
+ * @returns Form action state with validation or persistence result
+ */
 const signUp = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const rawData: object = Object.fromEntries(formData);
   const validatedData: SafeParseReturnType<object, RecordFields> = signUpSchema.safeParse(rawData);

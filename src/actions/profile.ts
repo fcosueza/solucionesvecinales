@@ -14,7 +14,14 @@ import z from "zod";
 
 type ProfileFormFields = z.infer<typeof profileSchema>;
 
-export const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+/**
+ * Updates the authenticated user's profile data and optional password/image.
+ *
+ * @param _prevState Previous form action state
+ * @param formData Profile form payload
+ * @returns Form action state with update result
+ */
+const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
 
   if (!verifiedSession.isAuth || !verifiedSession.session) {
@@ -97,7 +104,13 @@ export const updateProfile = async (_prevState: FormActionState, formData: FormD
   }
 };
 
-export const deleteProfile = async (_prevState: FormActionState): Promise<FormActionState> => {
+/**
+ * Deletes the authenticated user account and its owned communities, then clears the session.
+ *
+ * @param _prevState Previous form action state
+ * @returns Form action state when deletion fails; otherwise redirects
+ */
+const deleteProfile = async (_prevState: FormActionState): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
 
   if (!verifiedSession.isAuth || !verifiedSession.session) {
@@ -137,7 +150,7 @@ const MAX_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 MB
  * @param userID The ID of the user to whom the image belongs
  * @returns An object with the URL of the saved image, or an error message
  */
-export const saveProfileImageFile = async (
+const saveProfileImageFile = async (
   file: File,
   userID: number | string
 ): Promise<{ error?: string; imagen?: string }> => {
@@ -173,7 +186,7 @@ export const saveProfileImageFile = async (
  * @param formData FormData that must contain the "image" field with the file to upload
  * @returns An object with the URL of the uploaded image, or an error message
  */
-export const uploadProfile = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
+const uploadProfile = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
   const verifiedSession = await verifySession();
 
   if (!verifiedSession.isAuth || !verifiedSession.session) {
@@ -194,3 +207,5 @@ export const uploadProfile = async (formData: FormData): Promise<{ error?: strin
 
   return { imagen: result.imagen };
 };
+
+export { deleteProfile, saveProfileImageFile, updateProfile, uploadProfile };

@@ -8,21 +8,21 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
+import community from "./community";
 
-type CamposFormularioComunidad = z.infer<typeof communitySchema>;
+type communityFormFields = z.infer<typeof communitySchema>;
 
 /**
- * Update data for an existing community. Only the community administrator can do this.
+ * Updates community settings for a community managed by the authenticated admin user.
  *
- * @param _prevState Previous state of the form action.
- * @param formData Data sent from the community setup form.
- *
- * @returns El new state of the form with the result of the update.
+ * @param _prevState Previous form action state
+ * @param formData Form data containing community data and communityID
+ * @returns Form action state indicating success or failure
  */
-export const updateCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const sesionVerificada = await verifySession();
+const updateCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
       message: "Debes iniciar sesión para actualizar la comunidad",
@@ -30,10 +30,9 @@ export const updateCommunity = async (_prevState: FormActionState, formData: For
     };
   }
 
-  const esAdministrador =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  if (!esAdministrador) {
+  if (!isAdmin) {
     return {
       state: "error",
       message: "No tienes permisos para actualizar esta comunidad",
@@ -51,12 +50,12 @@ export const updateCommunity = async (_prevState: FormActionState, formData: For
     };
   }
 
-  const comunidad = await prisma.community.findUnique({
+  const community = await prisma.community.findUnique({
     where: { id: communityID },
     select: { adminId: true }
   });
 
-  if (!comunidad || comunidad.adminId !== sesionVerificada.session.userID) {
+  if (!community || community.adminId !== verifiedSession.session.userID) {
     return {
       state: "error",
       message: "No tienes permisos para actualizar esta comunidad",
@@ -64,14 +63,14 @@ export const updateCommunity = async (_prevState: FormActionState, formData: For
     };
   }
 
-  const datos: object = Object.fromEntries(formData);
-  const datosValidados: SafeParseReturnType<object, CamposFormularioComunidad> = communitySchema.safeParse(datos);
+  const rawData: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, communityFormFields> = communitySchema.safeParse(rawData);
 
-  if (!datosValidados.success) {
+  if (!validatedData.success) {
     return {
       state: "error",
       message: "Datos del formulario incorrectos",
-      errors: datosValidados.error.flatten().fieldErrors,
+      errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
   }
@@ -80,12 +79,12 @@ export const updateCommunity = async (_prevState: FormActionState, formData: For
     await prisma.community.update({
       where: { id: communityID },
       data: {
-        name: datosValidados.data.name,
-        street: datosValidados.data.street,
-        number: datosValidados.data.number,
-        city: datosValidados.data.city,
-        province: datosValidados.data.province,
-        country: datosValidados.data.country
+        name: validatedData.data.name,
+        street: validatedData.data.street,
+        number: validatedData.data.number,
+        city: validatedData.data.city,
+        province: validatedData.data.province,
+        country: validatedData.data.country
       }
     });
   } catch {
@@ -103,28 +102,25 @@ export const updateCommunity = async (_prevState: FormActionState, formData: For
 };
 
 /**
- * Permanently delete a community and all its related data.
- * Only the community administrator can do this.
+ * Deletes a community when requested by its authorized administrator.
  *
- * @param _prevState Previous state of the form action.
- * @param formData Form data with the ID of the community to delete.
- *
- * @returns Error state if it could not be deleted. On success, it redirects to /communities.
+ * @param _prevState Previous form action state
+ * @param formData Form data containing communityID
+ * @returns Form action state on validation failures; otherwise redirects
  */
-export const deleteCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const sesionVerificada = await verifySession();
+const deleteCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
       message: "Debes iniciar sesión para eliminar la comunidad"
     };
   }
 
-  const esAdministrador =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  if (!esAdministrador) {
+  if (!isAdmin) {
     return {
       state: "error",
       message: "No tienes permisos para eliminar esta comunidad"
@@ -140,12 +136,12 @@ export const deleteCommunity = async (_prevState: FormActionState, formData: For
     };
   }
 
-  const comunidad = await prisma.community.findUnique({
+  const community = await prisma.community.findUnique({
     where: { id: communityID },
     select: { adminId: true }
   });
 
-  if (!comunidad || comunidad.adminId !== sesionVerificada.session.userID) {
+  if (!community || community.adminId !== verifiedSession.session.userID) {
     return {
       state: "error",
       message: "No tienes permisos para eliminar esta comunidad"
@@ -167,13 +163,11 @@ export const deleteCommunity = async (_prevState: FormActionState, formData: For
 };
 
 /**
- * Server action that deletes a community from the backoffice.
- * Solo puede ser ejecutada por webAdmin.
- * Revalidate backoffice routes after deleting.
+ * Deletes a community from backoffice when executed by a web administrator.
  *
- * @param formData FormData that must contain the "id" field of the community to be deleted
+ * @param formData Form data containing the community id
  */
-export const deleteCommunityAdmin = async (formData: FormData): Promise<void> => {
+const deleteCommunityAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();
 
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
@@ -187,3 +181,5 @@ export const deleteCommunityAdmin = async (formData: FormData): Promise<void> =>
     revalidatePath("/backoffice/overview");
   } catch {}
 };
+
+export { deleteCommunity, deleteCommunityAdmin, updateCommunity };
