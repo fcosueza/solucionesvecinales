@@ -7,7 +7,7 @@ jest.mock("@/components/layouts/Forms/FinanceAddForm", () => ({
   default: ({ communityID, onClose }: { communityID: number; onClose: () => void }) => (
     <div>
       FinanceAddForm {communityID}
-      <button onClick={onClose}>Cerrar Finance</button>
+      <button onClick={onClose}>Close Finance</button>
     </div>
   )
 }));
@@ -17,61 +17,61 @@ jest.mock("@/components/layouts/Forms/IncidentAddForm", () => ({
   default: ({ communityID, onClose }: { communityID: number; onClose: () => void }) => (
     <div>
       IncidentAddForm {communityID}
-      <button onClick={onClose}>Cerrar Incident</button>
+      <button onClick={onClose}>Close Incident</button>
     </div>
   )
 }));
 
-describe("Suite de pruebas del componente ActionButton", () => {
-  it("Debe renderizar el texto por defecto cuando no se pasa buttonText", () => {
+describe("ActionButton component test suite", () => {
+  it("should render the default text when buttonText is not provided", () => {
     render(<ActionButton modalType="finance" communityID={7} />);
 
     expect(screen.getByRole("button", { name: "+ añadir" })).toBeInTheDocument();
   });
 
-  it("No debe renderizar el boton cuando canOpen es false", () => {
-    render(<ActionButton buttonText="+ añadir registro" canOpen={false} modalType="finance" communityID={7} />);
+  it("should not render the button when canOpen is false", () => {
+    render(<ActionButton buttonText="+ add record" canOpen={false} modalType="finance" communityID={7} />);
 
-    expect(screen.queryByRole("button", { name: "+ añadir registro" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "+ add record" })).not.toBeInTheDocument();
     expect(screen.queryByText("FinanceAddForm 7")).not.toBeInTheDocument();
     expect(screen.queryByText("IncidentAddForm 7")).not.toBeInTheDocument();
   });
 
-  it("Debe abrir FinanceAddForm al hacer click cuando modalType es finance", async () => {
-    render(<ActionButton buttonText="+ añadir registro" modalType="finance" communityID={7} />);
+  it("should open FinanceAddForm on click when modalType is finance", async () => {
+    render(<ActionButton buttonText="+ add record" modalType="finance" communityID={7} />);
 
-    await userEvent.click(screen.getByRole("button", { name: "+ añadir registro" }));
+    await userEvent.click(screen.getByRole("button", { name: "+ add record" }));
 
     expect(screen.getByText("FinanceAddForm 7")).toBeInTheDocument();
     expect(screen.queryByText("IncidentAddForm 7")).not.toBeInTheDocument();
   });
 
-  it("Debe abrir IncidentAddForm al hacer click cuando modalType es incident", async () => {
-    render(<ActionButton buttonText="+ añadir incidencias" modalType="incident" communityID={12} />);
+  it("should open IncidentAddForm on click when modalType is incident", async () => {
+    render(<ActionButton buttonText="+ add incidents" modalType="incident" communityID={12} />);
 
-    await userEvent.click(screen.getByRole("button", { name: "+ añadir incidencias" }));
+    await userEvent.click(screen.getByRole("button", { name: "+ add incidents" }));
 
     expect(screen.getByText("IncidentAddForm 12")).toBeInTheDocument();
     expect(screen.queryByText("FinanceAddForm 12")).not.toBeInTheDocument();
   });
 
-  it("Debe cerrar FinanceAddForm al llamar onClose", async () => {
-    render(<ActionButton buttonText="+ añadir registro" modalType="finance" communityID={7} />);
+  it("should close FinanceAddForm when onClose is called", async () => {
+    render(<ActionButton buttonText="+ add record" modalType="finance" communityID={7} />);
 
-    await userEvent.click(screen.getByRole("button", { name: "+ añadir registro" }));
+    await userEvent.click(screen.getByRole("button", { name: "+ add record" }));
     expect(screen.getByText("FinanceAddForm 7")).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole("button", { name: "Cerrar Finance" }));
+    await userEvent.click(screen.getByRole("button", { name: "Close Finance" }));
     expect(screen.queryByText("FinanceAddForm 7")).not.toBeInTheDocument();
   });
 
-  it("Debe cerrar IncidentAddForm al llamar onClose", async () => {
-    render(<ActionButton buttonText="+ añadir incidencias" modalType="incident" communityID={12} />);
+  it("should close IncidentAddForm when onClose is called", async () => {
+    render(<ActionButton buttonText="+ add incidents" modalType="incident" communityID={12} />);
 
-    await userEvent.click(screen.getByRole("button", { name: "+ añadir incidencias" }));
+    await userEvent.click(screen.getByRole("button", { name: "+ add incidents" }));
     expect(screen.getByText("IncidentAddForm 12")).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole("button", { name: "Cerrar Incident" }));
+    await userEvent.click(screen.getByRole("button", { name: "Close Incident" }));
     expect(screen.queryByText("IncidentAddForm 12")).not.toBeInTheDocument();
   });
 });

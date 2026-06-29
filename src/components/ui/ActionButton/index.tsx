@@ -22,7 +22,8 @@ interface ActionButtonProps {
  * @param props.canOpen Defines whether the button should be rendered. If false, the modal is not displayed or allowed to open.
  * @param props.modalType Determines the form to open: finance ("finance") or incidents ("incident").
  * @param props.communityID Community identifier that is sent to the open form.
- * @returns Un React node with the button and, where applicable, the open modal form.
+ *
+ * @returns A React node with the button and, where applicable, the open modal form.
  */
 const ActionButton = ({ buttonText, canOpen = true, modalType, communityID }: ActionButtonProps): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);

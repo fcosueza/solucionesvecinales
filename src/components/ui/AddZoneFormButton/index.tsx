@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import AddZoneForm from "@/components/layouts/Forms/AddZoneForm";
-import style from "@/components/ui/ActionButton/style.module.css";
+import style from "./style.module.css";
 
 interface Props {
   communityID: number;
