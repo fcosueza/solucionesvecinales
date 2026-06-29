@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { TENANT_CREDENTIALS } from "../auth/constants";
+import { TENANT_CREDENTIALS } from "../setup/constants";
 
 const URL = "http://localhost:3000/login";
 const toastElement = "[data-sonner-toaster] li";

@@ -37,7 +37,7 @@ export default defineConfig({
     /* Auth setup project — runs once before browser projects */
     {
       name: "setup",
-      testMatch: "**/auth/setup.ts"
+      testMatch: "**/setup/setup.ts"
     },
 
     {
