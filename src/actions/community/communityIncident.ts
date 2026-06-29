@@ -49,7 +49,7 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
     return;
   }
 
-  const inscription = await prisma.membership.findUnique({
+  const membership = await prisma.membership.findUnique({
     where: {
       user_community: {
         user: verifiedSession.session.userID,
@@ -61,7 +61,7 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
     }
   });
 
-  if (!inscription) {
+  if (!membership) {
     return;
   }
 
@@ -127,7 +127,7 @@ const deleteIncident = async (formData: FormData): Promise<void> => {
     return;
   }
 
-  const inscription = await prisma.membership.findUnique({
+  const membership = await prisma.membership.findUnique({
     where: {
       user_community: {
         user: verifiedSession.session.userID,
@@ -139,7 +139,7 @@ const deleteIncident = async (formData: FormData): Promise<void> => {
     }
   });
 
-  if (!inscription) {
+  if (!membership) {
     return;
   }
 
@@ -194,7 +194,7 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
     return;
   }
 
-  const inscription = await prisma.membership.findUnique({
+  const membership = await prisma.membership.findUnique({
     where: {
       user_community: {
         user: verifiedSession.session.userID,
@@ -206,7 +206,7 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
     }
   });
 
-  if (!inscription) {
+  if (!membership) {
     return;
   }
 
@@ -236,15 +236,15 @@ const deleteIncidentAdmin = async (formData: FormData): Promise<void> => {
 
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
 
-  const comunidad = Number(formData.get("comunidad"));
-  const usuario = String(formData.get("usuario") ?? "").trim();
-  const fecha = new Date(String(formData.get("fecha") ?? ""));
+  const community = Number(formData.get("comunidad"));
+  const user = String(formData.get("usuario") ?? "").trim();
+  const date = new Date(String(formData.get("fecha") ?? ""));
 
-  if (!comunidad || isNaN(comunidad) || !usuario || isNaN(fecha.getTime())) return;
+  if (!community || isNaN(community) || !user || isNaN(date.getTime())) return;
 
   try {
     await prisma.incident.delete({
-      where: { community_user_date: { community: comunidad, user: usuario, date: fecha } }
+      where: { community_user_date: { community: community, user: user, date: date } }
     });
     revalidatePath("/backoffice/incidencias");
     revalidatePath("/backoffice/overview");

@@ -1,6 +1,6 @@
 "use client";
 
-import reserveCommonArea from "@/actions/community/communityReservation";
+import { reserveCommonArea } from "@/actions/community/communityReservation";
 import { formatHourLabel, formatReservationDateLabel } from "@/lib/dateFormatting";
 import {
   MAX_RESERVATION_DURATION_HOURS,

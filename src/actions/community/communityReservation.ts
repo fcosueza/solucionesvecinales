@@ -264,5 +264,4 @@ const deleteReservation = async (reservationID: number, communityID: number): Pr
   return { state: "success", message: "Reserva cancelada correctamente" };
 };
 
-export { deleteReservation };
-export default reserveCommonArea;
+export { deleteReservation, reserveCommonArea };

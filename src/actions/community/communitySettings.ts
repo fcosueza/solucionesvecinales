@@ -8,7 +8,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
-import community from "./community";
 
 type communityFormFields = z.infer<typeof communitySchema>;
 

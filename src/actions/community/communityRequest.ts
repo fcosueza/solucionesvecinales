@@ -12,36 +12,33 @@ import { revalidatePath } from "next/cache";
  * @param formData Form data with the "communityID" field that indicates which community the user wants to subscribe to.
  */
 const requestCommunitySubscription = async (formData: FormData): Promise<void> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  // We check that the user is authenticated
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return;
   }
 
-  const esAdministrador =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  // Administrators cannot submit requests from the search flow
-  if (esAdministrador) {
+  if (isAdmin) {
     return;
   }
 
-  const idComunidadTemp = formData.get("communityID");
-  const idComunidad = Number(idComunidadTemp);
+  const idCommunityTemp = formData.get("communityID");
+  const idCommunity = Number(idCommunityTemp);
 
   // We validate that the communityID is a positive integer
-  if (!Number.isInteger(idComunidad) || idComunidad <= 0) {
+  if (!Number.isInteger(idCommunity) || idCommunity <= 0) {
     return;
   }
 
-  const idUsuario = sesionVerificada.session.userID;
+  const userID = verifiedSession.session.userID;
 
   // We perform the necessary queries in parallel to optimize performance
-  const [comunidad, comunidadesUsuario, solicitudesPendientes] = await Promise.all([
+  const [community, userCommunities, pendingRequests] = await Promise.all([
     prisma.community.findUnique({
       where: {
-        id: idComunidad
+        id: idCommunity
       },
       select: {
         id: true
@@ -49,12 +46,12 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
     }),
     prisma.user.findUnique({
       where: {
-        id: idUsuario
+        id: userID
       },
       select: {
         memberships: {
           where: {
-            community: idComunidad
+            community: idCommunity
           },
           select: {
             community: true
@@ -64,8 +61,8 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
     }),
     prisma.request.findFirst({
       where: {
-        user: idUsuario,
-        community: idComunidad,
+        user: userID,
+        community: idCommunity,
         status: "pending"
       },
       select: {
@@ -75,27 +72,27 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
   ]);
 
   // If the community does not exist, we do nothing
-  if (!comunidad) {
+  if (!community) {
     return;
   }
 
-  const yaSubscrito = (comunidadesUsuario?.memberships.length ?? 0) > 0;
+  const alreadySubscribed = (userCommunities?.memberships.length ?? 0) > 0;
 
   // If the user is already subscribed to the community, we do nothing
-  if (yaSubscrito) {
+  if (alreadySubscribed) {
     return;
   }
 
   // If a pending request already exists, do nothing
-  if (solicitudesPendientes) {
+  if (pendingRequests) {
     return;
   }
 
   // If everything is valid, create the request in "pending" status
   await prisma.request.create({
     data: {
-      user: idUsuario,
-      community: idComunidad,
+      user: userID,
+      community: idCommunity,
       status: "pending"
     }
   });
@@ -119,6 +116,7 @@ const deleteRequest = async (formData: FormData): Promise<void> => {
 
   try {
     await prisma.request.delete({ where: { id } });
+
     revalidatePath("/backoffice/solicitudes");
     revalidatePath("/backoffice/overview");
   } catch {}

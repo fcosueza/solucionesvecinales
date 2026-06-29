@@ -1,4 +1,4 @@
-import reserveCommonArea, { deleteReservation } from "./communityReservation";
+import { deleteReservation, reserveCommonArea } from "./communityReservation";
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import * as reservations from "@/lib/reservations";

@@ -13,25 +13,24 @@ import { revalidatePath } from "next/cache";
  *
  */
 const addMessage = async (communityId: number, formData: FormData): Promise<void> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
   // We check that the user is authenticated
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return;
   }
 
-  const esAdmin =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
   // Only administrators can add messages to the board
-  if (!esAdmin) {
+  if (!isAdmin) {
     return;
   }
 
-  const inscripcion = await prisma.membership.findUnique({
+  const membership = await prisma.membership.findUnique({
     where: {
       user_community: {
-        user: sesionVerificada.session.userID,
+        user: verifiedSession.session.userID,
         community: communityId
       }
     },
@@ -40,14 +39,14 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
     }
   });
 
-  if (!inscripcion) {
+  if (!membership) {
     return;
   }
 
-  const texto = (formData.get("texto") as string)?.trim();
+  const text = (formData.get("texto") as string)?.trim();
 
   // Adding empty messages is not allowed
-  if (!texto) {
+  if (!text) {
     return;
   }
 
@@ -56,7 +55,7 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
     await prisma.message.create({
       data: {
         community: communityId,
-        text: texto
+        text: text
       }
     });
 
@@ -71,23 +70,22 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
  * @param creadoEn - Message creation date (part of the composite PK).
  */
 const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return;
   }
 
-  const esAdmin =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  if (!esAdmin) {
+  if (!isAdmin) {
     return;
   }
 
-  const inscripcion = await prisma.membership.findUnique({
+  const membership = await prisma.membership.findUnique({
     where: {
       user_community: {
-        user: sesionVerificada.session.userID,
+        user: verifiedSession.session.userID,
         community: communityId
       }
     },
@@ -96,7 +94,7 @@ const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void>
     }
   });
 
-  if (!inscripcion) {
+  if (!membership) {
     return;
   }
 
