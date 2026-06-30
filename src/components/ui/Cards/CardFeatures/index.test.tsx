@@ -1,49 +1,49 @@
 import { render, screen } from "@testing-library/react";
 import CardFeatures from ".";
 
-describe("Suite de pruebas del componente CardFeatures", () => {
-  const urlImagen = "/assets/image/doc.svg";
-  const textoAlternativo = "Imagen de unos documentos";
-  const titulo = "Lorem Ipsum Dolor";
-  const parrafo = "Lorem Ipsum Dolor sit atmet consecterum";
+describe("CardFeatures component test suite", () => {
+  const imageURL = "/assets/image/doc.svg";
+  const altText = "Imagen de unos documentos";
+  const title = "Lorem Ipsum Dolor";
+  const paragraph = "Lorem Ipsum Dolor sit atmet consecterum";
 
-  it("Debe renderizar una tarjeta correctamente", () => {
-    render(<CardFeatures iconURL={urlImagen} iconAltText={textoAlternativo} cardTitle={titulo} cardPara={parrafo} />);
+  it("should render a card correctly", () => {
+    render(<CardFeatures iconURL={imageURL} iconAltText={altText} cardTitle={title} cardPara={paragraph} />);
 
     expect(screen.getByRole("card")).toBeInTheDocument();
   });
 
-  it("Debe renderizar una tarjeta con el icono y dimensiones indicadas", () => {
-    const anchoImagen = 120;
-    const altoImagen = 200;
+  it("should render a card with the provided icon and dimensions", () => {
+    const imageWidth = 120;
+    const imageHeight = 200;
 
     render(
       <CardFeatures
-        iconURL={urlImagen}
-        iconAltText={textoAlternativo}
-        iconWidth={anchoImagen}
-        iconHeight={altoImagen}
-        cardTitle={titulo}
-        cardPara={parrafo}
+        iconURL={imageURL}
+        iconAltText={altText}
+        iconWidth={imageWidth}
+        iconHeight={imageHeight}
+        cardTitle={title}
+        cardPara={paragraph}
       />
     );
 
     expect(screen.getByRole("img")).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveProperty("width", anchoImagen);
-    expect(screen.getByRole("img")).toHaveProperty("height", altoImagen);
+    expect(screen.getByRole("img")).toHaveProperty("width", imageWidth);
+    expect(screen.getByRole("img")).toHaveProperty("height", imageHeight);
   });
 
-  it("Debe renderizar una tarjeta con el título indicado", () => {
-    render(<CardFeatures iconURL={urlImagen} iconAltText={textoAlternativo} cardTitle={titulo} cardPara={parrafo} />);
+  it("should render a card with the provided title", () => {
+    render(<CardFeatures iconURL={imageURL} iconAltText={altText} cardTitle={title} cardPara={paragraph} />);
 
     expect(screen.getByRole("heading")).toBeInTheDocument();
-    expect(screen.getByText(titulo)).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
   });
 
-  it("Debe renderizar una tarjeta con el párrafo indicado", () => {
-    render(<CardFeatures iconURL={urlImagen} iconAltText={textoAlternativo} cardTitle={titulo} cardPara={parrafo} />);
+  it("should render a card with the provided paragraph", () => {
+    render(<CardFeatures iconURL={imageURL} iconAltText={altText} cardTitle={title} cardPara={paragraph} />);
 
-    expect(screen.getByText(parrafo)).toBeInTheDocument();
-    expect(screen.getByText(parrafo)).toBeInTheDocument();
+    expect(screen.getByText(paragraph)).toBeInTheDocument();
+    expect(screen.getByText(paragraph)).toBeInTheDocument();
   });
 });

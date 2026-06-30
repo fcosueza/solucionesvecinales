@@ -1,43 +1,43 @@
 import { render, screen } from "@testing-library/react";
 import CardStat from ".";
 
-describe("Suite de pruebas del componente CardStat", () => {
-  const titulo = "Incidentes Reportados";
-  const valor = "15";
-  const descripcion = "Número de incidentes reportados en el último mes";
+describe("CardStat component test suite", () => {
+  const title = "Incidentes Reportados";
+  const value = "15";
+  const description = "Número de incidentes reportados en el último mes";
 
-  it("Debe renderizar el componente correctamente", () => {
-    render(<CardStat title={titulo} value={valor} description={descripcion} />);
+  it("should render the component correctly", () => {
+    render(<CardStat title={title} value={value} description={description} />);
 
     expect(screen.getByRole("article")).toBeInTheDocument();
   });
 
-  it("Debe renderizar el título indicado", () => {
-    render(<CardStat title={titulo} value={valor} description={descripcion} />);
+  it("should render the provided title", () => {
+    render(<CardStat title={title} value={value} description={description} />);
 
-    expect(screen.getByText(titulo)).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
   });
 
-  it("Debe renderizar el valor indicado", () => {
-    render(<CardStat title={titulo} value={valor} description={descripcion} />);
+  it("should render the provided value", () => {
+    render(<CardStat title={title} value={value} description={description} />);
 
-    expect(screen.getByText(valor)).toBeInTheDocument();
+    expect(screen.getByText(value)).toBeInTheDocument();
   });
 
-  it("Debe renderizar la descripción indicada", () => {
-    render(<CardStat title={titulo} value={valor} description={descripcion} />);
+  it("should render the provided description", () => {
+    render(<CardStat title={title} value={value} description={description} />);
 
-    expect(screen.getByText(descripcion)).toBeInTheDocument();
+    expect(screen.getByText(description)).toBeInTheDocument();
   });
 
-  it("Debe renderizar los tres elementos de texto en el orden correcto", () => {
-    render(<CardStat title={titulo} value={valor} description={descripcion} />);
+  it("should render the three text elements in the correct order", () => {
+    render(<CardStat title={title} value={value} description={description} />);
 
     const parrafos = screen.getAllByRole("article")[0].querySelectorAll("p");
 
     expect(parrafos).toHaveLength(3);
-    expect(parrafos[0]).toHaveTextContent(titulo);
-    expect(parrafos[1]).toHaveTextContent(valor);
-    expect(parrafos[2]).toHaveTextContent(descripcion);
+    expect(parrafos[0]).toHaveTextContent(title);
+    expect(parrafos[1]).toHaveTextContent(value);
+    expect(parrafos[2]).toHaveTextContent(description);
   });
 });

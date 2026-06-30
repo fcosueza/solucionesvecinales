@@ -13,7 +13,7 @@ interface Props {
  * @param value The numerical value that represents the statistic, for example "15."
  * @param description A brief description that provides additional context about the statistic, for example "Number of incidents reported in the last month."
  *
- * @returns Un React component that displays a card with the statistics formatted in a clear and visually attractive way.
+ * @returns A React component that displays a card with the statistics formatted in a clear and visually attractive way.
  */
 const CardStat = ({ title, value, description }: Props): React.ReactNode => {
   return (

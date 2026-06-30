@@ -2,7 +2,6 @@ import Image from "next/image";
 import style from "./style.module.css";
 import React from "react";
 
-/** Props del componente CardFeatures. */
 interface Props {
   iconURL: string;
   iconAltText: string;
@@ -16,17 +15,17 @@ interface Props {
 /**
  * Component that creates a feature card with icon, title, and paragraph.
  *
- * @param props - Props del componente CardFeatures.
- * @param props.iconURL - URL del icono de la tarjeta.
- * @param props.iconAltText - Texto alternativo del icono.
- * @param props.iconWidth - Width of the icon in pixels.
- * @param props.iconHeight - Height of the icon in pixels.
- * @param props.cardTitle - Main title of the card.
- * @param props.cardPara - Descriptive paragraph of the card.
- * @param props.className - Optional CSS class to modify the appearance of the component.
+ * @param iconURL - URL of the card icon.
+ * @param iconAltText - Alternative text for the icon.
+ * @param iconWidth - Width of the icon in pixels.
+ * @param iconHeight - Height of the icon in pixels.
+ * @param cardTitle - Main title of the card.
+ * @param cardPara - Descriptive paragraph of the card.
+ * @param className - Optional CSS class to modify the appearance of the component.
  *
- * @returns La card with icon, title and paragraph as a React element.
+ * @returns The card with icon, title, and paragraph as a React element.
  */
+
 const CardFeatures = ({
   iconURL,
   iconAltText,

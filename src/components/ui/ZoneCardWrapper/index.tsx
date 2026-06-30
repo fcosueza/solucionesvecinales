@@ -69,10 +69,10 @@ const ZoneCardWrapper = ({
   return (
     <>
       <CardCommonArea
-        nombre={zone.name}
-        descripcion={zone.description}
-        horaInicio={zone.startTime}
-        horaFin={zone.endTime}
+        name={zone.name}
+        description={zone.description}
+        startTime={zone.startTime}
+        endTime={zone.endTime}
         imageUrl={zone.image ?? "/assets/images/default-community.jpeg"}
         reservationSummary={reservationSummary}
         isAdmin={isAdmin}

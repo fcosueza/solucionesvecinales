@@ -2,20 +2,20 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { formatTimeLabel } from "@/lib/dateFormatting";
 import CardCommonArea from ".";
 
-describe("Suite de pruebas del componente CardCommonArea", () => {
-  const nombre = "Piscina Comunitaria";
-  const descripcion = "Zona de piscina disponible para todos los vecinos";
-  const horaInicio = new Date("2024-01-01T09:00:00");
-  const horaFin = new Date("2024-01-01T21:00:00");
+describe("CardCommonArea component test suite", () => {
+  const name = "Piscina Comunitaria";
+  const description = "Zona de piscina disponible para todos los vecinos";
+  const startTime = new Date("2024-01-01T09:00:00");
+  const endTime = new Date("2024-01-01T21:00:00");
   const imageUrl = "/assets/images/pool.jpg";
 
-  it("Debe renderizar el componente correctamente", () => {
+  it("should render the component correctly", () => {
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
       />
     );
@@ -23,77 +23,77 @@ describe("Suite de pruebas del componente CardCommonArea", () => {
     expect(screen.getByRole("article")).toBeInTheDocument();
   });
 
-  it("Debe renderizar la imagen con el texto alternativo correcto", () => {
+  it("should render the image with the correct alt text", () => {
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
       />
     );
 
     expect(screen.getByRole("img")).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveAttribute("alt", `Imagen de la zona ${nombre}`);
+    expect(screen.getByRole("img")).toHaveAttribute("alt", `Imagen de la zona ${name}`);
   });
 
-  it("Debe renderizar el nombre de la zona común", () => {
+  it("should render the common area name", () => {
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
       />
     );
 
-    expect(screen.getByRole("heading")).toHaveTextContent(nombre);
+    expect(screen.getByRole("heading")).toHaveTextContent(name);
   });
 
-  it("Debe renderizar la descripción de la zona común", () => {
+  it("should render the common area description", () => {
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
       />
     );
 
-    expect(screen.getByText(descripcion)).toBeInTheDocument();
+    expect(screen.getByText(description)).toBeInTheDocument();
   });
 
-  it("Debe renderizar el horario con las horas de inicio y fin formateadas", () => {
+  it("should render the schedule with formatted start and end times", () => {
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
       />
     );
 
-    const horaInicioFormateada = formatTimeLabel(horaInicio);
+    const horaInicioFormateada = formatTimeLabel(startTime);
 
-    const horaFinFormateada = formatTimeLabel(horaFin);
+    const horaFinFormateada = formatTimeLabel(endTime);
 
     expect(screen.getByText(`Horario: ${horaInicioFormateada} - ${horaFinFormateada}`)).toBeInTheDocument();
   });
 
-  it("Debe formatear correctamente horas con minutos distintos de cero", () => {
+  it("should format times correctly when minutes are not zero", () => {
     const horaInicioConMinutos = new Date("2024-01-01T08:30:00");
     const horaFinConMinutos = new Date("2024-01-01T22:45:00");
 
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicioConMinutos}
-        horaFin={horaFinConMinutos}
+        name={name}
+        description={description}
+        startTime={horaInicioConMinutos}
+        endTime={horaFinConMinutos}
         imageUrl={imageUrl}
       />
     );
@@ -105,13 +105,13 @@ describe("Suite de pruebas del componente CardCommonArea", () => {
     expect(screen.getByText(`Horario: ${horaInicioFormateada} - ${horaFinFormateada}`)).toBeInTheDocument();
   });
 
-  it("Debe renderizar un resumen de reservas si se proporciona", () => {
+  it("should render a reservation summary when provided", () => {
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
         reservationSummary="Sin reservas previstas en la próxima semana."
       />
@@ -120,13 +120,13 @@ describe("Suite de pruebas del componente CardCommonArea", () => {
     expect(screen.getByText("Sin reservas previstas en la próxima semana.")).toBeInTheDocument();
   });
 
-  it("Debe renderizar la accion opcional cuando se proporciona", () => {
+  it("should render the optional action when provided", () => {
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
         action={<button type="button">Reservar ahora</button>}
       />
@@ -135,15 +135,15 @@ describe("Suite de pruebas del componente CardCommonArea", () => {
     expect(screen.getByRole("button", { name: "Reservar ahora" })).toBeInTheDocument();
   });
 
-  it("Debe mostrar y ejecutar eliminar cuando es admin y existe callback", () => {
+  it("should show and trigger delete when user is admin and callback exists", () => {
     const onDeleteRequest = jest.fn();
 
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
         isAdmin
         onDeleteRequest={onDeleteRequest}
@@ -157,13 +157,13 @@ describe("Suite de pruebas del componente CardCommonArea", () => {
     expect(onDeleteRequest).toHaveBeenCalledTimes(1);
   });
 
-  it("No debe mostrar eliminar si no hay callback", () => {
+  it("should not show delete if callback is not provided", () => {
     render(
       <CardCommonArea
-        nombre={nombre}
-        descripcion={descripcion}
-        horaInicio={horaInicio}
-        horaFin={horaFin}
+        name={name}
+        description={description}
+        startTime={startTime}
+        endTime={endTime}
         imageUrl={imageUrl}
         isAdmin
       />

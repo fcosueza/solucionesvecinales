@@ -19,7 +19,7 @@ interface Props {
 /**
  * Formats a Date object as a Spanish date and time label (dd/mm/yyyy hh:mm).
  *
- * @param date El objeto Date a formatear
+ * @param date Object of type Date to format
  * @returns String with the date in Spanish format
  */
 const toDateLabel = (date: Date): string => {
@@ -36,7 +36,7 @@ const toDateLabel = (date: Date): string => {
  * Converts the internal status of the incident into a readable label in Spanish.
  *
  * @param state Incident status
- * @returns Etiqueta of the state in Spanish
+ * @returns Label of the state in Spanish
  */
 const toStateLabel = (state: IncidentState): string => {
   if (state === "procesandose") return "procesandose";
@@ -48,7 +48,7 @@ const toStateLabel = (state: IncidentState): string => {
  * Returns the action button label based on the current status of the issue.
  *
  * @param state Current incident status
- * @returns Texto to show on status change button
+ * @returns Text to show on status change button
  */
 const toButtonLabel = (state: IncidentState): string => {
   if (state === "reportado") return "Procesar";
@@ -69,7 +69,7 @@ const toButtonLabel = (state: IncidentState): string => {
  * @param userName Name of the user who reported the incident
  * @param userEmail Email of the user who reported the incident
  * @param description Detailed description of the incident
- * @param state Estado actual de la incidencia (reportado, procesandose, resuelto)
+ * @param state State of the incident, which can be "reportado", "procesandose", or "resuelto"
  * @param isAdmin Indicates if the current user is an administrator (false by default)
  */
 const CardIncident = ({

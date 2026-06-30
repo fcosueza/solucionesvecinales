@@ -141,10 +141,10 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
             {comunidad.zones.map(zona => (
               <CardCommonArea
                 key={zona.name}
-                nombre={zona.name}
-                descripcion={zona.description}
-                horaInicio={zona.startTime}
-                horaFin={zona.endTime}
+                name={zona.name}
+                description={zona.description}
+                startTime={zona.startTime}
+                endTime={zona.endTime}
                 imageUrl={zona.image ?? "/assets/images/default-community.jpeg"}
                 reservationSummary="Reserva turnos de 1 o 2 horas en los próximos 7 días. Solo una reserva activa por usuario."
                 action={

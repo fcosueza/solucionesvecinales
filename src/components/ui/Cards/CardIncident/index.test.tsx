@@ -8,9 +8,9 @@ jest.mock("@/actions/community/communityIncident", () => ({
 
 import CardIncident from ".";
 
-describe("Suite de pruebas del componente CardIncident", () => {
-  const fecha = new Date("2026-05-02T09:30:00.000Z");
-  const actualizadaEn = new Date("2026-05-02T10:30:00.000Z");
+describe("CardIncident component test suite", () => {
+  const date = new Date("2026-05-02T09:30:00.000Z");
+  const updatedAt = new Date("2026-05-02T10:30:00.000Z");
   const formatDateLabel = (date: Date): string =>
     new Intl.DateTimeFormat("es-ES", {
       day: "2-digit",
@@ -20,14 +20,14 @@ describe("Suite de pruebas del componente CardIncident", () => {
       minute: "2-digit"
     }).format(date);
 
-  it("Debe renderizar nombre, email y fecha", () => {
+  it("should render name, email, and date", () => {
     render(
       <CardIncident
         communityID={5}
         userID="user-1"
-        incidentDate={fecha}
+        incidentDate={date}
         title="Bombilla fundida"
-        updatedAt={actualizadaEn}
+        updatedAt={updatedAt}
         userName="Maria Perez"
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
@@ -37,20 +37,20 @@ describe("Suite de pruebas del componente CardIncident", () => {
 
     expect(screen.getByText("Maria Perez")).toBeInTheDocument();
     expect(screen.getByText("maria@test.com")).toBeInTheDocument();
-    expect(screen.getByText(formatDateLabel(fecha))).toBeInTheDocument();
+    expect(screen.getByText(formatDateLabel(date))).toBeInTheDocument();
     expect(screen.getByText("Bombilla fundida")).toBeInTheDocument();
     expect(screen.getByText("Actualizada")).toBeInTheDocument();
     expect(screen.getByText("La puerta principal no cierra correctamente")).toBeInTheDocument();
   });
 
-  it("Debe mostrar estado REPORTADA con color azul", () => {
+  it("should show REPORTADA status with blue color", () => {
     render(
       <CardIncident
         communityID={5}
         userID="user-1"
-        incidentDate={fecha}
+        incidentDate={date}
         title="Bombilla fundida"
-        updatedAt={actualizadaEn}
+        updatedAt={updatedAt}
         userName="Maria Perez"
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
@@ -65,14 +65,14 @@ describe("Suite de pruebas del componente CardIncident", () => {
     expect(screen.getByRole("button")).not.toBeDisabled();
   });
 
-  it("Debe mostrar estado PROCESANDOSE con color naranja", () => {
+  it("should show PROCESANDOSE status with orange color", () => {
     render(
       <CardIncident
         communityID={5}
         userID="user-1"
-        incidentDate={fecha}
+        incidentDate={date}
         title="Bombilla fundida"
-        updatedAt={actualizadaEn}
+        updatedAt={updatedAt}
         userName="Maria Perez"
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
@@ -87,14 +87,14 @@ describe("Suite de pruebas del componente CardIncident", () => {
     expect(screen.getByRole("button")).not.toBeDisabled();
   });
 
-  it("Debe mostrar estado RESUELTA con color verde y boton deshabilitado", () => {
+  it("should show RESUELTA status with green color and disabled button", () => {
     render(
       <CardIncident
         communityID={5}
         userID="user-1"
-        incidentDate={fecha}
+        incidentDate={date}
         title="Bombilla fundida"
-        updatedAt={actualizadaEn}
+        updatedAt={updatedAt}
         userName="Maria Perez"
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
@@ -109,14 +109,14 @@ describe("Suite de pruebas del componente CardIncident", () => {
     expect(screen.getByRole("button", { name: "Eliminar incidencia" })).toBeInTheDocument();
   });
 
-  it("No debe mostrar el boton de cambio de estado si el usuario no es admin", () => {
+  it("should not show status-change button when user is not admin", () => {
     render(
       <CardIncident
         communityID={5}
         userID="user-1"
-        incidentDate={fecha}
+        incidentDate={date}
         title="Bombilla fundida"
-        updatedAt={actualizadaEn}
+        updatedAt={updatedAt}
         userName="Maria Perez"
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
@@ -127,14 +127,14 @@ describe("Suite de pruebas del componente CardIncident", () => {
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 
-  it("No debe mostrar boton de eliminar si la incidencia no esta resuelta", () => {
+  it("should not show delete button if incident is not resolved", () => {
     render(
       <CardIncident
         communityID={5}
         userID="user-1"
-        incidentDate={fecha}
+        incidentDate={date}
         title="Bombilla fundida"
-        updatedAt={actualizadaEn}
+        updatedAt={updatedAt}
         userName="Maria Perez"
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
@@ -146,14 +146,14 @@ describe("Suite de pruebas del componente CardIncident", () => {
     expect(screen.queryByRole("button", { name: "Eliminar incidencia" })).not.toBeInTheDocument();
   });
 
-  it("Debe incluir los campos ocultos para ejecutar la server action", () => {
+  it("should include hidden fields to execute the server action", () => {
     const { container } = render(
       <CardIncident
         communityID={5}
         userID="user-1"
-        incidentDate={fecha}
+        incidentDate={date}
         title="Bombilla fundida"
-        updatedAt={actualizadaEn}
+        updatedAt={updatedAt}
         userName="Maria Perez"
         userEmail="maria@test.com"
         description="La puerta principal no cierra correctamente"
@@ -163,6 +163,6 @@ describe("Suite de pruebas del componente CardIncident", () => {
 
     expect(container.querySelector('input[name="communityID"]')).toHaveAttribute("value", "5");
     expect(container.querySelector('input[name="userID"]')).toHaveAttribute("value", "user-1");
-    expect(container.querySelector('input[name="incidentDate"]')).toHaveAttribute("value", fecha.toISOString());
+    expect(container.querySelector('input[name="incidentDate"]')).toHaveAttribute("value", date.toISOString());
   });
 });

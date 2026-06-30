@@ -1,87 +1,87 @@
 import { render, screen } from "@testing-library/react";
 import CardCommunity from ".";
 
-describe("Suite de pruebas del componente CardCommunity", () => {
-  const urlImagen = "/assets/images/community.jpg";
-  const textoAlternativo = "Imagen de la comunidad";
-  const nombreComunidad = "Comunidad Las Flores";
-  const direccionComunidad = "Calle Mayor, 10, Madrid";
+describe("CardCommunity component test suite", () => {
+  const imageURL = "/assets/images/community.jpg";
+  const altText = "Imagen de la comunidad";
+  const communityName = "Comunidad Las Flores";
+  const communityAddress = "Calle Mayor, 10, Madrid";
 
-  it("Debe renderizar la tarjeta de comunidad correctamente", () => {
+  it("should render the community card correctly", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
       />
     );
 
     expect(screen.getByRole("card")).toBeInTheDocument();
   });
 
-  it("Debe renderizar la imagen con el texto alternativo indicado", () => {
+  it("should render the image with the provided alt text", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
       />
     );
 
     expect(screen.getByRole("img")).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveAttribute("alt", textoAlternativo);
+    expect(screen.getByRole("img")).toHaveAttribute("alt", altText);
   });
 
-  it("Debe renderizar el nombre de la comunidad", () => {
+  it("should render the community name", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
       />
     );
 
-    expect(screen.getByRole("heading")).toHaveTextContent(nombreComunidad);
+    expect(screen.getByRole("heading")).toHaveTextContent(communityName);
   });
 
-  it("Debe renderizar la dirección de la comunidad", () => {
+  it("should render the community address", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
       />
     );
 
-    expect(screen.getByText(direccionComunidad)).toBeInTheDocument();
+    expect(screen.getByText(communityAddress)).toBeInTheDocument();
   });
 
-  it("Debe renderizar el texto del botón CTA por defecto", () => {
+  it("should render the default CTA button text", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
       />
     );
 
     expect(screen.getByRole("button")).toHaveTextContent("Ver Comunidad");
   });
 
-  it("Debe renderizar el texto del botón CTA personalizado", () => {
+  it("should render a custom CTA button text", () => {
     const textoCTA = "Unirse a la Comunidad";
 
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
         ctaText={textoCTA}
       />
     );
@@ -89,26 +89,26 @@ describe("Suite de pruebas del componente CardCommunity", () => {
     expect(screen.getByRole("button")).toHaveTextContent(textoCTA);
   });
 
-  it("Debe renderizar el botón CTA habilitado por defecto", () => {
+  it("should render the CTA button enabled by default", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
       />
     );
 
     expect(screen.getByRole("button")).not.toBeDisabled();
   });
 
-  it("Debe renderizar el botón CTA deshabilitado si se indica", () => {
+  it("should render the CTA button as disabled when requested", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
         ctaDisabled={true}
       />
     );
@@ -116,26 +116,26 @@ describe("Suite de pruebas del componente CardCommunity", () => {
     expect(screen.getByRole("button")).toBeDisabled();
   });
 
-  it("Debe renderizar el botón CTA con tipo 'button' por defecto", () => {
+  it("should render the CTA button with type 'button' by default", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
       />
     );
 
     expect(screen.getByRole("button")).toHaveAttribute("type", "button");
   });
 
-  it("Debe renderizar el botón CTA con tipo 'submit' si se indica", () => {
+  it("should render the CTA button with type 'submit' when requested", () => {
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
         ctaButtonType="submit"
       />
     );
@@ -143,15 +143,15 @@ describe("Suite de pruebas del componente CardCommunity", () => {
     expect(screen.getByRole("button")).toHaveAttribute("type", "submit");
   });
 
-  it("Debe asociar el botón CTA al formulario indicado", () => {
+  it("should associate the CTA button to the provided form", () => {
     const idFormulario = "formulario-comunidad";
 
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
         ctaFormID={idFormulario}
       />
     );
@@ -159,15 +159,15 @@ describe("Suite de pruebas del componente CardCommunity", () => {
     expect(screen.getByRole("button")).toHaveAttribute("form", idFormulario);
   });
 
-  it("Debe aplicar la clase CSS adicional indicada", () => {
+  it("should apply the provided additional CSS class", () => {
     const claseAdicional = "clase-personalizada";
 
     render(
       <CardCommunity
-        imageURL={urlImagen}
-        imageAltText={textoAlternativo}
-        communityName={nombreComunidad}
-        communityAddress={direccionComunidad}
+        imageURL={imageURL}
+        imageAltText={altText}
+        communityName={communityName}
+        communityAddress={communityAddress}
         className={claseAdicional}
       />
     );
