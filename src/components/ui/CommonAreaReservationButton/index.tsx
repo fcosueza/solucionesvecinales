@@ -30,6 +30,7 @@ interface Props {
  * @param existingReservations List of existing reservations to manage availability
  * @param disabled Disables the button if the user already has an active reservation (default false)
  */
+
 const CommonAreaReservationButton = ({
   communityID,
   zoneName,
