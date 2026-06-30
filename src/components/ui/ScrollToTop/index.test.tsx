@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import ScrollToTopOnMount from ".";
 
-describe("Suite de pruebas del componente ScrollToTopOnMount", () => {
+describe("ScrollToTopOnMount component test suite", () => {
   let scrollToSpy: jest.SpyInstance;
 
   beforeEach(() => {
@@ -12,20 +12,20 @@ describe("Suite de pruebas del componente ScrollToTopOnMount", () => {
     scrollToSpy.mockRestore();
   });
 
-  it("Debe retornar null y no renderizar ningún elemento en el DOM", () => {
+  it("Should return null and not render any element in the DOM", () => {
     const { container } = render(<ScrollToTopOnMount />);
 
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("Debe llamar a window.scrollTo al montarse", () => {
+  it("Should call window.scrollTo on mount", () => {
     render(<ScrollToTopOnMount />);
 
     expect(scrollToSpy).toHaveBeenCalledTimes(1);
     expect(scrollToSpy).toHaveBeenCalledWith({ top: 0, behavior: "auto" });
   });
 
-  it("No debe llamar a window.scrollTo más de una vez al montarse", () => {
+  it("Should not call window.scrollTo more than once on mount", () => {
     const { rerender } = render(<ScrollToTopOnMount />);
 
     expect(scrollToSpy).toHaveBeenCalledTimes(1);

@@ -12,12 +12,12 @@ interface Props {
 /**
  * Component that renders the project logo with optional dimensions.
  *
- * @param props - Props del componente Logo.
- * @param props.url - Logo image resource path.
- * @param props.altText - Alternative text for accessibility.
- * @param props.width - Width of the logo in pixels.
- * @param props.height - Height of the logo in pixels.
- * @returns El logo del proyecto como un elemento React.
+ * @param url - Logo image resource path.
+ * @param altText - Alternative text for accessibility.
+ * @param width - Width of the logo in pixels.
+ * @param height - Height of the logo in pixels.
+ *
+ * @returns The project logo as a React element.
  */
 const Logo = ({
   url = "/assets/images/logo.svg",

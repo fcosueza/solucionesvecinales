@@ -3,12 +3,12 @@
 import { Toaster } from "sonner";
 
 /**
- * Renderiza el contenedor global de notificaciones (toasts) de Sonner.
+ * Render the global container for Sonner notifications (toasts).
  *
  * This component must be mounted only once, usually in the root layout,
  * so that any part of the application can show toast type notifications.
  *
- * @returns El Toaster component configured for the entire app.
+ * @returns The Toaster component configured for the entire app.
  */
 
 const SonnerToaster = (): React.ReactNode => {

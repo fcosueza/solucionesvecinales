@@ -24,38 +24,38 @@ jest.mock("sonner", () => ({
   )
 }));
 
-describe("Suite de pruebas del componente SonnerToaster", () => {
-  it("Debe renderizar el componente contenedor", () => {
+describe("SonnerToaster component test suite", () => {
+  it("Should render the wrapper component", () => {
     const { container } = render(<SonnerToaster />);
 
     expect(container.firstChild).toBeInTheDocument();
   });
 
-  it("Debe renderizar el Toaster de Sonner", () => {
+  it("Should render Sonner's Toaster", () => {
     render(<SonnerToaster />);
 
     expect(screen.getByTestId("sonner-toaster")).toBeInTheDocument();
   });
 
-  it("Debe configurar la posición en top-right", () => {
+  it("Should set the position to top-right", () => {
     render(<SonnerToaster />);
 
     expect(screen.getByTestId("sonner-toaster")).toHaveAttribute("data-position", "top-right");
   });
 
-  it("Debe habilitar el botón de cierre", () => {
+  it("Should enable the close button", () => {
     render(<SonnerToaster />);
 
     expect(screen.getByTestId("sonner-toaster")).toHaveAttribute("data-close-button", "true");
   });
 
-  it("Debe habilitar richColors", () => {
+  it("Should enable richColors", () => {
     render(<SonnerToaster />);
 
     expect(screen.getByTestId("sonner-toaster")).toHaveAttribute("data-rich-colors", "true");
   });
 
-  it("Debe configurar la duración del toast en 4000ms", () => {
+  it("Should set the toast duration to 4000ms", () => {
     render(<SonnerToaster />);
 
     expect(screen.getByTestId("sonner-toaster")).toHaveAttribute("data-duration", "4000");

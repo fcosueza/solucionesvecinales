@@ -26,23 +26,23 @@ interface Props {
  * @returns The CTA block with title, paragraph and button as a React element.
  */
 const CTA = ({ title, highlightText, para, buttonText, buttonRoute = "/" }: Props): React.ReactNode => {
-  const enrutador = useRouter();
-  const tieneResaltado = Boolean(highlightText && title.includes(highlightText));
+  const router = useRouter();
+  const hasHighlight = Boolean(highlightText && title.includes(highlightText));
 
   // Function to render the title with the text highlighted if provided.
   const renderTitle = (): React.ReactNode => {
-    if (!tieneResaltado || !highlightText) {
+    if (!hasHighlight || !highlightText) {
       return title;
     }
 
-    const [inicio, ...resto] = title.split(highlightText);
-    const fin = resto.join(highlightText);
+    const [start, ...rest] = title.split(highlightText);
+    const end = rest.join(highlightText);
 
     return (
       <>
-        {inicio}
+        {start}
         <span className={style.title__highlight}>{highlightText}</span>
-        {fin}
+        {end}
       </>
     );
   };
@@ -51,7 +51,7 @@ const CTA = ({ title, highlightText, para, buttonText, buttonRoute = "/" }: Prop
     <div className={style.cta}>
       <h1 className={style.title}>{renderTitle()}</h1>
       <p className={style.para}>{para}</p>
-      <Button text={buttonText} type="button" onClick={() => enrutador.push(buttonRoute)} />
+      <Button text={buttonText} type="button" onClick={() => router.push(buttonRoute)} />
     </div>
   );
 };

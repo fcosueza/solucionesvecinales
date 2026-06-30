@@ -1,6 +1,4 @@
 import style from "./style.module.css";
-
-/** Props del componente FormError. */
 interface Props {
   message: string | string[];
 }
@@ -8,8 +6,7 @@ interface Props {
 /**
  * Form component that displays a validation error message.
  *
- * @param props - Props del componente FormError.
- * @param props.message - Message or list of messages to display.
+ * @param message - Message or list of messages to display.
  *
  * @returns The form validation error message as a React element.
  */

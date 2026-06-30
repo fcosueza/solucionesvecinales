@@ -2,8 +2,6 @@ import { SocialIcon } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 import style from "./style.module.css";
-
-/** Props del componente Social. */
 interface Props {
   icons: SocialIcon[];
   className?: string;
@@ -12,11 +10,10 @@ interface Props {
 /**
  * Component that renders external social links with icons.
  *
- * @param props - Props del componente Social.
- * @param props.icons - List of social icons with rendering metadata.
+ * @param icons - List of social icons with rendering metadata.
+ * @param className - Optional CSS class to modify the appearance of the component.
  *
- * @param props.className - Optional CSS class to modify the appearance of the component.
- * @returns Los social links with icons as a React element.
+ * @returns Social links with icons as a React element.
  */
 const Social = ({ icons, className = "" }: Props): React.ReactNode => {
   return (

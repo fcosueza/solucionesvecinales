@@ -1,36 +1,36 @@
 import { render, screen } from "@testing-library/react";
 import Logo from ".";
 
-describe("Suite de pruebas del componente Logo", () => {
-  const rutaLogo = "assets/images/logo.svg";
+describe("Logo component test suite", () => {
+  const logoPath = "assets/images/logo.svg";
 
-  it("Debe renderizar el logo", () => {
-    render(<Logo url={rutaLogo} altText="Logotipo" />);
+  it("should render the logo", () => {
+    render(<Logo url={logoPath} altText="Logotipo" />);
     expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  it("Debe renderizar el logo con el texto alternativo indicado", () => {
-    const textoAlternativo = "Logo de la Empresa";
+  it("should render the logo with the specified alt text", () => {
+    const altText = "Logo de la Empresa";
 
-    render(<Logo url={rutaLogo} altText={textoAlternativo} />);
-    expect(screen.getByRole("img")).toHaveAttribute("alt", textoAlternativo);
+    render(<Logo url={logoPath} altText={altText} />);
+    expect(screen.getByRole("img")).toHaveAttribute("alt", altText);
   });
 
-  it("Debe renderizar el logo con el tamaño predeterminado si no se indica uno", () => {
-    const anchoPredeterminado = 150;
-    const altoPredeterminado = 120;
+  it("should render the logo with the default size if none is specified", () => {
+    const defaultWidth = 150;
+    const defaultHeight = 120;
 
-    render(<Logo url={rutaLogo} altText="Logotipo" />);
-    expect(screen.getByRole("img")).toHaveProperty("height", altoPredeterminado);
-    expect(screen.getByRole("img")).toHaveProperty("width", anchoPredeterminado);
+    render(<Logo url={logoPath} altText="Logotipo" />);
+    expect(screen.getByRole("img")).toHaveProperty("height", defaultHeight);
+    expect(screen.getByRole("img")).toHaveProperty("width", defaultWidth);
   });
 
-  it("Debe renderizar un logo con el tamaño indicado", () => {
-    const ancho = 150;
-    const alto = 120;
+  it("should render a logo with the specified size", () => {
+    const width = 150;
+    const height = 120;
 
-    render(<Logo url={rutaLogo} altText="Logotipo" width={ancho} height={alto} />);
-    expect(screen.getByRole("img")).toHaveProperty("width", ancho);
-    expect(screen.getByRole("img")).toHaveProperty("height", alto);
+    render(<Logo url={logoPath} altText="Logotipo" width={width} height={height} />);
+    expect(screen.getByRole("img")).toHaveProperty("width", width);
+    expect(screen.getByRole("img")).toHaveProperty("height", height);
   });
 });

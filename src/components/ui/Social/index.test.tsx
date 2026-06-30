@@ -2,14 +2,14 @@ import { render, screen } from "@testing-library/react";
 import { SocialIcon } from "@/types";
 import Social from ".";
 
-describe("Suite de pruebas del componente Social", () => {
-  it("Debe renderizar el contenedor de forma adecuada", () => {
+describe("Social component test suite", () => {
+  it("Should render the container correctly", () => {
     render(<Social icons={[]} />);
     expect(screen.getByLabelText("social")).toBeInTheDocument();
   });
 
-  it("Debe renderizar un icono correctamente", () => {
-    const iconos: SocialIcon[] = [
+  it("Should render one icon correctly", () => {
+    const icons: SocialIcon[] = [
       {
         src: "/assets/icons/facebook.png",
         url: "https://www.facebook.com/",
@@ -20,13 +20,13 @@ describe("Suite de pruebas del componente Social", () => {
       }
     ];
 
-    render(<Social icons={iconos} />);
+    render(<Social icons={icons} />);
     expect(screen.getByRole("img")).toBeInTheDocument();
     expect(screen.getByRole("img")).toHaveProperty("title", "Facebook");
   });
 
-  it("Debe renderizar todos los iconos recibidos", () => {
-    const iconos: SocialIcon[] = [
+  it("Should render all received icons", () => {
+    const icons: SocialIcon[] = [
       {
         src: "/assets/icons/facebook.png",
         url: "https://www.facebook.com/",
@@ -45,7 +45,7 @@ describe("Suite de pruebas del componente Social", () => {
       }
     ];
 
-    render(<Social icons={iconos} />);
+    render(<Social icons={icons} />);
     expect(screen.getAllByRole("img")).toHaveLength(2);
   });
 });

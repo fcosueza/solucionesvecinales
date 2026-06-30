@@ -31,12 +31,6 @@ interface Props {
  * @param className Additional CSS class for table container
  */
 const Table = ({ headers, rows, emptyMessage = "No data available.", className = "" }: Props): React.ReactNode => {
-  /**
-   * Normalizes a cell to the TableCell type to ensure consistent access to its properties.
-   *
-   * @param cell La celda a normalizar (puede ser ReactNode o TableCell)
-   * @returns Objeto TableCell normalizado
-   */
   const getCellData = (cell: React.ReactNode | TableCell): TableCell => {
     if (typeof cell === "object" && cell !== null && "content" in cell) {
       return cell;
