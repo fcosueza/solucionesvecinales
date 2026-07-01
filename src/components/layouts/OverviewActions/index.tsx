@@ -13,25 +13,26 @@ interface Props {
  * Component that represents the actions available in the overview, showing buttons according to the user's role.
  *
  * @param role The user's role, used to determine which actions to display.
- * @returns Un React node that represents the actions available in the overview.
+ *
+ * @returns A React node that represents the actions available in the overview.
  */
 const OverviewActions = ({ role }: Props): React.ReactNode => {
-  const enrutador = useRouter();
-  const esAdministrador = role === UserRole.admin || role === UserRole.webAdmin;
+  const router = useRouter();
+  const isAdmin = role === UserRole.admin || role === UserRole.webAdmin;
 
   return (
     <div className={style.container}>
       <div className={style.buttons}>
         <Button
           text="Buscar comunidad"
-          onClick={() => enrutador.push("/communities/search")}
+          onClick={() => router.push("/communities/search")}
           className={style.compactButton}
         />
 
-        {esAdministrador ? (
+        {isAdmin ? (
           <Button
             text="Añadir comunidad"
-            onClick={() => enrutador.push("/communities/add")}
+            onClick={() => router.push("/communities/add")}
             className={style.compactButton}
           />
         ) : null}

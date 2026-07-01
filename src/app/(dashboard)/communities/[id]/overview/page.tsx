@@ -130,7 +130,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
 
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Tablón de mensajes</h2>
-        <MessageBoard mensajes={comunidad.messages} comunidadId={comunidadId} isAdmin={esAdmin} />
+        <MessageBoard messages={comunidad.messages} communityID={comunidadId} isAdmin={esAdmin} />
       </section>
 
       <section className={style.section}>

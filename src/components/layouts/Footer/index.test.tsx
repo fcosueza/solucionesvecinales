@@ -2,15 +2,15 @@ import { render, screen } from "@testing-library/react";
 import { NavItem, SocialIcon } from "@/types";
 import Footer from ".";
 
-describe("Suite de pruebas del componente Footer", () => {
-  const enlaces: NavItem[] = [
-    { text: "Inicio", href: "#" },
-    { text: "Características", href: "#about" },
-    { text: "Contacto", href: "#contact" },
+describe("Footer component test suite", () => {
+  const links: NavItem[] = [
+    { text: "Home", href: "#" },
+    { text: "Features", href: "#about" },
+    { text: "Contact", href: "#contact" },
     { text: "Login", href: "#login" }
   ];
 
-  const iconos: SocialIcon[] = [
+  const icons: SocialIcon[] = [
     {
       src: "/assets/icons/facebook.png",
       altText: "Facebook Icon",
@@ -29,46 +29,46 @@ describe("Suite de pruebas del componente Footer", () => {
     }
   ];
 
-  it("Debe renderizar el contenedor footer de forma adecuada", () => {
-    render(<Footer links={enlaces} socialIcons={iconos} />);
+  it("Should render the footer container correctly", () => {
+    render(<Footer links={links} socialIcons={icons} />);
 
     expect(screen.getByRole("contentinfo")).toBeInTheDocument();
   });
 
-  it("Debe renderizar el menú con los enlaces que le hemos pasado de forma vertical", () => {
-    render(<Footer links={enlaces} socialIcons={[]} />);
+  it("Should render the menu with the provided links vertically", () => {
+    render(<Footer links={links} socialIcons={[]} />);
 
     expect(screen.getByRole("navigation")).toBeInTheDocument();
-    expect(screen.getAllByRole("listitem")).toHaveLength(enlaces.length);
+    expect(screen.getAllByRole("listitem")).toHaveLength(links.length);
     expect(screen.getAllByRole("listitem")[0]).toHaveClass("vertical");
   });
 
-  it("Debe renderizar los iconos sociales que le hemos pasado", () => {
-    render(<Footer links={enlaces} socialIcons={iconos} />);
+  it("Should render the provided social icons", () => {
+    render(<Footer links={links} socialIcons={icons} />);
 
     expect(screen.getByLabelText("social")).toBeInTheDocument();
   });
 
-  it("Debe renderizar el logo de la aplicación cuando se epecifica con logo", () => {
-    render(<Footer links={enlaces} socialIcons={iconos} withLogo={true} />);
+  it("Should render the app logo when withLogo is enabled", () => {
+    render(<Footer links={links} socialIcons={icons} withLogo={true} />);
 
     expect(screen.getByRole("img", { name: "Logo" })).toBeInTheDocument();
   });
 
-  it("No debe renderizar el menú si no le pasamos ningún enlace", () => {
-    render(<Footer socialIcons={iconos} />);
+  it("Should not render the menu if no links are provided", () => {
+    render(<Footer socialIcons={icons} />);
 
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
   });
 
-  it("No debe renderizar los iconos sociales si no le pasamos ningún enlace", () => {
-    render(<Footer links={enlaces} />);
+  it("Should not render social icons if none are provided", () => {
+    render(<Footer links={links} />);
 
     expect(screen.queryByRole("social")).not.toBeInTheDocument();
   });
 
-  it("No debe renderizar el logo si se indica la opción withLogo como false", () => {
-    render(<Footer socialIcons={iconos} withLogo={false} />);
+  it("Should not render the logo when withLogo is false", () => {
+    render(<Footer socialIcons={icons} withLogo={false} />);
 
     expect(screen.queryByRole("logo")).not.toBeInTheDocument();
   });

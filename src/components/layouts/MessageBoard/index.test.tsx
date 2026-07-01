@@ -36,14 +36,14 @@ describe("Suite de pruebas del componente MessageBoard", () => {
   });
 
   it("Debe mostrar el estado vacío cuando no hay mensajes", () => {
-    render(<MessageBoard mensajes={[]} comunidadId={1} />);
+    render(<MessageBoard messages={[]} communityID={1} />);
 
     expect(screen.getByText("No hay mensajes publicados.")).toBeInTheDocument();
     expect(screen.getByText("Cuando se creen avisos para esta comunidad, apareceran aqui.")).toBeInTheDocument();
   });
 
   it("Debe mostrar los mensajes y sus fechas formateadas", () => {
-    render(<MessageBoard mensajes={mensajesEjemplo} comunidadId={1} />);
+    render(<MessageBoard messages={mensajesEjemplo} communityID={1} />);
 
     expect(screen.getByText("Aviso de reunión vecinal")).toBeInTheDocument();
     expect(screen.getByText("Corte de agua el martes")).toBeInTheDocument();
@@ -52,20 +52,20 @@ describe("Suite de pruebas del componente MessageBoard", () => {
   });
 
   it("Debe mostrar el botón de añadir para administradores", () => {
-    render(<MessageBoard mensajes={[]} comunidadId={1} isAdmin />);
+    render(<MessageBoard messages={[]} communityID={1} isAdmin />);
 
     expect(screen.getByRole("button", { name: "+ Añadir mensaje" })).toBeInTheDocument();
   });
 
   it("No debe mostrar controles de administrador para usuarios no admin", () => {
-    render(<MessageBoard mensajes={mensajesEjemplo} comunidadId={1} />);
+    render(<MessageBoard messages={mensajesEjemplo} communityID={1} />);
 
     expect(screen.queryByRole("button", { name: "+ Añadir mensaje" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Eliminar mensaje" })).not.toBeInTheDocument();
   });
 
   it("Debe mostrar botones de eliminar para admin y llamar a deleteMessage", async () => {
-    render(<MessageBoard mensajes={mensajesEjemplo} comunidadId={7} isAdmin />);
+    render(<MessageBoard messages={mensajesEjemplo} communityID={7} isAdmin />);
 
     const botonesEliminar = screen.getAllByRole("button", { name: "Eliminar mensaje" });
     expect(botonesEliminar).toHaveLength(2);
@@ -77,7 +77,7 @@ describe("Suite de pruebas del componente MessageBoard", () => {
   });
 
   it("Debe abrir el MessageAddForm al pulsar '+ Añadir mensaje' en estado vacío", async () => {
-    render(<MessageBoard mensajes={[]} comunidadId={9} isAdmin />);
+    render(<MessageBoard messages={[]} communityID={9} isAdmin />);
 
     expect(screen.queryByTestId("message-add-form")).not.toBeInTheDocument();
 
@@ -88,7 +88,7 @@ describe("Suite de pruebas del componente MessageBoard", () => {
   });
 
   it("Debe abrir el MessageAddForm al pulsar '+ Añadir mensaje' con mensajes", async () => {
-    render(<MessageBoard mensajes={mensajesEjemplo} comunidadId={11} isAdmin />);
+    render(<MessageBoard messages={mensajesEjemplo} communityID={11} isAdmin />);
 
     await userEvent.click(screen.getByRole("button", { name: "+ Añadir mensaje" }));
 
@@ -97,7 +97,7 @@ describe("Suite de pruebas del componente MessageBoard", () => {
   });
 
   it("Debe cerrar el MessageAddForm cuando el hijo ejecuta onClose", async () => {
-    render(<MessageBoard mensajes={[]} comunidadId={9} isAdmin />);
+    render(<MessageBoard messages={[]} communityID={9} isAdmin />);
 
     await userEvent.click(screen.getByRole("button", { name: "+ Añadir mensaje" }));
     await userEvent.click(screen.getByRole("button", { name: "Cerrar formulario" }));

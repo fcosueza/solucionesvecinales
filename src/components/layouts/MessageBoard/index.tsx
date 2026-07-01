@@ -11,8 +11,8 @@ interface Message {
 }
 
 interface Props {
-  mensajes: Message[];
-  comunidadId: number;
+  messages: Message[];
+  communityID: number;
   isAdmin?: boolean;
 }
 
@@ -37,20 +37,20 @@ const formatMessageDate = (date: Date): string => {
  * Shows the list of messages posted by the administrator.
  * If the user is an administrator, they can add and delete messages.
  *
- * @param mensajes List of messages on the board
- * @param comunidadId ID of the community to which the board belongs
+ * @param messages List of messages on the board
+ * @param communityID ID of the community to which the board belongs
  * @param isAdmin Indicates if the current user is an administrator (false by default)
  */
-const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.ReactNode => {
+const MessageBoard = ({ messages, communityID, isAdmin = false }: Props): React.ReactNode => {
   const [showForm, setShowForm] = useState(false);
 
   const handleDelete = async (createdAt: Date) => {
-    await deleteMessage(comunidadId, createdAt);
+    await deleteMessage(communityID, createdAt);
   };
 
   return (
     <div className={style.wrapper}>
-      {mensajes.length === 0 ? (
+      {messages.length === 0 ? (
         <div className={style.boardEmpty}>
           <p className={style.emptyTitle}>No hay mensajes publicados.</p>
           <p className={style.emptyDescription}>Cuando se creen avisos para esta comunidad, apareceran aqui.</p>
@@ -63,7 +63,7 @@ const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.
       ) : (
         <div className={style.board}>
           <ul className={style.messageList}>
-            {mensajes.map(mensaje => (
+            {messages.map(mensaje => (
               <li key={`${mensaje.createdAt.toISOString()}-${mensaje.text}`} className={style.messageItem}>
                 <div className={style.messageContent}>
                   <p className={style.messageText}>{mensaje.text}</p>
@@ -90,7 +90,7 @@ const MessageBoard = ({ mensajes, comunidadId, isAdmin = false }: Props): React.
         </div>
       )}
 
-      {isAdmin && showForm && <MessageAddForm comunidadId={comunidadId} onClose={() => setShowForm(false)} />}
+      {isAdmin && showForm && <MessageAddForm comunidadId={communityID} onClose={() => setShowForm(false)} />}
     </div>
   );
 };

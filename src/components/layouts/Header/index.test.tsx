@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useRouter as enrutadorMock } from "next/navigation";
+import { useRouter as routerMock } from "next/navigation";
 import { NavItem } from "@/types";
 import Header from ".";
 
@@ -11,99 +11,99 @@ jest.mock("next/navigation", () => ({
 }));
 
 // Add the push method to the useRouter mock.
-(enrutadorMock as jest.Mock).mockReturnValue({
+(routerMock as jest.Mock).mockReturnValue({
   push: jest.fn()
 });
 
-describe("Suite de pruebas de Header", () => {
-  const enlaces: NavItem[] = [
+describe("Header test suite", () => {
+  const links: NavItem[] = [
     { text: "testLink-1", href: "/home" },
     { text: "testLink-2", href: "/contact" },
     { text: "testLink-3", href: "/about" }
   ];
 
-  it("Debe renderizar el Header correctamente", () => {
-    render(<Header links={enlaces} buttonText="TestButton" />);
+  it("Should render the Header correctly", () => {
+    render(<Header links={links} buttonText="TestButton" />);
     expect(screen.getByRole("banner")).toBeInTheDocument();
   });
 
-  it("Debe aplicar la variante de fondo indicada", () => {
-    render(<Header links={enlaces} backgroundVariant="highlight" />);
+  it("Should apply the specified background variant", () => {
+    render(<Header links={links} backgroundVariant="highlight" />);
 
     expect(screen.getByRole("banner")).toHaveClass("header--highlight");
   });
 
-  it("Debe renderizar el Logo correctamente", () => {
-    render(<Header links={enlaces} buttonText="TestButton" />);
+  it("Should render the logo correctly", () => {
+    render(<Header links={links} buttonText="TestButton" />);
     expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  it("Debe renderizar el NavMenu si se pasan enlaces por props", () => {
-    render(<Header links={enlaces} buttonText="TestButton" />);
+  it("Should render the NavMenu when links are passed via props", () => {
+    render(<Header links={links} buttonText="TestButton" />);
 
     expect(screen.getByRole("navigation")).toBeInTheDocument();
-    expect(screen.getAllByRole("listitem")).toHaveLength(enlaces.length);
+    expect(screen.getAllByRole("listitem")).toHaveLength(links.length);
   });
 
-  it("No debe renderizar el NavMenu sin enlaces", () => {
+  it("Should not render the NavMenu without links", () => {
     render(<Header buttonText="TestButton" />);
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
   });
 
-  it("Debe renderizar el Button correctamente", () => {
-    render(<Header links={enlaces} buttonText="TestButton" buttonRoute="/" />);
+  it("Should render the button correctly", () => {
+    render(<Header links={links} buttonText="TestButton" buttonRoute="/" />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
-  it("No debe renderizar el Button si no se pasa buttonText", () => {
-    render(<Header links={enlaces} />);
+  it("Should not render the button if buttonText is not provided", () => {
+    render(<Header links={links} />);
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 
-  it("No debe llamar al hook del router cuando no se hace click en el botón", async () => {
-    const enrutador = enrutadorMock();
+  it("Should not call the router hook when the button is not clicked", async () => {
+    const router = routerMock();
 
-    render(<Header links={enlaces} buttonText="TestButton" />);
+    render(<Header links={links} buttonText="TestButton" />);
 
-    expect(enrutador.push).not.toHaveBeenCalled();
+    expect(router.push).not.toHaveBeenCalled();
   });
 
-  it("Debe llamar al hook del router cuando se hace click en el botón", async () => {
-    const enrutador = enrutadorMock();
+  it("Should call the router hook when the button is clicked", async () => {
+    const router = routerMock();
 
-    render(<Header links={enlaces} buttonText="TestButton" />);
+    render(<Header links={links} buttonText="TestButton" />);
 
     await userEvent.click(screen.getByRole("button"));
-    expect(enrutador.push).toHaveBeenCalled();
+    expect(router.push).toHaveBeenCalled();
   });
 
-  it("No debe mostrar sombra si la página está al inicio", () => {
+  it("Should not show shadow when the page is at the top", () => {
     Object.defineProperty(window, "scrollY", {
       value: 0,
       writable: true,
       configurable: true
     });
 
-    render(<Header links={enlaces} buttonText="TestButton" />);
+    render(<Header links={links} buttonText="TestButton" />);
 
     expect(screen.getByRole("banner")).not.toHaveClass("header--scrolled");
   });
 
-  it("Debe añadir sombra al hacer scroll", async () => {
+  it("Should add shadow on scroll", async () => {
     Object.defineProperty(window, "scrollY", {
       value: 0,
       writable: true,
       configurable: true
     });
 
-    render(<Header links={enlaces} buttonText="TestButton" />);
+    render(<Header links={links} buttonText="TestButton" />);
 
     Object.defineProperty(window, "scrollY", {
       value: 100,
       writable: true,
       configurable: true
     });
-    
+
     fireEvent.scroll(window);
 
     await waitFor(() => {

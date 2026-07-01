@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import Gallery from ".";
 
-describe("Suite de pruebas del componente Gallery", () => {
-  it("Debe renderizar el componente gallery correctamente", () => {
+describe("Gallery component test suite", () => {
+  it("Should render the gallery component correctly", () => {
     render(
       <Gallery>
         <h1>Test</h1>
@@ -12,7 +12,7 @@ describe("Suite de pruebas del componente Gallery", () => {
     expect(screen.getByRole("gallery")).toBeInTheDocument();
   });
 
-  it("Debe renderizar los elementos que se le pasan como hijos", () => {
+  it("Should render the elements passed as children", () => {
     render(
       <Gallery>
         <h1>Test</h1>
@@ -22,7 +22,7 @@ describe("Suite de pruebas del componente Gallery", () => {
     expect(screen.getByRole("heading")).toBeInTheDocument();
   });
 
-  it("Debe renderizar todos los elementos que se le pasan como hijos", () => {
+  it("Should render all elements passed as children", () => {
     render(
       <Gallery>
         <h1>Test</h1>
@@ -35,7 +35,7 @@ describe("Suite de pruebas del componente Gallery", () => {
     expect(screen.getAllByRole("heading")).toHaveLength(4);
   });
 
-  it("Debe renderizar la galería con la clase CSS gallery cargada", () => {
+  it("Should render the gallery with the gallery CSS class applied", () => {
     render(
       <Gallery>
         <h1>Test</h1>
@@ -45,20 +45,20 @@ describe("Suite de pruebas del componente Gallery", () => {
     expect(screen.getByRole("gallery")).toHaveClass("gallery");
   });
 
-  it("Debe renderizar el titulo que se le ha pasado", () => {
-    const titulo = "Lorem Ipsum Title";
+  it("Should render the provided title", () => {
+    const title = "Lorem Ipsum Title";
 
     render(
-      <Gallery title={titulo}>
+      <Gallery title={title}>
         <div>Test</div>
       </Gallery>
     );
 
     expect(screen.getByRole("heading")).toBeInTheDocument();
-    expect(screen.getByText(titulo)).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
   });
 
-  it("No debe renderizar el titulo si no se pasa ninguno", () => {
+  it("Should not render the title if none is provided", () => {
     render(
       <Gallery>
         <div>Test</div>
