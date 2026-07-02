@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 const pushMock = jest.fn();
 
-// Mock of modules and functions
+// Module and function mocks
 jest.mock("@/actions/community/community", () => jest.fn());
 jest.mock("sonner", () => ({
   toast: {
@@ -21,12 +21,12 @@ jest.mock("next/navigation", () => ({
   })
 }));
 
-describe("Suite de pruebas del componente CommunityAddForm", () => {
+describe("CommunityAddForm component test suite", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("Debe renderizar el formulario y todos sus campos", () => {
+  it("should render the form and all fields", () => {
     render(<CommunityAddForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     expect(screen.getByRole("button", { name: "Crear comunidad" })).toBeInTheDocument();
   });
 
-  it("Debe reflejar lo que escribe el usuario en todos los campos", async () => {
+  it("should reflect user input in all fields", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
 
@@ -58,26 +58,26 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     expect(screen.getByRole("textbox", { name: "country-input" })).toHaveValue("España");
   });
 
-  it("Debe limpiar únicamente el campo con error y mantener el resto", async () => {
+  it("should clear only the field with an error and keep the rest", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
-    const accionMock = addCommunity as jest.Mock;
-    const datosFormulario = new FormData();
+    const actionMock = addCommunity as jest.Mock;
+    const formData = new FormData();
 
-    datosFormulario.append("name", "X");
-    datosFormulario.append("street", "Calle Mayor");
-    datosFormulario.append("number", "12");
-    datosFormulario.append("city", "Madrid");
-    datosFormulario.append("province", "Madrid");
-    datosFormulario.append("country", "España");
+    formData.append("name", "X");
+    formData.append("street", "Calle Mayor");
+    formData.append("number", "12");
+    formData.append("city", "Madrid");
+    formData.append("province", "Madrid");
+    formData.append("country", "España");
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
       message: "Datos del formulario incorrectos",
       errors: {
         name: "El nombre no es válido"
       },
-      payload: datosFormulario
+      payload: formData
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "X");
@@ -100,26 +100,26 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     });
   });
 
-  it("Debe limpiar el campo calle cuando street tiene error", async () => {
+  it("should clear street when street has an error", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
-    const accionMock = addCommunity as jest.Mock;
-    const datosFormulario = new FormData();
+    const actionMock = addCommunity as jest.Mock;
+    const formData = new FormData();
 
-    datosFormulario.append("name", "Comunidad Centro");
-    datosFormulario.append("street", "X");
-    datosFormulario.append("number", "12");
-    datosFormulario.append("city", "Madrid");
-    datosFormulario.append("province", "Madrid");
-    datosFormulario.append("country", "España");
+    formData.append("name", "Comunidad Centro");
+    formData.append("street", "X");
+    formData.append("number", "12");
+    formData.append("city", "Madrid");
+    formData.append("province", "Madrid");
+    formData.append("country", "España");
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
       message: "Datos del formulario incorrectos",
       errors: {
         street: "La calle no es válida"
       },
-      payload: datosFormulario
+      payload: formData
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "Comunidad Centro");
@@ -140,26 +140,26 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     });
   });
 
-  it("Debe limpiar el campo número cuando number tiene error", async () => {
+  it("should clear number when number has an error", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
-    const accionMock = addCommunity as jest.Mock;
-    const datosFormulario = new FormData();
+    const actionMock = addCommunity as jest.Mock;
+    const formData = new FormData();
 
-    datosFormulario.append("name", "Comunidad Centro");
-    datosFormulario.append("street", "Calle Mayor");
-    datosFormulario.append("number", "0");
-    datosFormulario.append("city", "Madrid");
-    datosFormulario.append("province", "Madrid");
-    datosFormulario.append("country", "España");
+    formData.append("name", "Comunidad Centro");
+    formData.append("street", "Calle Mayor");
+    formData.append("number", "0");
+    formData.append("city", "Madrid");
+    formData.append("province", "Madrid");
+    formData.append("country", "España");
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
       message: "Datos del formulario incorrectos",
       errors: {
         number: "El número debe ser mayor que 0"
       },
-      payload: datosFormulario
+      payload: formData
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "Comunidad Centro");
@@ -180,26 +180,26 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     });
   });
 
-  it("Debe limpiar el campo ciudad cuando city tiene error", async () => {
+  it("should clear city when city has an error", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
-    const accionMock = addCommunity as jest.Mock;
-    const datosFormulario = new FormData();
+    const actionMock = addCommunity as jest.Mock;
+    const formData = new FormData();
 
-    datosFormulario.append("name", "Comunidad Centro");
-    datosFormulario.append("street", "Calle Mayor");
-    datosFormulario.append("number", "12");
-    datosFormulario.append("city", "X");
-    datosFormulario.append("province", "Madrid");
-    datosFormulario.append("country", "España");
+    formData.append("name", "Comunidad Centro");
+    formData.append("street", "Calle Mayor");
+    formData.append("number", "12");
+    formData.append("city", "X");
+    formData.append("province", "Madrid");
+    formData.append("country", "España");
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
       message: "Datos del formulario incorrectos",
       errors: {
         city: "La ciudad no es válida"
       },
-      payload: datosFormulario
+      payload: formData
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "Comunidad Centro");
@@ -220,26 +220,26 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     });
   });
 
-  it("Debe limpiar el campo provincia cuando province tiene error", async () => {
+  it("should clear province when province has an error", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
-    const accionMock = addCommunity as jest.Mock;
-    const datosFormulario = new FormData();
+    const actionMock = addCommunity as jest.Mock;
+    const formData = new FormData();
 
-    datosFormulario.append("name", "Comunidad Centro");
-    datosFormulario.append("street", "Calle Mayor");
-    datosFormulario.append("number", "12");
-    datosFormulario.append("city", "Madrid");
-    datosFormulario.append("province", "X");
-    datosFormulario.append("country", "España");
+    formData.append("name", "Comunidad Centro");
+    formData.append("street", "Calle Mayor");
+    formData.append("number", "12");
+    formData.append("city", "Madrid");
+    formData.append("province", "X");
+    formData.append("country", "España");
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
       message: "Datos del formulario incorrectos",
       errors: {
         province: "La provincia no es válida"
       },
-      payload: datosFormulario
+      payload: formData
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "Comunidad Centro");
@@ -260,26 +260,26 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     });
   });
 
-  it("Debe limpiar el campo país cuando country tiene error", async () => {
+  it("should clear country when country has an error", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
-    const accionMock = addCommunity as jest.Mock;
-    const datosFormulario = new FormData();
+    const actionMock = addCommunity as jest.Mock;
+    const formData = new FormData();
 
-    datosFormulario.append("name", "Comunidad Centro");
-    datosFormulario.append("street", "Calle Mayor");
-    datosFormulario.append("number", "12");
-    datosFormulario.append("city", "Madrid");
-    datosFormulario.append("province", "Madrid");
-    datosFormulario.append("country", "X");
+    formData.append("name", "Comunidad Centro");
+    formData.append("street", "Calle Mayor");
+    formData.append("number", "12");
+    formData.append("city", "Madrid");
+    formData.append("province", "Madrid");
+    formData.append("country", "X");
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
       message: "Datos del formulario incorrectos",
       errors: {
         country: "El país no es válido"
       },
-      payload: datosFormulario
+      payload: formData
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "Comunidad Centro");
@@ -300,15 +300,15 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     });
   });
 
-  it("Debe llamar a toast.error cuando la acción devuelve error", async () => {
+  it("should call toast.error when the action returns an error", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
-    const accionMock = addCommunity as jest.Mock;
-    const mensaje = "No se pudo crear la comunidad";
+    const actionMock = addCommunity as jest.Mock;
+    const message = "No se pudo crear la comunidad";
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "error",
-      message: mensaje
+      message
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "Comunidad Centro");
@@ -320,22 +320,22 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     await user.click(screen.getByRole("button", { name: "Crear comunidad" }));
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith(mensaje);
+      expect(toast.error).toHaveBeenCalledWith(message);
     });
 
     expect(toast.success).not.toHaveBeenCalled();
     expect(pushMock).not.toHaveBeenCalled();
   });
 
-  it("Debe llamar a toast.success y redirigir al overview cuando la acción tiene éxito", async () => {
+  it("should call toast.success and redirect to overview when the action succeeds", async () => {
     const user = userEvent.setup();
     render(<CommunityAddForm />);
-    const accionMock = addCommunity as jest.Mock;
-    const mensaje = "Comunidad creada exitosamente";
+    const actionMock = addCommunity as jest.Mock;
+    const message = "Comunidad creada exitosamente";
 
-    accionMock.mockResolvedValue({
+    actionMock.mockResolvedValue({
       state: "success",
-      message: mensaje
+      message
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "Comunidad Centro");
@@ -347,7 +347,7 @@ describe("Suite de pruebas del componente CommunityAddForm", () => {
     await user.click(screen.getByRole("button", { name: "Crear comunidad" }));
 
     await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith(mensaje);
+      expect(toast.success).toHaveBeenCalledWith(message);
       expect(pushMock).toHaveBeenCalledWith("/communities");
     });
     expect(toast.error).not.toHaveBeenCalled();

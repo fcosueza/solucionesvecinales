@@ -9,7 +9,7 @@ import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import style from "./style.module.css";
 
-const estadoInicial: FormActionState = {
+const initialState: FormActionState = {
   state: "error" as const,
   message: ""
 };
@@ -17,39 +17,36 @@ const estadoInicial: FormActionState = {
 /**
  * Component that renders the form to add a new community.
  *
- * @param props - Props del componente CommunityAddForm.
- * @returns El community registration form as a React element.
+ * @param props - Props of the CommunityAddForm component.
+ * @returns The community registration form as a React element.
  */
 const CommunityAddForm = (): React.ReactNode => {
   const router = useRouter();
-  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
-    addCommunity,
-    estadoInicial
-  );
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(addCommunity, initialState);
 
   useEffect(() => {
-    if (!estado.message) return;
+    if (!state.message) return;
 
-    if (estado.state === "success") {
-      toast.success(estado.message);
+    if (state.state === "success") {
+      toast.success(state.message);
       router.push("/communities");
       return;
     }
 
-    toast.error(estado.message);
-  }, [estado, router]);
+    toast.error(state.message);
+  }, [state, router]);
 
   return (
     <>
-      <form action={accionFormulario} id="communityAddForm" role="form" className={style.form}>
+      <form action={formAction} id="communityAddForm" role="form" className={style.form}>
         <FormInput
           labelText="Nombre"
-          errorMsg={estado?.errors?.name ?? ""}
+          errorMsg={state?.errors?.name ?? ""}
           attr={{
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? ""),
+            defaultValue: state?.errors?.name ? "" : ((state.payload?.get("name") as string) ?? ""),
             placeholder: "Introduzca el nombre de la comunidad...",
             required: true
           }}
@@ -57,12 +54,12 @@ const CommunityAddForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Calle"
-          errorMsg={estado?.errors?.street ?? ""}
+          errorMsg={state?.errors?.street ?? ""}
           attr={{
             id: "street",
             name: "street",
             type: InputType.text,
-            defaultValue: estado?.errors?.street ? "" : ((estado.payload?.get("street") as string) ?? ""),
+            defaultValue: state?.errors?.street ? "" : ((state.payload?.get("street") as string) ?? ""),
             placeholder: "Introduzca la calle...",
             required: true
           }}
@@ -70,12 +67,12 @@ const CommunityAddForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Número"
-          errorMsg={estado?.errors?.number ?? ""}
+          errorMsg={state?.errors?.number ?? ""}
           attr={{
             id: "number",
             name: "number",
             type: InputType.number,
-            defaultValue: estado?.errors?.number ? "" : ((estado.payload?.get("number") as string) ?? ""),
+            defaultValue: state?.errors?.number ? "" : ((state.payload?.get("number") as string) ?? ""),
             placeholder: "Introduzca el número...",
             required: true
           }}
@@ -83,12 +80,12 @@ const CommunityAddForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Ciudad"
-          errorMsg={estado?.errors?.city ?? ""}
+          errorMsg={state?.errors?.city ?? ""}
           attr={{
             id: "city",
             name: "city",
             type: InputType.text,
-            defaultValue: estado?.errors?.city ? "" : ((estado.payload?.get("city") as string) ?? ""),
+            defaultValue: state?.errors?.city ? "" : ((state.payload?.get("city") as string) ?? ""),
             placeholder: "Introduzca la ciudad...",
             required: true
           }}
@@ -96,12 +93,12 @@ const CommunityAddForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Provincia"
-          errorMsg={estado?.errors?.province ?? ""}
+          errorMsg={state?.errors?.province ?? ""}
           attr={{
             id: "province",
             name: "province",
             type: InputType.text,
-            defaultValue: estado?.errors?.province ? "" : ((estado.payload?.get("province") as string) ?? ""),
+            defaultValue: state?.errors?.province ? "" : ((state.payload?.get("province") as string) ?? ""),
             placeholder: "Introduzca la provincia...",
             required: true
           }}
@@ -109,18 +106,18 @@ const CommunityAddForm = (): React.ReactNode => {
 
         <FormInput
           labelText="País"
-          errorMsg={estado?.errors?.country ?? ""}
+          errorMsg={state?.errors?.country ?? ""}
           attr={{
             id: "country",
             name: "country",
             type: InputType.text,
-            defaultValue: estado?.errors?.country ? "" : ((estado.payload?.get("country") as string) ?? ""),
+            defaultValue: state?.errors?.country ? "" : ((state.payload?.get("country") as string) ?? ""),
             placeholder: "Introduzca el país...",
             required: true
           }}
         />
 
-        <Button type="submit" text="Crear comunidad" disabled={estaPendiente} />
+        <Button type="submit" text="Crear comunidad" disabled={isPending} />
       </form>
     </>
   );
