@@ -84,11 +84,11 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
       <CommunitySettingsForm
         communityID={comunidad.id}
         name={comunidad.name}
-        calle={comunidad.street}
-        numero={comunidad.number}
-        ciudad={comunidad.city}
-        provincia={comunidad.province}
-        pais={comunidad.country}
+        street={comunidad.street}
+        number={comunidad.number}
+        city={comunidad.city}
+        province={comunidad.province}
+        country={comunidad.country}
       />
     </main>
   );

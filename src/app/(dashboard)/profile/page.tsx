@@ -65,7 +65,7 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
         name={usuario.name}
         surname={usuario.lastName}
         email={usuario.email}
-        rol={usuario.role as UserRole}
+        role={usuario.role as UserRole}
         image={usuario.image ?? undefined}
         hasCommunities={tieneComunidades}
       />
