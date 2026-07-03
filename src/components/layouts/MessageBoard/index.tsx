@@ -90,7 +90,7 @@ const MessageBoard = ({ messages, communityID, isAdmin = false }: Props): React.
         </div>
       )}
 
-      {isAdmin && showForm && <MessageAddForm comunidadId={communityID} onClose={() => setShowForm(false)} />}
+      {isAdmin && showForm && <MessageAddForm communityID={communityID} onClose={() => setShowForm(false)} />}
     </div>
   );
 };

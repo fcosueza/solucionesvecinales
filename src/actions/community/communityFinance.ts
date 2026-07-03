@@ -42,17 +42,17 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
     return;
   }
 
-  const descripcion = String(formData.get("descripcion") ?? "").trim();
-  const importe = Number(formData.get("importe"));
-  const tipo = String(formData.get("tipo") ?? "").trim();
-  const recordType = tipo === "ingreso" ? "income" : tipo === "gasto" ? "expense" : null;
+  const description = String(formData.get("descripcion") ?? "").trim();
+  const amount = Number(formData.get("importe"));
+  const type = String(formData.get("tipo") ?? "").trim();
+  const recordType = type === "ingreso" ? "income" : type === "gasto" ? "expense" : null;
 
   if (
     !Number.isInteger(communityID) ||
     communityID <= 0 ||
-    !descripcion ||
-    !Number.isFinite(importe) ||
-    importe <= 0 ||
+    !description ||
+    !Number.isFinite(amount) ||
+    amount <= 0 ||
     !recordType
   ) {
     return;
@@ -62,8 +62,8 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
     await prisma.financialRecord.create({
       data: {
         community: communityID,
-        description: descripcion,
-        amount: importe,
+        description: description,
+        amount: amount,
         type: recordType
       }
     });

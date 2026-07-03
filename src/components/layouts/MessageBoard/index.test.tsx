@@ -9,9 +9,9 @@ jest.mock("@/actions/community/communityMessage", () => ({
 
 jest.mock("@/components/layouts/Forms/MessageAddForm", () => ({
   __esModule: true,
-  default: ({ comunidadId, onClose }: { comunidadId: number; onClose: () => void }) => (
+  default: ({ communityID, onClose }: { communityID: number; onClose: () => void }) => (
     <div data-testid="message-add-form">
-      <p>Formulario para comunidad {comunidadId}</p>
+      <p>Formulario para comunidad {communityID}</p>
       <button type="button" onClick={onClose}>
         Cerrar formulario
       </button>
@@ -83,8 +83,9 @@ describe("Suite de pruebas del componente MessageBoard", () => {
 
     await userEvent.click(screen.getByRole("button", { name: "+ Añadir mensaje" }));
 
-    expect(screen.getByTestId("message-add-form")).toBeInTheDocument();
-    expect(screen.getByText("Formulario para comunidad 9")).toBeInTheDocument();
+    const addForm = screen.getByTestId("message-add-form");
+    expect(addForm).toBeInTheDocument();
+    expect(addForm).toHaveTextContent(/Formulario para comunidad\s*9/);
   });
 
   it("Debe abrir el MessageAddForm al pulsar '+ Añadir mensaje' con mensajes", async () => {
@@ -92,8 +93,9 @@ describe("Suite de pruebas del componente MessageBoard", () => {
 
     await userEvent.click(screen.getByRole("button", { name: "+ Añadir mensaje" }));
 
-    expect(screen.getByTestId("message-add-form")).toBeInTheDocument();
-    expect(screen.getByText("Formulario para comunidad 11")).toBeInTheDocument();
+    const addForm = screen.getByTestId("message-add-form");
+    expect(addForm).toBeInTheDocument();
+    expect(addForm).toHaveTextContent(/Formulario para comunidad\s*11/);
   });
 
   it("Debe cerrar el MessageAddForm cuando el hijo ejecuta onClose", async () => {

@@ -11,21 +11,19 @@ import { toast } from "sonner";
 import style from "./style.module.css";
 
 interface Props {
-  nombre: string;
-  apellido: string;
+  name: string;
+  surname: string;
   email: string;
-  rol: UserRole;
-  imagen?: string;
-  tieneComunidades?: boolean;
+  role: UserRole;
+  image?: string;
+  hasCommunities?: boolean;
 }
-
-// Initial state for profile form
-const estadoInicial: FormActionState = {
+const initialState: FormActionState = {
   state: "error" as const,
   message: ""
 };
 
-const etiquetasRol: Record<UserRole, string> = {
+const roleLabels: Record<UserRole, string> = {
   [UserRole.tenant]: "Inquilino",
   [UserRole.admin]: "Administrador",
   [UserRole.webAdmin]: "Administrador Web"
@@ -37,48 +35,51 @@ const etiquetasRol: Record<UserRole, string> = {
  * It also includes the option to permanently delete the account.
  * Administrators with active communities cannot delete their account directly.
  *
- * @param nombre Current user name
- * @param apellido User's current last name(s)
+ * @param name Current user name
+ * @param surname User's current last name(s)
  * @param email User's current email
- * @param rol Role of the user (tenant, admin, webAdmin)
- * @param imagen URL of the user's current avatar (optional)
- * @param tieneComunidades Indicates whether the administrator has active communities (false by default)
+ * @param role Role of the user (tenant, admin, webAdmin)
+ * @param image URL of the user's current avatar (optional)
+ * @param hasCommunities Indicates whether the administrator has active communities (false by default)
  */
-const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = false }: Props): React.ReactNode => {
+const ProfileForm = ({ name, surname, email, role, image, hasCommunities = false }: Props): React.ReactNode => {
   const router = useRouter();
-  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
-    updateProfile,
-    estadoInicial
-  );
-  const [estadoEliminar, accionEliminarPerfil, eliminandoPerfil] = useActionState<FormActionState, FormData>(
+  const [state, formState, isPending] = useActionState<FormActionState, FormData>(updateProfile, initialState);
+  const [deleteState, deleteAction, isDeleting] = useActionState<FormActionState, FormData>(
     deleteProfile,
-    estadoInicial
+    initialState
   );
-  const primerApellido = apellido.trim().split(/\s+/)[0] ?? "";
-  const esAdmin = rol === UserRole.admin || rol === UserRole.webAdmin;
-  const [popupEliminarAbierto, setPopupEliminarAbierto] = useState(false);
-  const [popupBloqueadoAbierto, setPopupBloqueadoAbierto] = useState(false);
-  const [avatarSrc, setAvatarSrc] = useState(imagen ?? "/assets/icons/profile-100.png");
+  const firstSurname = surname.trim().split(/\s+/)[0] ?? "";
+  const isAdmin = role === UserRole.admin || role === UserRole.webAdmin;
+  const [deletePopupOpen, setDeletePopupOpen] = useState(false);
+  const [blockedPopupOpen, setBlockedPopupOpen] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState(image ?? "/assets/icons/profile-100.png");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const previewAvatarRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!estado.message) return;
+    if (!state.message) return;
 
-    if (estado.state === "success") {
-      toast.success(estado.message);
+    if (state.state === "success") {
+      toast.success(state.message);
       router.refresh();
       return;
     }
 
-    toast.error(estado.message);
-  }, [estado, router]);
+    toast.error(state.message);
+  }, [state, router]);
 
   useEffect(() => {
-    if (!estadoEliminar.message) return;
+    if (!deleteState.message) return;
 
-    toast.error(estadoEliminar.message);
-  }, [estadoEliminar]);
+    if (deleteState.state === "success") {
+      toast.success(deleteState.message);
+      router.refresh();
+      return;
+    }
+
+    toast.error(deleteState.message);
+  }, [deleteState, router]);
 
   useEffect(() => {
     return () => {
@@ -97,7 +98,7 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = 
             type="button"
             className={style.uploadBtn}
             aria-label="Subir foto de perfil"
-            disabled={estaPendiente}
+            disabled={isPending}
             onClick={() => fileInputRef.current?.click()}
           >
             <Image src="/assets/icons/photo-24.png" alt="" width={16} height={16} />
@@ -124,20 +125,20 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = 
           />
         </div>
         <div className={style.userSummary}>
-          <p className={style.userName}>{`${nombre} ${primerApellido}`.trim()}</p>
-          <p className={style.userRole}>{etiquetasRol[rol]}</p>
+          <p className={style.userName}>{`${name} ${firstSurname}`.trim()}</p>
+          <p className={style.userRole}>{roleLabels[role]}</p>
         </div>
       </div>
 
-      <form action={accionFormulario} id="profileForm" role="form" className={style.form}>
+      <form action={formState} id="profileForm" role="form" className={style.form}>
         <FormInput
           labelText="Nombre"
-          errorMsg={estado?.errors?.name ?? ""}
+          errorMsg={state?.errors?.name ?? ""}
           attr={{
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? nombre),
+            defaultValue: state?.errors?.name ? "" : ((state.payload?.get("name") as string) ?? name),
             placeholder: "Introduzca su nombre...",
             required: true
           }}
@@ -145,12 +146,12 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = 
 
         <FormInput
           labelText="Apellido"
-          errorMsg={estado?.errors?.surname ?? ""}
+          errorMsg={state?.errors?.surname ?? ""}
           attr={{
             id: "surname",
             name: "surname",
             type: InputType.text,
-            defaultValue: estado?.errors?.surname ? "" : ((estado.payload?.get("surname") as string) ?? apellido),
+            defaultValue: state?.errors?.surname ? "" : ((state.payload?.get("surname") as string) ?? firstSurname),
             placeholder: "Introduzca su apellido...",
             required: true
           }}
@@ -158,12 +159,12 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = 
 
         <FormInput
           labelText="Email"
-          errorMsg={estado?.errors?.email ?? ""}
+          errorMsg={state?.errors?.email ?? ""}
           attr={{
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? email),
+            defaultValue: state?.errors?.email ? "" : ((state.payload?.get("email") as string) ?? email),
             placeholder: "Introduzca su email...",
             required: true
           }}
@@ -171,12 +172,12 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = 
 
         <FormInput
           labelText="Nueva contraseña"
-          errorMsg={estado?.errors?.password ?? ""}
+          errorMsg={state?.errors?.password ?? ""}
           attr={{
             id: "password",
             name: "password",
             type: InputType.password,
-            defaultValue: (estado.payload?.get("password") as string) ?? "",
+            defaultValue: (state.payload?.get("password") as string) ?? "",
             placeholder: "Introduzca una nueva contraseña...",
             required: false
           }}
@@ -184,36 +185,36 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = 
 
         <FormInput
           labelText="Repetir nueva contraseña"
-          errorMsg={estado?.errors?.repeat ?? ""}
+          errorMsg={state?.errors?.repeat ?? ""}
           attr={{
             id: "repeat",
             name: "repeat",
             type: InputType.password,
-            defaultValue: (estado.payload?.get("repeat") as string) ?? "",
+            defaultValue: (state.payload?.get("repeat") as string) ?? "",
             placeholder: "Repita la nueva contraseña...",
             required: false
           }}
         />
 
         <div className={style.actionsRow}>
-          <Button type="submit" text="Guardar" disabled={estaPendiente || eliminandoPerfil} />
+          <Button type="submit" text="Guardar" disabled={isPending || isDeleting} />
           <Button
             type="button"
             text="Eliminar perfil"
             variant="danger"
             onClick={() => {
-              if (esAdmin && tieneComunidades) {
-                setPopupBloqueadoAbierto(true);
+              if (isAdmin && hasCommunities) {
+                setBlockedPopupOpen(true);
               } else {
-                setPopupEliminarAbierto(true);
+                setDeletePopupOpen(true);
               }
             }}
           />
         </div>
       </form>
 
-      {popupBloqueadoAbierto && (
-        <div className={style.overlay} onClick={() => setPopupBloqueadoAbierto(false)}>
+      {blockedPopupOpen && (
+        <div className={style.overlay} onClick={() => setBlockedPopupOpen(false)}>
           <div
             className={style.popup}
             role="dialog"
@@ -229,19 +230,14 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = 
               Configuracion de cada una antes de poder eliminar tu cuenta.
             </p>
             <div className={style.popupActions}>
-              <Button
-                type="button"
-                text="Entendido"
-                variant="secondary"
-                onClick={() => setPopupBloqueadoAbierto(false)}
-              />
+              <Button type="button" text="Entendido" variant="secondary" onClick={() => setBlockedPopupOpen(false)} />
             </div>
           </div>
         </div>
       )}
 
-      {popupEliminarAbierto && (
-        <div className={style.overlay} onClick={() => !eliminandoPerfil && setPopupEliminarAbierto(false)}>
+      {deletePopupOpen && (
+        <div className={style.overlay} onClick={() => !isDeleting && setDeletePopupOpen(false)}>
           <div
             className={style.popup}
             role="dialog"
@@ -260,15 +256,15 @@ const ProfileForm = ({ nombre, apellido, email, rol, imagen, tieneComunidades = 
                 type="button"
                 text="Cancelar"
                 variant="secondary"
-                disabled={eliminandoPerfil}
-                onClick={() => setPopupEliminarAbierto(false)}
+                disabled={isDeleting}
+                onClick={() => setDeletePopupOpen(false)}
               />
-              <form action={accionEliminarPerfil}>
+              <form action={deleteAction}>
                 <Button
                   type="submit"
-                  text={eliminandoPerfil ? "Eliminando..." : "Eliminar"}
+                  text={isDeleting ? "Eliminando..." : "Eliminar"}
                   variant="danger"
-                  disabled={eliminandoPerfil}
+                  disabled={isDeleting}
                 />
               </form>
             </div>

@@ -24,19 +24,19 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("Suite de pruebas del componente SignUpForm", () => {
+describe("SignUpForm component test suite", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useRouter as jest.Mock).mockReturnValue({ push: jest.fn() });
   });
 
-  it("Debe renderizar el formulario", () => {
+  it("Should render the form", () => {
     render(<SignUpForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Debe renderizar todos los campos del formulario", () => {
+  it("Should render all form fields", () => {
     render(<SignUpForm />);
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
     expect(screen.getByLabelText("repeat-input")).toBeInTheDocument();
   });
 
-  it("Debe renderizar todos los valores predeterminados en los campos", () => {
+  it("Should render all default values in the fields", () => {
     render(<SignUpForm />);
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
@@ -57,53 +57,53 @@ describe("Suite de pruebas del componente SignUpForm", () => {
     expect(screen.getByLabelText("repeat-input")).toHaveValue("");
   });
 
-  it("Debe renderizar 2 roles en el control de selección de rol", () => {
+  it("Should render 2 roles in the role selection control", () => {
     render(<SignUpForm />);
 
-    const grupoRadio = screen.getByRole("group");
+    const radioGroup = screen.getByRole("group");
 
-    expect(within(grupoRadio).getByRole("radio", { name: "tenant-radio" })).toBeInTheDocument();
-    expect(within(grupoRadio).getByRole("radio", { name: "admin-radio" })).toBeInTheDocument();
+    expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeInTheDocument();
+    expect(within(radioGroup).getByRole("radio", { name: "admin-radio" })).toBeInTheDocument();
   });
 
-  it("Debe marcar por defecto la opción de inquilino en el control de selección de rol", () => {
+  it("Should mark the tenant option by default in the role selection control", () => {
     render(<SignUpForm />);
 
-    const grupoRadio = screen.getByRole("group");
+    const radioGroup = screen.getByRole("group");
 
-    expect(within(grupoRadio).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
+    expect(within(radioGroup).getByRole("radio", { name: "tenant-radio" })).toBeChecked();
   });
 
-  it("Debe mostrar mensajes de error si los campos no son correctos", async () => {
+  it("Should display error messages if the fields are incorrect", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUp as jest.Mock;
-    const datosFormulario = new FormData();
+    const formData = new FormData();
 
-    const nombre = "a";
-    const apellidos = "a";
-    const correo = "email@email.c";
-    const contrasena = "blablalbal";
-    const repetirContrasena = "blabuieon";
+    const name = "a";
+    const surname = "a";
+    const email = "email@email.c";
+    const password = "blablalbal";
+    const repetarPassword = "blabuieon";
 
-    datosFormulario.append("name", nombre);
-    datosFormulario.append("surname", apellidos);
-    datosFormulario.append("email", correo);
-    datosFormulario.append("password", contrasena);
-    datosFormulario.append("repeat", repetirContrasena);
+    formData.append("name", name);
+    formData.append("surname", surname);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("repeat", repetarPassword);
 
     accionMock.mockResolvedValue({
       state: "error",
       message: "Incorrect form data",
       errors: { name: "error", surname: "error", email: "error", password: "error", repeat: "error" },
-      payload: datosFormulario
+      payload: formData
     });
 
-    await user.type(screen.getByRole("textbox", { name: "name-input" }), nombre);
-    await user.type(screen.getByRole("textbox", { name: "surname-input" }), apellidos);
-    await user.type(screen.getByRole("textbox", { name: "email-input" }), correo);
-    await user.type(screen.getByLabelText("password-input"), contrasena);
-    await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await user.type(screen.getByLabelText("password-input"), password);
+    await user.type(screen.getByLabelText("repeat-input"), repetarPassword);
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findAllByRole("alert")).toHaveLength(5);
@@ -116,89 +116,89 @@ describe("Suite de pruebas del componente SignUpForm", () => {
     });
   });
 
-  it("Debe mantener valores en todos los campos excepto en repetirContraseña, mostrando error si las contraseñas no coinciden", async () => {
+  it("Should maintain values in all fields except repeatPassword, showing error if passwords do not match", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUp as jest.Mock;
-    const datosFormulario = new FormData();
+    const formData = new FormData();
 
-    const nombre = "aaaaaaaaaaaaaaaaa";
-    const apellidos = "aaaaa";
-    const correo = "email@email.com";
-    const contrasena = "blablablablablablablabla";
-    const repetirContrasena = "blablablablablablablable";
+    const name = "aaaaaaaaaaaaaaaaa";
+    const surname = "aaaaa";
+    const email = "email@email.com";
+    const password = "blablablablablablablabla";
+    const repeatPassword = "blablablablablablablable";
 
-    datosFormulario.append("name", nombre);
-    datosFormulario.append("surname", apellidos);
-    datosFormulario.append("email", correo);
-    datosFormulario.append("password", contrasena);
-    datosFormulario.append("repeat", repetirContrasena);
+    formData.append("name", name);
+    formData.append("surname", surname);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("repeat", repeatPassword);
 
     accionMock.mockResolvedValue({
       state: "error",
       message: "Incorrect form data",
       errors: { repeat: "error" },
-      payload: datosFormulario
+      payload: formData
     });
 
-    await user.type(screen.getByRole("textbox", { name: "name-input" }), nombre);
-    await user.type(screen.getByRole("textbox", { name: "surname-input" }), apellidos);
-    await user.type(screen.getByRole("textbox", { name: "email-input" }), correo);
-    await user.type(screen.getByLabelText("password-input"), contrasena);
-    await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await user.type(screen.getByLabelText("password-input"), password);
+    await user.type(screen.getByLabelText("repeat-input"), repeatPassword);
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(nombre);
-      expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(apellidos);
-      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(correo);
+      expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue(name);
+      expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
+      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(email);
       expect(screen.getByLabelText("password-input")).toHaveValue("");
       expect(screen.getByLabelText("repeat-input")).toHaveValue("");
     });
   });
 
-  it("Debe mantener los datos de todos los campos si todos son correctos excepto nombre que es incorrecto", async () => {
+  it("Should maintain all field values if all are correct except name which is incorrect", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUp as jest.Mock;
-    const datosFormulario = new FormData();
+    const formData = new FormData();
 
-    const nombre = "a";
-    const apellidos = "aaaaaaaaaaaa";
-    const correo = "email@email.com";
-    const contrasena = "blablablablablablablabla";
-    const repetirContrasena = "blablablablablablablabla";
+    const name = "a";
+    const surname = "aaaaaaaaaaaa";
+    const email = "email@email.com";
+    const password = "blablablablablablablabla";
+    const repeatPassword = "blablablablablablablabla";
 
-    datosFormulario.append("name", nombre);
-    datosFormulario.append("surname", apellidos);
-    datosFormulario.append("email", correo);
-    datosFormulario.append("password", contrasena);
-    datosFormulario.append("repeat", repetirContrasena);
+    formData.append("name", name);
+    formData.append("surname", surname);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("repeat", repeatPassword);
 
     accionMock.mockResolvedValue({
       state: "error",
       message: "Incorrect form data",
       errors: { name: "error" },
-      payload: datosFormulario
+      payload: formData
     });
 
-    await user.type(screen.getByRole("textbox", { name: "name-input" }), nombre);
-    await user.type(screen.getByRole("textbox", { name: "surname-input" }), apellidos);
-    await user.type(screen.getByRole("textbox", { name: "email-input" }), correo);
-    await user.type(screen.getByLabelText("password-input"), contrasena);
-    await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await user.type(screen.getByLabelText("password-input"), password);
+    await user.type(screen.getByLabelText("repeat-input"), repeatPassword);
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => {
       expect(screen.getByRole("textbox", { name: "name-input" })).toHaveValue("");
-      expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(apellidos);
-      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(correo);
+      expect(screen.getByRole("textbox", { name: "surname-input" })).toHaveValue(surname);
+      expect(screen.getByRole("textbox", { name: "email-input" })).toHaveValue(email);
       expect(screen.getByLabelText("password-input")).toHaveValue("");
       expect(screen.getByLabelText("repeat-input")).toHaveValue("");
     });
   });
 
-  it("Debe redirigir a la página de inicio de sesión si el usuario se creó correctamente", async () => {
+  it("Should redirect to the login page if the user is created successfully", async () => {
     const pushMock = jest.fn();
 
     (useRouter as jest.Mock).mockReturnValue({ push: pushMock });
@@ -206,46 +206,46 @@ describe("Suite de pruebas del componente SignUpForm", () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUp as jest.Mock;
-    const datosFormulario = new FormData();
+    const formData = new FormData();
 
-    const nombre = "aaaaaaaaaaaa";
-    const apellidos = "aaaaaaaaaaaa";
-    const correo = "email@email.com";
-    const contrasena = "blablablablablablablabla";
-    const repetirContrasena = "blablablablablablablabla";
+    const name = "aaaaaaaaaaaa";
+    const surname = "aaaaaaaaaaaa";
+    const email = "email@email.com";
+    const password = "blablablablablablablabla";
+    const repeatPassword = "blablablablablablablabla";
 
-    datosFormulario.append("name", nombre);
-    datosFormulario.append("surname", apellidos);
-    datosFormulario.append("email", correo);
-    datosFormulario.append("password", contrasena);
-    datosFormulario.append("role", "inquilino");
-    datosFormulario.append("repeat", repetirContrasena);
+    formData.append("name", name);
+    formData.append("surname", surname);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("role", "inquilino");
+    formData.append("repeat", repeatPassword);
 
     accionMock.mockResolvedValue({
       state: "success",
       message: "User created correctly",
-      payload: datosFormulario
+      payload: formData
     });
 
-    await user.type(screen.getByRole("textbox", { name: "name-input" }), nombre);
-    await user.type(screen.getByRole("textbox", { name: "surname-input" }), apellidos);
-    await user.type(screen.getByRole("textbox", { name: "email-input" }), correo);
-    await user.type(screen.getByLabelText("password-input"), contrasena);
-    await user.type(screen.getByLabelText("repeat-input"), repetirContrasena);
+    await user.type(screen.getByRole("textbox", { name: "name-input" }), name);
+    await user.type(screen.getByRole("textbox", { name: "surname-input" }), surname);
+    await user.type(screen.getByRole("textbox", { name: "email-input" }), email);
+    await user.type(screen.getByLabelText("password-input"), password);
+    await user.type(screen.getByLabelText("repeat-input"), repeatPassword);
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith("/login"));
   });
 
-  it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {
+  it("Should call toast.error with the message when the action returns an error", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUp as jest.Mock;
-    const mensaje = "Error al crear el usuario";
+    const message = "Error al crear el usuario";
 
     accionMock.mockResolvedValue({
       state: "error",
-      message: mensaje
+      message: message
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "NombreValido");
@@ -256,19 +256,19 @@ describe("Suite de pruebas del componente SignUpForm", () => {
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith(mensaje);
+      expect(toast.error).toHaveBeenCalledWith(message);
     });
   });
 
-  it("Debe llamar a toast.success con el mensaje cuando el usuario se crea correctamente", async () => {
+  it("Should call toast.success with the message when the user is created successfully", async () => {
     const { user } = configurar(<SignUpForm />);
 
     const accionMock = signUp as jest.Mock;
-    const mensaje = "Usuario creado correctamente";
+    const message = "Usuario creado correctamente";
 
     accionMock.mockResolvedValue({
       state: "success",
-      message: mensaje
+      message: message
     });
 
     await user.type(screen.getByRole("textbox", { name: "name-input" }), "NombreValido");
@@ -279,7 +279,7 @@ describe("Suite de pruebas del componente SignUpForm", () => {
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith(mensaje);
+      expect(toast.success).toHaveBeenCalledWith(message);
     });
   });
 });

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import Image from "next/image";
 import style from "./style.module.css";
 
-const estadoInicial = {
+const initialState = {
   state: "error" as const,
   message: ""
 };
@@ -19,28 +19,27 @@ const estadoInicial = {
 /**
  * Component that renders the registration form and manages the creation of users.
  *
- * @param props - Props del componente SignUpForm.
  * @returns El registration form as a React element.
  */
 const SignUpForm = (): React.ReactNode => {
   const router = useRouter();
-  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(signUp, estadoInicial);
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(signUp, initialState);
 
   useEffect(() => {
-    if (!estado.message) return;
+    if (!state.message) return;
 
-    if (estado.state === "success") {
-      toast.success(estado.message);
+    if (state.state === "success") {
+      toast.success(state.message);
       router.push("/login");
       return;
     }
 
-    toast.error(estado.message);
-  }, [estado, router]);
+    toast.error(state.message);
+  }, [state, router]);
 
   return (
     <>
-      <form action={accionFormulario} id="signupForm" role="form" className={style.form}>
+      <form action={formAction} id="signupForm" role="form" className={style.form}>
         <div className={style.form__header}>
           <div className={style.form__avatar}>
             <Image src="/assets/icons/profile-100.png" alt="Profile icon" width={80} height={80} />
@@ -50,12 +49,12 @@ const SignUpForm = (): React.ReactNode => {
         </div>
         <FormInput
           labelText="Nombre"
-          errorMsg={estado?.errors?.name ?? ""}
+          errorMsg={state?.errors?.name ?? ""}
           attr={{
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? ""),
+            defaultValue: state?.errors?.name ? "" : ((state.payload?.get("name") as string) ?? ""),
             placeholder: "Introduzca su nombre...",
             required: true
           }}
@@ -63,12 +62,12 @@ const SignUpForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Apellidos"
-          errorMsg={estado?.errors?.surname ?? ""}
+          errorMsg={state?.errors?.surname ?? ""}
           attr={{
             id: "surname",
             name: "surname",
             type: InputType.text,
-            defaultValue: estado?.errors?.surname ? "" : ((estado.payload?.get("surname") as string) ?? ""),
+            defaultValue: state?.errors?.surname ? "" : ((state.payload?.get("surname") as string) ?? ""),
             placeholder: "Introduzca sus apellidos...",
             required: true
           }}
@@ -99,12 +98,12 @@ const SignUpForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Correo"
-          errorMsg={estado?.errors?.email ?? ""}
+          errorMsg={state?.errors?.email ?? ""}
           attr={{
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
+            defaultValue: state?.errors?.email ? "" : ((state.payload?.get("email") as string) ?? ""),
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true
@@ -113,7 +112,7 @@ const SignUpForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Contraseña (min. 15 caracteres)"
-          errorMsg={estado?.errors?.password ?? ""}
+          errorMsg={state?.errors?.password ?? ""}
           attr={{
             id: "password",
             name: "password",
@@ -126,7 +125,7 @@ const SignUpForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Repita la Contraseña"
-          errorMsg={estado?.errors?.repeat ?? ""}
+          errorMsg={state?.errors?.repeat ?? ""}
           attr={{
             id: "repeat",
             name: "repeat",
@@ -137,7 +136,7 @@ const SignUpForm = (): React.ReactNode => {
           }}
         />
 
-        <Button type="submit" text="Enviar" disabled={estaPendiente} fullWidth />
+        <Button type="submit" text="Enviar" disabled={isPending} fullWidth />
       </form>
     </>
   );

@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import style from "./style.module.css";
 
 interface Props {
-  comunidadId: number;
+  communityID: number;
   onClose: () => void;
 }
 
@@ -13,16 +13,18 @@ interface Props {
  * Modal form to post a new message on a community board.
  * Only accessible to community administrators.
  *
- * @param comunidadId ID of the community to which the board belongs
+ * @param communityID ID of the community to which the board belongs
  * @param onClose Modal close function
+ *
+ * @returns The form to post a new message as a React element.
  */
-const MessageAddForm = ({ comunidadId, onClose }: Props): React.ReactNode => {
+const MessageAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleAdd = async (formData: FormData) => {
     setPending(true);
-    await addMessage(comunidadId, formData);
+    await addMessage(communityID, formData);
     setPending(false);
     if (textareaRef.current) {
       textareaRef.current.value = "";

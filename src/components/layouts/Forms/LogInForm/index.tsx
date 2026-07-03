@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import Image from "next/image";
 import style from "./style.module.css";
 
-const estadoInicial: FormActionState = {
+const initialState: FormActionState = {
   state: "error" as const,
   message: ""
 };
@@ -18,29 +18,27 @@ const estadoInicial: FormActionState = {
 /**
  * Component that renders the login form and processes credentials.
  *
- * @param props - Props del componente LogInForm.
- *
- * @returns El login form as a React element.
+ * @returns The login form as a React element.
  */
 const LogInForm = (): React.ReactNode => {
   const router = useRouter();
-  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(logIn, estadoInicial);
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(logIn, initialState);
 
   useEffect(() => {
-    if (!estado.message) return;
+    if (!state.message) return;
 
-    if (estado.state === "success") {
-      toast.success(estado.message);
-      router.push(estado.redirectTo ?? "/communities");
+    if (state.state === "success") {
+      toast.success(state.message);
+      router.push(state.redirectTo ?? "/communities");
       return;
     }
 
-    toast.error(estado.message);
-  }, [estado, router]);
+    toast.error(state.message);
+  }, [state, router]);
 
   return (
     <>
-      <form action={accionFormulario} id="loginForm" className={style.form} role="form">
+      <form action={formAction} id="loginForm" className={style.form} role="form">
         <div className={style.form__header}>
           <div className={style.form__avatar}>
             <Image src="/assets/icons/profile-100.png" alt="Profile icon" width={80} height={80} />
@@ -51,12 +49,12 @@ const LogInForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Correo"
-          errorMsg={estado?.errors?.email ?? ""}
+          errorMsg={state?.errors?.email ?? ""}
           attr={{
             id: "email",
             name: "email",
             type: InputType.email,
-            defaultValue: estado?.errors?.email ? "" : ((estado.payload?.get("email") as string) ?? ""),
+            defaultValue: state?.errors?.email ? "" : ((state.payload?.get("email") as string) ?? ""),
             placeholder: "Introduzca su correo...",
             pattern: "[^@\\s]+@[^@\\s]+.[^@\\s]+",
             required: true
@@ -65,7 +63,7 @@ const LogInForm = (): React.ReactNode => {
 
         <FormInput
           labelText="Contraseña"
-          errorMsg={estado?.errors?.password ?? ""}
+          errorMsg={state?.errors?.password ?? ""}
           attr={{
             id: "password",
             name: "password",
@@ -76,7 +74,7 @@ const LogInForm = (): React.ReactNode => {
           }}
         />
 
-        <Button type="submit" text="Enviar" disabled={estaPendiente} fullWidth />
+        <Button type="submit" text="Enviar" disabled={isPending} fullWidth />
       </form>
     </>
   );

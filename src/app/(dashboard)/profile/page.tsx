@@ -62,12 +62,12 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
       <h1 className={style.title}>Mi perfil</h1>
       <p className={style.description}>Cambiar los datos de tu perfil</p>
       <ProfileForm
-        nombre={usuario.name}
-        apellido={usuario.lastName}
+        name={usuario.name}
+        surname={usuario.lastName}
         email={usuario.email}
         rol={usuario.role as UserRole}
-        imagen={usuario.image ?? undefined}
-        tieneComunidades={tieneComunidades}
+        image={usuario.image ?? undefined}
+        hasCommunities={tieneComunidades}
       />
     </main>
   );

@@ -18,7 +18,7 @@ jest.mock("@/actions/community/communityMessage", () => ({
 
 const addMessageMock = addMessage as jest.Mock;
 
-describe("Suite de pruebas del componente MessageAddForm", () => {
+describe("MessageAddForm component test suite", () => {
   beforeEach(() => {
     addMessageMock.mockResolvedValue(undefined);
   });
@@ -27,8 +27,8 @@ describe("Suite de pruebas del componente MessageAddForm", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe renderizar el popup con su contenido base", () => {
-    render(<MessageAddForm comunidadId={5} onClose={jest.fn()} />);
+  it("Should render the popup with its base content", () => {
+    render(<MessageAddForm communityID={5} onClose={jest.fn()} />);
 
     expect(screen.getByRole("heading", { name: "Nuevo mensaje" })).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Escribe el mensaje...")).toBeInTheDocument();
@@ -36,35 +36,35 @@ describe("Suite de pruebas del componente MessageAddForm", () => {
     expect(screen.getByRole("button", { name: "Publicar" })).toBeInTheDocument();
   });
 
-  it("Debe mostrar el estado inicial no pendiente", () => {
-    render(<MessageAddForm comunidadId={5} onClose={jest.fn()} />);
+  it("Should show the initial non-pending state", () => {
+    render(<MessageAddForm communityID={5} onClose={jest.fn()} />);
 
     expect(screen.getByRole("button", { name: "Publicar" })).toBeEnabled();
     expect(screen.getByRole("button", { name: "Cancelar" })).toBeEnabled();
   });
 
-  it("Debe mostrar 'Publicando...' mientras la publicación está pendiente", async () => {
+  it("Should show 'Publishing...' while the publication is pending", async () => {
     const setPending = jest.fn();
     (useState as jest.MockedFunction<typeof useState>).mockImplementationOnce(() => [true, setPending]);
 
-    render(<MessageAddForm comunidadId={5} onClose={jest.fn()} />);
+    render(<MessageAddForm communityID={5} onClose={jest.fn()} />);
 
     expect(screen.getByRole("button", { name: "Publicando..." })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Cancelar" })).toBeDisabled();
   });
 
-  it("Debe cerrar al hacer clic en 'Cancelar'", async () => {
+  it("Should close when clicking 'Cancel'", async () => {
     const onClose = jest.fn();
-    render(<MessageAddForm comunidadId={5} onClose={onClose} />);
+    render(<MessageAddForm communityID={5} onClose={onClose} />);
 
     await userEvent.click(screen.getByRole("button", { name: "Cancelar" }));
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("Debe cerrar al hacer clic en el overlay", () => {
+  it("Should close when clicking the overlay", () => {
     const onClose = jest.fn();
-    const { container } = render(<MessageAddForm comunidadId={5} onClose={onClose} />);
+    const { container } = render(<MessageAddForm communityID={5} onClose={onClose} />);
 
     const overlay = container.querySelector(".overlay");
     expect(overlay).not.toBeNull();
@@ -74,9 +74,9 @@ describe("Suite de pruebas del componente MessageAddForm", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("No debe cerrar al hacer clic dentro del popup", () => {
+  it("Should not close when clicking inside the popup", () => {
     const onClose = jest.fn();
-    const { container } = render(<MessageAddForm comunidadId={5} onClose={onClose} />);
+    const { container } = render(<MessageAddForm communityID={5} onClose={onClose} />);
 
     const popup = container.querySelector(".popup");
     expect(popup).not.toBeNull();
@@ -86,9 +86,9 @@ describe("Suite de pruebas del componente MessageAddForm", () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it("Debe llamar addMessage con comunidadId y FormData al enviar", async () => {
+  it("Should call addMessage with communityID and FormData on submit", async () => {
     const onClose = jest.fn();
-    render(<MessageAddForm comunidadId={3} onClose={onClose} />);
+    render(<MessageAddForm communityID={3} onClose={onClose} />);
 
     await userEvent.type(screen.getByPlaceholderText("Escribe el mensaje..."), "Hola comunidad");
     await userEvent.click(screen.getByRole("button", { name: "Publicar" }));
@@ -99,9 +99,9 @@ describe("Suite de pruebas del componente MessageAddForm", () => {
     });
   });
 
-  it("Debe limpiar el textarea tras publicar", async () => {
+  it("Should clear the textarea after publishing", async () => {
     const onClose = jest.fn();
-    render(<MessageAddForm comunidadId={3} onClose={onClose} />);
+    render(<MessageAddForm communityID={3} onClose={onClose} />);
 
     const textarea = screen.getByPlaceholderText("Escribe el mensaje...") as HTMLTextAreaElement;
 
@@ -116,7 +116,7 @@ describe("Suite de pruebas del componente MessageAddForm", () => {
     });
   });
 
-  it("No debe fallar si el textarea ya no existe al terminar la publicación", async () => {
+  it("Should not fail if the textarea no longer exists when the publication finishes", async () => {
     const onClose = jest.fn();
     let resolverPublicacion: (() => void) | undefined;
 
@@ -127,7 +127,7 @@ describe("Suite de pruebas del componente MessageAddForm", () => {
         })
     );
 
-    const { unmount } = render(<MessageAddForm comunidadId={3} onClose={onClose} />);
+    const { unmount } = render(<MessageAddForm communityID={3} onClose={onClose} />);
 
     await userEvent.type(screen.getByPlaceholderText("Escribe el mensaje..."), "Mensaje temporal");
     await userEvent.click(screen.getByRole("button", { name: "Publicar" }));

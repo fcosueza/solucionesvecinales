@@ -1,7 +1,7 @@
 "use client";
 
 import { communityFinance } from "@/actions/community/communityFinance";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import style from "./style.module.css";
 
 interface Props {
@@ -20,26 +20,11 @@ interface Props {
  */
 const FinanceAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);
-  const descriptionRef = useRef<HTMLInputElement>(null);
-  const amountRef = useRef<HTMLInputElement>(null);
-  const typeRef = useRef<HTMLSelectElement>(null);
 
   const handleAdd = async (formData: FormData) => {
     setPending(true);
     await communityFinance(communityID, formData);
     setPending(false);
-
-    if (descriptionRef.current) {
-      descriptionRef.current.value = "";
-    }
-
-    if (amountRef.current) {
-      amountRef.current.value = "";
-    }
-
-    if (typeRef.current) {
-      typeRef.current.value = "gasto";
-    }
 
     onClose();
   };
@@ -51,7 +36,6 @@ const FinanceAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
 
         <form action={handleAdd}>
           <input
-            ref={descriptionRef}
             type="text"
             name="descripcion"
             className={style.popupInput}
@@ -61,7 +45,6 @@ const FinanceAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
           />
 
           <input
-            ref={amountRef}
             type="number"
             name="importe"
             className={style.popupInput}
@@ -71,7 +54,7 @@ const FinanceAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
             required
           />
 
-          <select ref={typeRef} name="tipo" className={style.popupSelect} defaultValue="gasto">
+          <select name="tipo" className={style.popupSelect} defaultValue="gasto">
             <option value="gasto">Pago</option>
             <option value="ingreso">Ingreso</option>
           </select>
