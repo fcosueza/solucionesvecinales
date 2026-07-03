@@ -20,7 +20,7 @@ jest.mock("sonner", () => ({
   }
 }));
 
-describe("AddZoneForm", () => {
+describe("AddZoneForm component test suite", () => {
   const mockRefresh = jest.fn();
   const mockOnClose = jest.fn();
 

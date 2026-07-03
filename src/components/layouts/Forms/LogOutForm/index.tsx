@@ -15,11 +15,11 @@ interface Props {
 /**
  * Component that renders a confirmation form to sign out.
  *
- * @param props - Props del componente LogOutForm.
- * @param props.questionText - Question shown to the user.
- * @param props.confirmText - Confirmation button text.
- * @param props.cancelText - Cancel button text.
- * @returns El logout confirmation form as a React element.
+ * @param questionText - Question shown to the user.
+ * @param confirmText - Confirmation button text.
+ * @param cancelText - Cancel button text.
+ *
+ * @returns The logout confirmation form as a React element.
  */
 const LogOutForm = ({
   questionText = "You want to logout?",

@@ -12,15 +12,15 @@ import style from "./style.module.css";
 
 interface Props {
   communityID: number;
-  nombre: string;
-  calle: string;
-  numero: number;
-  ciudad: string;
-  provincia: string;
-  pais: string;
+  name: string;
+  street: string;
+  number: number;
+  city: string;
+  province: string;
+  country: string;
 }
 
-const estadoInicial: FormActionState = {
+const initialState: FormActionState = {
   state: "error" as const,
   message: ""
 };
@@ -31,50 +31,47 @@ const estadoInicial: FormActionState = {
  * It also includes the option to delete the community permanently.
  *
  * @param communityID Community ID to edit
- * @param nombre Current name of the community
- * @param calle Current community street
- * @param numero Current building number
- * @param ciudad Ciudad actual
- * @param provincia Provincia actual
- * @param pais Current country
+ * @param name Current name of the community
+ * @param street Current community street
+ * @param number Current building number
+ * @param city Current city
+ * @param province Current province
+ * @param country Current country
  */
 const CommunitySettingsForm = ({
   communityID,
-  nombre,
-  calle,
-  numero,
-  ciudad,
-  provincia,
-  pais
+  name,
+  street,
+  number,
+  city,
+  province,
+  country
 }: Props): React.ReactNode => {
   const router = useRouter();
-  const [estado, accionFormulario, estaPendiente] = useActionState<FormActionState, FormData>(
-    updateCommunity,
-    estadoInicial
-  );
-  const [estadoEliminar, accionEliminar, eliminando] = useActionState<FormActionState, FormData>(
+  const [state, formAction, isPending] = useActionState<FormActionState, FormData>(updateCommunity, initialState);
+  const [deleteState, deleteAction, isDeleting] = useActionState<FormActionState, FormData>(
     deleteCommunity,
-    estadoInicial
+    initialState
   );
-  const [popupEliminarAbierto, setPopupEliminarAbierto] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   useEffect(() => {
-    if (!estado.message) return;
+    if (!state.message) return;
 
-    if (estado.state === "success") {
-      toast.success(estado.message);
+    if (state.state === "success") {
+      toast.success(state.message);
       router.refresh();
       return;
     }
 
-    toast.error(estado.message);
-  }, [estado, router]);
+    toast.error(state.message);
+  }, [state, router]);
 
   useEffect(() => {
-    if (!estadoEliminar.message) return;
+    if (!deleteState.message) return;
 
-    toast.error(estadoEliminar.message);
-  }, [estadoEliminar]);
+    toast.error(deleteState.message);
+  }, [deleteState]);
 
   return (
     <div className={style.settingsWrapper}>
@@ -82,35 +79,35 @@ const CommunitySettingsForm = ({
         <div className={style.communityImageFrame}>
           <Image
             src="/assets/images/default-community.jpeg"
-            alt={`Imagen de la comunidad ${nombre}`}
+            alt={`Imagen de la comunidad ${name}`}
             width={160}
             height={160}
             className={style.communityImage}
           />
         </div>
         <div className={style.communitySummary}>
-          <p className={style.communityName}>{nombre}</p>
+          <p className={style.communityName}>{name}</p>
           <p className={style.communityAddress}>
-            {calle}, {numero}
+            {street}, {number}
           </p>
           <p className={style.communityAddress}>
-            {ciudad}, {provincia}
+            {city}, {province}
           </p>
-          <p className={style.communityAddress}>{pais}</p>
+          <p className={style.communityAddress}>{country}</p>
         </div>
       </div>
 
-      <form action={accionFormulario} id="communitySettingsForm" role="form" className={style.form}>
+      <form action={formAction} id="communitySettingsForm" role="form" className={style.form}>
         <input type="hidden" name="communityID" value={communityID} />
 
         <FormInput
           labelText="Nombre"
-          errorMsg={estado?.errors?.name ?? ""}
+          errorMsg={state?.errors?.name ?? ""}
           attr={{
             id: "name",
             name: "name",
             type: InputType.text,
-            defaultValue: estado?.errors?.name ? "" : ((estado.payload?.get("name") as string) ?? nombre),
+            defaultValue: state?.errors?.name ? "" : ((state.payload?.get("name") as string) ?? name),
             placeholder: "Introduce el nombre de la comunidad...",
             required: true
           }}
@@ -118,12 +115,12 @@ const CommunitySettingsForm = ({
 
         <FormInput
           labelText="Calle"
-          errorMsg={estado?.errors?.street ?? ""}
+          errorMsg={state?.errors?.street ?? ""}
           attr={{
             id: "street",
             name: "street",
             type: InputType.text,
-            defaultValue: estado?.errors?.street ? "" : ((estado.payload?.get("street") as string) ?? calle),
+            defaultValue: state?.errors?.street ? "" : ((state.payload?.get("street") as string) ?? street),
             placeholder: "Introduce la calle...",
             required: true
           }}
@@ -131,12 +128,12 @@ const CommunitySettingsForm = ({
 
         <FormInput
           labelText="Número"
-          errorMsg={estado?.errors?.number ?? ""}
+          errorMsg={state?.errors?.number ?? ""}
           attr={{
             id: "number",
             name: "number",
             type: InputType.number,
-            defaultValue: estado?.errors?.number ? "" : ((estado.payload?.get("number") as string) ?? String(numero)),
+            defaultValue: state?.errors?.number ? "" : ((state.payload?.get("number") as string) ?? String(number)),
             placeholder: "Introduce el número...",
             required: true
           }}
@@ -144,12 +141,12 @@ const CommunitySettingsForm = ({
 
         <FormInput
           labelText="Ciudad"
-          errorMsg={estado?.errors?.city ?? ""}
+          errorMsg={state?.errors?.city ?? ""}
           attr={{
             id: "city",
             name: "city",
             type: InputType.text,
-            defaultValue: estado?.errors?.city ? "" : ((estado.payload?.get("city") as string) ?? ciudad),
+            defaultValue: state?.errors?.city ? "" : ((state.payload?.get("city") as string) ?? city),
             placeholder: "Introduce la ciudad...",
             required: true
           }}
@@ -157,12 +154,12 @@ const CommunitySettingsForm = ({
 
         <FormInput
           labelText="Provincia"
-          errorMsg={estado?.errors?.province ?? ""}
+          errorMsg={state?.errors?.province ?? ""}
           attr={{
             id: "province",
             name: "province",
             type: InputType.text,
-            defaultValue: estado?.errors?.province ? "" : ((estado.payload?.get("province") as string) ?? provincia),
+            defaultValue: state?.errors?.province ? "" : ((state.payload?.get("province") as string) ?? province),
             placeholder: "Introduce la provincia...",
             required: true
           }}
@@ -170,30 +167,25 @@ const CommunitySettingsForm = ({
 
         <FormInput
           labelText="País"
-          errorMsg={estado?.errors?.country ?? ""}
+          errorMsg={state?.errors?.country ?? ""}
           attr={{
             id: "country",
             name: "country",
             type: InputType.text,
-            defaultValue: estado?.errors?.country ? "" : ((estado.payload?.get("country") as string) ?? pais),
+            defaultValue: state?.errors?.country ? "" : ((state.payload?.get("country") as string) ?? country),
             placeholder: "Introduce el país...",
             required: true
           }}
         />
 
         <div className={style.actionsRow}>
-          <Button type="submit" text="Guardar" disabled={estaPendiente || eliminando} />
-          <Button
-            type="button"
-            text="Eliminar comunidad"
-            variant="danger"
-            onClick={() => setPopupEliminarAbierto(true)}
-          />
+          <Button type="submit" text="Guardar" disabled={isPending || isDeleting} />
+          <Button type="button" text="Eliminar comunidad" variant="danger" onClick={() => setIsDeletePopupOpen(true)} />
         </div>
       </form>
 
-      {popupEliminarAbierto && (
-        <div className={style.overlay} onClick={() => !eliminando && setPopupEliminarAbierto(false)}>
+      {isDeletePopupOpen && (
+        <div className={style.overlay} onClick={() => !isDeleting && setIsDeletePopupOpen(false)}>
           <div
             className={style.popup}
             role="dialog"
@@ -202,26 +194,26 @@ const CommunitySettingsForm = ({
             onClick={event => event.stopPropagation()}
           >
             <h3 id="confirm-delete-community-title" className={style.popupTitle}>
-              Confirmar eliminacion
+              Confirmar eliminación
             </h3>
             <p className={style.popupDescription}>
-              Esta accion eliminara la comunidad <strong>{nombre}</strong> y todos sus datos de forma permanente.
+              Esta accion eliminara la comunidad <strong>{name}</strong> y todos sus datos de forma permanente.
             </p>
             <div className={style.popupActions}>
               <Button
                 type="button"
                 text="Cancelar"
                 variant="secondary"
-                disabled={eliminando}
-                onClick={() => setPopupEliminarAbierto(false)}
+                disabled={isDeleting}
+                onClick={() => setIsDeletePopupOpen(false)}
               />
-              <form action={accionEliminar}>
+              <form action={deleteAction}>
                 <input type="hidden" name="communityID" value={communityID} />
                 <Button
                   type="submit"
-                  text={eliminando ? "Eliminando..." : "Eliminar"}
+                  text={isDeleting ? "Eliminando..." : "Eliminar"}
                   variant="danger"
-                  disabled={eliminando}
+                  disabled={isDeleting}
                 />
               </form>
             </div>

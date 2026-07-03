@@ -28,55 +28,55 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("Suite de pruebas del componente LogInForm", () => {
+describe("LogInForm component test suite", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     pushMock.mockReset();
   });
 
-  it("Debe renderizar el formulario correctamente", () => {
+  it("Should render the form correctly", () => {
     render(<LogInForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
 
-  it("Debe renderizar los campos para insertar el correo y la contraseña", () => {
+  it("Should render the fields for entering email and password", () => {
     render(<LogInForm />);
 
     expect(screen.getByRole("textbox", { name: "email-input" })).toBeInTheDocument();
     expect(screen.getByLabelText("password-input")).toBeInTheDocument();
   });
 
-  it("Debe mostrar en cada campo lo que está escribiendo el usuario", async () => {
+  it("Should update the input fields as the user types", async () => {
     const { user } = configurar(<LogInForm />);
 
-    const correo = "testname@email.com";
-    const contrasena = "asssssssasasdsdasdasdasas";
+    const email = "testname@email.com";
+    const password = "asssssssasasdsdasdasdasas";
 
-    const inputCorreo = screen.getByRole("textbox", { name: "email-input" });
-    const inputContrasena = screen.getByLabelText("password-input");
+    const inputEmail = screen.getByRole("textbox", { name: "email-input" });
+    const inputPassword = screen.getByLabelText("password-input");
 
-    await user.type(inputCorreo, correo);
-    await user.type(inputContrasena, contrasena);
+    await user.type(inputEmail, email);
+    await user.type(inputPassword, password);
 
-    expect(inputCorreo).toHaveValue(correo);
-    expect(inputContrasena).toHaveValue(contrasena);
+    expect(inputEmail).toHaveValue(email);
+    expect(inputPassword).toHaveValue(password);
   });
 
-  it("Debe mostrar el mensaje de error si el correo es incorrecto", async () => {
+  it("Should show an error message if the email is incorrect", async () => {
     const { user } = configurar(<LogInForm />);
 
     const actionMock = logIn as jest.Mock;
-    const datosFormulario = new FormData();
+    const formaData = new FormData();
 
-    const correo = "testname@email.c";
-    const contrasena = "asssssssasasdsdasdasdasas";
+    const email = "testname@email.c";
+    const password = "asssssssasasdsdasdasdasas";
 
-    const inputCorreo = screen.getByRole("textbox", { name: "email-input" });
-    const inputContrasena = screen.getByLabelText("password-input");
+    const inputEmail = screen.getByRole("textbox", { name: "email-input" });
+    const inputPassword = screen.getByLabelText("password-input");
 
-    datosFormulario.append("email", correo);
-    datosFormulario.append("password", contrasena);
+    formaData.append("email", email);
+    formaData.append("password", password);
 
     actionMock.mockResolvedValue({
       state: "error",
@@ -84,33 +84,33 @@ describe("Suite de pruebas del componente LogInForm", () => {
       errors: {
         email: "email incorrecto"
       },
-      payload: datosFormulario
+      payload: formaData
     });
 
-    await user.type(inputCorreo, correo);
-    await user.type(inputContrasena, contrasena);
+    await user.type(inputEmail, email);
+    await user.type(inputPassword, password);
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
     await waitFor(() => {
-      expect(inputCorreo).toHaveValue("");
-      expect(inputContrasena).toHaveValue("");
+      expect(inputEmail).toHaveValue("");
+      expect(inputPassword).toHaveValue("");
     });
   });
 
-  it("Debe mostrar mensaje de error si la contraseña es incorrecta", async () => {
+  it("Should show an error message if the password is incorrect", async () => {
     const { user } = configurar(<LogInForm />);
 
     const actionMock = logIn as jest.Mock;
-    const datosFormulario = new FormData();
-    const correo = "testname@email.com";
-    const contrasena = "as";
+    const formaData = new FormData();
+    const email = "testname@email.com";
+    const password = "as";
 
-    const inputCorreo = screen.getByRole("textbox", { name: "email-input" });
-    const inputContrasena = screen.getByLabelText("password-input");
+    const inputEmail = screen.getByRole("textbox", { name: "email-input" });
+    const inputPassword = screen.getByLabelText("password-input");
 
-    datosFormulario.append("email", correo);
-    datosFormulario.append("password", contrasena);
+    formaData.append("email", email);
+    formaData.append("password", password);
 
     actionMock.mockResolvedValue({
       state: "error",
@@ -118,29 +118,29 @@ describe("Suite de pruebas del componente LogInForm", () => {
       errors: {
         password: "password incorrecto"
       },
-      payload: datosFormulario
+      payload: formaData
     });
 
-    await user.type(inputCorreo, correo);
-    await user.type(inputContrasena, contrasena);
+    await user.type(inputEmail, email);
+    await user.type(inputPassword, password);
     await user.click(screen.getByRole("button"));
 
     expect(await screen.findByRole("alert")).toBeInTheDocument();
     await waitFor(() => {
-      expect(inputContrasena).toHaveValue("");
-      expect(inputCorreo).toHaveValue(correo);
+      expect(inputPassword).toHaveValue("");
+      expect(inputEmail).toHaveValue(email);
     });
   });
 
-  it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {
+  it("Should call toast.error with the message when the action returns an error", async () => {
     const { user } = configurar(<LogInForm />);
 
     const actionMock = logIn as jest.Mock;
-    const mensaje = "Credenciales incorrectas";
+    const message = "Credenciales incorrectas";
 
     actionMock.mockResolvedValue({
       state: "error",
-      message: mensaje
+      message: message
     });
 
     await user.type(screen.getByRole("textbox", { name: "email-input" }), "test@email.com");
@@ -148,19 +148,19 @@ describe("Suite de pruebas del componente LogInForm", () => {
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith(mensaje);
+      expect(toast.error).toHaveBeenCalledWith(message);
     });
   });
 
-  it("Debe llamar a toast.success con el mensaje cuando el inicio de sesión es correcto", async () => {
+  it("Should call toast.success with the message when the action returns success", async () => {
     const { user } = configurar(<LogInForm />);
 
     const actionMock = logIn as jest.Mock;
-    const mensaje = "Sesión iniciada correctamente";
+    const message = "Sesión iniciada correctamente";
 
     actionMock.mockResolvedValue({
       state: "success",
-      message: mensaje
+      message: message
     });
 
     await user.type(screen.getByRole("textbox", { name: "email-input" }), "test@email.com");
@@ -168,11 +168,11 @@ describe("Suite de pruebas del componente LogInForm", () => {
     await user.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith(mensaje);
+      expect(toast.success).toHaveBeenCalledWith(message);
     });
   });
 
-  it("Debe redirigir al back office cuando la accion devuelve redirectTo de webAdmin", async () => {
+  it("Should redirect to the back office when the action returns redirectTo for webAdmin", async () => {
     const { user } = configurar(<LogInForm />);
 
     const actionMock = logIn as jest.Mock;

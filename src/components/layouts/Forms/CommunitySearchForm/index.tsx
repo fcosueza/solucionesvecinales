@@ -11,8 +11,7 @@ interface Props {
 /**
  * Standalone search input used to filter communities.
  *
- * @param props - Search input props.
- * @param props.defaultValue - Initial text used to prefill the search field from query params.
+ * @param defaultValue - Initial text used to prefill the search field from query params.
  *
  * @returns A GET-based search form that submits query text to the current page.
  */

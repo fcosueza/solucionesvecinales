@@ -83,7 +83,7 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
       <p className={style.description}>Gestiona los datos y ajustes de la comunidad</p>
       <CommunitySettingsForm
         communityID={comunidad.id}
-        nombre={comunidad.name}
+        name={comunidad.name}
         calle={comunidad.street}
         numero={comunidad.number}
         ciudad={comunidad.city}

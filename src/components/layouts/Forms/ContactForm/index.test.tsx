@@ -21,17 +21,17 @@ function configurar(jsx: React.ReactNode) {
   };
 }
 
-describe("Suite de pruebas del componente ContactForm", () => {
+describe("ContactForm component test suite", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("Debe renderizar un formulario correctamente", () => {
+  it("should render the form correctly", () => {
     render(<ContactForm />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();
   });
-  it("Debe renderizar los campos del formulario correctamente", () => {
+  it("should render the form fields correctly", () => {
     render(<ContactForm />);
 
     expect(screen.getByRole("textbox", { name: "name-input" })).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     expect(screen.getByRole("textbox", { name: "msg-input" })).toBeInTheDocument();
   });
 
-  it("Debe mostrar en los campos lo que está escribiendo el usuario", async () => {
+  it("should display the user's input in the form fields", async () => {
     const { user } = configurar(<ContactForm />);
 
     const nombre = "testname";
@@ -55,7 +55,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     expect(screen.getByRole("textbox", { name: "msg-input" })).toHaveValue(mensaje);
   });
 
-  it("Debe mostrar el mensaje de error y aplicar la clase si el nombre es incorrecto", async () => {
+  it("should display an error message and apply the class if the name is incorrect", async () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
@@ -88,7 +88,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     });
   });
 
-  it("Debe mostrar el mensaje de error y aplicar la clase si el correo es incorrecto", async () => {
+  it("should display an error message and apply the class if the email is incorrect", async () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
@@ -122,7 +122,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     });
   });
 
-  it("Debe mostrar el mensaje de error y aplicar la clase si el mensaje es incorrecto", async () => {
+  it("should display an error message and apply the class if the message is incorrect", async () => {
     const { user } = configurar(<ContactForm />);
 
     const datosFormulario = new FormData();
@@ -155,7 +155,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     });
   });
 
-  it("Debe llamar a toast.error con el mensaje cuando la acción devuelve un error", async () => {
+  it("should call toast.error with the message when the action returns an error", async () => {
     const { user } = configurar(<ContactForm />);
 
     const accionMock = contactMsg as jest.Mock;
@@ -175,7 +175,7 @@ describe("Suite de pruebas del componente ContactForm", () => {
     });
   });
 
-  it("Debe llamar a toast.success con el mensaje cuando la acción se completa correctamente", async () => {
+  it("should call toast.success with the message when the action completes successfully", async () => {
     const { user } = configurar(<ContactForm />);
 
     const accionMock = contactMsg as jest.Mock;

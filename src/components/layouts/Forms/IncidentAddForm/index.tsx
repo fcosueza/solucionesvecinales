@@ -1,7 +1,7 @@
 "use client";
 
 import { addIncident } from "@/actions/community/communityIncident";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import style from "./style.module.css";
 
 interface Props {
@@ -18,21 +18,11 @@ interface Props {
  */
 const IncidentAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);
-  const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const handleAdd = async (formData: FormData) => {
     setPending(true);
     await addIncident(communityID, formData);
     setPending(false);
-
-    if (titleRef.current) {
-      titleRef.current.value = "";
-    }
-
-    if (descriptionRef.current) {
-      descriptionRef.current.value = "";
-    }
 
     onClose();
   };
@@ -44,7 +34,6 @@ const IncidentAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
 
         <form action={handleAdd}>
           <input
-            ref={titleRef}
             type="text"
             name="titulo"
             className={style.popupInput}
@@ -54,7 +43,6 @@ const IncidentAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
           />
 
           <textarea
-            ref={descriptionRef}
             name="descripcion"
             className={style.popupTextarea}
             placeholder="Describe la incidencia..."

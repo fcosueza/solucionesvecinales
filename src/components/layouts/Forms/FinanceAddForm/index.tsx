@@ -15,6 +15,8 @@ interface Props {
  *
  * @param communityID ID of the community to which the financial record is added
  * @param onClose Modal close function
+ *
+ * @returns The form to add a financial record as a React element.
  */
 const FinanceAddForm = ({ communityID, onClose }: Props): React.ReactNode => {
   const [pending, setPending] = useState(false);
