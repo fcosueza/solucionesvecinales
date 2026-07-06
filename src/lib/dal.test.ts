@@ -10,7 +10,7 @@ jest.mock("@/lib/session", () => ({
   decodeSession: jest.fn()
 }));
 
-describe("Suite de pruebas de verifySession", () => {
+describe("verifySession test suite", () => {
   const cookiesMock = cookies as jest.Mock;
   const decodeSessionMock = decodeSession as jest.Mock;
 
@@ -18,7 +18,7 @@ describe("Suite de pruebas de verifySession", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver isAuth false si decodeSession devuelve error", async () => {
+  it("should return isAuth false if decodeSession returns an error", async () => {
     cookiesMock.mockResolvedValue({
       get: jest.fn().mockReturnValue({ value: "cookie-token" })
     });
@@ -30,7 +30,7 @@ describe("Suite de pruebas de verifySession", () => {
     expect(result).toEqual({ isAuth: false });
   });
 
-  it("Debe devolver isAuth true y session cuando la sesion es valida", async () => {
+  it("should return isAuth true and session when the session is valid", async () => {
     const payload = { userID: "user-1", role: "admin", iat: 111, exp: 222 };
 
     cookiesMock.mockResolvedValue({
@@ -47,7 +47,7 @@ describe("Suite de pruebas de verifySession", () => {
     });
   });
 
-  it("Debe pasar undefined a decodeSession si no hay cookie de session", async () => {
+  it("should pass undefined to decodeSession if there is no session cookie", async () => {
     cookiesMock.mockResolvedValue({
       get: jest.fn().mockReturnValue(undefined)
     });

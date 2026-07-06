@@ -9,18 +9,18 @@ import { BasicError, SessionPayload, SessionVerification } from "@/types";
  * Function to verify the user's session on the server. Runs when accessing protected routes
  * and checks that the user has a valid session. Returns an object with the authentication status and session data if valid.
  *
- * @returns Un object with the isAuth property indicating whether the user is authenticated, and optionally the session data.
+ * @returns An object with the isAuth property indicating whether the user is authenticated, and optionally the session data.
  */
 
 const verifySession = cache(async (): Promise<SessionVerification> => {
-  const valorCookie: string | undefined = (await cookies()).get("session")?.value;
-  const sesion: SessionPayload | BasicError = await decodeSession(valorCookie);
+  const sessionCookie: string | undefined = (await cookies()).get("session")?.value;
+  const session: SessionPayload | BasicError = await decodeSession(sessionCookie);
 
-  if ("error" in sesion) {
+  if ("error" in session) {
     return { isAuth: false };
   }
 
-  return { isAuth: true, session: sesion };
+  return { isAuth: true, session: session };
 });
 
 export default verifySession;

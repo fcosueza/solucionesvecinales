@@ -19,6 +19,7 @@ type ProfileFormFields = z.infer<typeof profileSchema>;
  *
  * @param _prevState Previous form action state
  * @param formData Profile form payload
+ *
  * @returns Form action state with update result
  */
 const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
@@ -148,6 +149,7 @@ const MAX_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 MB
  *
  * @param file The image file to save
  * @param userID The ID of the user to whom the image belongs
+ *
  * @returns An object with the URL of the saved image, or an error message
  */
 const saveProfileImageFile = async (

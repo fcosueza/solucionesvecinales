@@ -12,7 +12,7 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de logInAction", () => {
+describe("logInAction server function test suite", () => {
   const crearFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
@@ -27,36 +27,36 @@ describe("Suite de pruebas de logInAction", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver un error si la validación falla", async () => {
-    const datosForm = crearFormData({
+  it("Should return an error if validation fails", async () => {
+    const formData = crearFormData({
       email: "not-an-email@gmail.c",
       password: "aaa"
     });
 
-    const resultado = await logIn({} as FormActionState, datosForm);
+    const result = await logIn({} as FormActionState, formData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Validación de datos del formulario fallida");
-    expect(resultado.errors).toBeDefined();
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Validación de datos del formulario fallida");
+    expect(result.errors).toBeDefined();
     expect(prisma.user.findUnique).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver un error si el usuario no existe", async () => {
+  it("Should return an error if the user does not exist", async () => {
     (prisma.user.findUnique as jest.Mock).mockResolvedValue(null);
 
-    const datosForm = crearFormData({
+    const formData = crearFormData({
       email: "john@example.com",
       password: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     });
 
-    const resultado = await logIn({} as FormActionState, datosForm);
+    const result = await logIn({} as FormActionState, formData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Validación de datos del formulario fallida");
-    expect(resultado.errors?.email).toBe("No existe un usuario con este correo electrónico en la base de datos.");
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Validación de datos del formulario fallida");
+    expect(result.errors?.email).toBe("No existe un usuario con este correo electrónico en la base de datos.");
   });
 
-  it("Debe devolver un error si la contraseña no coincide", async () => {
+  it("Should return an error if the password does not match", async () => {
     const hashedPassword = await bcrypt.hash("testestestestestestest", 10);
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValue({
@@ -65,19 +65,19 @@ describe("Suite de pruebas de logInAction", () => {
       credentials: { password: hashedPassword }
     });
 
-    const datosForm = crearFormData({
+    const formData = crearFormData({
       email: "john@example.com",
       password: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     });
 
-    const resultado = await logIn({} as FormActionState, datosForm);
+    const result = await logIn({} as FormActionState, formData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Validación de datos del formulario fallida");
-    expect(resultado.errors?.password).toBe("La contraseña no es válida para este usuario.");
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Validación de datos del formulario fallida");
+    expect(result.errors?.password).toBe("La contraseña no es válida para este usuario.");
   });
 
-  it("Debe devolver success si el usuario existe y la contraseña es correcta", async () => {
+  it("Should return success if the user exists and the password is correct", async () => {
     const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValue({
@@ -86,20 +86,20 @@ describe("Suite de pruebas de logInAction", () => {
       credentials: { password: hashedPassword }
     });
 
-    const datosForm = crearFormData({
+    const formData = crearFormData({
       email: "john@example.com",
       password: "aaaaaaaaaaaaaaaaaaaa"
     });
 
-    const resultado = await logIn({} as FormActionState, datosForm);
+    const result = await logIn({} as FormActionState, formData);
 
-    expect(resultado.state).toBe("success");
-    expect(resultado.message).toBe("El nombre de usuario y la contraseña son correctos");
-    expect(resultado.redirectTo).toBe("/communities");
+    expect(result.state).toBe("success");
+    expect(result.message).toBe("El nombre de usuario y la contraseña son correctos");
+    expect(result.redirectTo).toBe("/communities");
     await waitFor(() => expect(createSession).toHaveBeenCalledTimes(1));
   });
 
-  it("Debe devolver redirectTo a backoffice cuando el usuario es webAdmin", async () => {
+  it("Should return redirectTo to backoffice when the user is webAdmin", async () => {
     const hashedPassword = await bcrypt.hash("aaaaaaaaaaaaaaaaaaaa", 10);
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValue({
@@ -108,14 +108,14 @@ describe("Suite de pruebas de logInAction", () => {
       credentials: { password: hashedPassword }
     });
 
-    const datosForm = crearFormData({
+    const formData = crearFormData({
       email: "webadmin@vecinos.local",
       password: "aaaaaaaaaaaaaaaaaaaa"
     });
 
-    const resultado = await logIn({} as FormActionState, datosForm);
+    const result = await logIn({} as FormActionState, formData);
 
-    expect(resultado.state).toBe("success");
-    expect(resultado.redirectTo).toBe("/backoffice/overview");
+    expect(result.state).toBe("success");
+    expect(result.redirectTo).toBe("/backoffice/overview");
   });
 });

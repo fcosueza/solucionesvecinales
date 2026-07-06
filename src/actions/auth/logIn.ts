@@ -10,7 +10,6 @@ import z from "zod";
 
 type CamposLogin = z.infer<typeof logInSchema>;
 
-// Doesn't include password and repeat fields in the payload to avoid sending sensitive information back to the client
 const safePayload = (formData: FormData): FormData => {
   const safe = new FormData();
 
@@ -27,6 +26,7 @@ const safePayload = (formData: FormData): FormData => {
  *
  * @param _prevState Previous form action state
  * @param formData Login form payload
+ *
  * @returns Form action state with validation result and optional redirect path
  */
 const logIn = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
@@ -42,7 +42,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     };
   }
 
-  const usuario = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email: validatedData.data.email
     },
@@ -51,7 +51,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     }
   });
 
-  if (!usuario || !usuario.credentials) {
+  if (!user || !user.credentials) {
     return {
       state: "error",
       message: "Validación de datos del formulario fallida",
@@ -62,7 +62,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
     };
   }
 
-  const passwordMatch: boolean = await bcrypt.compare(validatedData.data.password, usuario.credentials.password);
+  const passwordMatch: boolean = await bcrypt.compare(validatedData.data.password, user.credentials.password);
 
   if (!passwordMatch)
     return {
@@ -74,9 +74,9 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
       payload: safePayload(formData)
     };
 
-  await createSession(usuario.id, usuario.role as UserRole);
+  await createSession(user.id, user.role as UserRole);
 
-  const redirectTo = usuario.role === UserRole.webAdmin ? "/backoffice/overview" : "/communities";
+  const redirectTo = user.role === UserRole.webAdmin ? "/backoffice/overview" : "/communities";
 
   return {
     state: "success",

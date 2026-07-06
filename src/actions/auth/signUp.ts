@@ -26,6 +26,7 @@ const safePayload = (formData: FormData): FormData => {
  *
  * @param _prevState Previous form action state
  * @param formData Sign-up form payload
+ *
  * @returns Form action state with validation or persistence result
  */
 const signUp = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {

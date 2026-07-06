@@ -66,14 +66,14 @@ const deleteContact = async (formData: FormData): Promise<void> => {
 
   if (!session.isAuth || session.session?.role !== UserRole.webAdmin) return;
 
-  const nombre = String(formData.get("nombre") ?? "").trim();
+  const name = String(formData.get("nombre") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
-  const creadoEn = new Date(String(formData.get("creadoEn") ?? ""));
+  const createdAt = new Date(String(formData.get("creadoEn") ?? ""));
 
-  if (!nombre || !email || isNaN(creadoEn.getTime())) return;
+  if (!name || !email || isNaN(createdAt.getTime())) return;
 
   try {
-    await prisma.contact.delete({ where: { name_email_createdAt: { name: nombre, email, createdAt: creadoEn } } });
+    await prisma.contact.delete({ where: { name_email_createdAt: { name: name, email, createdAt: createdAt } } });
     revalidatePath("/backoffice/contacto");
   } catch {}
 };

@@ -41,10 +41,10 @@ describe("Test suite for profile actions", () => {
   const deleteSessionMock = deleteSession as jest.Mock;
   const redirectMock = redirect as unknown as jest.Mock;
 
-  const prismaUsuarioUpdateMock = (prisma as any).user.update as jest.Mock;
+  const prismaUserUpdateMock = (prisma as any).user.update as jest.Mock;
   const prismaTransactionMock = (prisma as any).$transaction as jest.Mock;
 
-  const crearFormData = (data: Record<string, string>) => {
+  const createFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -54,8 +54,8 @@ describe("Test suite for profile actions", () => {
     return fd;
   };
 
-  const formValido = () =>
-    crearFormData({
+  const validForm = () =>
+    createFormData({
       name: "Juan",
       surname: "Perez",
       email: "juan@example.com",
@@ -69,14 +69,14 @@ describe("Test suite for profile actions", () => {
 
   it("Should return an error in updateProfile if there is no session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
-    const formData = formValido();
+    const formData = validForm();
 
-    const resultado = await updateProfile({ state: "error", message: "" }, formData);
+    const result = await updateProfile({ state: "error", message: "" }, formData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Debes iniciar sesión para actualizar tu perfil");
-    expect(resultado.payload).toBe(formData);
-    expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Debes iniciar sesión para actualizar tu perfil");
+    expect(result.payload).toBe(formData);
+    expect(prismaUserUpdateMock).not.toHaveBeenCalled();
   });
 
   it("Should return an error in updateProfile if validation fails", async () => {
@@ -85,9 +85,9 @@ describe("Test suite for profile actions", () => {
       session: { userID: "user-1", role: "tenant" }
     });
 
-    const resultado = await updateProfile(
+    const result = await updateProfile(
       { state: "error", message: "" },
-      crearFormData({
+      createFormData({
         name: "A",
         surname: "B",
         email: "email-invalido",
@@ -96,10 +96,10 @@ describe("Test suite for profile actions", () => {
       })
     );
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Invalid form data");
-    expect(resultado.errors).toBeDefined();
-    expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Invalid form data");
+    expect(result.errors).toBeDefined();
+    expect(prismaUserUpdateMock).not.toHaveBeenCalled();
   });
 
   it("Should update profile without image or password", async () => {
@@ -107,16 +107,16 @@ describe("Test suite for profile actions", () => {
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
     });
-    prismaUsuarioUpdateMock.mockResolvedValue({});
+    prismaUserUpdateMock.mockResolvedValue({});
 
-    const resultado = await updateProfile({ state: "error", message: "" }, formValido());
+    const result = await updateProfile({ state: "error", message: "" }, validForm());
 
-    expect(resultado).toEqual({
+    expect(result).toEqual({
       state: "success",
       message: "Perfil actualizado exitosamente",
       payload: expect.any(FormData)
     });
-    expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
+    expect(prismaUserUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
       data: {
         name: "Juan",
@@ -132,11 +132,11 @@ describe("Test suite for profile actions", () => {
       session: { userID: "user-1", role: "tenant" }
     });
     bcryptHashMock.mockResolvedValue("hashed-pass");
-    prismaUsuarioUpdateMock.mockResolvedValue({});
+    prismaUserUpdateMock.mockResolvedValue({});
 
-    const resultado = await updateProfile(
+    const result = await updateProfile(
       { state: "error", message: "" },
-      crearFormData({
+      createFormData({
         name: "Juan",
         surname: "Perez",
         email: "juan@example.com",
@@ -145,9 +145,9 @@ describe("Test suite for profile actions", () => {
       })
     );
 
-    expect(resultado.state).toBe("success");
+    expect(result.state).toBe("success");
     expect(bcryptHashMock).toHaveBeenCalledWith("123456789012345", 10);
-    expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
+    expect(prismaUserUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
       data: {
         name: "Juan",
@@ -169,15 +169,15 @@ describe("Test suite for profile actions", () => {
       session: { userID: "user-1", role: "tenant" }
     });
 
-    const formData = formValido();
+    const formData = validForm();
     formData.append("imagen", new File(["img"], "avatar.txt", { type: "text/plain" }));
 
-    const resultado = await updateProfile({ state: "error", message: "" }, formData);
+    const result = await updateProfile({ state: "error", message: "" }, formData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Formato de imagen no válido. Usa JPG, PNG, WebP o GIF.");
-    expect(resultado.payload).toBe(formData);
-    expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Formato de imagen no válido. Usa JPG, PNG, WebP o GIF.");
+    expect(result.payload).toBe(formData);
+    expect(prismaUserUpdateMock).not.toHaveBeenCalled();
   });
 
   it("Should return an error in updateProfile if the image exceeds the maximum size", async () => {
@@ -186,15 +186,15 @@ describe("Test suite for profile actions", () => {
       session: { userID: "user-1", role: "tenant" }
     });
 
-    const formData = formValido();
+    const formData = validForm();
     formData.append("imagen", new File(["x".repeat(5 * 1024 * 1024 + 1)], "avatar.png", { type: "image/png" }));
 
-    const resultado = await updateProfile({ state: "error", message: "" }, formData);
+    const result = await updateProfile({ state: "error", message: "" }, formData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("El tamaño de la imagen no puede exceder los 5 MB.");
-    expect(resultado.payload).toBe(formData);
-    expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("El tamaño de la imagen no puede exceder los 5 MB.");
+    expect(result.payload).toBe(formData);
+    expect(prismaUserUpdateMock).not.toHaveBeenCalled();
   });
 
   it("Should return an error in updateProfile if image persistence fails", async () => {
@@ -209,14 +209,14 @@ describe("Test suite for profile actions", () => {
       configurable: true
     });
 
-    const formData = formValido();
+    const formData = validForm();
     formData.append("imagen", file);
 
-    const resultado = await updateProfile({ state: "error", message: "" }, formData);
+    const result = await updateProfile({ state: "error", message: "" }, formData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("No se pudo actualizar el perfil. Por favor, inténtalo de nuevo.");
-    expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("No se pudo actualizar el perfil. Por favor, inténtalo de nuevo.");
+    expect(prismaUserUpdateMock).not.toHaveBeenCalled();
   });
 
   it("Should return an error in updateProfile if Prisma throws an exception", async () => {
@@ -224,12 +224,12 @@ describe("Test suite for profile actions", () => {
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
     });
-    prismaUsuarioUpdateMock.mockRejectedValue(new Error("DB error"));
+    prismaUserUpdateMock.mockRejectedValue(new Error("DB error"));
 
-    const formData = formValido();
-    const resultado = await updateProfile({ state: "error", message: "" }, formData);
+    const formData = validForm();
+    const result = await updateProfile({ state: "error", message: "" }, formData);
 
-    expect(resultado).toEqual({
+    expect(result).toEqual({
       state: "error",
       message: "No se pudo actualizar el perfil. Por favor, inténtalo de nuevo.",
       payload: formData
@@ -242,16 +242,16 @@ describe("Test suite for profile actions", () => {
       session: { userID: "user-1", role: "tenant" }
     });
     mkdirSync(join(process.cwd(), "public", "uploads", "profiles"), { recursive: true });
-    prismaUsuarioUpdateMock.mockResolvedValue({});
+    prismaUserUpdateMock.mockResolvedValue({});
 
-    const formData = formValido();
+    const formData = validForm();
     formData.append("imagen", new File(["img"], "avatar.png", { type: "image/png" }));
 
-    const resultado = await updateProfile({ state: "error", message: "" }, formData);
+    const result = await updateProfile({ state: "error", message: "" }, formData);
 
-    expect(resultado.state).toBe("success");
-    expect(resultado.message).toBe("Perfil actualizado exitosamente");
-    expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith(
+    expect(result.state).toBe("success");
+    expect(result.message).toBe("Perfil actualizado exitosamente");
+    expect(prismaUserUpdateMock).toHaveBeenCalledWith(
       expect.objectContaining({
         where: { id: "user-1" },
         data: expect.objectContaining({ image: expect.stringMatching(/^\/uploads\/profiles\/user-1-\d+\.png$/) })
@@ -264,14 +264,14 @@ describe("Test suite for profile actions", () => {
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
     });
-    prismaUsuarioUpdateMock.mockResolvedValue({});
+    prismaUserUpdateMock.mockResolvedValue({});
 
     // Use a real File with content so jsdom stores it, but override size to 0
     // so imageFile instanceof File is true but size > 0 is false (covers line 66 branch)
     const zeroFile = new File(["x"], "avatar.png", { type: "image/png" });
     Object.defineProperty(zeroFile, "size", { get: () => 0, configurable: true });
 
-    const formData = formValido();
+    const formData = validForm();
     // Spy on formData.get so "imagen" returns the size-0 File (get is only called
     // explicitly in updateProfile for "imagen"; Object.fromEntries uses the iterator)
     jest.spyOn(formData, "get").mockImplementation(key => {
@@ -279,10 +279,10 @@ describe("Test suite for profile actions", () => {
       return FormData.prototype.get.call(formData, key);
     });
 
-    const resultado = await updateProfile({ state: "error", message: "" }, formData);
+    const result = await updateProfile({ state: "error", message: "" }, formData);
 
-    expect(resultado.state).toBe("success");
-    expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
+    expect(result.state).toBe("success");
+    expect(prismaUserUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
       data: { name: "Juan", lastName: "Perez", email: "juan@example.com" }
     });
@@ -291,9 +291,9 @@ describe("Test suite for profile actions", () => {
   it("Should return an error in deleteProfile if there is no session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
 
-    const resultado = await deleteProfile({ state: "error", message: "" });
+    const result = await deleteProfile({ state: "error", message: "" });
 
-    expect(resultado).toEqual({
+    expect(result).toEqual({
       state: "error",
       message: "Debes iniciar sesión para eliminar tu cuenta"
     });
@@ -307,9 +307,9 @@ describe("Test suite for profile actions", () => {
     });
     prismaTransactionMock.mockRejectedValue(new Error("tx error"));
 
-    const resultado = await deleteProfile({ state: "error", message: "" });
+    const result = await deleteProfile({ state: "error", message: "" });
 
-    expect(resultado).toEqual({
+    expect(result).toEqual({
       state: "error",
       message: "No se pudo eliminar la cuenta. Por favor, inténtalo de nuevo."
     });
@@ -346,48 +346,48 @@ describe("Test suite for saveProfileImageFile", () => {
   });
 
   it("Should return an error if the value is not a File", async () => {
-    const resultado = await saveProfileImageFile("no-es-un-file" as unknown as File, "user-1");
+    const result = await saveProfileImageFile("no-es-un-file" as unknown as File, "user-1");
 
-    expect(resultado).toEqual({ error: "No file provided" });
+    expect(result).toEqual({ error: "No file provided" });
   });
 
   it("Should return an error if the file has size 0", async () => {
-    const resultado = await saveProfileImageFile(new File([], "vacio.png", { type: "image/png" }), "user-1");
+    const result = await saveProfileImageFile(new File([], "vacio.png", { type: "image/png" }), "user-1");
 
-    expect(resultado).toEqual({ error: "No file provided" });
+    expect(result).toEqual({ error: "No file provided" });
   });
 
   it("Should return an error if the MIME type is not allowed", async () => {
-    const resultado = await saveProfileImageFile(new File(["data"], "archivo.txt", { type: "text/plain" }), "user-1");
+    const result = await saveProfileImageFile(new File(["data"], "archivo.txt", { type: "text/plain" }), "user-1");
 
-    expect(resultado).toEqual({ error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF." });
+    expect(result).toEqual({ error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF." });
   });
 
   it("Should return an error if the file exceeds the maximum size", async () => {
-    const grande = new File(["x".repeat(5 * 1024 * 1024 + 1)], "grande.png", { type: "image/png" });
-    const resultado = await saveProfileImageFile(grande, "user-1");
+    const bigFile = new File(["x".repeat(5 * 1024 * 1024 + 1)], "grande.png", { type: "image/png" });
+    const result = await saveProfileImageFile(bigFile, "user-1");
 
-    expect(resultado).toEqual({ error: "El tamaño de la imagen no puede exceder los 5 MB." });
+    expect(result).toEqual({ error: "El tamaño de la imagen no puede exceder los 5 MB." });
   });
 
   it("Should save the file and return the URL if the data is valid", async () => {
     mkdirSync(join(process.cwd(), "public", "uploads", "profiles"), { recursive: true });
 
     const file = new File(["img"], "avatar.png", { type: "image/png" });
-    const resultado = await saveProfileImageFile(file, "user-42");
+    const result = await saveProfileImageFile(file, "user-42");
 
-    expect(resultado.error).toBeUndefined();
-    expect(resultado.imagen).toMatch(/^\/uploads\/profiles\/user-42-\d+\.png$/);
+    expect(result.error).toBeUndefined();
+    expect(result.imagen).toMatch(/^\/uploads\/profiles\/user-42-\d+\.png$/);
   });
 
   it("Should use the .jpg extension if the file has no extension", async () => {
     mkdirSync(join(process.cwd(), "public", "uploads", "profiles"), { recursive: true });
 
     const file = new File(["img"], "avatar", { type: "image/png" });
-    const resultado = await saveProfileImageFile(file, "user-42");
+    const result = await saveProfileImageFile(file, "user-42");
 
-    expect(resultado.error).toBeUndefined();
-    expect(resultado.imagen).toMatch(/^\/uploads\/profiles\/user-42-\d+\.jpg$/);
+    expect(result.error).toBeUndefined();
+    expect(result.imagen).toMatch(/^\/uploads\/profiles\/user-42-\d+\.jpg$/);
   });
 
   it("Should propagate the error if reading the file fails", async () => {
@@ -412,9 +412,9 @@ describe("Test suite for uploadProfile", () => {
   it("Should return an error if there is no authenticated session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false, session: null });
 
-    const resultado = await uploadProfile(new FormData());
+    const result = await uploadProfile(new FormData());
 
-    expect(resultado).toEqual({ error: "Debes iniciar sesión para subir una imagen" });
+    expect(result).toEqual({ error: "Debes iniciar sesión para subir una imagen" });
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
@@ -424,9 +424,9 @@ describe("Test suite for uploadProfile", () => {
     const fd = new FormData();
     fd.append("imagen", new File(["data"], "archivo.txt", { type: "text/plain" }));
 
-    const resultado = await uploadProfile(fd);
+    const result = await uploadProfile(fd);
 
-    expect(resultado).toEqual({ error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF." });
+    expect(result).toEqual({ error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF." });
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
@@ -438,9 +438,9 @@ describe("Test suite for uploadProfile", () => {
     const fd = new FormData();
     fd.append("imagen", "no-es-un-file");
 
-    const resultado = await uploadProfile(fd);
+    const result = await uploadProfile(fd);
 
-    expect(resultado.error).toBeDefined();
+    expect(result.error).toBeDefined();
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
@@ -451,9 +451,9 @@ describe("Test suite for uploadProfile", () => {
     const fd = new FormData();
     fd.append("imagen", "no-es-un-file");
 
-    const resultado = await uploadProfile(fd);
+    const result = await uploadProfile(fd);
 
-    expect(resultado.error).toBeDefined();
+    expect(result.error).toBeDefined();
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
@@ -465,13 +465,13 @@ describe("Test suite for uploadProfile", () => {
     const fd = new FormData();
     fd.append("imagen", new File(["img"], "avatar.png", { type: "image/png" }));
 
-    const resultado = await uploadProfile(fd);
+    const result = await uploadProfile(fd);
 
-    expect(resultado.error).toBeUndefined();
-    expect(resultado.imagen).toMatch(/^\/uploads\/profiles\/user-1-\d+\.png$/);
+    expect(result.error).toBeUndefined();
+    expect(result.imagen).toMatch(/^\/uploads\/profiles\/user-1-\d+\.png$/);
     expect(prismaUsuarioUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
-      data: { image: resultado.imagen }
+      data: { image: result.imagen }
     });
   });
 });
