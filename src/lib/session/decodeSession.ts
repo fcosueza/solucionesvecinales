@@ -12,12 +12,12 @@ import { jwtVerify } from "jose";
  * @throws {Error} If an error occurs during token verification
  * @returns Session data if valid, or an error object
  */
-async function descifrarSesion(token: string | undefined = ""): Promise<SessionPayload | BasicError> {
-  const secreto: string | undefined = process.env.SESSION_SECRET;
-  const claveCodificada: Uint8Array = new TextEncoder().encode(secreto);
+async function decodeSession(token: string | undefined = ""): Promise<SessionPayload | BasicError> {
+  const secret: string | undefined = process.env.SESSION_SECRET;
+  const encodedKey: Uint8Array = new TextEncoder().encode(secret);
 
   try {
-    const { payload } = await jwtVerify<SessionPayload>(token, claveCodificada, { algorithms: ["HS256"] });
+    const { payload } = await jwtVerify<SessionPayload>(token, encodedKey, { algorithms: ["HS256"] });
 
     return payload;
   } catch (_error) {
@@ -25,4 +25,4 @@ async function descifrarSesion(token: string | undefined = ""): Promise<SessionP
   }
 }
 
-export default descifrarSesion;
+export default decodeSession;

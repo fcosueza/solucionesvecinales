@@ -1,7 +1,7 @@
-import crearSesion from "./crearSesion";
-import cifrarSesion from "./cifrarSesion";
-import descifrarSesion from "./descifrarSesion";
-import eliminarSesion from "./eliminarSesion";
-import actualizarSesion from "./actualizarSesion";
+import createSession from "./createSession";
+import encodeSession from "./encodeSession";
+import decodeSession from "./decodeSession";
+import deleteSession from "./deleteSession";
+import updateSession from "./updateSession";
 
-export { crearSesion, cifrarSesion, descifrarSesion, eliminarSesion, actualizarSesion };
+export { createSession, encodeSession, decodeSession, deleteSession, updateSession };

@@ -1,6 +1,6 @@
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
-import { eliminarSesion } from "@/lib/session";
+import { deleteSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { mkdirSync } from "fs";
@@ -17,7 +17,7 @@ if (!File.prototype.arrayBuffer) {
 // Mocks
 jest.mock("@/lib/dal", () => jest.fn());
 jest.mock("@/lib/session", () => ({
-  eliminarSesion: jest.fn()
+  deleteSession: jest.fn()
 }));
 jest.mock("bcrypt", () => ({
   hash: jest.fn()
@@ -38,7 +38,7 @@ jest.mock("@/lib/prisma", () => ({
 describe("Test suite for profile actions", () => {
   const verifySessionMock = verifySession as jest.Mock;
   const bcryptHashMock = bcrypt.hash as jest.Mock;
-  const eliminarSesionMock = eliminarSesion as jest.Mock;
+  const deleteSessionMock = deleteSession as jest.Mock;
   const redirectMock = redirect as unknown as jest.Mock;
 
   const prismaUsuarioUpdateMock = (prisma as any).user.update as jest.Mock;
@@ -313,7 +313,7 @@ describe("Test suite for profile actions", () => {
       state: "error",
       message: "No se pudo eliminar la cuenta. Por favor, inténtalo de nuevo."
     });
-    expect(eliminarSesionMock).not.toHaveBeenCalled();
+    expect(deleteSessionMock).not.toHaveBeenCalled();
     expect(redirectMock).not.toHaveBeenCalled();
   });
 
@@ -335,7 +335,7 @@ describe("Test suite for profile actions", () => {
     expect(prismaTransactionMock).toHaveBeenCalledTimes(1);
     expect(tx.community.deleteMany).toHaveBeenCalledWith({ where: { adminId: "25" } });
     expect(tx.user.delete).toHaveBeenCalledWith({ where: { id: "25" } });
-    expect(eliminarSesionMock).toHaveBeenCalledTimes(1);
+    expect(deleteSessionMock).toHaveBeenCalledTimes(1);
     expect(redirectMock).toHaveBeenCalledWith("/");
   });
 });

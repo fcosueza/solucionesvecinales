@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import descifrarSesion from "./descifrarSesion";
+import decodeSession from "./decodeSession";
 
 /**
  * Updates the expiration date of the current session, extending its duration by 7 days.
@@ -10,22 +10,22 @@ import descifrarSesion from "./descifrarSesion";
  * @returns Null if there is no valid session, or void if it was updated successfully
  */
 
-async function actualizarSesion(): Promise<null | void> {
+async function updateSession(): Promise<null | void> {
   const token = (await cookies()).get("session")?.value;
-  const datos = await descifrarSesion(token);
+  const data = await decodeSession(token);
 
-  if (!token || datos.error != undefined) return null;
+  if (!token || data.error != undefined) return null;
 
-  const expiracion = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const almacenCookies = await cookies();
+  const expirationDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const cookieStore = await cookies();
 
-  almacenCookies.set("session", token, {
+  cookieStore.set("session", token, {
     httpOnly: true,
     secure: true,
-    expires: expiracion,
+    expires: expirationDate,
     sameSite: true,
     path: "/"
   });
 }
 
-export default actualizarSesion;
+export default updateSession;

@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import logInSchema from "@/schemas/auth/login.schema";
 import { FormActionState, UserRole } from "@/types";
 import { SafeParseReturnType } from "zod";
-import { crearSesion } from "@/lib/session";
+import { createSession } from "@/lib/session";
 import z from "zod";
 
 type CamposLogin = z.infer<typeof logInSchema>;
@@ -74,7 +74,7 @@ const logIn = async (_prevState: FormActionState, formData: FormData): Promise<F
       payload: safePayload(formData)
     };
 
-  await crearSesion(usuario.id, usuario.role as UserRole);
+  await createSession(usuario.id, usuario.role as UserRole);
 
   const redirectTo = usuario.role === UserRole.webAdmin ? "/backoffice/overview" : "/communities";
 

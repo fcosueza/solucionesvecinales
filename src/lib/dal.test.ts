@@ -1,32 +1,32 @@
 import verifySession from "./dal";
 import { cookies } from "next/headers";
-import { descifrarSesion } from "@/lib/session";
+import { decodeSession } from "@/lib/session";
 
 jest.mock("next/headers", () => ({
   cookies: jest.fn()
 }));
 
 jest.mock("@/lib/session", () => ({
-  descifrarSesion: jest.fn()
+  decodeSession: jest.fn()
 }));
 
 describe("Suite de pruebas de verifySession", () => {
   const cookiesMock = cookies as jest.Mock;
-  const descifrarSesionMock = descifrarSesion as jest.Mock;
+  const decodeSessionMock = decodeSession as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver isAuth false si descifrarSesion devuelve error", async () => {
+  it("Debe devolver isAuth false si decodeSession devuelve error", async () => {
     cookiesMock.mockResolvedValue({
       get: jest.fn().mockReturnValue({ value: "cookie-token" })
     });
-    descifrarSesionMock.mockResolvedValue({ error: "token_invalido", message: "Sesion invalida" });
+    decodeSessionMock.mockResolvedValue({ error: "token_invalido", message: "Sesion invalida" });
 
     const result = await verifySession();
 
-    expect(descifrarSesionMock).toHaveBeenCalledWith("cookie-token");
+    expect(decodeSessionMock).toHaveBeenCalledWith("cookie-token");
     expect(result).toEqual({ isAuth: false });
   });
 
@@ -36,26 +36,26 @@ describe("Suite de pruebas de verifySession", () => {
     cookiesMock.mockResolvedValue({
       get: jest.fn().mockReturnValue({ value: "cookie-token" })
     });
-    descifrarSesionMock.mockResolvedValue(payload);
+    decodeSessionMock.mockResolvedValue(payload);
 
     const result = await verifySession();
 
-    expect(descifrarSesionMock).toHaveBeenCalledWith("cookie-token");
+    expect(decodeSessionMock).toHaveBeenCalledWith("cookie-token");
     expect(result).toEqual({
       isAuth: true,
       session: payload
     });
   });
 
-  it("Debe pasar undefined a descifrarSesion si no hay cookie de session", async () => {
+  it("Debe pasar undefined a decodeSession si no hay cookie de session", async () => {
     cookiesMock.mockResolvedValue({
       get: jest.fn().mockReturnValue(undefined)
     });
-    descifrarSesionMock.mockResolvedValue({ error: "cookie_missing", message: "Sin cookie" });
+    decodeSessionMock.mockResolvedValue({ error: "cookie_missing", message: "Sin cookie" });
 
     const result = await verifySession();
 
-    expect(descifrarSesionMock).toHaveBeenCalledWith(undefined);
+    expect(decodeSessionMock).toHaveBeenCalledWith(undefined);
     expect(result).toEqual({ isAuth: false });
   });
 });

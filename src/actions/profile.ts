@@ -2,7 +2,7 @@
 
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
-import { eliminarSesion } from "@/lib/session";
+import { deleteSession } from "@/lib/session";
 import profileSchema from "@/schemas/common/profile.schema";
 import { FormActionState } from "@/types";
 import bcrypt from "bcrypt";
@@ -134,7 +134,7 @@ const deleteProfile = async (_prevState: FormActionState): Promise<FormActionSta
     };
   }
 
-  await eliminarSesion();
+  await deleteSession();
   redirect("/");
 };
 

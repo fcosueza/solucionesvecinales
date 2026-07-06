@@ -1,5 +1,5 @@
 import { FormActionState, UserRole } from "@/types";
-import { crearSesion } from "@/lib/session";
+import { createSession } from "@/lib/session";
 import { waitFor } from "@testing-library/dom";
 import logIn from "./logIn";
 import prisma from "../../lib/prisma";
@@ -96,7 +96,7 @@ describe("Suite de pruebas de logInAction", () => {
     expect(resultado.state).toBe("success");
     expect(resultado.message).toBe("El nombre de usuario y la contraseña son correctos");
     expect(resultado.redirectTo).toBe("/communities");
-    await waitFor(() => expect(crearSesion).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(createSession).toHaveBeenCalledTimes(1));
   });
 
   it("Debe devolver redirectTo a backoffice cuando el usuario es webAdmin", async () => {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SessionPayload, BasicError } from "@/types";
-import { descifrarSesion } from "./lib/session";
+import { decodeSession } from "./lib/session";
 import { cookies } from "next/headers";
 
 const protectedRoutes = ["/communities", "/backoffice", "/profile", "/contact"];
@@ -22,7 +22,7 @@ async function proxy(req: NextRequest): Promise<NextResponse> {
   const isPublicRoute: boolean = publicRoutes.includes(route);
 
   const cookieValue: string | undefined = (await cookies()).get("session")?.value;
-  const session: SessionPayload | BasicError = await descifrarSesion(cookieValue);
+  const session: SessionPayload | BasicError = await decodeSession(cookieValue);
 
   if (isProtectedRoute && "error" in session) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));

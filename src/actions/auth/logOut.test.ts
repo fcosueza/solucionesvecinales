@@ -1,5 +1,5 @@
 import logOut from "./logOut";
-import { eliminarSesion } from "@/lib/session";
+import { deleteSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 jest.mock("next/navigation");
@@ -10,10 +10,10 @@ describe("Suite de pruebas de logOutAction", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe llamar a la funcio eliminarSesion", async () => {
+  it("Debe llamar a la funcio deleteSession", async () => {
     await logOut();
 
-    expect(eliminarSesion).toHaveBeenCalled();
+    expect(deleteSession).toHaveBeenCalled();
   });
 
   it("Debe redirigir al usuario a la página de inicio", async () => {
