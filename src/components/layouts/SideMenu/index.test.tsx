@@ -8,12 +8,12 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn()
 }));
 
-describe("Suite de pruebas del componente SideMenu", () => {
+describe("SideMenu component test suite", () => {
   beforeEach(() => {
     (rutaActualMock as jest.Mock).mockReturnValue("/communities");
   });
 
-  it("Debe renderizar la estructura principal y los datos del usuario", () => {
+  it("Should render the main structure and user data", () => {
     render(<SideMenu userName="Marina" role={UserRole.tenant} avatarUrl="/assets/images/avatar.jpg" />);
 
     expect(screen.getByLabelText("Menú lateral principal")).toBeInTheDocument();
@@ -30,7 +30,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByAltText("Logo de Soluciones Vecinales en blanco")).toBeInTheDocument();
   });
 
-  it("Debe usar el avatar predeterminado cuando no se indica avatarUrl", () => {
+  it("Should use the default avatar when avatarUrl is not provided", () => {
     render(<SideMenu userName="Carlos" role={UserRole.admin} />);
 
     expect(screen.getByAltText("Avatar de Carlos")).toHaveAttribute(
@@ -39,7 +39,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     );
   });
 
-  it("Debe renderizar la etiqueta correcta para cada rol", () => {
+  it("Should render the correct label for each role", () => {
     const { rerender } = render(<SideMenu userName="Andrea" role={UserRole.admin} />);
     expect(screen.getByText("Administrador")).toBeInTheDocument();
 
@@ -47,7 +47,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByText("Administrador Web")).toBeInTheDocument();
   });
 
-  it("Debe marcar como activo el enlace cuando la ruta coincide exactamente", () => {
+  it("Should mark a link as active when the route matches exactly", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/communities");
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
@@ -57,7 +57,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Salir" })).not.toHaveClass("menuLinkActive");
   });
 
-  it("Debe marcar como activo un enlace distinto de logout cuando la ruta es hija", () => {
+  it("Should mark a non-logout link as active when the route is a child route", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/profile/settings");
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
@@ -66,7 +66,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Mis comunidades" })).not.toHaveClass("menuLinkActive");
   });
 
-  it("No debe marcar como activo logout cuando la ruta es hija de logout", () => {
+  it("Should not mark logout as active when the route is a child of logout", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/logout/confirm");
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
@@ -74,7 +74,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Salir" })).not.toHaveClass("menuLinkActive");
   });
 
-  it("Debe mantener activa Vista General cuando la ruta es el detalle base de la comunidad", () => {
+  it("Should keep Vista General active when the route is the community base detail", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/communities/12");
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
@@ -83,7 +83,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Mis comunidades" })).not.toHaveClass("menuLinkActive");
   });
 
-  it("Debe mantener activo el enlace padre de comunidad cuando la ruta es una subruta", () => {
+  it("Should keep the community parent link active when the route is a subroute", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/communities/12/incidencias/44");
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
@@ -92,7 +92,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Vista General" })).not.toHaveClass("menuLinkActive");
   });
 
-  it("No debe mostrar Solicitudes para un inquilino", () => {
+  it("Should not show Solicitudes for a tenant", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/communities/12");
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
@@ -100,7 +100,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.queryByRole("link", { name: "Solicitudes" })).not.toBeInTheDocument();
   });
 
-  it("Debe mostrar Solicitudes para un administrador", () => {
+  it("Should show Solicitudes for an admin", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/communities/12");
 
     render(<SideMenu userName="Laura" role={UserRole.admin} />);
@@ -108,7 +108,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/communities/12/requests");
   });
 
-  it("Debe mostrar el menu de back office para un administrador web", () => {
+  it("Should show the back-office menu for a web admin", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/backoffice/overview");
 
     render(<SideMenu userName="Laura" role={UserRole.webAdmin} />);
@@ -124,7 +124,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.queryByRole("link", { name: "Perfil de Usuario" })).not.toBeInTheDocument();
   });
 
-  it("Debe mantener activa Vista General en la raiz del back office", () => {
+  it("Should keep Vista General active at the back-office root", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/backoffice");
 
     render(<SideMenu userName="Laura" role={UserRole.webAdmin} />);
@@ -133,7 +133,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Comunidades" })).not.toHaveClass("menuLinkActive");
   });
 
-  it("Debe mantener activa Vista General en una subruta del overview de back office", () => {
+  it("Should keep Vista General active on a back-office overview subroute", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/backoffice/overview/metricas");
 
     render(<SideMenu userName="Laura" role={UserRole.webAdmin} />);
@@ -142,7 +142,7 @@ describe("Suite de pruebas del componente SideMenu", () => {
     expect(screen.getByRole("link", { name: "Comunidades" })).not.toHaveClass("menuLinkActive");
   });
 
-  it("Debe ocultar enlaces de comunidad al salir a Mis comunidades", () => {
+  it("Should hide community links when returning to Mis comunidades", () => {
     (rutaActualMock as jest.Mock).mockReturnValue("/communities/12/overview");
 
     const { rerender } = render(<SideMenu userName="Laura" role={UserRole.admin} />);

@@ -19,7 +19,7 @@ const initialState = {
 /**
  * Component that renders the registration form and manages the creation of users.
  *
- * @returns El registration form as a React element.
+ * @returns The registration form as a React element.
  */
 const SignUpForm = (): React.ReactNode => {
   const router = useRouter();

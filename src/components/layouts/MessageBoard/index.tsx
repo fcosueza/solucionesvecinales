@@ -19,7 +19,8 @@ interface Props {
 /**
  * Formats a Date object as a Spanish date and time label (dd/mm/yyyy hh:mm).
  *
- * @param date El objeto Date a formatear
+ * @param date The date to format
+ *
  * @returns String with the date in Spanish format
  */
 const formatMessageDate = (date: Date): string => {
@@ -33,7 +34,6 @@ const formatMessageDate = (date: Date): string => {
 };
 
 /**
- * Community message board.
  * Shows the list of messages posted by the administrator.
  * If the user is an administrator, they can add and delete messages.
  *

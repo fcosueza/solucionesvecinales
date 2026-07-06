@@ -11,37 +11,37 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn()
 }));
 
-describe("Suite de pruebas del componente OverviewActions", () => {
+describe("OverviewActions component test suite", () => {
   beforeEach(() => {
     (enrutadorMock as jest.Mock).mockReturnValue({ push: pushMock });
     pushMock.mockClear();
   });
 
-  it("Debe renderizar el botón 'Buscar comunidad' para cualquier rol", () => {
+  it("Should render the 'Buscar comunidad' button for any role", () => {
     render(<OverviewActions role={UserRole.tenant} />);
 
     expect(screen.getByRole("button", { name: "Buscar comunidad" })).toBeInTheDocument();
   });
 
-  it("Debe renderizar el botón 'Añadir comunidad' para el rol admin", () => {
+  it("Should render the 'Añadir comunidad' button for the admin role", () => {
     render(<OverviewActions role={UserRole.admin} />);
 
     expect(screen.getByRole("button", { name: "Añadir comunidad" })).toBeInTheDocument();
   });
 
-  it("Debe renderizar el botón 'Añadir comunidad' para el rol webAdmin", () => {
+  it("Should render the 'Añadir comunidad' button for the webAdmin role", () => {
     render(<OverviewActions role={UserRole.webAdmin} />);
 
     expect(screen.getByRole("button", { name: "Añadir comunidad" })).toBeInTheDocument();
   });
 
-  it("No debe renderizar el botón 'Añadir comunidad' para el rol inquilino", () => {
+  it("Should not render the 'Añadir comunidad' button for the tenant role", () => {
     render(<OverviewActions role={UserRole.tenant} />);
 
     expect(screen.queryByRole("button", { name: "Añadir comunidad" })).not.toBeInTheDocument();
   });
 
-  it("Debe navegar a /communities/search al hacer clic en 'Buscar comunidad'", async () => {
+  it("Should navigate to /communities/search when clicking 'Buscar comunidad'", async () => {
     render(<OverviewActions role={UserRole.tenant} />);
 
     await userEvent.click(screen.getByRole("button", { name: "Buscar comunidad" }));
@@ -50,7 +50,7 @@ describe("Suite de pruebas del componente OverviewActions", () => {
     expect(pushMock).toHaveBeenCalledTimes(1);
   });
 
-  it("Debe navegar a /communities/add al hacer clic en 'Añadir comunidad'", async () => {
+  it("Should navigate to /communities/add when clicking 'Añadir comunidad'", async () => {
     render(<OverviewActions role={UserRole.admin} />);
 
     await userEvent.click(screen.getByRole("button", { name: "Añadir comunidad" }));
