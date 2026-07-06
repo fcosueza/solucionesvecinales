@@ -10,6 +10,8 @@ import { revalidatePath } from "next/cache";
  * as long as there is no pending request or the user is not already subscribed to the community.
  *
  * @param formData Form data with the "communityID" field that indicates which community the user wants to subscribe to.
+ *
+ * @returns Promise<void> - Resolves when the request is created or if the user is not authorized or already subscribed.
  */
 const requestCommunitySubscription = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
@@ -27,14 +29,12 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
   const idCommunityTemp = formData.get("communityID");
   const idCommunity = Number(idCommunityTemp);
 
-  // We validate that the communityID is a positive integer
   if (!Number.isInteger(idCommunity) || idCommunity <= 0) {
     return;
   }
 
   const userID = verifiedSession.session.userID;
 
-  // We perform the necessary queries in parallel to optimize performance
   const [community, userCommunities, pendingRequests] = await Promise.all([
     prisma.community.findUnique({
       where: {
@@ -71,24 +71,16 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
     })
   ]);
 
-  // If the community does not exist, we do nothing
   if (!community) {
     return;
   }
 
   const alreadySubscribed = (userCommunities?.memberships.length ?? 0) > 0;
 
-  // If the user is already subscribed to the community, we do nothing
-  if (alreadySubscribed) {
+  if (alreadySubscribed || pendingRequests) {
     return;
   }
 
-  // If a pending request already exists, do nothing
-  if (pendingRequests) {
-    return;
-  }
-
-  // If everything is valid, create the request in "pending" status
   await prisma.request.create({
     data: {
       user: userID,
@@ -105,6 +97,8 @@ const requestCommunitySubscription = async (formData: FormData): Promise<void> =
  * Only available to web administrators.
  *
  * @param formData Form data containing the request id
+ *
+ * @returns Promise<void> - Resolves when the request is deleted or if the user is not authorized
  */
 const deleteRequest = async (formData: FormData): Promise<void> => {
   const session = await verifySession();

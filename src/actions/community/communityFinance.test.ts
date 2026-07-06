@@ -18,20 +18,20 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de communityFinance", () => {
+describe("communityFinance server function test suite", () => {
   const createFormData = ({
-    descripcion = "Factura ascensor",
-    importe = "150.50",
-    tipo = "gasto"
+    description = "Factura ascensor",
+    amount = "150.50",
+    type = "gasto"
   }: {
-    descripcion?: string;
-    importe?: string;
-    tipo?: string;
+    description?: string;
+    amount?: string;
+    type?: string;
   }) => {
     const formData = new FormData();
-    formData.append("descripcion", descripcion);
-    formData.append("importe", importe);
-    formData.append("tipo", tipo);
+    formData.append("descripcion", description);
+    formData.append("importe", amount);
+    formData.append("tipo", type);
     return formData;
   };
 
@@ -40,7 +40,7 @@ describe("Suite de pruebas de communityFinance", () => {
     (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "admin-1" });
   });
 
-  it("No debe hacer nada si el usuario no esta autenticado", async () => {
+  it("Should do nothing if the user is not authenticated", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     await communityFinance(1, createFormData({}));
@@ -48,7 +48,7 @@ describe("Suite de pruebas de communityFinance", () => {
     expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el usuario no es administrador", async () => {
+  it("Should do nothing if the user is not an admin", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: UserRole.tenant }
@@ -59,18 +59,18 @@ describe("Suite de pruebas de communityFinance", () => {
     expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el formulario es invalido", async () => {
+  it("Should do nothing if the form is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
     });
 
-    await communityFinance(0, createFormData({ descripcion: "", importe: "NaN", tipo: "otro" }));
+    await communityFinance(0, createFormData({ description: "", amount: "NaN", type: "otro" }));
 
     expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si faltan campos en el FormData", async () => {
+  it("Should do nothing if fields are missing in FormData", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
@@ -82,7 +82,7 @@ describe("Suite de pruebas de communityFinance", () => {
     expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el usuario no esta inscrito en la comunidad", async () => {
+  it("Should do nothing if the user is not a member of the community", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
@@ -94,14 +94,14 @@ describe("Suite de pruebas de communityFinance", () => {
     expect(prisma.financialRecord.create).not.toHaveBeenCalled();
   });
 
-  it("Debe crear un registro y revalidar rutas si el usuario es admin", async () => {
+  it("Should create a record and revalidate routes if the user is admin", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
     });
     (prisma.financialRecord.create as jest.Mock).mockResolvedValue({});
 
-    await communityFinance(4, createFormData({ descripcion: "  Cuota mensual  ", importe: "300", tipo: "ingreso" }));
+    await communityFinance(4, createFormData({ description: "  Cuota mensual  ", amount: "300", type: "ingreso" }));
 
     expect(prisma.financialRecord.create).toHaveBeenCalledWith({
       data: {
@@ -115,19 +115,19 @@ describe("Suite de pruebas de communityFinance", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/communities/4/overview");
   });
 
-  it("Debe crear un registro si el usuario es webAdmin", async () => {
+  it("Should create a record if the user is webAdmin", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
     });
     (prisma.financialRecord.create as jest.Mock).mockResolvedValue({});
 
-    await communityFinance(2, createFormData({ tipo: "gasto" }));
+    await communityFinance(2, createFormData({ type: "gasto" }));
 
     expect(prisma.financialRecord.create).toHaveBeenCalled();
   });
 
-  it("No debe lanzar error si prisma.create falla", async () => {
+  it("Should not throw an error if prisma.create fails", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
@@ -139,12 +139,12 @@ describe("Suite de pruebas de communityFinance", () => {
   });
 });
 
-describe("Suite de pruebas de deleteRecord", () => {
+describe("deleteRecord test suite", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("No debe hacer nada si no hay sesion autenticada", async () => {
+  it("Should do nothing if there is no authenticated session", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     const formData = new FormData();
@@ -156,7 +156,7 @@ describe("Suite de pruebas de deleteRecord", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el rol no es webAdmin", async () => {
+  it("Should do nothing if the role is not webAdmin", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
@@ -171,7 +171,7 @@ describe("Suite de pruebas de deleteRecord", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el id es invalido", async () => {
+  it("Should do nothing if the id is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
@@ -186,7 +186,7 @@ describe("Suite de pruebas de deleteRecord", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar registro y revalidar rutas", async () => {
+  it("Should delete the record and revalidate routes", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
@@ -203,7 +203,7 @@ describe("Suite de pruebas de deleteRecord", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
   });
 
-  it("No debe lanzar error si prisma.delete falla", async () => {
+  it("Should not throw an error if prisma.delete fails", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }

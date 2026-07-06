@@ -16,7 +16,8 @@ type communityFormFields = z.infer<typeof communitySchema>;
  *
  * @param _prevState Previous form action state
  * @param formData Form data containing community data and communityID
- * @returns Form action state indicating success or failure
+ *
+ * @returns FormActionState indicating success or failure
  */
 const updateCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
@@ -105,7 +106,8 @@ const updateCommunity = async (_prevState: FormActionState, formData: FormData):
  *
  * @param _prevState Previous form action state
  * @param formData Form data containing communityID
- * @returns Form action state on validation failures; otherwise redirects
+ *
+ * @returns FormActionState on validation failures; otherwise redirects
  */
 const deleteCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
@@ -165,6 +167,7 @@ const deleteCommunity = async (_prevState: FormActionState, formData: FormData):
  * Deletes a community from backoffice when executed by a web administrator.
  *
  * @param formData Form data containing the community id
+ * @returns Promise<void> that resolves when the community is deleted and paths are revalidated
  */
 const deleteCommunityAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();

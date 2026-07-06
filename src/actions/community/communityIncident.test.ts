@@ -21,7 +21,7 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de updateIncidentStatus", () => {
+describe("updateIncidentStatus test suite", () => {
   const createFormData = ({
     communityID = "1",
     userID = "user-1",
@@ -45,7 +45,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "user-1" });
   });
 
-  it("No debe hacer nada si el usuario no esta autenticado", async () => {
+  it("Should do nothing if the user is not authenticated", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     await updateIncidentStatus(createFormData({}));
@@ -54,7 +54,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el formulario es invalido", async () => {
+  it("Should do nothing if the form is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
 
     await updateIncidentStatus(createFormData({ communityID: "abc", incidentDate: "invalid-date" }));
@@ -62,7 +62,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(prisma.incident.findFirst).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si userID esta vacio", async () => {
+  it("Should do nothing if userID is empty", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
 
     await updateIncidentStatus(createFormData({ userID: "   " }));
@@ -71,7 +71,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si incidentDate no es valida", async () => {
+  it("Should do nothing if incidentDate is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
 
     await updateIncidentStatus(createFormData({ incidentDate: "fecha-invalida" }));
@@ -80,7 +80,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si faltan userID e incidentDate en el FormData", async () => {
+  it("Should do nothing if userID and incidentDate are missing in FormData", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
     const formData = new FormData();
     formData.append("communityID", "1");
@@ -91,7 +91,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
-  it("No debe actualizar incidencia si el usuario no esta inscrito en la comunidad", async () => {
+  it("Should not update the incident if the user is not a member of the community", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
     (prisma.membership.findUnique as jest.Mock).mockResolvedValue(null);
 
@@ -101,7 +101,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
-  it("Debe cambiar estado de reportado a procesandose", async () => {
+  it("Should change status from reported to inProgress", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
     (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "reported" });
 
@@ -123,7 +123,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/communities/1/overview");
   });
 
-  it("Debe cambiar estado de procesandose a resuelto", async () => {
+  it("Should change status from inProgress to resolved", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
     (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "inProgress" });
 
@@ -143,7 +143,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     });
   });
 
-  it("No debe actualizar si la incidencia ya esta resuelta", async () => {
+  it("Should not update if the incident is already resolved", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
     (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "resolved" });
 
@@ -152,7 +152,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
-  it("No debe actualizar si la incidencia no existe", async () => {
+  it("Should not update if the incident does not exist", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
     (prisma.incident.findFirst as jest.Mock).mockResolvedValue(null);
 
@@ -161,7 +161,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
     expect(prisma.incident.updateMany).not.toHaveBeenCalled();
   });
 
-  it("Debe usar estado resuelto si llega un estado no esperado", async () => {
+  it("Should use resolved status if an unexpected status is received", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "admin-1" } });
     (prisma.incident.findFirst as jest.Mock).mockResolvedValue({ status: "desconocido" });
 
@@ -182,7 +182,7 @@ describe("Suite de pruebas de updateIncidentStatus", () => {
   });
 });
 
-describe("Suite de pruebas de deleteIncident", () => {
+describe("deleteIncident test suite", () => {
   const createFormData = ({
     communityID = "1",
     userID = "user-1",
@@ -206,7 +206,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "admin-1" });
   });
 
-  it("No debe eliminar si no hay sesion", async () => {
+  it("Should not delete if there is no session", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     await deleteIncident(createFormData({}));
@@ -215,7 +215,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar si el usuario no es admin", async () => {
+  it("Should not delete if the user is not admin", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -230,7 +230,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar si los datos son invalidos", async () => {
+  it("Should not delete if data is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -245,7 +245,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar si userID esta vacio", async () => {
+  it("Should not delete if userID is empty", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -261,7 +261,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar si faltan userID e incidentDate en el FormData", async () => {
+  it("Should not delete if userID and incidentDate are missing in FormData", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -280,7 +280,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar si el admin no esta inscrito en la comunidad", async () => {
+  it("Should not delete if the admin is not a member of the community", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -296,7 +296,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar si la incidencia no existe", async () => {
+  it("Should not delete if the incident does not exist", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -311,7 +311,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar incidencias que no esten resueltas", async () => {
+  it("Should not delete incidents that are not resolved", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -326,7 +326,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(prisma.incident.delete).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar incidencias resueltas y revalidar rutas", async () => {
+  it("Should delete resolved incidents and revalidate routes", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -352,7 +352,7 @@ describe("Suite de pruebas de deleteIncident", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/communities/7/overview");
   });
 
-  it("No debe lanzar error si prisma.delete falla", async () => {
+  it("Should not throw an error if prisma.delete fails", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -368,7 +368,7 @@ describe("Suite de pruebas de deleteIncident", () => {
   });
 });
 
-describe("Suite de pruebas de addIncident", () => {
+describe("addIncident test suite", () => {
   const createFormData = ({
     titulo = "Puerta rota",
     descripcion = "La puerta del garaje no cierra"
@@ -389,7 +389,7 @@ describe("Suite de pruebas de addIncident", () => {
     (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "user-1" });
   });
 
-  it("No debe hacer nada si el usuario no esta autenticado", async () => {
+  it("Should do nothing if the user is not authenticated", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     await addIncident(1, createFormData({}));
@@ -397,7 +397,7 @@ describe("Suite de pruebas de addIncident", () => {
     expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si los datos son invalidos", async () => {
+  it("Should do nothing if data is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
 
     await addIncident(0, createFormData({ titulo: "", descripcion: "" }));
@@ -405,7 +405,7 @@ describe("Suite de pruebas de addIncident", () => {
     expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
-  it("No debe crear incidencia si el titulo queda vacio tras trim", async () => {
+  it("Should not create an incident if title is empty after trim", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
 
     await addIncident(3, createFormData({ titulo: "   ", descripcion: "Descripcion valida" }));
@@ -413,7 +413,7 @@ describe("Suite de pruebas de addIncident", () => {
     expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
-  it("No debe crear incidencia si la descripcion queda vacia tras trim", async () => {
+  it("Should not create an incident if description is empty after trim", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
 
     await addIncident(3, createFormData({ titulo: "Titulo valido", descripcion: "   " }));
@@ -421,7 +421,7 @@ describe("Suite de pruebas de addIncident", () => {
     expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
-  it("No debe crear incidencia si faltan titulo y descripcion en el FormData", async () => {
+  it("Should not create an incident if title and description are missing in FormData", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
     const formData = new FormData();
 
@@ -430,7 +430,7 @@ describe("Suite de pruebas de addIncident", () => {
     expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
-  it("No debe crear incidencia si el usuario no esta inscrito en la comunidad", async () => {
+  it("Should not create an incident if the user is not a member of the community", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
     (prisma.membership.findUnique as jest.Mock).mockResolvedValue(null);
 
@@ -439,7 +439,7 @@ describe("Suite de pruebas de addIncident", () => {
     expect(prisma.incident.create).not.toHaveBeenCalled();
   });
 
-  it("Debe crear incidencia y revalidar rutas", async () => {
+  it("Should create an incident and revalidate routes", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
     (prisma.incident.create as jest.Mock).mockResolvedValue({});
 
@@ -458,7 +458,7 @@ describe("Suite de pruebas de addIncident", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/communities/3/overview");
   });
 
-  it("No debe lanzar error si prisma.create falla", async () => {
+  it("Should not throw an error if prisma.create fails", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: true, session: { userID: "user-1" } });
     (prisma.incident.create as jest.Mock).mockRejectedValue(new Error("DB error"));
 
@@ -467,7 +467,7 @@ describe("Suite de pruebas de addIncident", () => {
   });
 });
 
-describe("Suite de pruebas de deleteIncidentAdmin", () => {
+describe("deleteIncidentAdmin test suite", () => {
   const createFormData = ({
     comunidad = "3",
     usuario = "user-1",
@@ -490,7 +490,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
     jest.clearAllMocks();
   });
 
-  it("No debe hacer nada si no hay sesion autenticada", async () => {
+  it("Should do nothing if there is no authenticated session", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     await deleteIncidentAdmin(createFormData({}));
@@ -499,7 +499,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el rol no es webAdmin", async () => {
+  it("Should do nothing if the role is not webAdmin", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
@@ -511,7 +511,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si los datos son invalidos", async () => {
+  it("Should do nothing if data is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
@@ -523,7 +523,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si faltan usuario y fecha en el FormData", async () => {
+  it("Should do nothing if usuario and fecha are missing in FormData", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
@@ -538,7 +538,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar incidencia y revalidar rutas", async () => {
+  it("Should delete incident and revalidate routes", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
@@ -560,7 +560,7 @@ describe("Suite de pruebas de deleteIncidentAdmin", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
   });
 
-  it("No debe lanzar error si prisma.delete falla", async () => {
+  it("Should not throw an error if prisma.delete fails", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }

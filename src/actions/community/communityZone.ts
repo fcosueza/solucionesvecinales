@@ -10,6 +10,7 @@ import { revalidatePath } from "next/cache";
  *
  * @param communityID Community identifier
  * @param formData Form data with zone name, description and time range
+ *
  * @returns Form action state with creation result
  */
 const createZone = async (communityID: number, formData: FormData): Promise<FormActionState> => {
@@ -137,7 +138,8 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
  * Deletes a common area from a community managed by the authenticated admin.
  *
  * @param communityID Community identifier
- * @param zoneName Zone name
+ * @param zoneName Name of the zone to be deleted
+ *
  * @returns Form action state with deletion result
  */
 const deleteZone = async (communityID: number, zoneName: string): Promise<FormActionState> => {
@@ -207,6 +209,7 @@ const deleteZone = async (communityID: number, zoneName: string): Promise<FormAc
  * Deletes a common area from backoffice when executed by a web administrator.
  *
  * @param formData Form data containing the community id and zone name
+ * @returns Promise<void> - Resolves when the zone is deleted or if the user is not authorized
  */
 const deleteZoneAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();

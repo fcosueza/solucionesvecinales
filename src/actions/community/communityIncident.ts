@@ -12,6 +12,7 @@ type IncidentState = "reported" | "inProgress" | "resolved";
  * The progression is: reported -> processing -> resolved
  *
  * @param currentState Current incident status
+ *
  * @returns Next status in the sequence
  */
 const getNextState = (currentState: IncidentState): IncidentState => {
@@ -32,6 +33,7 @@ const getNextState = (currentState: IncidentState): IncidentState => {
  * Validate permissions before updating.
  *
  * @param formData FormData that must contain: communityID, userID and incidentDate
+ * @returns Promise<void> - Resolves when the incident status is updated or if the user is not authorized
  */
 const updateIncidentStatus = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
@@ -104,6 +106,7 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
  * Revalidates issues backoffice routes after deleting.
  *
  * @param formData FormData that must contain the ID of the incident to be deleted
+ * @returns Promise<void> - Resolves when the incident is deleted or if the user is not authorized
  */
 const deleteIncident = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
@@ -179,6 +182,8 @@ const deleteIncident = async (formData: FormData): Promise<void> => {
  *
  * @param communityID Community identifier
  * @param formData Form data containing title and description
+ *
+ * @returns Promise<void> - Resolves when the incident is added or if the user is not authorized
  */
 const addIncident = async (communityID: number, formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
@@ -230,6 +235,8 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
  * Deletes an incident from backoffice when performed by a web administrator.
  *
  * @param formData Form data containing community, user and incident date
+ *
+ * @returns Promise<void> - Resolves when the incident is deleted or if the user is not authorized
  */
 const deleteIncidentAdmin = async (formData: FormData): Promise<void> => {
   const session = await verifySession();

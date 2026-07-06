@@ -12,6 +12,8 @@ import { revalidatePath } from "next/cache";
  *
  * @param communityID - ID of the community where the movement is registered
  * @param formData - FormData that must contain: description, amount and type (income/expense)
+ *
+ * @returns Promise<void> - Resolves when the record is created or if the user is not authorized
  */
 const communityFinance = async (communityID: number, formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
@@ -26,7 +28,7 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
     return;
   }
 
-  const inscription = await prisma.membership.findUnique({
+  const membership = await prisma.membership.findUnique({
     where: {
       user_community: {
         user: verifiedSession.session.userID,
@@ -38,7 +40,7 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
     }
   });
 
-  if (!inscription) {
+  if (!membership) {
     return;
   }
 

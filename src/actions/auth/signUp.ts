@@ -70,7 +70,6 @@ const signUp = async (_prevState: FormActionState, formData: FormData): Promise<
     };
   }
 
-  // Successfully created user
   return {
     state: "success",
     message: "Usuario creado exitosamente"

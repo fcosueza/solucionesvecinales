@@ -15,13 +15,12 @@ type CamposFormularioComunidad = z.infer<typeof communitySchema>;
  * @param _prevState Previous state of the form action.
  * @param formData Data sent from the community registration form.
  *
- * @returns El new state of the form with the result of the creation.
+ * @returns The new state of the form with the result of the creation.
  */
 const addCommunity = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  // If the user is not authenticated, an error is returned
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     return {
       state: "error",
       message: "Debes iniciar sesión para crear una comunidad",
@@ -29,12 +28,9 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // You must verify that the user is an administrator
-  const esAdministrador =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  // If the user is not an administrator, they cannot create the community
-  if (!esAdministrador) {
+  if (!isAdmin) {
     return {
       state: "error",
       message: "No tienes permisos para crear comunidades",
@@ -42,42 +38,38 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // We validate the form data using the schema defined with Zod
-  const datos: object = Object.fromEntries(formData);
-  const datosValidados: SafeParseReturnType<object, CamposFormularioComunidad> = communitySchema.safeParse(datos);
+  const rawData: object = Object.fromEntries(formData);
+  const validatedData: SafeParseReturnType<object, CamposFormularioComunidad> = communitySchema.safeParse(rawData);
 
-  // If the data is invalid, an error status is returned with validation messages
-  if (!datosValidados.success) {
+  if (!validatedData.success) {
     return {
       state: "error",
       message: "Datos del formulario incorrectos",
-      errors: datosValidados.error.flatten().fieldErrors,
+      errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
   }
 
-  // We try to create the community in the database
   try {
     await prisma.community.create({
       data: {
-        name: datosValidados.data.name,
-        street: datosValidados.data.street,
-        number: datosValidados.data.number,
-        city: datosValidados.data.city,
-        province: datosValidados.data.province,
-        country: datosValidados.data.country,
-        adminId: sesionVerificada.session.userID,
+        name: validatedData.data.name,
+        street: validatedData.data.street,
+        number: validatedData.data.number,
+        city: validatedData.data.city,
+        province: validatedData.data.province,
+        country: validatedData.data.country,
+        adminId: verifiedSession.session.userID,
         memberships: {
           create: [
             {
-              user: sesionVerificada.session.userID
+              user: verifiedSession.session.userID
             }
           ]
         }
       }
     });
   } catch (error: unknown) {
-    // If the error is a unique key conflict, we return a duplicate error
     if (
       typeof error === "object" &&
       error !== null &&
@@ -91,7 +83,6 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
       };
     }
 
-    // For any other errors, we return a generic message
     return {
       state: "error",
       message: "No se pudo crear la comunidad",
@@ -102,7 +93,6 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
     };
   }
 
-  // If everything goes well, return the status as success
   return {
     state: "success",
     message: "Comunidad creada exitosamente",

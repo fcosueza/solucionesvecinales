@@ -14,6 +14,7 @@ const isValidDecision = (value: string): value is Decision => {
  * Reviews a pending community subscription request and approves or rejects it.
  *
  * @param formData Form data containing communityID, requestID and decision
+ * @returns Promise<void> that resolves when the request is processed and paths are revalidated
  */
 const reviewCommunityRequest = async (formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();

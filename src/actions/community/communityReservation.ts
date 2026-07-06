@@ -20,7 +20,8 @@ import { revalidatePath } from "next/cache";
  * @param userID User ID
  * @param currentDate The current date
  * @param currentTime The current time
- * @returns Objeto filter for Prism
+ *
+ * @returns Prisma filter object to find upcoming reservations for the user
  */
 const getUpcomingReservationFilter = (userID: string, currentDate: Date, currentTime: Date) => ({
   user: userID,
@@ -32,7 +33,8 @@ const getUpcomingReservationFilter = (userID: string, currentDate: Date, current
  *
  * @param message Error message to show to the user
  * @param formData Optional form data to return to customer
- * @returns FormActionState object with error status
+ *
+ * @returns FormActionState object with error state and message
  */
 const createReservationError = (message: string, formData?: FormData): FormActionState => ({
   state: "error",
@@ -48,7 +50,8 @@ const createReservationError = (message: string, formData?: FormData): FormActio
  * @param communityID Community ID
  * @param zoneName Name of the common area to reserve
  * @param formData FormData that must contain: date, start time and duration
- * @returns FormActionState with the result of the operation
+ *
+ * @returns FormActionState with the result of the reservation attempt
  */
 const reserveCommonArea = async (
   communityID: number,
@@ -83,7 +86,7 @@ const reserveCommonArea = async (
     return createReservationError("Solo puedes reservar dentro de los próximos 7 días", formData);
   }
 
-  const [inscription, zone] = await Promise.all([
+  const [membership, zone] = await Promise.all([
     prisma.membership.findUnique({
       where: {
         user_community: {
@@ -110,7 +113,7 @@ const reserveCommonArea = async (
     })
   ]);
 
-  if (!inscription) {
+  if (!membership) {
     return createReservationError("No perteneces a esta comunidad", formData);
   }
 
@@ -226,7 +229,8 @@ const reserveCommonArea = async (
  *
  * @param reservationID Reservation identifier
  * @param communityID Community identifier
- * @returns Form action state with cancellation result
+ *
+ * @returns FormActionState with the result of the cancellation attempt
  */
 const deleteReservation = async (reservationID: number, communityID: number): Promise<FormActionState> => {
   const verifiedSession = await verifySession();

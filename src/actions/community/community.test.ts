@@ -11,8 +11,8 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de addCommunity", () => {
-  const crearFormData = (data: Record<string, string>) => {
+describe("addCommunity server function test suite", () => {
+  const createFormData = (data: Record<string, string>) => {
     const fd = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -22,8 +22,8 @@ describe("Suite de pruebas de addCommunity", () => {
     return fd;
   };
 
-  const formValido = () =>
-    crearFormData({
+  const validForm = () =>
+    createFormData({
       name: "Comunidad Centro",
       street: "Mayor",
       number: "10",
@@ -36,17 +36,17 @@ describe("Suite de pruebas de addCommunity", () => {
     jest.clearAllMocks();
   });
 
-  it("Debe devolver un error si el usuario no está autenticado", async () => {
+  it("Should return an error if the user is not authenticated", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
-    const resultado = await addCommunity({} as FormActionState, formValido());
+    const result = await addCommunity({} as FormActionState, validForm());
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Debes iniciar sesión para crear una comunidad");
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Debes iniciar sesión para crear una comunidad");
     expect(prisma.community.create).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver un error si el usuario no tiene rol administrador", async () => {
+  it("Should return an error if the user does not have the admin role", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -55,14 +55,14 @@ describe("Suite de pruebas de addCommunity", () => {
       }
     });
 
-    const resultado = await addCommunity({} as FormActionState, formValido());
+    const result = await addCommunity({} as FormActionState, validForm());
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("No tienes permisos para crear comunidades");
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("No tienes permisos para crear comunidades");
     expect(prisma.community.create).not.toHaveBeenCalled();
   });
 
-  it("Debe devolver un error si la validación falla", async () => {
+  it("Should return an error if validation fails", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -71,7 +71,7 @@ describe("Suite de pruebas de addCommunity", () => {
       }
     });
 
-    const datosInvalidos = crearFormData({
+    const invalidData = createFormData({
       name: "A",
       street: "C",
       number: "0",
@@ -80,15 +80,15 @@ describe("Suite de pruebas de addCommunity", () => {
       country: "E"
     });
 
-    const resultado = await addCommunity({} as FormActionState, datosInvalidos);
+    const result = await addCommunity({} as FormActionState, invalidData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Datos del formulario incorrectos");
-    expect(resultado.errors).toBeDefined();
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Datos del formulario incorrectos");
+    expect(result.errors).toBeDefined();
     expect(prisma.community.create).not.toHaveBeenCalled();
   });
 
-  it("Debe crear la comunidad correctamente cuando los datos son válidos", async () => {
+  it("Should create the community successfully when data is valid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -99,10 +99,10 @@ describe("Suite de pruebas de addCommunity", () => {
 
     (prisma.community.create as jest.Mock).mockResolvedValue({ id: 1 });
 
-    const resultado = await addCommunity({} as FormActionState, formValido());
+    const result = await addCommunity({} as FormActionState, validForm());
 
-    expect(resultado.state).toBe("success");
-    expect(resultado.message).toBe("Comunidad creada exitosamente");
+    expect(result.state).toBe("success");
+    expect(result.message).toBe("Comunidad creada exitosamente");
     expect(prisma.community.create).toHaveBeenCalledWith({
       data: {
         name: "Comunidad Centro",
@@ -123,7 +123,7 @@ describe("Suite de pruebas de addCommunity", () => {
     });
   });
 
-  it("Debe devolver un error específico si Prisma devuelve P2002", async () => {
+  it("Should return a specific error if Prisma returns P2002", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -134,15 +134,15 @@ describe("Suite de pruebas de addCommunity", () => {
 
     (prisma.community.create as jest.Mock).mockRejectedValue({ code: "P2002" });
 
-    const datosFormulario = formValido();
-    const resultado = await addCommunity({} as FormActionState, datosFormulario);
+    const validData = validForm();
+    const result = await addCommunity({} as FormActionState, validData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("Ya existe una comunidad con esos datos");
-    expect(resultado.payload).toBe(datosFormulario);
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("Ya existe una comunidad con esos datos");
+    expect(result.payload).toBe(validData);
   });
 
-  it("Debe devolver un error interno si Prisma falla por un motivo distinto", async () => {
+  it("Should return an internal error if Prisma fails for a different reason", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -153,12 +153,12 @@ describe("Suite de pruebas de addCommunity", () => {
 
     (prisma.community.create as jest.Mock).mockRejectedValue(new Error("DB error"));
 
-    const datosFormulario = formValido();
-    const resultado = await addCommunity({} as FormActionState, datosFormulario);
+    const validData = validForm();
+    const result = await addCommunity({} as FormActionState, validData);
 
-    expect(resultado.state).toBe("error");
-    expect(resultado.message).toBe("No se pudo crear la comunidad");
-    expect(resultado.errors?.prisma).toBe("Error interno");
-    expect(resultado.payload).toBe(datosFormulario);
+    expect(result.state).toBe("error");
+    expect(result.message).toBe("No se pudo crear la comunidad");
+    expect(result.errors?.prisma).toBe("Error interno");
+    expect(result.payload).toBe(validData);
   });
 });

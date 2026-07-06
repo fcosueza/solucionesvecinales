@@ -18,17 +18,17 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de communityMessage", () => {
+describe("communityMessage test suite", () => {
   const verifySessionMock = verifySession as jest.Mock;
   const prismaCreateMock = prisma.message.create as jest.Mock;
   const prismaDeleteMock = prisma.message.delete as jest.Mock;
   const revalidatePathMock = revalidatePath as jest.Mock;
 
-  const createFormData = (texto?: string) => {
+  const createFormData = (text?: string) => {
     const formData = new FormData();
 
-    if (texto !== undefined) {
-      formData.append("texto", texto);
+    if (text !== undefined) {
+      formData.append("texto", text);
     }
 
     return formData;
@@ -39,7 +39,7 @@ describe("Suite de pruebas de communityMessage", () => {
     (prisma.membership.findUnique as jest.Mock).mockResolvedValue({ user: "admin-1" });
   });
 
-  it("No debe anadir mensaje si no hay sesion", async () => {
+  it("Should not add a message if there is no session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
 
     await addMessage(10, createFormData("Mensaje valido"));
@@ -48,7 +48,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("No debe anadir mensaje si no es admin", async () => {
+  it("Should not add a message if the user is not admin", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -63,7 +63,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("No debe anadir mensaje si el texto esta vacio o en blanco", async () => {
+  it("Should not add a message if text is empty or blank", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -78,7 +78,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe anadir mensaje y revalidar si el usuario es admin", async () => {
+  it("Should add a message and revalidate if the user is admin", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -99,7 +99,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).toHaveBeenCalledWith("/communities/15/overview");
   });
 
-  it("Debe anadir mensaje y revalidar si el usuario es webAdmin", async () => {
+  it("Should add a message and revalidate if the user is webAdmin", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -120,7 +120,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).toHaveBeenCalledWith("/communities/22/overview");
   });
 
-  it("No debe anadir mensaje si el usuario no esta inscrito en la comunidad", async () => {
+  it("Should not add a message if the user is not a member of the community", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -136,7 +136,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("No debe propagar error ni revalidar si falla create", async () => {
+  it("Should not propagate error or revalidate if create fails", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -150,7 +150,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar mensaje si no hay sesion", async () => {
+  it("Should not delete a message if there is no session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
 
     await deleteMessage(7, new Date("2026-05-02T09:30:00.000Z"));
@@ -159,7 +159,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("No debe eliminar mensaje si no es admin", async () => {
+  it("Should not delete a message if the user is not admin", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -174,7 +174,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar mensaje y revalidar si es admin", async () => {
+  it("Should delete a message and revalidate if the user is admin", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -184,13 +184,13 @@ describe("Suite de pruebas de communityMessage", () => {
     });
     prismaDeleteMock.mockResolvedValue({});
 
-    const creadoEn = new Date("2026-05-02T09:30:00.000Z");
-    await deleteMessage(7, creadoEn);
+    const createdAt = new Date("2026-05-02T09:30:00.000Z");
+    await deleteMessage(7, createdAt);
 
     expect(prismaDeleteMock).toHaveBeenCalledWith({
       where: {
         createdAt_community: {
-          createdAt: creadoEn,
+          createdAt: createdAt,
           community: 7
         }
       }
@@ -198,7 +198,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).toHaveBeenCalledWith("/communities/7/overview");
   });
 
-  it("Debe eliminar mensaje y revalidar si es webAdmin", async () => {
+  it("Should delete a message and revalidate if the user is webAdmin", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -208,13 +208,13 @@ describe("Suite de pruebas de communityMessage", () => {
     });
     prismaDeleteMock.mockResolvedValue({});
 
-    const creadoEn = new Date("2026-05-02T09:30:00.000Z");
-    await deleteMessage(11, creadoEn);
+    const createdAt = new Date("2026-05-02T09:30:00.000Z");
+    await deleteMessage(11, createdAt);
 
     expect(prismaDeleteMock).toHaveBeenCalledWith({
       where: {
         createdAt_community: {
-          createdAt: creadoEn,
+          createdAt: createdAt,
           community: 11
         }
       }
@@ -222,7 +222,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).toHaveBeenCalledWith("/communities/11/overview");
   });
 
-  it("No debe eliminar mensaje si el usuario no esta inscrito en la comunidad", async () => {
+  it("Should not delete a message if the user is not a member of the community", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {
@@ -238,7 +238,7 @@ describe("Suite de pruebas de communityMessage", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("No debe propagar error ni revalidar si falla delete", async () => {
+  it("Should not propagate error or revalidate if delete fails", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: {

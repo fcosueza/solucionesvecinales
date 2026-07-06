@@ -25,7 +25,7 @@ jest.mock("@/lib/prisma", () => ({
   $transaction: jest.fn(async callback => callback(txMock))
 }));
 
-describe("Suite de pruebas de reviewCommunityRequest", () => {
+describe("reviewCommunityRequest test suite", () => {
   const createFormData = ({
     communityID = "1",
     requestID = "101",
@@ -48,7 +48,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     jest.clearAllMocks();
   });
 
-  it("No debe hacer nada si el usuario no está autenticado", async () => {
+  it("Should do nothing if the user is not authenticated", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     await reviewCommunityRequest(createFormData({}));
@@ -57,7 +57,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(prisma.$transaction).not.toHaveBeenCalled();
   });
 
-  it("No debe permitir revisión si el usuario no administra la comunidad", async () => {
+  it("Should not allow review if the user does not manage the community", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -73,7 +73,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(txMock.request.updateMany).not.toHaveBeenCalled();
   });
 
-  it("Debe aprobar solicitud pendiente y crear inscripción", async () => {
+  it("Should approve a pending request and create membership", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -113,7 +113,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/communities/1/solicitudes");
   });
 
-  it("Debe denegar solicitud pendiente sin crear inscripción", async () => {
+  it("Should reject a pending request without creating membership", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -140,7 +140,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(txMock.membership.upsert).not.toHaveBeenCalled();
   });
 
-  it("No debe cambiar solicitud si no está pendiente", async () => {
+  it("Should not change request if it is not pending", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -157,7 +157,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(txMock.membership.upsert).not.toHaveBeenCalled();
   });
 
-  it("No debe crear inscripción si updateMany no actualizó ninguna fila", async () => {
+  it("Should not create membership if updateMany did not update any row", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -175,7 +175,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(txMock.membership.upsert).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si los datos del formulario no son válidos", async () => {
+  it("Should do nothing if form data is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -189,7 +189,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(prisma.$transaction).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si la decisión no es válida", async () => {
+  it("Should do nothing if decision is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -208,7 +208,7 @@ describe("Suite de pruebas de reviewCommunityRequest", () => {
     expect(prisma.$transaction).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el campo decision es null", async () => {
+  it("Should do nothing if decision field is null", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {

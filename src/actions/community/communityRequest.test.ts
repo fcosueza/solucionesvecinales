@@ -22,7 +22,7 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-describe("Suite de pruebas de requestCommunitySubscription", () => {
+describe("requestCommunitySubscription test suite", () => {
   const formDataWithCommunity = (communityID: string) => {
     const formData = new FormData();
 
@@ -35,7 +35,7 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     jest.clearAllMocks();
   });
 
-  it("No debe hacer nada si el usuario no está autenticado", async () => {
+  it("Should do nothing if the user is not authenticated", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     await requestCommunitySubscription(formDataWithCommunity("5"));
@@ -45,7 +45,7 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si communityID no es válido", async () => {
+  it("Should do nothing if communityID is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -60,7 +60,7 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe crear solicitud si el usuario es administrador", async () => {
+  it("Should not create a request if the user is an admin", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -78,7 +78,7 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe crear solicitud si el usuario ya está suscrito", async () => {
+  it("Should not create a request if the user is already subscribed", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -98,7 +98,7 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe crear solicitud si ya existe una solicitud pendiente", async () => {
+  it("Should not create a request if a pending request already exists", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -118,7 +118,7 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("Debe crear una nueva solicitud en pendiente cuando procede", async () => {
+  it("Should create a new pending request when applicable", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -144,7 +144,7 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/communities/search");
   });
 
-  it("No debe crear solicitud si la comunidad no existe", async () => {
+  it("Should not create a request if the community does not exist", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -162,7 +162,7 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe crear solicitud si el usuario no tiene inscripciones (userWithCommunities es null)", async () => {
+  it("Should not create a request if the user has no memberships (userWithCommunities is null)", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: {
@@ -180,12 +180,12 @@ describe("Suite de pruebas de requestCommunitySubscription", () => {
   });
 });
 
-describe("Suite de pruebas de deleteRequest", () => {
+describe("deleteRequest test suite", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("No debe hacer nada si no hay sesion autenticada", async () => {
+  it("Should do nothing if there is no authenticated session", async () => {
     (verifySession as jest.Mock).mockResolvedValue({ isAuth: false });
 
     const formData = new FormData();
@@ -197,7 +197,7 @@ describe("Suite de pruebas de deleteRequest", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el rol no es webAdmin", async () => {
+  it("Should do nothing if the role is not webAdmin", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
@@ -212,7 +212,7 @@ describe("Suite de pruebas de deleteRequest", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("No debe hacer nada si el id es invalido", async () => {
+  it("Should do nothing if the id is invalid", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
@@ -227,7 +227,7 @@ describe("Suite de pruebas de deleteRequest", () => {
     expect(revalidatePath).not.toHaveBeenCalled();
   });
 
-  it("Debe eliminar solicitud y revalidar rutas", async () => {
+  it("Should delete request and revalidate routes", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }
@@ -244,7 +244,7 @@ describe("Suite de pruebas de deleteRequest", () => {
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
   });
 
-  it("No debe lanzar error si prisma.delete falla", async () => {
+  it("Should not throw an error if prisma.delete fails", async () => {
     (verifySession as jest.Mock).mockResolvedValue({
       isAuth: true,
       session: { userID: "webadmin-1", role: UserRole.webAdmin }

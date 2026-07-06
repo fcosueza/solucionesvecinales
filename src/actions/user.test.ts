@@ -30,7 +30,7 @@ describe("Test suite for user server functions", () => {
     prismaCommunityFindMock.mockResolvedValue(null);
   });
 
-  it("Should return unauthorized error if there is no authenticated session", async () => {
+  it("should return unauthorized error if there is no authenticated session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false });
 
     const formData = new FormData();
@@ -47,7 +47,7 @@ describe("Test suite for user server functions", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Should return unauthorized error if the role is not webAdmin", async () => {
+  it("should return unauthorized error if the role is not webAdmin", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "admin-1", role: UserRole.admin }
@@ -67,7 +67,7 @@ describe("Test suite for user server functions", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Should return invalid_user_id error if the id is empty", async () => {
+  it("should return invalid_user_id error if the id is empty", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -87,7 +87,7 @@ describe("Test suite for user server functions", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Should return invalid_user_id error if no id is sent", async () => {
+  it("should return invalid_user_id error if no id is sent", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -106,7 +106,7 @@ describe("Test suite for user server functions", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Should return user_is_community_admin error if they manage any community", async () => {
+  it("should return user_is_community_admin error if they manage any community", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -131,7 +131,7 @@ describe("Test suite for user server functions", () => {
     expect(revalidatePathMock).not.toHaveBeenCalled();
   });
 
-  it("Should delete the user and revalidate paths when everything is valid", async () => {
+  it("should delete the user and revalidate paths when everything is valid", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }
@@ -159,7 +159,7 @@ describe("Test suite for user server functions", () => {
     expect(revalidatePathMock).toHaveBeenNthCalledWith(2, "/backoffice/overview");
   });
 
-  it("Should return delete_user_failed error in deleteUser", async () => {
+  it("should return delete_user_failed error in deleteUser", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "web-admin-1", role: UserRole.webAdmin }

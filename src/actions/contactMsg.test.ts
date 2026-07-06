@@ -93,7 +93,7 @@ describe("deleteContact test suite", () => {
     jest.clearAllMocks();
   });
 
-  it("Should exit without acting when there is no authenticated session", async () => {
+  it("should exit without acting when there is no authenticated session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false, session: null });
 
     await deleteContact(new FormData());
@@ -101,7 +101,7 @@ describe("deleteContact test suite", () => {
     expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
-  it("Should exit without acting when the role is not webAdmin", async () => {
+  it("should exit without acting when the role is not webAdmin", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "tenant" } });
 
     await deleteContact(new FormData());
@@ -109,7 +109,7 @@ describe("deleteContact test suite", () => {
     expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
-  it("Should exit without acting when session is valid but has no user data", async () => {
+  it("should exit without acting when session is valid but has no user data", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: null });
 
     await deleteContact(new FormData());
@@ -117,7 +117,7 @@ describe("deleteContact test suite", () => {
     expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
-  it("Should exit without acting when required fields are missing", async () => {
+  it("should exit without acting when required fields are missing", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
 
     await deleteContact(new FormData());
@@ -125,7 +125,7 @@ describe("deleteContact test suite", () => {
     expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
-  it("Should exit without acting when name is present but email is missing", async () => {
+  it("should exit without acting when name is present but email is missing", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
 
     const formData = new FormData();
@@ -137,7 +137,7 @@ describe("deleteContact test suite", () => {
     expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
-  it("Should exit without acting when the provided date is invalid", async () => {
+  it("should exit without acting when the provided date is invalid", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
 
     const formData = new FormData();
@@ -150,7 +150,7 @@ describe("deleteContact test suite", () => {
     expect(prisma.contact.delete).not.toHaveBeenCalled();
   });
 
-  it("Should delete the contact and revalidate the path when data is valid", async () => {
+  it("should delete the contact and revalidate the path when data is valid", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
     (prisma.contact.delete as jest.Mock).mockResolvedValue({});
 
@@ -174,7 +174,7 @@ describe("deleteContact test suite", () => {
     expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/contacto");
   });
 
-  it("Should handle Prisma errors silently", async () => {
+  it("should handle Prisma errors silently", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { role: "adminWeb" } });
     (prisma.contact.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
 

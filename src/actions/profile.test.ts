@@ -409,7 +409,7 @@ describe("Test suite for uploadProfile", () => {
     jest.clearAllMocks();
   });
 
-  it("Should return an error if there is no authenticated session", async () => {
+  it("should return an error if there is no authenticated session", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: false, session: null });
 
     const result = await uploadProfile(new FormData());
@@ -418,7 +418,7 @@ describe("Test suite for uploadProfile", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Should return an error if saveProfileImageFile returns an error", async () => {
+  it("should return an error if saveProfileImageFile returns an error", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
 
     const fd = new FormData();
@@ -430,7 +430,7 @@ describe("Test suite for uploadProfile", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Should return a generic error if saveProfileImageFile returns neither image nor error", async () => {
+  it("should return a generic error if saveProfileImageFile returns neither image nor error", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
 
     // Pass a non-File value so saveProfileImageFile returns { error: "..." }
@@ -444,7 +444,7 @@ describe("Test suite for uploadProfile", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Should return a generic error if saveProfileImageFile does not return an image", async () => {
+  it("should return a generic error if saveProfileImageFile does not return an image", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
 
     // Pass a non-File value so saveProfileImageFile returns { error: "..." }
@@ -457,7 +457,7 @@ describe("Test suite for uploadProfile", () => {
     expect(prismaUsuarioUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("Should update the user image and return the URL on success", async () => {
+  it("should update the user image and return the URL on success", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
     mkdirSync(join(process.cwd(), "public", "uploads", "profiles"), { recursive: true });
     prismaUsuarioUpdateMock.mockResolvedValueOnce({});

@@ -11,18 +11,17 @@ import { revalidatePath } from "next/cache";
  * @param communityId - Community ID.
  * @param formData - Form data with the "text" field.
  *
+ * @returns Promise<void> - Resolves when the message is added or if the user is not authorized.
  */
 const addMessage = async (communityId: number, formData: FormData): Promise<void> => {
   const verifiedSession = await verifySession();
 
-  // We check that the user is authenticated
   if (!verifiedSession.isAuth || !verifiedSession.session) {
     return;
   }
 
   const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  // Only administrators can add messages to the board
   if (!isAdmin) {
     return;
   }
@@ -45,12 +44,10 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
 
   const text = (formData.get("texto") as string)?.trim();
 
-  // Adding empty messages is not allowed
   if (!text) {
     return;
   }
 
-  // We try to create the message in the database
   try {
     await prisma.message.create({
       data: {
@@ -67,9 +64,11 @@ const addMessage = async (communityId: number, formData: FormData): Promise<void
  * Delete a message from a community board.
  *
  * @param communityId - Community ID.
- * @param creadoEn - Message creation date (part of the composite PK).
+ * @param createdAt - Message creation date (part of the composite PK).
+ *
+ * @returns Promise<void> - Resolves when the message is deleted or if the user is not authorized.
  */
-const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void> => {
+const deleteMessage = async (communityId: number, createdAt: Date): Promise<void> => {
   const verifiedSession = await verifySession();
 
   if (!verifiedSession.isAuth || !verifiedSession.session) {
@@ -102,7 +101,7 @@ const deleteMessage = async (communityId: number, creadoEn: Date): Promise<void>
     await prisma.message.delete({
       where: {
         createdAt_community: {
-          createdAt: creadoEn,
+          createdAt: createdAt,
           community: communityId
         }
       }
