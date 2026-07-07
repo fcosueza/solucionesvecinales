@@ -74,7 +74,7 @@ const deleteContact = async (formData: FormData): Promise<void> => {
 
   try {
     await prisma.contact.delete({ where: { name_email_createdAt: { name: name, email, createdAt: createdAt } } });
-    revalidatePath("/backoffice/contacto");
+    revalidatePath("/backoffice/contact");
   } catch {}
 };
 

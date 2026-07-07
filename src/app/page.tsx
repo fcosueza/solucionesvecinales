@@ -9,23 +9,23 @@ import { NavItem } from "@/types";
 import { SocialIcon } from "@/types";
 import style from "./style.module.css";
 
-const tituloHero = "¡Tu comunidad, más conectada y organizada que nunca!";
-const parraHero = `Con nuestra app, gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
+const heroTitle = "¡Tu comunidad, más conectada y organizada que nunca!";
+const heroParaph = `Con nuestra app, gestiona incidencias, recibe avisos importantes, reserva espacios comunes y
   consulta las novedades de tu comunidad, desde cualquier lugar y en cualquier momento.`;
 
-const enlacesCabecera: NavItem[] = [
+const headerLinks: NavItem[] = [
   { text: "Inicio", href: "#" },
   { text: "Características", href: "#gallery" },
   { text: "Contacto", href: "#contact" }
 ];
 
-const enlacesFooter: NavItem[] = [
+const footerLinks: NavItem[] = [
   { text: "Inicio", href: "#" },
   { text: "Política de Cookies", href: "/cookie-policy" },
   { text: "Política de Privacidad", href: "/privacy-policy" }
 ];
 
-const iconosSociales: SocialIcon[] = [
+const socialIcons: SocialIcon[] = [
   {
     src: "/assets/icons/facebook.png",
     altText: "Icono de Facebook",
@@ -69,7 +69,7 @@ const iconosSociales: SocialIcon[] = [
 ];
 
 // Information for the cards
-const datosTarjetas = [
+const cardsData = [
   {
     iconURL: "/assets/icons/feature-tablon-50.png",
     iconAltText: "Icono de una notificación",
@@ -98,24 +98,25 @@ const datosTarjetas = [
 
 /**
  * Public home page of the platform.
+ *
  * Present the value proposition, main features and call to action buttons
  * for the registration of new users and view of communities.
  *
- * @returns La rendered home page
+ * @returns The rendered home page
  */
 export default function Home() {
   return (
     <>
-      <Header links={enlacesCabecera} buttonText="Iniciar sesión" buttonRoute="/login" backgroundVariant="highlight" />
+      <Header links={headerLinks} buttonText="Iniciar sesión" buttonRoute="/login" backgroundVariant="highlight" />
 
       <main className={style.main}>
         <section className={`${style.section} ${style.hero}`}>
           <div className={`${style.container} ${style.hero__content}`}>
             <div className={style.hero__copy}>
               <CTA
-                title={tituloHero}
+                title={heroTitle}
                 highlightText="conectada y organizada"
-                para={parraHero}
+                para={heroParaph}
                 buttonText="Regístrate ahora"
                 buttonRoute={"/signup"}
               />
@@ -172,7 +173,7 @@ export default function Home() {
             </div>
 
             <Gallery>
-              {datosTarjetas.map(data => {
+              {cardsData.map(data => {
                 return (
                   <CardFeatures
                     iconURL={data.iconURL}
@@ -210,7 +211,7 @@ export default function Home() {
         </section>
       </main>
 
-      <Footer links={enlacesFooter} socialIcons={iconosSociales} withLogo={true} />
+      <Footer links={footerLinks} socialIcons={socialIcons} withLogo={true} />
     </>
   );
 }

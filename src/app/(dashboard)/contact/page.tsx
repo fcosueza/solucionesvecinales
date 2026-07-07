@@ -17,16 +17,16 @@ const helpContent: HelpContent = {
 
 /**
  * Dashboard contact page.
+ *
  * Provides a contact form for users to submit queries,
  * suggestions or incidents directly to the platform team.
  *
- * @component
- * @returns La rendered contact page
+ * @returns The rendered contact page
  */
 const ContactoPage = async (): Promise<React.ReactNode> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
 

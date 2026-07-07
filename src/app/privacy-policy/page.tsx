@@ -9,10 +9,11 @@ export const metadata: Metadata = {
 
 /**
  * Privacy Policy Page.
+ *
  * Informs users about how their personal data is collected, processed and protected
  * on the Neighborhood Solutions platform, in accordance with data protection regulations.
  *
- * @returns La rendered privacy policy page
+ * @returns The rendered privacy policy page
  */
 export default function PoliticaPrivacidadPage(): React.ReactNode {
   return (

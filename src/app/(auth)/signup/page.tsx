@@ -5,7 +5,7 @@ import Link from "next/link";
 import { NavItem } from "@/types";
 import style from "./style.module.css";
 
-const enlacesCabecera: NavItem[] = [{ text: "Inicio", href: "/" }];
+const headerLinks: NavItem[] = [{ text: "Inicio", href: "/" }];
 
 const helpContent: HelpContent = {
   title: "Ayuda: Registro",
@@ -25,13 +25,13 @@ const helpContent: HelpContent = {
  * Allows you to create a new account on the platform by providing personal data and credentials.
  * Includes a registration form and links for users who already have an account.
  *
- * @returns La rendered registration page
+ * @returns The rendered registration page
  */
 export default function Register() {
   return (
     <>
       <PageHelpWidget content={helpContent} />
-      <Header links={enlacesCabecera} buttonText="Iniciar sesión" buttonRoute="/login" />
+      <Header links={headerLinks} buttonText="Iniciar sesión" buttonRoute="/login" />
       <main className={style.main}>
         <SignUpForm />
         <p className={style.para}>

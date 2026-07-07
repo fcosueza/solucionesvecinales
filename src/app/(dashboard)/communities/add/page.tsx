@@ -20,23 +20,22 @@ const helpContent: HelpContent = {
 
 /**
  * Page to create a new community.
+ *
  * Allows users with an administrator role to create a new community on the platform.
  * Redirects to communities if the user does not have the necessary permissions.
  *
- * @component
  * @returns La rendered community creation page
  */
 const NewCommunity = async (): Promise<React.ReactNode> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
 
-  const esAdministrador =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  if (!esAdministrador) {
+  if (!isAdmin) {
     redirect("/communities");
   }
 

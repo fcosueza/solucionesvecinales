@@ -43,10 +43,10 @@ const helpContent: HelpContent = {
 
 /**
  * Community search page.
+ *
  * Allows users to search for communities available on the platform
  * and send subscription requests to those who want to join.
  *
- * @component
  * @param searchParams Optional search parameters: q (search term)
  * @returns La rendered community search page
  */
@@ -57,10 +57,8 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
     redirect("/login");
   }
 
-  const isAdminUser =
-    verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  // We run a query to get all available communities, sorted alphabetically by name
   const communities = await prisma.community.findMany({
     select: {
       id: true,
@@ -76,8 +74,7 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
     }
   });
 
-  // We check which communities the user has to mark the ones they already have registered in the search form
-  const userWithCommunities = await prisma.user.findUnique({
+  const userHasCommunities = await prisma.user.findUnique({
     where: {
       id: verifiedSession.session.userID
     },
@@ -98,10 +95,9 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
     }
   });
 
-  // We combine managed communities and communities in which the user is a tenant
-  const enrolledCommunityIDs = new Set<number>(aLista(userWithCommunities?.memberships).map(i => i.community));
+  const enrolledCommunityIDs = new Set<number>(aLista(userHasCommunities?.memberships).map(i => i.community));
   const pendingRequestCommunityIDs = new Set<number>(
-    aLista(userWithCommunities?.requests).map(request => request.community)
+    aLista(userHasCommunities?.requests).map(request => request.community)
   );
 
   const resolvedSearchParams = await searchParams;
@@ -139,10 +135,10 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
               {filteredCommunities.map(community => {
                 const isAlreadyEnrolled = enrolledCommunityIDs.has(community.id);
                 const hasPendingRequest = pendingRequestCommunityIDs.has(community.id);
-                const shouldDisableCTA = isAdminUser || isAlreadyEnrolled || hasPendingRequest;
+                const shouldDisableCTA = isAdmin || isAlreadyEnrolled || hasPendingRequest;
                 const ctaText = isAlreadyEnrolled
                   ? "Ya inscrito"
-                  : isAdminUser
+                  : isAdmin
                     ? "No disponible para administradores"
                     : hasPendingRequest
                       ? "Solicitud pendiente"

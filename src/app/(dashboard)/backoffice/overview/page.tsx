@@ -11,7 +11,7 @@ const accesosDirectos = [
   { text: "Zonas Comunes", href: "/backoffice/zonas-comunes" },
   { text: "Finanzas", href: "/backoffice/finanzas" },
   { text: "Solicitudes", href: "/backoffice/solicitudes" },
-  { text: "Contacto", href: "/backoffice/contacto" }
+  { text: "Contacto", href: "/backoffice/contact" }
 ] as const;
 
 /**

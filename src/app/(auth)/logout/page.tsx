@@ -20,7 +20,7 @@ const helpContent: HelpContent = {
  * Allows authenticated users to securely log out of their current session.
  * Request confirmation before proceeding with logout.
  *
- * @returns La rendered logout page
+ * @returns The rendered logout page
  */
 export default function LogOut() {
   return (

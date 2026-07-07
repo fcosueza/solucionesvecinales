@@ -7,9 +7,9 @@ import { UserRole } from "@/types";
 import { redirect } from "next/navigation";
 import style from "./style.module.css";
 
-const tituloComunidades = "Mis comunidades";
-const descripcionComunidades = "Aquí tienes todas las comunidades a las que perteneces";
-const mensajeSinComunidades = "Aún no estás suscrito a ninguna comunidad. Usa el botón de búsqueda para unirte a una.";
+const communityTitle = "Mis comunidades";
+const communityDescription = "Aquí tienes todas las comunidades a las que perteneces";
+const communityEmptyMessage = "Aún no estás suscrito a ninguna comunidad. Usa el botón de búsqueda para unirte a una.";
 
 const helpContent: HelpContent = {
   title: "Ayuda: Mis comunidades",
@@ -28,19 +28,18 @@ const helpContent: HelpContent = {
  * Lists all communities to which the user is subscribed.
  * Provides shortcuts to search, create or join new communities.
  *
- * @component
  * @returns La rendered user communities page
  */
 const CommunitiesPage = async (): Promise<React.ReactNode> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
 
-  const usuario = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
-      id: sesionVerificada.session.userID
+      id: verifiedSession.session.userID
     },
     select: {
       role: true,
@@ -74,68 +73,68 @@ const CommunitiesPage = async (): Promise<React.ReactNode> => {
     }
   });
 
-  if (!usuario) {
+  if (!user) {
     redirect("/login");
   }
 
-  const comunidadesSuscritas = usuario.memberships.map(inscripcion => inscripcion.communityRef);
-  const comunidadesUnicas = Array.from(
-    new Map(comunidadesSuscritas.map(comunidad => [comunidad.id, comunidad])).values()
+  const communitiesMembership = user.memberships.map(inscripcion => inscripcion.communityRef);
+  const uniqueCommunities = Array.from(
+    new Map(communitiesMembership.map(comunidad => [comunidad.id, comunidad])).values()
   );
 
-  const comunidadesPendientes = usuario.requests
+  const pendingCommunities = user.requests
     .map(s => s.communityRef)
-    .filter(c => !comunidadesUnicas.some(inscrita => inscrita.id === c.id));
+    .filter(c => !uniqueCommunities.some(inscrita => inscrita.id === c.id));
 
   return (
     <main className={style.main}>
       <PageHelpWidget content={helpContent} />
       <section className={style.communitiesSection}>
-        <h1 className={style.title}>{tituloComunidades}</h1>
-        <p className={style.description}>{descripcionComunidades}</p>
+        <h1 className={style.title}>{communityTitle}</h1>
+        <p className={style.description}>{communityDescription}</p>
 
         <div className={style.cardsContainer}>
-          {comunidadesUnicas.map(comunidad => {
-            const detalleComunidadFormID = `community-detail-${comunidad.id}`;
+          {uniqueCommunities.map(community => {
+            const detalleComunidadFormID = `community-detail-${community.id}`;
 
             return (
-              <div key={comunidad.id}>
+              <div key={community.id}>
                 <CardCommunity
                   className={style.cardCommunity}
                   imageURL="/assets/images/default-community.jpeg"
-                  imageAltText={`Imagen de la comunidad ${comunidad.name}`}
-                  communityName={comunidad.name}
-                  communityAddress={`${comunidad.street}, ${comunidad.number}. ${comunidad.city}`}
+                  imageAltText={`Imagen de la comunidad ${community.name}`}
+                  communityName={community.name}
+                  communityAddress={`${community.street}, ${community.number}. ${community.city}`}
                   ctaButtonType="submit"
                   ctaFormID={detalleComunidadFormID}
                 />
 
-                <form action={`/communities/${comunidad.id}/overview`} id={detalleComunidadFormID} />
+                <form action={`/communities/${community.id}/overview`} id={detalleComunidadFormID} />
               </div>
             );
           })}
 
-          {comunidadesPendientes.map(comunidad => (
+          {pendingCommunities.map(community => (
             <CardCommunity
-              key={comunidad.id}
+              key={community.id}
               className={style.cardCommunity}
               imageURL="/assets/images/default-community.jpeg"
-              imageAltText={`Imagen de la comunidad ${comunidad.name}`}
-              communityName={comunidad.name}
-              communityAddress={`${comunidad.street}, ${comunidad.number}. ${comunidad.city}`}
+              imageAltText={`Imagen de la comunidad ${community.name}`}
+              communityName={community.name}
+              communityAddress={`${community.street}, ${community.number}. ${community.city}`}
               ctaText="Solicitud pendiente"
               ctaDisabled
             />
           ))}
 
-          {comunidadesUnicas.length === 0 && comunidadesPendientes.length === 0 && (
-            <p className={style.emptyState}>{mensajeSinComunidades}</p>
+          {uniqueCommunities.length === 0 && pendingCommunities.length === 0 && (
+            <p className={style.emptyState}>{communityEmptyMessage}</p>
           )}
         </div>
       </section>
 
       <section className={style.actionsSection}>
-        <OverviewActions role={usuario.role as UserRole} />
+        <OverviewActions role={user.role as UserRole} />
       </section>
     </main>
   );

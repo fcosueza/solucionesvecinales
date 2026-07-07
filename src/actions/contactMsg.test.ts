@@ -171,7 +171,7 @@ describe("deleteContact test suite", () => {
         }
       }
     });
-    expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/contacto");
+    expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/contact");
   });
 
   it("should handle Prisma errors silently", async () => {

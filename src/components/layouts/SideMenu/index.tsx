@@ -23,13 +23,13 @@ type MenuLink = {
 const enlacesBase = [
   { text: "Mis comunidades", href: "/communities" },
   { text: "Perfil de Usuario", href: "/profile" },
-  { text: "Contacto", href: "/contacto" },
+  { text: "Contacto", href: "/contact" },
   { text: "Salir", href: "/logout" }
 ] as const;
 
 const enlacesBackOffice = [
   { text: "Vista General", href: "/backoffice/overview" },
-  { text: "Contacto", href: "/backoffice/contacto" },
+  { text: "Contacto", href: "/backoffice/contact" },
   { text: "Comunidades", href: "/backoffice/comunidades" },
   { text: "Usuarios", href: "/backoffice/usuarios" },
   { text: "Incidencias", href: "/backoffice/incidencias" },

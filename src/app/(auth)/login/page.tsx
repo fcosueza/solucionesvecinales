@@ -5,7 +5,7 @@ import Link from "next/link";
 import { NavItem } from "@/types";
 import style from "./style.module.css";
 
-const enlacesCabecera: NavItem[] = [{ text: "Inicio", href: "/" }];
+const headerLinks: NavItem[] = [{ text: "Inicio", href: "/" }];
 
 const helpContent: HelpContent = {
   title: "Ayuda: Iniciar sesión",
@@ -28,13 +28,13 @@ const helpContent: HelpContent = {
  * Allows registered users to authenticate to the platform using their credentials.
  * Includes a login form and links to register new users.
  *
- * @returns La rendered login page
+ * @returns The rendered login page
  */
 export default function LogIn() {
   return (
     <>
       <PageHelpWidget content={helpContent} />
-      <Header links={enlacesCabecera} buttonText="Regístrate" buttonRoute="/signup" />
+      <Header links={headerLinks} buttonText="Regístrate" buttonRoute="/signup" />
       <main className={style.main}>
         <LogInForm />
         <p className={style.para}>

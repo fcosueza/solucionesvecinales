@@ -13,7 +13,7 @@ export const metadata: Metadata = {
  * Explain to users what cookies are, which ones are used on the platform,
  * their purpose and how you can manage your cookie preferences.
  *
- * @returns La rendered cookie policy page
+ * @returns The rendered cookie policy page
  */
 export default function PoliticaCookiesPage(): React.ReactNode {
   return (

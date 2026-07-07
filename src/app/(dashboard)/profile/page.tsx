@@ -23,22 +23,22 @@ const helpContent: HelpContent = {
 
 /**
  * User profile page.
+ *
  * Allows the authenticated user to view and edit their personal information, including
  * first name, last name, email, password and profile image.
  *
- * @component
- * @returns La rendered user profile page
+ * @returns The rendered user profile page
  */
 const ProfilePage = async (): Promise<React.ReactNode> => {
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
 
-  const userID = sesionVerificada.session.userID;
+  const userID = verifiedSession.session.userID;
 
-  const usuario = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id: userID },
     select: {
       name: true,
@@ -49,12 +49,12 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
     }
   });
 
-  if (!usuario) {
+  if (!user) {
     redirect("/login");
   }
 
-  const esAdministrador = usuario.role === UserRole.admin || usuario.role === UserRole.webAdmin;
-  const tieneComunidades = esAdministrador ? (await prisma.community.count({ where: { adminId: userID } })) > 0 : false;
+  const isAdmin = user.role === UserRole.admin || user.role === UserRole.webAdmin;
+  const hasCommunities = isAdmin ? (await prisma.community.count({ where: { adminId: userID } })) > 0 : false;
 
   return (
     <main className={style.main}>
@@ -62,12 +62,12 @@ const ProfilePage = async (): Promise<React.ReactNode> => {
       <h1 className={style.title}>Mi perfil</h1>
       <p className={style.description}>Cambiar los datos de tu perfil</p>
       <ProfileForm
-        name={usuario.name}
-        surname={usuario.lastName}
-        email={usuario.email}
-        role={usuario.role as UserRole}
-        image={usuario.image ?? undefined}
-        hasCommunities={tieneComunidades}
+        name={user.name}
+        surname={user.lastName}
+        email={user.email}
+        role={user.role as UserRole}
+        image={user.image ?? undefined}
+        hasCommunities={hasCommunities}
       />
     </main>
   );
