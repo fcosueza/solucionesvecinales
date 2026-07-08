@@ -22,7 +22,7 @@ const helpContent: HelpContent = {
  *
  * @returns The rendered logout page
  */
-export default function LogOut() {
+export default function LogOut(): React.ReactNode {
   return (
     <>
       <PageHelpWidget content={helpContent} />

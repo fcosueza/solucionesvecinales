@@ -116,12 +116,12 @@ describe("SideMenu component test suite", () => {
     render(<SideMenu userName="Laura" role={UserRole.webAdmin} />);
 
     expect(screen.getByRole("link", { name: "Vista General" })).toHaveAttribute("href", "/backoffice/overview");
-    expect(screen.getByRole("link", { name: "Comunidades" })).toHaveAttribute("href", "/backoffice/comunidades");
-    expect(screen.getByRole("link", { name: "Usuarios" })).toHaveAttribute("href", "/backoffice/usuarios");
-    expect(screen.getByRole("link", { name: "Incidencias" })).toHaveAttribute("href", "/backoffice/incidencias");
-    expect(screen.getByRole("link", { name: "Zonas Comunes" })).toHaveAttribute("href", "/backoffice/zonas-comunes");
-    expect(screen.getByRole("link", { name: "Finanzas" })).toHaveAttribute("href", "/backoffice/finanzas");
-    expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/backoffice/solicitudes");
+    expect(screen.getByRole("link", { name: "Comunidades" })).toHaveAttribute("href", "/backoffice/communities");
+    expect(screen.getByRole("link", { name: "Usuarios" })).toHaveAttribute("href", "/backoffice/users");
+    expect(screen.getByRole("link", { name: "Incidencias" })).toHaveAttribute("href", "/backoffice/incidents");
+    expect(screen.getByRole("link", { name: "Zonas Comunes" })).toHaveAttribute("href", "/backoffice/common-zones");
+    expect(screen.getByRole("link", { name: "Finanzas" })).toHaveAttribute("href", "/backoffice/finances");
+    expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/backoffice/requests");
     expect(screen.queryByRole("link", { name: "Mis comunidades" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Perfil de Usuario" })).not.toBeInTheDocument();
   });

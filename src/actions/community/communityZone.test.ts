@@ -450,7 +450,7 @@ describe("communityZone test suite", () => {
           }
         }
       });
-      expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/zonas-comunes");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/common-zones");
       expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/overview");
     });
   });

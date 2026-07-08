@@ -30,7 +30,7 @@ const helpContent: HelpContent = {
  *
  * @returns The rendered login page
  */
-export default function LogIn() {
+export default function LogIn(): React.ReactNode {
   return (
     <>
       <PageHelpWidget content={helpContent} />

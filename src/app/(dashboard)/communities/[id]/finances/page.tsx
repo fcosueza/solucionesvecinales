@@ -164,7 +164,7 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
   const canAddRecord =
     verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  const { totalIncome, totalPayments, balanceFinal } = calculateFinancialSummary(community.financialRecords);
+  const { totalIncome, totalPayments, finalBalance } = calculateFinancialSummary(community.financialRecords);
 
   const rows: TableRow[] = [
     ...buildSectionRows({
@@ -182,7 +182,7 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
     {
       key: "balance-final",
       variant: "balance",
-      cells: [{ content: "Balance Final", colSpan: 2 }, { content: formatCurrencyAmount(balanceFinal) }]
+      cells: [{ content: "Balance Final", colSpan: 2 }, { content: formatCurrencyAmount(finalBalance) }]
     }
   ];
 

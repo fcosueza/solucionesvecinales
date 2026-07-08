@@ -91,7 +91,7 @@ const deleteRecord = async (formData: FormData): Promise<void> => {
 
   try {
     await prisma.financialRecord.delete({ where: { id } });
-    revalidatePath("/backoffice/finanzas");
+    revalidatePath("/backoffice/finances");
     revalidatePath("/backoffice/overview");
   } catch {}
 };

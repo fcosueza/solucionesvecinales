@@ -7,9 +7,9 @@ const PAGE_SIZE = 10;
 
 /**
  * Backoffice contact message management page.
+ *
  * Lists all messages received through the contact form with search and pagination support.
  *
- * @component
  * @param searchParams Optional search parameters: q (search term) and page (current page)
  * @returns La backoffice contact page rendered
  */
@@ -32,7 +32,7 @@ export default async function BackOfficeContactoPage({
       }
     : undefined;
 
-  const [total, totalFiltrados, mensajes] = await Promise.all([
+  const [total, filteredTotal, messages] = await Promise.all([
     prisma.contact.count(),
     prisma.contact.count({ where }),
     prisma.contact.findMany({
@@ -43,7 +43,7 @@ export default async function BackOfficeContactoPage({
     })
   ]);
 
-  const totalPages = Math.max(1, Math.ceil(totalFiltrados / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(filteredTotal / PAGE_SIZE));
 
   return (
     <main className={style.main}>
@@ -60,7 +60,7 @@ export default async function BackOfficeContactoPage({
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Mensajes de contacto</h2>
         <p className={style.sectionDescription}>
-          {totalFiltrados} resultado{totalFiltrados !== 1 ? "s" : ""}
+          {filteredTotal} resultado{filteredTotal !== 1 ? "s" : ""}
           {q ? ` para "${q}"` : ""}.
         </p>
 
@@ -77,24 +77,24 @@ export default async function BackOfficeContactoPage({
           </button>
         </form>
 
-        {mensajes.length > 0 ? (
+        {messages.length > 0 ? (
           <>
             <ul className={style.list}>
-              {mensajes.map(contacto => (
+              {messages.map(contactMsg => (
                 <li
-                  key={`${contacto.name}-${contacto.email}-${contacto.createdAt.toISOString()}`}
+                  key={`${contactMsg.name}-${contactMsg.email}-${contactMsg.createdAt.toISOString()}`}
                   className={style.listItem}
                 >
-                  <p className={style.itemTitle}>{contacto.name}</p>
-                  <p className={style.itemMeta}>{contacto.email}</p>
-                  <p className={style.itemMeta}>{contacto.message}</p>
+                  <p className={style.itemTitle}>{contactMsg.name}</p>
+                  <p className={style.itemMeta}>{contactMsg.email}</p>
+                  <p className={style.itemMeta}>{contactMsg.message}</p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{contacto.createdAt.toLocaleDateString("es-ES")}</span>
+                    <span className={style.pill}>{contactMsg.createdAt.toLocaleDateString("es-ES")}</span>
                   </div>
                   <form action={deleteContact}>
-                    <input type="hidden" name="nombre" value={contacto.name} />
-                    <input type="hidden" name="email" value={contacto.email} />
-                    <input type="hidden" name="creadoEn" value={contacto.createdAt.toISOString()} />
+                    <input type="hidden" name="nombre" value={contactMsg.name} />
+                    <input type="hidden" name="email" value={contactMsg.email} />
+                    <input type="hidden" name="creadoEn" value={contactMsg.createdAt.toISOString()} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar
                     </button>

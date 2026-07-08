@@ -9,7 +9,7 @@ export interface FinancialRecordCalculable {
 interface FinancialSummary {
   totalIncome: number;
   totalPayments: number;
-  balanceFinal: number;
+  finalBalance: number;
 }
 
 /**
@@ -32,7 +32,7 @@ const toAmountNumber = (amount: number | string | { toString(): string }): numbe
  * Sums all incomes, expenses, and calculates the final balance.
  *
  * @param records Array of financial records to process
- * @returns Object with totalIncome, totalPayments and balanceFinal
+ * @returns Object with totalIncome, totalPayments and finalBalance
  */
 const calculateFinancialSummary = (records: FinancialRecordCalculable[]): FinancialSummary => {
   return records.reduce<FinancialSummary>(
@@ -46,14 +46,14 @@ const calculateFinancialSummary = (records: FinancialRecordCalculable[]): Financ
         summary.totalPayments += amount;
       }
 
-      summary.balanceFinal = summary.totalIncome - summary.totalPayments;
+      summary.finalBalance = summary.totalIncome - summary.totalPayments;
 
       return summary;
     },
     {
       totalIncome: 0,
       totalPayments: 0,
-      balanceFinal: 0
+      finalBalance: 0
     }
   );
 };

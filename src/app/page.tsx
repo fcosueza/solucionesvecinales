@@ -104,7 +104,7 @@ const cardsData = [
  *
  * @returns The rendered home page
  */
-export default function Home() {
+export default function Home(): React.ReactNode {
   return (
     <>
       <Header links={headerLinks} buttonText="Iniciar sesión" buttonRoute="/login" backgroundVariant="highlight" />

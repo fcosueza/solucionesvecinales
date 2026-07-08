@@ -556,7 +556,7 @@ describe("deleteIncidentAdmin test suite", () => {
         }
       }
     });
-    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/incidencias");
+    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/incidents");
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
   });
 

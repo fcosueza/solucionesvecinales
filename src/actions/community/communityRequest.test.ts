@@ -240,7 +240,7 @@ describe("deleteRequest test suite", () => {
     await deleteRequest(formData);
 
     expect(prisma.request.delete).toHaveBeenCalledWith({ where: { id: 24 } });
-    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/solicitudes");
+    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/requests");
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
   });
 

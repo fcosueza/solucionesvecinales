@@ -7,12 +7,12 @@ const PAGE_SIZE = 10;
 
 /**
  * Backoffice community management page.
+ *
  * Lists all communities registered on the platform with search and pagination support.
  * Shows statistics of common areas and pending requests.
  *
- * @component
  * @param searchParams Optional search parameters: q (search term) and page (current page)
- * @returns La backoffice communities page rendered
+ * @returns The backoffice communities page rendered
  */
 export default async function BackOfficeCommunitiesPage({
   searchParams
@@ -25,7 +25,7 @@ export default async function BackOfficeCommunitiesPage({
 
   const where = q ? { name: { contains: q, mode: "insensitive" as const } } : undefined;
 
-  const [totalComunidades, comunidadesConZonas, comunidadesConSolicitudesPendientes, comunidades, totalFiltradas] =
+  const [communitiesTotal, communitiesWithZones, communitiesWithPendingRequests, communities, totalFiltered] =
     await Promise.all([
       prisma.community.count(),
       prisma.community.count({ where: { zones: { some: {} } } }),
@@ -60,7 +60,7 @@ export default async function BackOfficeCommunitiesPage({
       prisma.community.count({ where })
     ]);
 
-  const totalPages = Math.max(1, Math.ceil(totalFiltradas / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
 
   return (
     <main className={style.main}>
@@ -71,15 +71,15 @@ export default async function BackOfficeCommunitiesPage({
       </header>
 
       <section className={style.statsGrid}>
-        <CardStat title="Total" value={String(totalComunidades)} description="Comunidades activas en plataforma" />
+        <CardStat title="Total" value={String(communitiesTotal)} description="Comunidades activas en plataforma" />
         <CardStat
           title="Con Zonas"
-          value={String(comunidadesConZonas)}
+          value={String(communitiesWithZones)}
           description="Comunidades con zonas comunes configuradas"
         />
         <CardStat
           title="Con Solicitudes"
-          value={String(comunidadesConSolicitudesPendientes)}
+          value={String(communitiesWithPendingRequests)}
           description="Comunidades con solicitudes pendientes"
         />
       </section>
@@ -87,7 +87,7 @@ export default async function BackOfficeCommunitiesPage({
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Comunidades</h2>
         <p className={style.sectionDescription}>
-          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}
+          {totalFiltered} resultado{totalFiltered !== 1 ? "s" : ""}
           {q ? ` para "${q}"` : ""}.
         </p>
 
@@ -104,25 +104,25 @@ export default async function BackOfficeCommunitiesPage({
           </button>
         </form>
 
-        {comunidades.length > 0 ? (
+        {communities.length > 0 ? (
           <>
             <ul className={style.list}>
-              {comunidades.map(comunidad => (
-                <li key={comunidad.id} className={style.listItem}>
-                  <p className={style.itemTitle}>{comunidad.name}</p>
+              {communities.map(community => (
+                <li key={community.id} className={style.listItem}>
+                  <p className={style.itemTitle}>{community.name}</p>
                   <p className={style.itemMeta}>
-                    {comunidad.street}, {comunidad.number}. {comunidad.city}, {comunidad.province}
+                    {community.street}, {community.number}. {community.city}, {community.province}
                   </p>
                   <p className={style.itemMeta}>
-                    Admin: {comunidad.admin.name} {comunidad.admin.lastName}
+                    Admin: {community.admin.name} {community.admin.lastName}
                   </p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{comunidad._count.zones} zonas</span>
-                    <span className={style.pill}>{comunidad._count.incidents} incidencias</span>
-                    <span className={style.pill}>{comunidad._count.requests} solicitudes</span>
+                    <span className={style.pill}>{community._count.zones} zonas</span>
+                    <span className={style.pill}>{community._count.incidents} incidencias</span>
+                    <span className={style.pill}>{community._count.requests} solicitudes</span>
                   </div>
                   <form action={deleteCommunityAdmin}>
-                    <input type="hidden" name="id" value={comunidad.id} />
+                    <input type="hidden" name="id" value={community.id} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar
                     </button>

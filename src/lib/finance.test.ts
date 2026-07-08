@@ -12,7 +12,7 @@ describe("Finance module test suite", () => {
     expect(summary).toEqual({
       totalIncome: 1099.5,
       totalPayments: 260.75,
-      balanceFinal: 838.75
+      finalBalance: 838.75
     });
   });
 
@@ -20,7 +20,7 @@ describe("Finance module test suite", () => {
     expect(calculateFinancialSummary([])).toEqual({
       totalIncome: 0,
       totalPayments: 0,
-      balanceFinal: 0
+      finalBalance: 0
     });
   });
 

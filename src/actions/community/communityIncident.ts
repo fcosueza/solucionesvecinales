@@ -253,7 +253,7 @@ const deleteIncidentAdmin = async (formData: FormData): Promise<void> => {
     await prisma.incident.delete({
       where: { community_user_date: { community: community, user: user, date: date } }
     });
-    revalidatePath("/backoffice/incidencias");
+    revalidatePath("/backoffice/incidents");
     revalidatePath("/backoffice/overview");
   } catch {}
 };

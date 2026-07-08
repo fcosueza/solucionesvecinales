@@ -17,7 +17,6 @@ const formatoHora = new Intl.DateTimeFormat("es-ES", {
  * Lists all common areas of all communities with search and pagination support.
  * Shows information on schedules, reservations and the community to which each area belongs.
  *
- * @component
  * @param searchParams Optional search parameters: q (search term) and page (current page)
  * @returns La backoffice common areas page rendered
  */

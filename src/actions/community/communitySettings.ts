@@ -179,7 +179,7 @@ const deleteCommunityAdmin = async (formData: FormData): Promise<void> => {
 
   try {
     await prisma.community.delete({ where: { id } });
-    revalidatePath("/backoffice/comunidades");
+    revalidatePath("/backoffice/communities");
     revalidatePath("/backoffice/overview");
   } catch {}
 };

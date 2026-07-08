@@ -199,7 +199,7 @@ describe("deleteRecord test suite", () => {
     await deleteRecord(formData);
 
     expect(prisma.financialRecord.delete).toHaveBeenCalledWith({ where: { id: 18 } });
-    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/finanzas");
+    expect(revalidatePath).toHaveBeenCalledWith("/backoffice/finances");
     expect(revalidatePath).toHaveBeenCalledWith("/backoffice/overview");
   });
 

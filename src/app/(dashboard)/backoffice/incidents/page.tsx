@@ -7,12 +7,12 @@ const PAGE_SIZE = 10;
 
 /**
  * Backoffice incident management page.
+ *
  * Lists all issues from all communities with search and pagination support.
  * Allows you to review the operational status of the incident flow (reported, being processed, resolved).
  *
- * @component
  * @param searchParams Optional search parameters: q (search term) and page (current page)
- * @returns La backoffice issues page rendered
+ * @returns The backoffice issues page rendered
  */
 export default async function BackOfficeIncidentsPage({
   searchParams
@@ -25,7 +25,7 @@ export default async function BackOfficeIncidentsPage({
 
   const where = q ? { title: { contains: q, mode: "insensitive" as const } } : undefined;
 
-  const [totalIncidencias, reportadas, enProceso, resueltas, incidencias, totalFiltradas] = await Promise.all([
+  const [totalIncidents, reported, inProgress, resolved, incidents, totalFiltered] = await Promise.all([
     prisma.incident.count(),
     prisma.incident.count({ where: { status: "reported" } }),
     prisma.incident.count({ where: { status: "inProgress" } }),
@@ -58,7 +58,7 @@ export default async function BackOfficeIncidentsPage({
     prisma.incident.count({ where })
   ]);
 
-  const totalPages = Math.max(1, Math.ceil(totalFiltradas / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(totalFiltered / PAGE_SIZE));
 
   return (
     <main className={style.main}>
@@ -69,16 +69,16 @@ export default async function BackOfficeIncidentsPage({
       </header>
 
       <section className={style.statsGrid}>
-        <CardStat title="Total" value={String(totalIncidencias)} description="Incidencias registradas" />
-        <CardStat title="Reportadas" value={String(reportadas)} description="Pendientes de primera gestion" />
-        <CardStat title="En proceso" value={String(enProceso)} description="Incidencias actualmente activas" />
-        <CardStat title="Resueltas" value={String(resueltas)} description="Incidencias cerradas" />
+        <CardStat title="Total" value={String(totalIncidents)} description="Incidencias registradas" />
+        <CardStat title="Reportadas" value={String(reported)} description="Pendientes de primera gestion" />
+        <CardStat title="En proceso" value={String(inProgress)} description="Incidencias actualmente activas" />
+        <CardStat title="Resueltas" value={String(resolved)} description="Incidencias cerradas" />
       </section>
 
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Incidencias</h2>
         <p className={style.sectionDescription}>
-          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}
+          {totalFiltered} resultado{totalFiltered !== 1 ? "s" : ""}
           {q ? ` para "${q}"` : ""}.
         </p>
 
@@ -95,27 +95,27 @@ export default async function BackOfficeIncidentsPage({
           </button>
         </form>
 
-        {incidencias.length > 0 ? (
+        {incidents.length > 0 ? (
           <>
             <ul className={style.list}>
-              {incidencias.map(incidencia => (
+              {incidents.map(incident => (
                 <li
-                  key={`${incidencia.title}-${incidencia.date.toISOString()}-${incidencia.communityRef.name}`}
+                  key={`${incident.title}-${incident.date.toISOString()}-${incident.communityRef.name}`}
                   className={style.listItem}
                 >
-                  <p className={style.itemTitle}>{incidencia.title}</p>
-                  <p className={style.itemMeta}>Comunidad: {incidencia.communityRef.name}</p>
+                  <p className={style.itemTitle}>{incident.title}</p>
+                  <p className={style.itemMeta}>Comunidad: {incident.communityRef.name}</p>
                   <p className={style.itemMeta}>
-                    Reportada por {incidencia.userRef.name} {incidencia.userRef.lastName}
+                    Reportada por {incident.userRef.name} {incident.userRef.lastName}
                   </p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{incidencia.status}</span>
-                    <span className={style.pill}>{incidencia.updatedAt.toLocaleDateString("es-ES")}</span>
+                    <span className={style.pill}>{incident.status}</span>
+                    <span className={style.pill}>{incident.updatedAt.toLocaleDateString("es-ES")}</span>
                   </div>
                   <form action={deleteIncidentAdmin}>
-                    <input type="hidden" name="comunidad" value={incidencia.community} />
-                    <input type="hidden" name="usuario" value={incidencia.user} />
-                    <input type="hidden" name="fecha" value={incidencia.date.toISOString()} />
+                    <input type="hidden" name="comunidad" value={incident.community} />
+                    <input type="hidden" name="usuario" value={incident.user} />
+                    <input type="hidden" name="fecha" value={incident.date.toISOString()} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar
                     </button>

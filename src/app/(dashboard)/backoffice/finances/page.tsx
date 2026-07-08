@@ -8,10 +8,10 @@ const PAGE_SIZE = 10;
 
 /**
  * Backoffice financial management page.
+ *
  * Shows an aggregated summary of the economic movements of all communities,
  * including income, expenses and total balance. Allows search and paging of records.
  *
- * @component
  * @param searchParams Optional search parameters: q (search term) and page (current page)
  * @returns La rendered backoffice finance page
  */
@@ -26,7 +26,7 @@ export default async function BackOfficeFinancePage({
 
   const where = q ? { description: { contains: q, mode: "insensitive" as const } } : undefined;
 
-  const [registrosTodos, totalRegistros, comunidadesConMovimientos, movimientos, totalFiltrados] = await Promise.all([
+  const [allRecords, totalRecords, communitiesWithRecords, movements, filteredTotal] = await Promise.all([
     prisma.financialRecord.findMany({ select: { type: true, amount: true } }),
     prisma.financialRecord.count(),
     prisma.community.count({ where: { financialRecords: { some: {} } } }),
@@ -51,8 +51,8 @@ export default async function BackOfficeFinancePage({
     prisma.financialRecord.count({ where })
   ]);
 
-  const { totalIncome, totalPayments, balanceFinal } = calculateFinancialSummary(registrosTodos);
-  const totalPages = Math.max(1, Math.ceil(totalFiltrados / PAGE_SIZE));
+  const { totalIncome, totalPayments, finalBalance } = calculateFinancialSummary(allRecords);
+  const totalPages = Math.max(1, Math.ceil(filteredTotal / PAGE_SIZE));
 
   return (
     <main className={style.main}>
@@ -63,20 +63,20 @@ export default async function BackOfficeFinancePage({
       </header>
 
       <section className={style.statsGrid}>
-        <CardStat title="Movimientos" value={String(totalRegistros)} description="Registros financieros acumulados" />
+        <CardStat title="Movimientos" value={String(totalRecords)} description="Registros financieros acumulados" />
         <CardStat title="Ingresos" value={formatCurrencyAmount(totalIncome)} description="Importe total de ingresos" />
         <CardStat title="Gastos" value={formatCurrencyAmount(totalPayments)} description="Importe total de gastos" />
         <CardStat
           title="Balance"
-          value={formatCurrencyAmount(balanceFinal)}
-          description={`Saldo consolidado en ${comunidadesConMovimientos} comunidades`}
+          value={formatCurrencyAmount(finalBalance)}
+          description={`Saldo consolidado en ${communitiesWithRecords} comunidades`}
         />
       </section>
 
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Movimientos</h2>
         <p className={style.sectionDescription}>
-          {totalFiltrados} resultado{totalFiltrados !== 1 ? "s" : ""}
+          {filteredTotal} resultado{filteredTotal !== 1 ? "s" : ""}
           {q ? ` para "${q}"` : ""}.
         </p>
 
@@ -93,10 +93,10 @@ export default async function BackOfficeFinancePage({
           </button>
         </form>
 
-        {movimientos.length > 0 ? (
+        {movements.length > 0 ? (
           <>
             <ul className={style.list}>
-              {movimientos.map(registro => (
+              {movements.map(registro => (
                 <li key={registro.id} className={style.listItem}>
                   <p className={style.itemTitle}>{registro.description}</p>
                   <p className={style.itemMeta}>Comunidad: {registro.communityRef.name}</p>

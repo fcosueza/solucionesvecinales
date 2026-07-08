@@ -103,7 +103,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
     notFound();
   }
 
-  const { balanceFinal: finalBalance } = calculateFinancialSummary(comunidad.financialRecords);
+  const { finalBalance } = calculateFinancialSummary(comunidad.financialRecords);
   const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
   return (

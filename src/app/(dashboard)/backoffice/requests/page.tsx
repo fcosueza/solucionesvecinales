@@ -2,17 +2,18 @@ import CardStat from "@/components/ui/Cards/CardStat";
 import { deleteRequest } from "@/actions/community/communityRequest";
 import prisma from "@/lib/prisma";
 import style from "../style.module.css";
+import { request } from "https";
 
 const PAGE_SIZE = 10;
 
 /**
  * Backoffice community request management page.
+ *
  * Lists all community subscription requests with search and pagination support.
  * Shows the status (pending, approved, denied) of each request.
  *
- * @component
  * @param searchParams Optional search parameters: q (search term) and page (current page)
- * @returns La backoffice requests page rendered
+ * @returns The backoffice requests page rendered
  */
 export default async function BackOfficeRequestsPage({
   searchParams
@@ -33,7 +34,7 @@ export default async function BackOfficeRequestsPage({
       }
     : undefined;
 
-  const [pendientes, aprobadas, denegadas, solicitudes, totalFiltradas] = await Promise.all([
+  const [pending, approved, rejected, requests, filteredTotal] = await Promise.all([
     prisma.request.count({ where: { status: "pending" } }),
     prisma.request.count({ where: { status: "approved" } }),
     prisma.request.count({ where: { status: "rejected" } }),
@@ -63,7 +64,7 @@ export default async function BackOfficeRequestsPage({
     prisma.request.count({ where })
   ]);
 
-  const totalPages = Math.max(1, Math.ceil(totalFiltradas / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(filteredTotal / PAGE_SIZE));
 
   return (
     <main className={style.main}>
@@ -74,15 +75,15 @@ export default async function BackOfficeRequestsPage({
       </header>
 
       <section className={style.statsGrid}>
-        <CardStat title="Pendientes" value={String(pendientes)} description="Solicitudes por revisar" />
-        <CardStat title="Aprobadas" value={String(aprobadas)} description="Solicitudes aceptadas" />
-        <CardStat title="Denegadas" value={String(denegadas)} description="Solicitudes rechazadas" />
+        <CardStat title="Pendientes" value={String(pending)} description="Solicitudes por revisar" />
+        <CardStat title="Aprobadas" value={String(approved)} description="Solicitudes aceptadas" />
+        <CardStat title="Denegadas" value={String(rejected)} description="Solicitudes rechazadas" />
       </section>
 
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Solicitudes</h2>
         <p className={style.sectionDescription}>
-          {totalFiltradas} resultado{totalFiltradas !== 1 ? "s" : ""}
+          {filteredTotal} resultado{filteredTotal !== 1 ? "s" : ""}
           {q ? ` para "${q}"` : ""}.
         </p>
 
@@ -99,21 +100,21 @@ export default async function BackOfficeRequestsPage({
           </button>
         </form>
 
-        {solicitudes.length > 0 ? (
+        {requests.length > 0 ? (
           <>
             <ul className={style.list}>
-              {solicitudes.map(solicitud => (
-                <li key={solicitud.id} className={style.listItem}>
-                  <p className={style.itemTitle}>{solicitud.communityRef.name}</p>
+              {requests.map(request => (
+                <li key={request.id} className={style.listItem}>
+                  <p className={style.itemTitle}>{request.communityRef.name}</p>
                   <p className={style.itemMeta}>
-                    {solicitud.userRef.name} {solicitud.userRef.lastName} · {solicitud.userRef.email}
+                    {request.userRef.name} {request.userRef.lastName} · {request.userRef.email}
                   </p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{solicitud.status}</span>
-                    <span className={style.pill}>{solicitud.createdAt.toLocaleDateString("es-ES")}</span>
+                    <span className={style.pill}>{request.status}</span>
+                    <span className={style.pill}>{request.createdAt.toLocaleDateString("es-ES")}</span>
                   </div>
                   <form action={deleteRequest}>
-                    <input type="hidden" name="id" value={solicitud.id} />
+                    <input type="hidden" name="id" value={request.id} />
                     <button type="submit" className={style.deleteBtn}>
                       Eliminar
                     </button>

@@ -5,58 +5,51 @@ import Link from "next/link";
 import style from "../style.module.css";
 
 const accesosDirectos = [
-  { text: "Comunidades", href: "/backoffice/comunidades" },
-  { text: "Usuarios", href: "/backoffice/usuarios" },
-  { text: "Incidencias", href: "/backoffice/incidencias" },
-  { text: "Zonas Comunes", href: "/backoffice/zonas-comunes" },
-  { text: "Finanzas", href: "/backoffice/finanzas" },
-  { text: "Solicitudes", href: "/backoffice/solicitudes" },
+  { text: "Comunidades", href: "/backoffice/communities" },
+  { text: "Usuarios", href: "/backoffice/users" },
+  { text: "Incidencias", href: "/backoffice/incidents" },
+  { text: "Zonas Comunes", href: "/backoffice/common-zones" },
+  { text: "Finanzas", href: "/backoffice/finances" },
+  { text: "Solicitudes", href: "/backoffice/requests" },
   { text: "Contacto", href: "/backoffice/contact" }
 ] as const;
 
 /**
  * Backoffice overview page.
+ *
  * Shows a global operational summary of the platform with community statistics,
  * users, incidents, common areas, requests and financial balance.
  *
- * @component
  * @returns La rendered backoffice overview page
  */
 export default async function BackOfficeOverviewPage(): Promise<React.ReactNode> {
-  const [
-    totalComunidades,
-    totalUsuarios,
-    totalIncidencias,
-    totalZonas,
-    solicitudesPendientes,
-    registros,
-    comunidadesRecientes
-  ] = await Promise.all([
-    prisma.community.count(),
-    prisma.user.count(),
-    prisma.incident.count(),
-    prisma.zone.count(),
-    prisma.request.count({ where: { status: "pending" } }),
-    prisma.financialRecord.findMany({ select: { type: true, amount: true } }),
-    prisma.community.findMany({
-      take: 5,
-      orderBy: { id: "desc" },
-      select: {
-        id: true,
-        name: true,
-        city: true,
-        province: true,
-        admin: {
-          select: {
-            name: true,
-            lastName: true
+  const [totalCommunities, totalUsers, totalIncidents, totalZones, pendingRequests, records, recentCommunities] =
+    await Promise.all([
+      prisma.community.count(),
+      prisma.user.count(),
+      prisma.incident.count(),
+      prisma.zone.count(),
+      prisma.request.count({ where: { status: "pending" } }),
+      prisma.financialRecord.findMany({ select: { type: true, amount: true } }),
+      prisma.community.findMany({
+        take: 5,
+        orderBy: { id: "desc" },
+        select: {
+          id: true,
+          name: true,
+          city: true,
+          province: true,
+          admin: {
+            select: {
+              name: true,
+              lastName: true
+            }
           }
         }
-      }
-    })
-  ]);
+      })
+    ]);
 
-  const { balanceFinal } = calculateFinancialSummary(registros);
+  const { finalBalance } = calculateFinancialSummary(records);
 
   return (
     <main className={style.main}>
@@ -70,22 +63,22 @@ export default async function BackOfficeOverviewPage(): Promise<React.ReactNode>
       </header>
 
       <section className={style.statsGrid}>
-        <CardStat title="Comunidades" value={String(totalComunidades)} description="Comunidades dadas de alta" />
-        <CardStat title="Usuarios" value={String(totalUsuarios)} description="Usuarios registrados en la plataforma" />
+        <CardStat title="Comunidades" value={String(totalCommunities)} description="Comunidades dadas de alta" />
+        <CardStat title="Usuarios" value={String(totalUsers)} description="Usuarios registrados en la plataforma" />
         <CardStat
           title="Incidencias"
-          value={String(totalIncidencias)}
+          value={String(totalIncidents)}
           description="Incidencias acumuladas en todas las comunidades"
         />
-        <CardStat title="Zonas" value={String(totalZonas)} description="Zonas comunes creadas" />
+        <CardStat title="Zonas" value={String(totalZones)} description="Zonas comunes creadas" />
         <CardStat
           title="Solicitudes"
-          value={String(solicitudesPendientes)}
+          value={String(pendingRequests)}
           description="Solicitudes pendientes de revision"
         />
         <CardStat
           title="Balance Global"
-          value={formatCurrencyAmount(balanceFinal)}
+          value={formatCurrencyAmount(finalBalance)}
           description="Ingresos menos gastos registrados"
         />
       </section>
@@ -108,16 +101,16 @@ export default async function BackOfficeOverviewPage(): Promise<React.ReactNode>
           <h2 className={style.sectionTitle}>Ultimas comunidades</h2>
           <p className={style.sectionDescription}>Referencia rapida de las comunidades mas recientes en el sistema.</p>
 
-          {comunidadesRecientes.length > 0 ? (
+          {recentCommunities.length > 0 ? (
             <ul className={style.list}>
-              {comunidadesRecientes.map(comunidad => (
-                <li key={comunidad.id} className={style.listItem}>
-                  <p className={style.itemTitle}>{comunidad.name}</p>
+              {recentCommunities.map(community => (
+                <li key={community.id} className={style.listItem}>
+                  <p className={style.itemTitle}>{community.name}</p>
                   <p className={style.itemMeta}>
-                    {comunidad.city}, {comunidad.province}
+                    {community.city}, {community.province}
                   </p>
                   <p className={style.itemMeta}>
-                    Admin: {comunidad.admin.name} {comunidad.admin.lastName}
+                    Admin: {community.admin.name} {community.admin.lastName}
                   </p>
                 </li>
               ))}

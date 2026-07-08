@@ -111,7 +111,7 @@ const deleteRequest = async (formData: FormData): Promise<void> => {
   try {
     await prisma.request.delete({ where: { id } });
 
-    revalidatePath("/backoffice/solicitudes");
+    revalidatePath("/backoffice/requests");
     revalidatePath("/backoffice/overview");
   } catch {}
 };

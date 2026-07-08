@@ -6,7 +6,7 @@ import style from "../style.module.css";
 
 const PAGE_SIZE = 10;
 
-const etiquetasRol: Record<UserRole, string> = {
+const rolteLabels: Record<UserRole, string> = {
   [UserRole.tenant]: "Inquilino",
   [UserRole.admin]: "Administrador",
   [UserRole.webAdmin]: "Administrador Web"
@@ -14,10 +14,10 @@ const etiquetasRol: Record<UserRole, string> = {
 
 /**
  * Backoffice user management page.
+ *
  * Lists all registered users on the platform with search and paging support.
  * Allows webAdmin to view user information and delete accounts.
  *
- * @component
  * @param searchParams Optional search parameters: q (search term) and page (current page)
  * @returns La backoffice users page rendered
  */
@@ -40,7 +40,7 @@ export default async function BackOfficeUsersPage({
       }
     : undefined;
 
-  const [totalUsuarios, totalInquilinos, totalAdmins, totalAdminsWeb, usuarios, totalFiltrados] = await Promise.all([
+  const [totalUsers, totalTenants, totalAdmins, totalAdminsWeb, users, filteredTotal] = await Promise.all([
     prisma.user.count(),
     prisma.user.count({ where: { role: UserRole.tenant } }),
     prisma.user.count({ where: { role: UserRole.admin } }),
@@ -67,7 +67,7 @@ export default async function BackOfficeUsersPage({
     prisma.user.count({ where })
   ]);
 
-  const totalPages = Math.max(1, Math.ceil(totalFiltrados / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(filteredTotal / PAGE_SIZE));
 
   return (
     <main className={style.main}>
@@ -78,8 +78,8 @@ export default async function BackOfficeUsersPage({
       </header>
 
       <section className={style.statsGrid}>
-        <CardStat title="Total" value={String(totalUsuarios)} description="Usuarios registrados" />
-        <CardStat title="Inquilinos" value={String(totalInquilinos)} description="Usuarios finales" />
+        <CardStat title="Total" value={String(totalUsers)} description="Usuarios registrados" />
+        <CardStat title="Inquilinos" value={String(totalTenants)} description="Usuarios finales" />
         <CardStat title="Admins" value={String(totalAdmins)} description="Administradores de comunidad" />
         <CardStat title="Admin Web" value={String(totalAdminsWeb)} description="Acceso total al back office" />
       </section>
@@ -87,7 +87,7 @@ export default async function BackOfficeUsersPage({
       <article className={style.sectionCard}>
         <h2 className={style.sectionTitle}>Usuarios</h2>
         <p className={style.sectionDescription}>
-          {totalFiltrados} resultado{totalFiltrados !== 1 ? "s" : ""}
+          {filteredTotal} resultado{filteredTotal !== 1 ? "s" : ""}
           {q ? ` para "${q}"` : ""}.
         </p>
 
@@ -104,21 +104,21 @@ export default async function BackOfficeUsersPage({
           </button>
         </form>
 
-        {usuarios.length > 0 ? (
+        {users.length > 0 ? (
           <>
             <ul className={style.list}>
-              {usuarios.map(usuario => (
-                <li key={usuario.id} className={style.listItem}>
+              {users.map(user => (
+                <li key={user.id} className={style.listItem}>
                   <p className={style.itemTitle}>
-                    {usuario.name} {usuario.lastName}
+                    {user.name} {user.lastName}
                   </p>
-                  <p className={style.itemMeta}>{usuario.email}</p>
+                  <p className={style.itemMeta}>{user.email}</p>
                   <div className={style.pillRow}>
-                    <span className={style.pill}>{etiquetasRol[usuario.role as UserRole]}</span>
-                    <span className={style.pill}>{usuario._count.memberships} inscripciones</span>
-                    <span className={style.pill}>{usuario._count.requests} solicitudes</span>
+                    <span className={style.pill}>{rolteLabels[user.role as UserRole]}</span>
+                    <span className={style.pill}>{user._count.memberships} inscripciones</span>
+                    <span className={style.pill}>{user._count.requests} solicitudes</span>
                   </div>
-                  <UserDeleteForm userId={usuario.id} deleteClassName={style.deleteBtn} />
+                  <UserDeleteForm userId={user.id} deleteClassName={style.deleteBtn} />
                 </li>
               ))}
             </ul>

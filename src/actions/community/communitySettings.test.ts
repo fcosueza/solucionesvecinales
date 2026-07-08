@@ -357,7 +357,7 @@ describe("communitySettings test suite", () => {
       await deleteCommunityAdmin(formData);
 
       expect(deleteMock).toHaveBeenCalledWith({ where: { id: 12 } });
-      expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/comunidades");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/communities");
       expect(revalidatePathMock).toHaveBeenCalledWith("/backoffice/overview");
     });
 

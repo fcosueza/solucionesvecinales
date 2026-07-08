@@ -30,12 +30,12 @@ const enlacesBase = [
 const enlacesBackOffice = [
   { text: "Vista General", href: "/backoffice/overview" },
   { text: "Contacto", href: "/backoffice/contact" },
-  { text: "Comunidades", href: "/backoffice/comunidades" },
-  { text: "Usuarios", href: "/backoffice/usuarios" },
-  { text: "Incidencias", href: "/backoffice/incidencias" },
-  { text: "Zonas Comunes", href: "/backoffice/zonas-comunes" },
-  { text: "Finanzas", href: "/backoffice/finanzas" },
-  { text: "Solicitudes", href: "/backoffice/solicitudes" },
+  { text: "Comunidades", href: "/backoffice/communities" },
+  { text: "Usuarios", href: "/backoffice/users" },
+  { text: "Incidencias", href: "/backoffice/incidents" },
+  { text: "Zonas Comunes", href: "/backoffice/common-zones" },
+  { text: "Finanzas", href: "/backoffice/finances" },
+  { text: "Solicitudes", href: "/backoffice/requests" },
   { text: "Salir", href: "/logout" }
 ] as const;
 

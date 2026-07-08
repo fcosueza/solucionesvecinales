@@ -225,7 +225,7 @@ const deleteZoneAdmin = async (formData: FormData): Promise<void> => {
     await prisma.zone.delete({
       where: { name_community: { name: name, community: community } }
     });
-    revalidatePath("/backoffice/zonas-comunes");
+    revalidatePath("/backoffice/common-zones");
     revalidatePath("/backoffice/overview");
   } catch {}
 };
