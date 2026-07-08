@@ -217,7 +217,7 @@ describe("communityReservation test suite", () => {
       })
     });
     expect(revalidatePathMock).toHaveBeenNthCalledWith(1, "/communities/1/overview");
-    expect(revalidatePathMock).toHaveBeenNthCalledWith(2, "/communities/1/zonas-comunes");
+    expect(revalidatePathMock).toHaveBeenNthCalledWith(2, "/communities/1/common-areas");
   });
 
   it("Should translate P2002 into a concurrency message", async () => {
@@ -285,6 +285,6 @@ describe("communityReservation test suite", () => {
     expect(result).toEqual({ state: "success", message: "Reserva cancelada correctamente" });
     expect(prismaMock.reservation.delete).toHaveBeenCalledWith({ where: { id: 3 } });
     expect(revalidatePathMock).toHaveBeenNthCalledWith(1, "/communities/1/overview");
-    expect(revalidatePathMock).toHaveBeenNthCalledWith(2, "/communities/1/zonas-comunes");
+    expect(revalidatePathMock).toHaveBeenNthCalledWith(2, "/communities/1/common-areas");
   });
 });

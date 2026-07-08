@@ -84,11 +84,11 @@ describe("SideMenu component test suite", () => {
   });
 
   it("Should keep the community parent link active when the route is a subroute", () => {
-    (rutaActualMock as jest.Mock).mockReturnValue("/communities/12/incidencias/44");
+    (rutaActualMock as jest.Mock).mockReturnValue("/communities/12/incidents/44");
 
     render(<SideMenu userName="Laura" role={UserRole.tenant} />);
 
-    expect(screen.getByRole("link", { name: "Incidencias" })).toHaveClass("menuLinkActive");
+    expect(screen.getByRole("link", { name: "Incidents" })).toHaveClass("menuLinkActive");
     expect(screen.getByRole("link", { name: "Vista General" })).not.toHaveClass("menuLinkActive");
   });
 
@@ -105,6 +105,8 @@ describe("SideMenu component test suite", () => {
 
     render(<SideMenu userName="Laura" role={UserRole.admin} />);
 
+    expect(screen.getByRole("link", { name: "Common Areas" })).toHaveAttribute("href", "/communities/12/common-areas");
+    expect(screen.getByRole("link", { name: "Finanzas" })).toHaveAttribute("href", "/communities/12/finances");
     expect(screen.getByRole("link", { name: "Solicitudes" })).toHaveAttribute("href", "/communities/12/requests");
   });
 

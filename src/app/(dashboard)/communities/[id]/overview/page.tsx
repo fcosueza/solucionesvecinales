@@ -32,29 +32,29 @@ const helpContent: HelpContent = {
 
 /**
  * Community overview page.
+ *
  * Shows the main community summary with statistics, message board and
  * Featured common areas. Provides quick access to community modules.
  *
- * @component
  * @param params Route parameters including community ID
- * @returns La community overview page rendered
+ * @returns The community overview page rendered
  */
 const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
-  const comunidadId = Number(id);
+  const communityID = Number(id);
 
-  if (isNaN(comunidadId)) {
+  if (isNaN(communityID)) {
     notFound();
   }
 
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
 
   const comunidad = await prisma.community.findUnique({
-    where: { id: comunidadId },
+    where: { id: communityID },
     select: {
       id: true,
       name: true,
@@ -103,9 +103,8 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
     notFound();
   }
 
-  const { balanceFinal } = calculateFinancialSummary(comunidad.financialRecords);
-  const esAdmin =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const { balanceFinal: finalBalance } = calculateFinancialSummary(comunidad.financialRecords);
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
   return (
     <main className={style.main}>
@@ -130,7 +129,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
 
       <section className={style.section}>
         <h2 className={style.sectionTitle}>Tablón de mensajes</h2>
-        <MessageBoard messages={comunidad.messages} communityID={comunidadId} isAdmin={esAdmin} />
+        <MessageBoard messages={comunidad.messages} communityID={communityID} isAdmin={isAdmin} />
       </section>
 
       <section className={style.section}>
@@ -138,17 +137,17 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
 
         {comunidad.zones.length > 0 ? (
           <div className={style.zonesGrid}>
-            {comunidad.zones.map(zona => (
+            {comunidad.zones.map(zone => (
               <CardCommonArea
-                key={zona.name}
-                name={zona.name}
-                description={zona.description}
-                startTime={zona.startTime}
-                endTime={zona.endTime}
-                imageUrl={zona.image ?? "/assets/images/default-community.jpeg"}
+                key={zone.name}
+                name={zone.name}
+                description={zone.description}
+                startTime={zone.startTime}
+                endTime={zone.endTime}
+                imageUrl={zone.image ?? "/assets/images/default-community.jpeg"}
                 reservationSummary="Reserva turnos de 1 o 2 horas en los próximos 7 días. Solo una reserva activa por usuario."
                 action={
-                  <Link className={style.zoneLink} href={`/communities/${comunidadId}/zonas-comunes`}>
+                  <Link className={style.zoneLink} href={`/communities/${communityID}/common-areas`}>
                     Ir a reservas
                   </Link>
                 }
@@ -168,7 +167,7 @@ const CommunityOverviewPage = async ({ params }: Props): Promise<React.ReactNode
         />
         <CardStat
           title="Balance total"
-          value={formatCurrencyAmount(balanceFinal)}
+          value={formatCurrencyAmount(finalBalance)}
           description="Balance total calculado como ingresos menos pagos registrados"
         />
       </section>

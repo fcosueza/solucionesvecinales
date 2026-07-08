@@ -47,9 +47,9 @@ const enlacesBackOffice = [
  */
 const enlacesComunidad = (id: string) => [
   { text: "Vista General", href: `/communities/${id}/overview` },
-  { text: "Incidencias", href: `/communities/${id}/incidencias` },
-  { text: "Zonas Comunes", href: `/communities/${id}/zonas-comunes` },
-  { text: "Finanzas", href: `/communities/${id}/finanzas` }
+  { text: "Incidents", href: `/communities/${id}/incidents` },
+  { text: "Common Areas", href: `/communities/${id}/common-areas` },
+  { text: "Finanzas", href: `/communities/${id}/finances` }
 ];
 
 /**

@@ -16,26 +16,26 @@ interface Props {
 }
 
 const helpContent: HelpContent = {
-  title: "Ayuda: Zonas comunes",
-  summary: "Reserva espacios de la comunidad y consulta tus reservas.",
+  title: "Help: Common Areas",
+  summary: "Reserve community spaces and review your reservations.",
   steps: [
-    "Revisa las zonas disponibles y sus horarios.",
-    "Selecciona una zona y crea una reserva válida.",
-    "Consulta tus reservas en la sección correspondiente.",
-    "Cancela o ajusta reservas si la interfaz lo permite."
+    "Review the available areas and their schedules.",
+    "Select an area and create a valid reservation.",
+    "Check your reservations in the corresponding section.",
+    "Cancel or adjust reservations if the interface allows it."
   ],
   constraints: [
-    "Las reservas están limitadas por ventana temporal y disponibilidad.",
-    "Solo administradores pueden añadir nuevas zonas."
+    "Reservations are limited by the booking window and availability.",
+    "Only administrators can add new areas."
   ]
 };
 
 /**
  * Page of common areas of a community.
+ *
  * Shows the common areas available for reservation and the user's current reservations.
  * Administrators can create new common areas.
  *
- * @component
  * @param params Route parameters including community ID
  * @returns La community commons page rendered
  */
@@ -130,7 +130,7 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"
-          alt={`Imagen de la comunidad ${community.name}`}
+          alt={`Community image for ${community.name}`}
           width={240}
           height={160}
           className={style.headerImage}
@@ -138,7 +138,7 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
         />
 
         <div className={style.headerInfo}>
-          <h1 className={style.title}>Zonas comunes</h1>
+          <h1 className={style.title}>Common Areas</h1>
           <p className={style.communityName}>{community.name}</p>
           <p className={style.address}>
             {community.street}, {community.number}. {community.city}, {community.province}, {community.country}
@@ -148,16 +148,16 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
 
       <section className={style.infoPanel}>
         <div>
-          <h2 className={style.infoTitle}>Normas de reserva</h2>
+          <h2 className={style.infoTitle}>Booking rules</h2>
           <p className={style.infoText}>
-            Cada reserva dura 1 o 2 horas, siempre en punto, y se puede hacer para los próximos 7 días.
+            Each reservation lasts 1 or 2 hours, starts on the hour, and can be made for the next 7 days.
           </p>
         </div>
       </section>
 
       <section className={style.section}>
         <div className={style.sectionControls}>
-          <h2 className={style.sectionTitle}>Reservar una zona</h2>
+          <h2 className={style.sectionTitle}>Reserve an area</h2>
           {isAdmin ? <AddZoneFormButton communityID={communityID} /> : null}
         </div>
 
@@ -167,8 +167,8 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
               const weeklyReservations = zone.reservations.length;
               const reservationSummary =
                 weeklyReservations > 0
-                  ? `${weeklyReservations} reservas previstas para los próximos 7 días.`
-                  : "Sin reservas previstas en la próxima semana.";
+                  ? `${weeklyReservations} reservations scheduled for the next 7 days.`
+                  : "No reservations scheduled for the next week.";
 
               return (
                 <ZoneCardWrapper
@@ -183,12 +183,12 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
             })}
           </div>
         ) : (
-          <p className={style.emptyState}>Esta comunidad todavía no tiene zonas comunes registradas.</p>
+          <p className={style.emptyState}>This community does not have any common areas registered yet.</p>
         )}
       </section>
 
       <section className={style.section}>
-        <h2 className={style.sectionTitle}>Mis reservas</h2>
+        <h2 className={style.sectionTitle}>My reservations</h2>
 
         {userReservations.length > 0 ? (
           <div className={style.myReservationsList}>
@@ -204,7 +204,7 @@ const CommunityCommonAreasPage = async ({ params }: Props): Promise<React.ReactN
             ))}
           </div>
         ) : (
-          <p className={style.emptyState}>Aún no has realizado ninguna reserva en esta comunidad.</p>
+          <p className={style.emptyState}>You have not made any reservations in this community yet.</p>
         )}
       </section>
     </main>

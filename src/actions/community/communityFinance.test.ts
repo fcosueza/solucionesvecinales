@@ -111,7 +111,7 @@ describe("communityFinance server function test suite", () => {
         type: "income"
       }
     });
-    expect(revalidatePath).toHaveBeenCalledWith("/communities/4/finanzas");
+    expect(revalidatePath).toHaveBeenCalledWith("/communities/4/finances");
     expect(revalidatePath).toHaveBeenCalledWith("/communities/4/overview");
   });
 

@@ -119,7 +119,7 @@ describe("updateIncidentStatus test suite", () => {
         updatedAt: expect.any(Date)
       }
     });
-    expect(revalidatePath).toHaveBeenCalledWith("/communities/1/incidencias");
+    expect(revalidatePath).toHaveBeenCalledWith("/communities/1/incidents");
     expect(revalidatePath).toHaveBeenCalledWith("/communities/1/overview");
   });
 
@@ -348,7 +348,7 @@ describe("deleteIncident test suite", () => {
         }
       }
     });
-    expect(revalidatePath).toHaveBeenCalledWith("/communities/7/incidencias");
+    expect(revalidatePath).toHaveBeenCalledWith("/communities/7/incidents");
     expect(revalidatePath).toHaveBeenCalledWith("/communities/7/overview");
   });
 
@@ -454,7 +454,7 @@ describe("addIncident test suite", () => {
         status: "reported"
       }
     });
-    expect(revalidatePath).toHaveBeenCalledWith("/communities/3/incidencias");
+    expect(revalidatePath).toHaveBeenCalledWith("/communities/3/incidents");
     expect(revalidatePath).toHaveBeenCalledWith("/communities/3/overview");
   });
 

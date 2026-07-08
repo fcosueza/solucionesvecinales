@@ -70,7 +70,7 @@ const communityFinance = async (communityID: number, formData: FormData): Promis
       }
     });
 
-    revalidatePath(`/communities/${communityID}/finanzas`);
+    revalidatePath(`/communities/${communityID}/finances`);
     revalidatePath(`/communities/${communityID}/overview`);
   } catch {}
 };

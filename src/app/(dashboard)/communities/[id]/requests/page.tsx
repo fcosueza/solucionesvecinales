@@ -49,12 +49,12 @@ const toStatusLabel = (status: "pending" | "approved" | "rejected"): string => {
 
 /**
  * Community request page.
+ *
  * Lists all subscription requests received in the community.
  * Allows administrators to approve or reject new member requests.
  *
- * @component
  * @param params Route parameters including community ID
- * @returns La community requests page rendered
+ * @returns The community requests page rendered
  */
 const CommunityRequestsPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;

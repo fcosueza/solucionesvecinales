@@ -97,7 +97,7 @@ const updateIncidentStatus = async (formData: FormData): Promise<void> => {
     }
   });
 
-  revalidatePath(`/communities/${communityID}/incidencias`);
+  revalidatePath(`/communities/${communityID}/incidents`);
   revalidatePath(`/communities/${communityID}/overview`);
 };
 
@@ -172,7 +172,7 @@ const deleteIncident = async (formData: FormData): Promise<void> => {
       }
     });
 
-    revalidatePath(`/communities/${communityID}/incidencias`);
+    revalidatePath(`/communities/${communityID}/incidents`);
     revalidatePath(`/communities/${communityID}/overview`);
   } catch {}
 };
@@ -226,7 +226,7 @@ const addIncident = async (communityID: number, formData: FormData): Promise<voi
       }
     });
 
-    revalidatePath(`/communities/${communityID}/incidencias`);
+    revalidatePath(`/communities/${communityID}/incidents`);
     revalidatePath(`/communities/${communityID}/overview`);
   } catch {}
 };

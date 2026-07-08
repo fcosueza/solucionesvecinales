@@ -13,7 +13,7 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-interface RegistroItem {
+interface RecordItem {
   id: number;
   description: FinancialRecordCalculable["description"];
   amount: FinancialRecordCalculable["amount"];
@@ -39,7 +39,7 @@ const helpContent: HelpContent = {
 /**
  * Formats a Date object as a Spanish date label (dd/mm/yyyy).
  *
- * @param date El objeto Date a formatear
+ * @param date The date object to format
  * @returns String with the date in dd/mm/yyyy format
  */
 const toDateLabel = (date: Date): string => {
@@ -58,16 +58,17 @@ const toDateLabel = (date: Date): string => {
  * @param registros Array of section financial records
  * @param emptyMessage Message to show when there are no records
  * @param total The cumulative total of the section
+ *
  * @returns Array of rows (TableRow[]) to render to the table
  */
 const buildSectionRows = ({
   title,
-  registros,
+  records,
   emptyMessage,
   total
 }: {
   title: string;
-  registros: RegistroItem[];
+  records: RecordItem[];
   emptyMessage: string;
   total: number;
 }): TableRow[] => {
@@ -79,19 +80,19 @@ const buildSectionRows = ({
     }
   ];
 
-  if (registros.length === 0) {
+  if (records.length === 0) {
     rows.push({
       key: `${title}-empty`,
       cells: [{ content: emptyMessage, colSpan: 3 }]
     });
   } else {
     rows.push(
-      ...registros.map(registro => ({
-        key: registro.id,
+      ...records.map(register => ({
+        key: register.id,
         cells: [
-          registro.description,
-          toDateLabel(registro.createdAt),
-          formatCurrencyAmount(Number(registro.amount.toString()))
+          register.description,
+          toDateLabel(register.createdAt),
+          formatCurrencyAmount(Number(register.amount.toString()))
         ]
       }))
     );
@@ -108,10 +109,10 @@ const buildSectionRows = ({
 
 /**
  * Community finance page.
+ *
  * Shows the income, expenses and financial balance of the community.
  * Allows administrators to add new financial records.
  *
- * @component
  * @param params Route parameters including community ID
  * @returns La community finance page rendered
  */
@@ -158,8 +159,8 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
     notFound();
   }
 
-  const pagos = community.financialRecords.filter(registro => registro.type === "expense");
-  const ingresos = community.financialRecords.filter(registro => registro.type === "income");
+  const payments = community.financialRecords.filter(record => record.type === "expense");
+  const incomes = community.financialRecords.filter(record => record.type === "income");
   const canAddRecord =
     verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
@@ -168,13 +169,13 @@ const CommunityFinancePage = async ({ params }: Props): Promise<React.ReactNode>
   const rows: TableRow[] = [
     ...buildSectionRows({
       title: "Pagos",
-      registros: pagos,
+      records: payments,
       emptyMessage: "No hay pagos registrados.",
       total: totalPayments
     }),
     ...buildSectionRows({
       title: "Ingresos",
-      registros: ingresos,
+      records: incomes,
       emptyMessage: "No hay ingresos registrados.",
       total: totalIncome
     }),

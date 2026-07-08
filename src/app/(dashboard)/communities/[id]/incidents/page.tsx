@@ -13,28 +13,28 @@ interface Props {
 }
 
 const helpContent: HelpContent = {
-  title: "Ayuda: Incidencias",
-  summary: "Gestiona incidencias reportadas por la comunidad.",
+  title: "Help: Incidents",
+  summary: "Manage incidents reported by the community.",
   steps: [
-    "Revisa la lista de incidencias existentes.",
-    "Pulsa añadir incidencias para crear una nueva.",
-    "Completa título y descripción del problema.",
-    "Haz seguimiento del estado hasta su resolución."
+    "Review the list of existing incidents.",
+    "Select add incidents to create a new one.",
+    "Complete the issue title and description.",
+    "Track the status until it is resolved."
   ],
   constraints: [
-    "El alta de incidencias puede variar según permisos.",
-    "Los estados se actualizan según el flujo definido por la comunidad."
+    "Incident creation may vary depending on permissions.",
+    "Statuses update according to the workflow defined by the community."
   ]
 };
 
 /**
  * Community incident page.
+ *
  * Lists all incidents reported in the community with their current status.
  * It allows you to report new incidents and track the resolution flow.
  *
- * @component
  * @param params Route parameters including community ID
- * @returns La community issues page rendered
+ * @returns The community issues page rendered
  */
 const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
@@ -107,7 +107,7 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
       <section className={style.headerSection}>
         <Image
           src="/assets/images/default-community.jpeg"
-          alt={`Imagen de la comunidad ${community.name}`}
+          alt={`Community image for ${community.name}`}
           width={240}
           height={160}
           className={style.headerImage}
@@ -115,7 +115,7 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
         />
 
         <div className={style.headerInfo}>
-          <h1 className={style.title}>Incidencias</h1>
+          <h1 className={style.title}>Incidents</h1>
           <p className={style.communityName}>{community.name}</p>
           <p className={style.address}>
             {community.street}, {community.number}. {community.city}, {community.province}, {community.country}
@@ -125,8 +125,8 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
 
       <section className={style.section}>
         <div className={style.sectionControls}>
-          <h2 className={style.sectionTitle}>Incidencias de la comunidad</h2>
-          <ActionButton buttonText="+ añadir incidencias" modalType="incident" communityID={communityID} />
+          <h2 className={style.sectionTitle}>Community incidents</h2>
+          <ActionButton buttonText="+ add incidents" modalType="incident" communityID={communityID} />
         </div>
 
         {incidents.length > 0 ? (
@@ -156,7 +156,7 @@ const CommunityIncidentsPage = async ({ params }: Props): Promise<React.ReactNod
             </ul>
           </div>
         ) : (
-          <p className={style.emptyState}>No hay incidencias registradas para esta comunidad.</p>
+          <p className={style.emptyState}>There are no incidents registered for this community.</p>
         )}
       </section>
     </main>

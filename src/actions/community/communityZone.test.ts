@@ -247,7 +247,7 @@ describe("communityZone test suite", () => {
           endTime: new Date(Date.UTC(1970, 0, 1, 21, 0, 0, 0))
         }
       });
-      expect(revalidatePathMock).toHaveBeenCalledWith("/communities/3/zonas-comunes");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/communities/3/common-areas");
       expect(revalidatePathMock).toHaveBeenCalledWith("/communities/3/overview");
       expect(result).toEqual({
         state: "success",
@@ -341,7 +341,7 @@ describe("communityZone test suite", () => {
           }
         }
       });
-      expect(revalidatePathMock).toHaveBeenCalledWith("/communities/2/zonas-comunes");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/communities/2/common-areas");
       expect(revalidatePathMock).toHaveBeenCalledWith("/communities/2/overview");
       expect(result).toEqual({
         state: "success",

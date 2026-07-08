@@ -216,7 +216,7 @@ const reserveCommonArea = async (
   }
 
   revalidatePath(`/communities/${communityID}/overview`);
-  revalidatePath(`/communities/${communityID}/zonas-comunes`);
+  revalidatePath(`/communities/${communityID}/common-areas`);
 
   return {
     state: "success",
@@ -263,7 +263,7 @@ const deleteReservation = async (reservationID: number, communityID: number): Pr
   }
 
   revalidatePath(`/communities/${communityID}/overview`);
-  revalidatePath(`/communities/${communityID}/zonas-comunes`);
+  revalidatePath(`/communities/${communityID}/common-areas`);
 
   return { state: "success", message: "Reserva cancelada correctamente" };
 };

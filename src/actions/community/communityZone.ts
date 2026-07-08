@@ -125,7 +125,7 @@ const createZone = async (communityID: number, formData: FormData): Promise<Form
     };
   }
 
-  revalidatePath(`/communities/${communityID}/zonas-comunes`);
+  revalidatePath(`/communities/${communityID}/common-areas`);
   revalidatePath(`/communities/${communityID}/overview`);
 
   return {
@@ -196,7 +196,7 @@ const deleteZone = async (communityID: number, zoneName: string): Promise<FormAc
     };
   }
 
-  revalidatePath(`/communities/${communityID}/zonas-comunes`);
+  revalidatePath(`/communities/${communityID}/common-areas`);
   revalidatePath(`/communities/${communityID}/overview`);
 
   return {

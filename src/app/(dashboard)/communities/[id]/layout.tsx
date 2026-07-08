@@ -8,43 +8,43 @@ interface Props {
 }
 
 /**
- * Design of a specific community.
- * Verifies that the user has access to the community and provides the common structure
- * to all the pages of that community.
+ * Community layout component.
  *
- * @component
+ * Wraps all community-related pages and ensures that the user is authenticated and authorized to access the community.
+ *
  * @param children Content of nested community pages
  * @param params Route parameters including community ID
- * @returns El community layout rendered
+ *
+ * @returns The community layout rendered
  */
 const CommunityLayout = async ({ children, params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
-  const comunidadId = Number(id);
+  const communityID = Number(id);
 
-  if (isNaN(comunidadId)) {
+  if (isNaN(communityID)) {
     notFound();
   }
 
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
 
-  const comunidad = await prisma.community.findUnique({
-    where: { id: comunidadId },
+  const community = await prisma.community.findUnique({
+    where: { id: communityID },
     select: { id: true }
   });
 
-  if (!comunidad) {
+  if (!community) {
     notFound();
   }
 
-  const inscripcion = await prisma.membership.findUnique({
+  const membership = await prisma.membership.findUnique({
     where: {
       user_community: {
-        user: sesionVerificada.session.userID,
-        community: comunidadId
+        user: verifiedSession.session.userID,
+        community: communityID
       }
     },
     select: {
@@ -52,7 +52,7 @@ const CommunityLayout = async ({ children, params }: Props): Promise<React.React
     }
   });
 
-  if (!inscripcion) {
+  if (!membership) {
     redirect("/communities");
   }
 

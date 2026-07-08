@@ -6,9 +6,9 @@ interface Props {
 
 /**
  * Index page for a specific community.
+ *
  * Automatically redirects to the community overview page.
  *
- * @component
  * @param params Route parameters including community ID
  * @returns No returns content, only redirects
  */

@@ -27,11 +27,11 @@ const helpContent: HelpContent = {
 
 /**
  * Community configuration page.
+ *
  * Allows administrators to edit community data such as name, address, and description.
  *
- * @component
  * @param params Route parameters including community ID
- * @returns La community settings page rendered
+ * @returns The community settings page rendered
  */
 const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode> => {
   const { id } = await params;
@@ -41,20 +41,19 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
     notFound();
   }
 
-  const sesionVerificada = await verifySession();
+  const verifiedSession = await verifySession();
 
-  if (!sesionVerificada.isAuth || !sesionVerificada.session) {
+  if (!verifiedSession.isAuth || !verifiedSession.session) {
     redirect("/login");
   }
 
-  const esAdministrador =
-    sesionVerificada.session.role === UserRole.admin || sesionVerificada.session.role === UserRole.webAdmin;
+  const isAdmin = verifiedSession.session.role === UserRole.admin || verifiedSession.session.role === UserRole.webAdmin;
 
-  if (!esAdministrador) {
+  if (!isAdmin) {
     redirect(`/communities/${communityID}/overview`);
   }
 
-  const comunidad = await prisma.community.findUnique({
+  const community = await prisma.community.findUnique({
     where: { id: communityID },
     select: {
       id: true,
@@ -68,11 +67,11 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
     }
   });
 
-  if (!comunidad) {
+  if (!community) {
     notFound();
   }
 
-  if (comunidad.adminId !== sesionVerificada.session.userID) {
+  if (community.adminId !== verifiedSession.session.userID) {
     redirect(`/communities/${communityID}/overview`);
   }
 
@@ -82,13 +81,13 @@ const CommunitySettingsPage = async ({ params }: Props): Promise<React.ReactNode
       <h1 className={style.title}>Configuracion</h1>
       <p className={style.description}>Gestiona los datos y ajustes de la comunidad</p>
       <CommunitySettingsForm
-        communityID={comunidad.id}
-        name={comunidad.name}
-        street={comunidad.street}
-        number={comunidad.number}
-        city={comunidad.city}
-        province={comunidad.province}
-        country={comunidad.country}
+        communityID={community.id}
+        name={community.name}
+        street={community.street}
+        number={community.number}
+        city={community.city}
+        province={community.province}
+        country={community.country}
       />
     </main>
   );

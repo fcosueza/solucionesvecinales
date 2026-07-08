@@ -94,7 +94,6 @@ const SearchCommunityPage = async ({ searchParams }: SearchPageProps): Promise<R
       }
     }
   });
-
   const enrolledCommunityIDs = new Set<number>(aLista(userHasCommunities?.memberships).map(i => i.community));
   const pendingRequestCommunityIDs = new Set<number>(
     aLista(userHasCommunities?.requests).map(request => request.community)
