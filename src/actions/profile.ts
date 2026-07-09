@@ -2,6 +2,7 @@
 
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
+import { deleteUser } from "@/lib/user";
 import { deleteSession } from "@/lib/session";
 import profileSchema from "@/schemas/common/profile.schema";
 import { FormActionState } from "@/types";
@@ -20,7 +21,7 @@ type ProfileFormFields = z.infer<typeof profileSchema>;
  * @param _prevState Previous form action state
  * @param formData Profile form payload
  *
- * @returns Form action state with update result
+ * @returns A promise that resolves to a FormActionState object indicating success or failure of the update operation.
  */
 const updateProfile = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const verifiedSession = await verifySession();
@@ -39,7 +40,7 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
   if (!validatedData.success) {
     return {
       state: "error",
-      message: "Invalid form data",
+      message: "Datos del formulario no válidos",
       errors: validatedData.error.flatten().fieldErrors,
       payload: formData
     };
@@ -106,7 +107,7 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
 };
 
 /**
- * Deletes the authenticated user account and its owned communities, then clears the session.
+ * Deletes the authenticated user account and then clears the session.
  *
  * @param _prevState Previous form action state
  * @returns Form action state when deletion fails; otherwise redirects
@@ -123,15 +124,12 @@ const deleteProfile = async (_prevState: FormActionState): Promise<FormActionSta
 
   const userID = String(verifiedSession.session.userID);
 
-  try {
-    await prisma.$transaction(async tx => {
-      await tx.community.deleteMany({ where: { adminId: userID } });
-      await tx.user.delete({ where: { id: userID } });
-    });
-  } catch {
+  const deleteError = await deleteUser(userID);
+
+  if (deleteError) {
     return {
       state: "error",
-      message: "No se pudo eliminar la cuenta. Por favor, inténtalo de nuevo."
+      message: deleteError.message
     };
   }
 
@@ -139,7 +137,6 @@ const deleteProfile = async (_prevState: FormActionState): Promise<FormActionSta
   redirect("/");
 };
 
-// Allowed formats and maximum size for profile images
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 MB
 

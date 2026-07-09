@@ -1,6 +1,7 @@
 import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { deleteSession } from "@/lib/session";
+import { deleteUser } from "@/lib/user";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { mkdirSync } from "fs";
@@ -25,13 +26,15 @@ jest.mock("bcrypt", () => ({
 jest.mock("next/navigation", () => ({
   redirect: jest.fn()
 }));
+jest.mock("@/lib/user", () => ({
+  deleteUser: jest.fn()
+}));
 jest.mock("@/lib/prisma", () => ({
   __esModule: true,
   default: {
     user: {
       update: jest.fn()
-    },
-    $transaction: jest.fn()
+    }
   }
 }));
 
@@ -39,10 +42,10 @@ describe("Test suite for profile actions", () => {
   const verifySessionMock = verifySession as jest.Mock;
   const bcryptHashMock = bcrypt.hash as jest.Mock;
   const deleteSessionMock = deleteSession as jest.Mock;
+  const deleteUserMock = deleteUser as jest.Mock;
   const redirectMock = redirect as unknown as jest.Mock;
 
   const prismaUserUpdateMock = (prisma as any).user.update as jest.Mock;
-  const prismaTransactionMock = (prisma as any).$transaction as jest.Mock;
 
   const createFormData = (data: Record<string, string>) => {
     const fd = new FormData();
@@ -97,7 +100,7 @@ describe("Test suite for profile actions", () => {
     );
 
     expect(result.state).toBe("error");
-    expect(result.message).toBe("Invalid form data");
+    expect(result.message).toBe("Datos del formulario no válidos");
     expect(result.errors).toBeDefined();
     expect(prismaUserUpdateMock).not.toHaveBeenCalled();
   });
@@ -297,22 +300,62 @@ describe("Test suite for profile actions", () => {
       state: "error",
       message: "Debes iniciar sesión para eliminar tu cuenta"
     });
-    expect(prismaTransactionMock).not.toHaveBeenCalled();
+    expect(deleteUserMock).not.toHaveBeenCalled();
   });
 
-  it("Should return an error in deleteProfile if the transaction fails", async () => {
+  it("Should return any deleteUser error message in deleteProfile", async () => {
     verifySessionMock.mockResolvedValue({
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
     });
-    prismaTransactionMock.mockRejectedValue(new Error("tx error"));
+    deleteUserMock.mockResolvedValue({
+      error: "delete_user_failed",
+      message: "No se pudo eliminar el usuario"
+    });
 
     const result = await deleteProfile({ state: "error", message: "" });
 
     expect(result).toEqual({
       state: "error",
-      message: "No se pudo eliminar la cuenta. Por favor, inténtalo de nuevo."
+      message: "No se pudo eliminar el usuario"
     });
+    expect(deleteSessionMock).not.toHaveBeenCalled();
+    expect(redirectMock).not.toHaveBeenCalled();
+  });
+
+  it("Should return an error in deleteProfile when the user still administrates communities", async () => {
+    verifySessionMock.mockResolvedValue({
+      isAuth: true,
+      session: { userID: "user-1", role: "tenant" }
+    });
+    deleteUserMock.mockResolvedValue({
+      error: "user_is_community_admin",
+      message: "No se puede eliminar un usuario que aun administra comunidades"
+    });
+
+    const result = await deleteProfile({ state: "error", message: "" });
+
+    expect(result).toEqual({
+      state: "error",
+      message: "No se puede eliminar un usuario que aun administra comunidades"
+    });
+    expect(deleteSessionMock).not.toHaveBeenCalled();
+    expect(redirectMock).not.toHaveBeenCalled();
+  });
+
+  it("Should return an error in deleteProfile when the user does not exist", async () => {
+    verifySessionMock.mockResolvedValue({
+      isAuth: true,
+      session: { userID: "user-1", role: "tenant" }
+    });
+    deleteUserMock.mockResolvedValue({
+      error: "not_found",
+      message: "No existe el usuario a eliminar"
+    });
+
+    const result = await deleteProfile({ state: "error", message: "" });
+
+    expect(result).toEqual({ state: "error", message: "No existe el usuario a eliminar" });
     expect(deleteSessionMock).not.toHaveBeenCalled();
     expect(redirectMock).not.toHaveBeenCalled();
   });
@@ -322,19 +365,12 @@ describe("Test suite for profile actions", () => {
       isAuth: true,
       session: { userID: 25, role: "tenant" }
     });
-
-    const tx = {
-      community: { deleteMany: jest.fn().mockResolvedValue({}) },
-      user: { delete: jest.fn().mockResolvedValue({}) }
-    };
-
-    prismaTransactionMock.mockImplementation(async (callback: (arg: typeof tx) => Promise<void>) => callback(tx));
+    deleteUserMock.mockResolvedValue(null);
 
     await deleteProfile({ state: "error", message: "" });
 
-    expect(prismaTransactionMock).toHaveBeenCalledTimes(1);
-    expect(tx.community.deleteMany).toHaveBeenCalledWith({ where: { adminId: "25" } });
-    expect(tx.user.delete).toHaveBeenCalledWith({ where: { id: "25" } });
+    expect(deleteUserMock).toHaveBeenCalledTimes(1);
+    expect(deleteUserMock).toHaveBeenCalledWith("25");
     expect(deleteSessionMock).toHaveBeenCalledTimes(1);
     expect(redirectMock).toHaveBeenCalledWith("/");
   });
