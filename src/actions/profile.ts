@@ -6,7 +6,7 @@ import { deleteUser } from "@/lib/user";
 import { deleteSession } from "@/lib/session";
 import { saveImage } from "@/lib/saveImage";
 import profileSchema from "@/schemas/common/profile.schema";
-import { FormActionState } from "@/types";
+import { BasicError, FormActionState } from "@/types";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { SafeParseReturnType } from "zod";
@@ -58,17 +58,17 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
     }
 
     if (imageFile instanceof File && imageFile.size > 0) {
-      const savedImage = await saveImage(imageFile, verifiedSession.session.userID, "profiles");
+      const saveImageResult = await saveImage(imageFile, verifiedSession.session.userID, "profiles");
 
-      if (savedImage.error) {
+      if (typeof saveImageResult !== "string") {
         return {
           state: "error",
-          message: savedImage.error,
+          message: saveImageResult.message,
           payload: formData
         };
       }
 
-      imageURL = savedImage.imageURL;
+      imageURL = saveImageResult;
     }
 
     await prisma.user.update({
@@ -140,28 +140,38 @@ const deleteProfile = async (_prevState: FormActionState): Promise<FormActionSta
  * Validates the session, processes the image file and updates the URL in the database.
  *
  * @param formData FormData that must contain the "image" field with the file to upload
- * @returns An object with the URL of the uploaded image, or an error message
+ * @returns A BasicError on failure, or the uploaded image URL on success
  */
-const uploadProfile = async (formData: FormData): Promise<{ error?: string; imagen?: string }> => {
+const uploadProfile = async (formData: FormData): Promise<BasicError | { imagen: string }> => {
   const verifiedSession = await verifySession();
 
   if (!verifiedSession.isAuth || !verifiedSession.session) {
-    return { error: "Debes iniciar sesión para subir una imagen" };
+    return {
+      error: "unauthorized",
+      message: "Debes iniciar sesión para subir una imagen"
+    };
   }
 
   const file = formData.get("imagen");
-  const result = await saveImage(file as File, verifiedSession.session.userID, "profiles");
+  const saveImageResult = await saveImage(file as File, verifiedSession.session.userID, "profiles");
 
-  if (result.error || !result.imageURL) {
-    return { error: result.error };
+  if (typeof saveImageResult !== "string") {
+    return saveImageResult;
   }
 
-  await prisma.user.update({
-    where: { id: verifiedSession.session.userID },
-    data: { image: result.imageURL }
-  });
+  try {
+    await prisma.user.update({
+      where: { id: verifiedSession.session.userID },
+      data: { image: saveImageResult }
+    });
+  } catch {
+    return {
+      error: "upload_image_failed",
+      message: "No se pudo subir la imagen. Por favor, inténtalo de nuevo."
+    };
+  }
 
-  return { imagen: result.imageURL };
+  return { imagen: saveImageResult };
 };
 
 export { deleteProfile, updateProfile, uploadProfile };

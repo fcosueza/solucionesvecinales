@@ -164,7 +164,8 @@ describe("Test suite for profile actions", () => {
       session: { userID: "user-1", role: "tenant" }
     });
     saveImageMock.mockResolvedValue({
-      error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF."
+      error: "invalid_image_type",
+      message: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF."
     });
 
     const formData = validForm();
@@ -185,7 +186,8 @@ describe("Test suite for profile actions", () => {
       session: { userID: "user-1", role: "tenant" }
     });
     saveImageMock.mockResolvedValue({
-      error: "El tamaño de la imagen no puede exceder los 5 MB."
+      error: "image_too_large",
+      message: "El tamaño de la imagen no puede exceder los 5 MB."
     });
 
     const formData = validForm();
@@ -239,7 +241,7 @@ describe("Test suite for profile actions", () => {
       isAuth: true,
       session: { userID: "user-1", role: "tenant" }
     });
-    saveImageMock.mockResolvedValue({ imageURL: "/uploads/profiles/user-1-123456.png" });
+    saveImageMock.mockResolvedValue("/uploads/profiles/user-1-123456.png");
     prismaUserUpdateMock.mockResolvedValue({});
 
     const formData = validForm();
@@ -387,14 +389,18 @@ describe("Test suite for uploadProfile", () => {
 
     const result = await uploadProfile(new FormData());
 
-    expect(result).toEqual({ error: "Debes iniciar sesión para subir una imagen" });
+    expect(result).toEqual({
+      error: "unauthorized",
+      message: "Debes iniciar sesión para subir una imagen"
+    });
     expect(prismaUserUpdateMock).not.toHaveBeenCalled();
   });
 
   it("should return an error if saveImage returns an error", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
     saveImageMock.mockResolvedValue({
-      error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF."
+      error: "invalid_image_type",
+      message: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF."
     });
 
     const fd = new FormData();
@@ -402,26 +408,36 @@ describe("Test suite for uploadProfile", () => {
 
     const result = await uploadProfile(fd);
 
-    expect(result).toEqual({ error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF." });
+    expect(result).toEqual({
+      error: "invalid_image_type",
+      message: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF."
+    });
     expect(prismaUserUpdateMock).not.toHaveBeenCalled();
   });
 
-  it("should return a generic error if saveImage returns neither image nor error", async () => {
+  it("should return a generic error if prisma update fails after saveImage", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
-    saveImageMock.mockResolvedValue({});
+    saveImageMock.mockResolvedValue("/uploads/profiles/user-1-123456.png");
+    prismaUserUpdateMock.mockRejectedValue(new Error("db failure"));
 
     const fd = new FormData();
     fd.append("imagen", new File(["img"], "avatar.png", { type: "image/png" }));
 
     const result = await uploadProfile(fd);
 
-    expect(result.error).toBeDefined();
-    expect(prismaUserUpdateMock).not.toHaveBeenCalled();
+    expect(result).toEqual({
+      error: "upload_image_failed",
+      message: "No se pudo subir la imagen. Por favor, inténtalo de nuevo."
+    });
+    expect(prismaUserUpdateMock).toHaveBeenCalledWith({
+      where: { id: "user-1" },
+      data: { image: "/uploads/profiles/user-1-123456.png" }
+    });
   });
 
   it("should update the user image and return the URL on success", async () => {
     verifySessionMock.mockResolvedValue({ isAuth: true, session: { userID: "user-1", role: "tenant" } });
-    saveImageMock.mockResolvedValue({ imageURL: "/uploads/profiles/user-1-123456.png" });
+    saveImageMock.mockResolvedValue("/uploads/profiles/user-1-123456.png");
     prismaUserUpdateMock.mockResolvedValueOnce({});
 
     const fd = new FormData();
@@ -429,11 +445,10 @@ describe("Test suite for uploadProfile", () => {
 
     const result = await uploadProfile(fd);
 
-    expect(result.error).toBeUndefined();
-    expect(result.imagen).toBe("/uploads/profiles/user-1-123456.png");
+    expect(result).toEqual({ imagen: "/uploads/profiles/user-1-123456.png" });
     expect(prismaUserUpdateMock).toHaveBeenCalledWith({
       where: { id: "user-1" },
-      data: { image: result.imagen }
+      data: { image: "/uploads/profiles/user-1-123456.png" }
     });
   });
 });
