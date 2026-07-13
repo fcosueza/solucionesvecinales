@@ -4,12 +4,11 @@ import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import { deleteUser } from "@/lib/user";
 import { deleteSession } from "@/lib/session";
+import { saveImage } from "@/lib/saveImage";
 import profileSchema from "@/schemas/common/profile.schema";
 import { FormActionState } from "@/types";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
-import { writeFile } from "fs/promises";
-import { extname, join } from "path";
 import { SafeParseReturnType } from "zod";
 import z from "zod";
 
@@ -19,7 +18,7 @@ type ProfileFormFields = z.infer<typeof profileSchema>;
  * Updates the authenticated user's profile data and optional password/image.
  *
  * @param _prevState Previous form action state
- * @param formData Profile form payload
+ * @param formData Form data containing the profile fields to update
  *
  * @returns A promise that resolves to a FormActionState object indicating success or failure of the update operation.
  */
@@ -59,7 +58,7 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
     }
 
     if (imageFile instanceof File && imageFile.size > 0) {
-      const savedImage = await saveProfileImageFile(imageFile, verifiedSession.session.userID);
+      const savedImage = await saveImage(imageFile, verifiedSession.session.userID, "profiles");
 
       if (savedImage.error) {
         return {
@@ -69,7 +68,7 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
         };
       }
 
-      imageURL = savedImage.imagen;
+      imageURL = savedImage.imageURL;
     }
 
     await prisma.user.update({
@@ -123,7 +122,6 @@ const deleteProfile = async (_prevState: FormActionState): Promise<FormActionSta
   }
 
   const userID = String(verifiedSession.session.userID);
-
   const deleteError = await deleteUser(userID);
 
   if (deleteError) {
@@ -135,47 +133,6 @@ const deleteProfile = async (_prevState: FormActionState): Promise<FormActionSta
 
   await deleteSession();
   redirect("/");
-};
-
-const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const MAX_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 MB
-
-/**
- * Save the profile picture file to the server, validating the file format and size before saving it.
- * The file is saved with the user ID and current date to avoid collisions.
- *
- * @param file The image file to save
- * @param userID The ID of the user to whom the image belongs
- *
- * @returns An object with the URL of the saved image, or an error message
- */
-const saveProfileImageFile = async (
-  file: File,
-  userID: number | string
-): Promise<{ error?: string; imagen?: string }> => {
-  if (!(file instanceof File) || file.size === 0) {
-    return { error: "No file provided" };
-  }
-
-  if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-    return { error: "Formato de imagen no válido. Usa JPG, PNG, WebP o GIF." };
-  }
-
-  if (file.size > MAX_SIZE_IN_BYTES) {
-    return { error: "El tamaño de la imagen no puede exceder los 5 MB." };
-  }
-
-  const ext = extname(file.name) || ".jpg";
-  const fileName = `${userID}-${Date.now()}${ext}`;
-  const uploadDir = join(process.cwd(), "public", "uploads", "profiles");
-  const filePath = join(uploadDir, fileName);
-
-  const buffer = Buffer.from(await file.arrayBuffer());
-  await writeFile(filePath, buffer);
-
-  const imageURL = `/uploads/profiles/${fileName}`;
-
-  return { imagen: imageURL };
 };
 
 /**
@@ -193,18 +150,18 @@ const uploadProfile = async (formData: FormData): Promise<{ error?: string; imag
   }
 
   const file = formData.get("imagen");
-  const result = await saveProfileImageFile(file as File, verifiedSession.session.userID);
+  const result = await saveImage(file as File, verifiedSession.session.userID, "profiles");
 
-  if (result.error) {
+  if (result.error || !result.imageURL) {
     return { error: result.error };
   }
 
   await prisma.user.update({
     where: { id: verifiedSession.session.userID },
-    data: { image: result.imagen }
+    data: { image: result.imageURL }
   });
 
-  return { imagen: result.imagen };
+  return { imagen: result.imageURL };
 };
 
-export { deleteProfile, saveProfileImageFile, updateProfile, uploadProfile };
+export { deleteProfile, updateProfile, uploadProfile };
