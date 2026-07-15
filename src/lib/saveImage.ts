@@ -1,4 +1,4 @@
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import { extname, join } from "path";
 import { BasicError } from "../types/index.js";
 
@@ -41,8 +41,16 @@ const saveImage = async (file: File, ownerID: number | string, folder: string): 
   const uploadDir = join(process.cwd(), "public", "uploads", folder);
   const filePath = join(uploadDir, fileName);
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  await writeFile(filePath, buffer);
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    await mkdir(uploadDir, { recursive: true });
+    await writeFile(filePath, buffer);
+  } catch {
+    return {
+      error: "image_save_failed",
+      message: "No se pudo guardar la imagen. Intenta nuevamente."
+    };
+  }
 
   return `/uploads/${folder}/${fileName}`;
 };

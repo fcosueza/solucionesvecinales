@@ -1,4 +1,4 @@
-import { mkdtempSync, mkdirSync, readFileSync, rmSync } from "fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import { saveImage } from "./saveImage";
@@ -57,7 +57,6 @@ describe("saveImage function test suite", () => {
       value: jest.fn().mockResolvedValue(new TextEncoder().encode("avatar").buffer)
     });
     const uploadDir = join(tempRoot, "public", "uploads", "profiles");
-    mkdirSync(uploadDir, { recursive: true });
 
     const result = await saveImage(file, 1, "profiles");
 
@@ -66,5 +65,18 @@ describe("saveImage function test suite", () => {
     const savedPath = join(uploadDir, savedFile);
 
     expect(readFileSync(savedPath)).toEqual(Buffer.from("avatar"));
+  });
+
+  it("Returns an error when image persistence fails", async () => {
+    const file = new File(["avatar"], "avatar", { type: "image/png" });
+    Object.defineProperty(file, "arrayBuffer", {
+      value: jest.fn().mockResolvedValue(new TextEncoder().encode("avatar").buffer)
+    });
+    writeFileSync(join(tempRoot, "public"), "not a directory");
+
+    await expect(saveImage(file, 1, "profiles")).resolves.toEqual({
+      error: "image_save_failed",
+      message: "No se pudo guardar la imagen. Intenta nuevamente."
+    });
   });
 });
