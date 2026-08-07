@@ -336,7 +336,7 @@ Relevant scripts in this repository:
 
 ## TODO
 
-- Translate all code to English
+- ~~Translate all code to English~~
 - Make the app responsive for small devices (high priority)
 - Refactor the reservation system to allow up to 3 reservations per user
 - Refactor server functions (if needed)
