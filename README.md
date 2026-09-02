@@ -171,19 +171,25 @@ This section explains how to install the software required to run the applicatio
 
 ## Deploy on Vercel (Next.js + Prisma)
 
-To avoid Prisma errors during build/deploy:
+Vercel builds do not modify the database. Applying migrations from every preview or production build can cause concurrent deployments to contend for Prisma's PostgreSQL advisory lock.
 
 1. Define these variables in Vercel (Project Settings -> Environment Variables):
    - DATABASE_URL
    - SESSION_SECRET
 2. Use this Build Command: npm run vercel-build
 3. Verify Install Command is npm ci (or npm install)
-4. Prisma Client is generated during install/build, migrations are applied with prisma migrate deploy, and seed runs on every build
+4. Before deploying a release that contains migrations, run the following once from a serialized CI release job with the production `DATABASE_URL`:
+
+   ```bash
+   npm run db:migrate:deploy
+   ```
+
+   Do not run migrations or seed data during Vercel builds. Preview deployments should use a separate database when they require database changes.
 
 Relevant scripts in this repository:
 
 - npm run build -> prisma generate && next build
-- npm run vercel-build -> prisma generate && prisma migrate deploy && prisma db seed && next build
+- npm run vercel-build -> prisma generate && next build
 - npm run db:migrate:deploy -> prisma migrate deploy
 - npm run db:seed -> prisma db seed
 
