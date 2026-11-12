@@ -9,7 +9,6 @@ import profileSchema from "@/schemas/common/profile.schema";
 import { BasicError, FormActionState } from "@/types";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
-import { SafeParseReturnType } from "zod";
 import z from "zod";
 
 type ProfileFormFields = z.infer<typeof profileSchema>;
@@ -34,7 +33,7 @@ const updateProfile = async (_prevState: FormActionState, formData: FormData): P
   }
 
   const rawData: object = Object.fromEntries(formData);
-  const validatedData: SafeParseReturnType<object, ProfileFormFields> = profileSchema.safeParse(rawData);
+  const validatedData = profileSchema.safeParse(rawData);
 
   if (!validatedData.success) {
     return {
