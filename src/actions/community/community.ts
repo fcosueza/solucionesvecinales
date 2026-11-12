@@ -4,7 +4,6 @@ import verifySession from "@/lib/dal";
 import prisma from "@/lib/prisma";
 import communitySchema from "@/schemas/common/community.schema";
 import { FormActionState, UserRole } from "@/types";
-import { SafeParseReturnType } from "zod";
 import z from "zod";
 
 type CamposFormularioComunidad = z.infer<typeof communitySchema>;
@@ -39,7 +38,7 @@ const addCommunity = async (_prevState: FormActionState, formData: FormData): Pr
   }
 
   const rawData: object = Object.fromEntries(formData);
-  const validatedData: SafeParseReturnType<object, CamposFormularioComunidad> = communitySchema.safeParse(rawData);
+  const validatedData = communitySchema.safeParse(rawData);
 
   if (!validatedData.success) {
     return {

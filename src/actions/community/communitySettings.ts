@@ -6,7 +6,6 @@ import communitySchema from "@/schemas/common/community.schema";
 import { FormActionState, UserRole } from "@/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { SafeParseReturnType } from "zod";
 import z from "zod";
 
 type communityFormFields = z.infer<typeof communitySchema>;
@@ -64,7 +63,7 @@ const updateCommunity = async (_prevState: FormActionState, formData: FormData):
   }
 
   const rawData: object = Object.fromEntries(formData);
-  const validatedData: SafeParseReturnType<object, communityFormFields> = communitySchema.safeParse(rawData);
+  const validatedData = communitySchema.safeParse(rawData);
 
   if (!validatedData.success) {
     return {

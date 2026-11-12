@@ -4,7 +4,6 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import signUpSchema from "@/schemas/auth/signup.schema";
 import { FormActionState } from "@/types";
-import { SafeParseReturnType } from "zod";
 import z from "zod";
 
 type RecordFields = z.infer<typeof signUpSchema>;
@@ -31,7 +30,7 @@ const safePayload = (formData: FormData): FormData => {
  */
 const signUp = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const rawData: object = Object.fromEntries(formData);
-  const validatedData: SafeParseReturnType<object, RecordFields> = signUpSchema.safeParse(rawData);
+  const validatedData = signUpSchema.safeParse(rawData);
 
   if (!validatedData.success) {
     return {

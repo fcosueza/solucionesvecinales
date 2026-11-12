@@ -4,7 +4,6 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import logInSchema from "@/schemas/auth/login.schema";
 import { FormActionState, UserRole } from "@/types";
-import { SafeParseReturnType } from "zod";
 import { createSession } from "@/lib/session";
 import z from "zod";
 
@@ -31,7 +30,7 @@ const safePayload = (formData: FormData): FormData => {
  */
 const logIn = async (_prevState: FormActionState, formData: FormData): Promise<FormActionState> => {
   const rawData: object = Object.fromEntries(formData);
-  const validatedData: SafeParseReturnType<object, CamposLogin> = logInSchema.safeParse(rawData);
+  const validatedData = logInSchema.safeParse(rawData);
 
   if (!validatedData.success) {
     return {
